@@ -1,0 +1,36 @@
+Window createUserWI {
+
+    #entityForm {
+        id:userForm
+        entity:Employee
+    }#
+
+    Button backBU {
+        String text := ['Back']
+        event onClick {
+            back
+        }
+
+    }
+    ComboBox rolesCB {
+        Set(Role) rows := [Role.allInstances()]
+            Label roleLB {
+                String text := [$rolesCB.row$.role]
+            }
+    }
+    Button assignRoleBU {
+        String text := ['Assign']
+        event onClick {
+            if [$userForm_create_button.userForm$.oclIsUndefined() = false]{
+                if [$rolesCB.selected$.oclIsUndefined() = false]{
+                    [$userForm_create_button.userForm$.roles] += [$rolesCB.selected$]
+                } else {
+                    notification(['Message'], ['Please, select first a role.'], [-1])
+                }
+            } else {
+                notification(['Message'], ['Please, create first an employee.'], [-1])
+            }
+        }
+    }
+
+}

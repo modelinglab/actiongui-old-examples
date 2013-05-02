@@ -1,0 +1,22 @@
+entity Employee isUser {
+    String login
+    String password 
+    Set(Role) roles oppositeTo users
+    Set(Customer) customers oppositeTo contacts
+    }
+ 
+entity Role {
+    String role
+    //users assigned to this role
+    Set(Employee) users oppositeTo roles
+}
+
+entity Customer {
+    String name
+    String surname
+    Date birthday
+    String email
+    String phone
+    Integer loyalty
+    Set(Employee) contacts oppositeTo customers
+}

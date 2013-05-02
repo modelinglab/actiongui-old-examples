@@ -1,0 +1,17 @@
+Window editCustomerWI {
+    Customer selectedCustomer
+
+    #entityEditForm{
+        id:editCustomer
+        entity:Customer
+        instance:[$editCustomerWI.selectedCustomer$]    
+    }#
+
+    Button backBU {
+        String text := ['Back']
+        event onClick {
+            back
+        }
+    }
+
+}
