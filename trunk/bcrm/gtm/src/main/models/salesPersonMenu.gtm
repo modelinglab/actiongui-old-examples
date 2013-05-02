@@ -1,0 +1,32 @@
+Window salesPersonMenuWI {
+
+    /* Button createCustomerBU {
+        String text := ['Create customer']
+        event onClick {
+            open createCustomerWI ()
+        }
+    }
+    */ 
+
+    Button searchCustomersBU {
+        String text := ['Search customers']
+        event onClick {
+            open searchCustomersWI ()
+        }
+    }
+
+    Button changePasswordBU {
+        String text := ['Change password']
+        event onClick {
+            open changePasswordWI ()
+        }
+    }
+
+    Button exitBU {
+        String text := ['Exit']
+
+        event onClick {
+            exit
+        }
+    }
+}

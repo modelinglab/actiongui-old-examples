@@ -1,0 +1,58 @@
+
+.searchCustomersWI .customersTable_page  {
+    position : absolute;
+    left: 200px;
+    top: 230px;
+}
+
+.searchCustomersWI .customersTable  {
+    position : absolute;
+    left: 10px;
+    top: 20px;
+    width: 800px;
+    height: 200px;
+}
+
+
+.searchCustomersWI .customersTable .birthday  {
+}
+
+.searchCustomersWI .customersTable .phone  {
+}
+
+.searchCustomersWI .customersTable .email  {
+}
+
+.searchCustomersWI .customersTable .name  {
+}
+
+.searchCustomersWI .customersTable .surname  {
+}
+
+.searchCustomersWI .customersTable .loyalty  {
+}
+
+.searchCustomersWI .customersTable_prevBu  {
+     position : absolute;
+    left: 10px;
+    top: 230px;
+}
+
+.searchCustomersWI .customersTable_nextBu  {
+    position : absolute;
+    left: 90px;
+    top: 230px;
+}
+
+.searchCustomersWI .editCustomerBU  {
+    position : absolute;
+    left: 10px;
+    top: 270px;
+}
+
+.searchCustomersWI .backBU  {
+    position : absolute;
+    left: 10px;
+    top: 300px;
+}
+

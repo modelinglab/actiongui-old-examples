@@ -1,0 +1,50 @@
+Window searchUsersWI {
+
+    #entityTable {
+    id:employeesTable
+    entity:Employee
+    size: [5]
+    }#
+
+    Button editUserBU {
+        String text := ['Edit']
+        event onClick {
+            if [$employeesTable.selected$.oclIsUndefined() = false] {
+                open editUserWI (selectedEmployee:[$employeesTable.selected$])
+            } else {
+                notification(['Message'], ['Please, select an employee first.'], [-1])
+            }
+        }
+
+    }
+    Button backBU {
+        String text := ['Back']
+        event onClick {
+            back
+        }
+    }
+
+    Button deleteBU {
+        String text := ['Delete']
+        event onClick {
+            if [$employeesTable.selected$.oclIsUndefined() = false] {
+                try {
+                    delete [$employeesTable.selected$]
+                    notification(['Message'], ['The selected employee has been successfully deleted.'], [-1])
+                    // This need to be generalized
+                    employeesTable.all := [Employee.allInstances()->asOrderedSet()]
+                    employeesTable.total := [$employeesTable.all$->size()]
+                    employeesTable.upper := [if $employeesTable.lower$+$employeesTable.size$-1 > $employeesTable.total$ then $employeesTable.total$ else $employeesTable.lower$+$employeesTable.size$-1 endif]
+                    employeesTable.rows := [$employeesTable.all$->subOrderedSet($employeesTable.lower$,$employeesTable.upper$)]
+                    //    
+                    }
+                catch (SecurityException) {
+                    notification(['Message'], ['Sorry, you do not have permissions to delete this employee'], [-1])
+                    }
+            } else {
+                notification(['Message'], ['Please, select an employee first.'], [-1])
+            }
+        }
+
+    }
+}

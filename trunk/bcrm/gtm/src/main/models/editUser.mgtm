@@ -1,0 +1,18 @@
+Window editUserWI {
+    Employee selectedEmployee
+
+    #entityEditForm{
+        id:editEmployee 
+        entity:Employee
+        instance:[$editUserWI.selectedEmployee$]    
+    }#
+
+    Button backBU {
+        String text := ['Back']
+        event onClick {
+            back
+        }
+    }
+
+
+}
