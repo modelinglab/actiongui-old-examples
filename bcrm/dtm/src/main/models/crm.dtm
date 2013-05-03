@@ -1,3 +1,4 @@
+//entity employee
 entity Employee isUser {
     String login
     String password 
