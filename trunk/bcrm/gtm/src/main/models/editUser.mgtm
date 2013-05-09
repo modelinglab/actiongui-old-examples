@@ -7,6 +7,27 @@ Window editUserWI {
         instance:[$editUserWI.selectedEmployee$]    
     }#
 
+    #entityTable {
+        id: rolesTable
+        entity: Role
+        attributes: {role}
+        size: [5]
+    }#
+
+    
+
+    Button assignRoleBU {
+        String text := ['Assign']
+        event onClick {
+            if [$rolesTable.selected$.oclIsUndefined() = false] {
+                back
+            } else {
+                notification(['Message'], ['Please, select a role first.'], [-1])
+            }
+        }
+
+    }
+
     Button backBU {
         String text := ['Back']
         event onClick {
@@ -14,5 +35,6 @@ Window editUserWI {
         }
     }
 
-
+   
 }
+
