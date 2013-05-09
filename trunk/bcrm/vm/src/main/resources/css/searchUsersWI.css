@@ -1,17 +1,13 @@
 
-.searchUsersWI .employeesTable_page  {
-    position : absolute;
-    left: 200px;
-    top: 230px;
-}
 
 .searchUsersWI .employeesTable  {
     position : absolute;
-    left: 10px;
-    top: 20px;
-    width: 400px;
-    height: 200px;
+    left: 30px;
+    top: 30px;
+    width: 200px;
+    height: 100px;
 }
+
 
 
 .searchUsersWI .employeesTable .login  {
@@ -20,27 +16,40 @@
 .searchUsersWI .employeesTable .password  {
 }
 
+
+ .searchUsersWI .employeesTable_page  {
+    position : absolute;
+    left: 180px;
+    top: 160px;
+}
 .searchUsersWI .employeesTable_prevBu  {
     position : absolute;
-    left: 10px;
-    top: 230px;
+    left: 30px;
+    top: 160px;
 }
 
 .searchUsersWI .employeesTable_nextBu  {
     position : absolute;
-    left: 90px;
-    top: 230px;
-}
-
-.searchUsersWI .editUserBU  {
-    position : absolute;
-    left: 10px;
-    top: 270px;
+    left: 120px;
+    top: 160px;
 }
 
 .searchUsersWI .backBU  {
     position : absolute;
-    left: 10px;
-    top: 300px;
+    left: 30px;
+    top: 210px;
 }
 
+
+.searchUsersWI .editUserBU  {
+    position : absolute;
+    left: 90px;
+    top: 210px;
+}
+
+
+.searchUsersWI .deleteBU {
+    position : absolute;
+    left: 150px;
+    top: 210px;
+}
