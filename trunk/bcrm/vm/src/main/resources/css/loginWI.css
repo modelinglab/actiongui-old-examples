@@ -1,38 +1,38 @@
 
 .loginWI .loginLA  {
     position : absolute;
-    left: 10px;
+    left: 30px;
     top: 30px;
 }
 
 .loginWI .loginTF  {
     position : absolute;
-    left: 80px;
+    left: 100px;
     top: 30px;
 }
 
 .loginWI .passLA  {
     position : absolute;
-    left: 10px;
+    left: 30px;
     top: 60px;
 }
 
 .loginWI .passTF  {
     position : absolute;
-    left: 80px;
+    left: 100px;
     top: 60px;
 }
 
 .loginWI .loginBU  {
     position : absolute;
-    left: 80px;
+    left: 100px;
     top: 90px;
     
 }
 
 .loginWI .backBU  {
     position : absolute;
-    left: 10px;
+    left: 30px;
     top: 90px;
 }
 

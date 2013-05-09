@@ -1,10 +1,37 @@
 
-.managerMenuWI .manageCustomersBU  {
+.managerMenuWI .createUserBU  {
+    position : absolute;
+    left: 30px;
+    top: 30px;
 }
 
-.managerMenuWI .manageUsersBU  {
+.managerMenuWI .searchUsersBU  {
+    position : absolute;
+    left: 30px;
+    top: 60px;
+}
+
+.managerMenuWI .createCustomerBU  {
+    position : absolute;
+    left: 30px;
+    top: 90px;
+}
+
+.managerMenuWI .searchCustomersBU  {
+    position : absolute;
+    left: 30px;
+    top: 120px;
+}
+
+.managerMenuWI .changePasswordBU  {
+    position : absolute;
+    left: 30px;
+    top: 150px;
 }
 
 .managerMenuWI .exitBU  {
+    position : absolute;
+    left: 30px;
+    top: 180px;
 }
 
