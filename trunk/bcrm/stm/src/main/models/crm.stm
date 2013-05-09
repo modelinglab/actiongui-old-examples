@@ -1,6 +1,7 @@
 role SalesPerson {
     Employee {
-        update password, read constrainedBy [self = caller]
+        read login
+        update password, read password constrainedBy [self = caller]
     }
     Customer {
         read name, read surname, read email, read phone
@@ -13,7 +14,7 @@ role SalesPerson {
 role Manager extends SalesPerson {
     Employee {
         create
-        read login, read password, read roles, read customers 
+        read roles, read customers
         update
         delete
         }
