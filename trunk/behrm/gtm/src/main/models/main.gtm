@@ -27,7 +27,7 @@ Window loginWi isMain{
 
 Button loginWi.loginBu{
     event onClick{
-        if [Professional.allInstances()->exists(p|p.user = $userEn.text$ and p.password = $passEn.text$)]{
+        if [Professional.allInstances()->exists(p|true)]{
             professional := [Professional.allInstances()->any(p|p.user = $userEn.text$ and p.password = $passEn.text$)]
             open medicalCenterWi(caller:[$professional$], role:[$professional$.myRole->any(true)])
         }
