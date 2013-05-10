@@ -1,0 +1,1 @@
+GRANT ALL PRIVILEGES ON eHRMApp.* TO actiongui IDENTIFIED BY 'actiongui';

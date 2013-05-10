@@ -1,0 +1,239 @@
+
+.registerPatientWi .contactInfoLa  {
+    position: absolute;
+    top: 50px;
+    left: 90px;
+}
+
+.registerPatientWi .idLa  {
+    position: absolute;
+    top: 80px;
+    left: 50px;
+}
+
+.registerPatientWi .nameLa  {
+    position: absolute;
+    top: 110px;
+    left: 50px;
+}
+
+.registerPatientWi .surnameLa  {
+    position: absolute;
+    top: 140px;
+    left: 50px;
+}
+
+.registerPatientWi .genderLa  {
+    position: absolute;
+    top: 170px;
+    left: 50px;
+}
+
+.registerPatientWi .birthLa  {
+    position: absolute;
+    top: 200px;
+    left: 50px;
+}
+
+.registerPatientWi .addressLa  {
+    position: absolute;
+    top: 230px;
+    left: 50px;
+}
+
+.registerPatientWi .vipLa  {
+    position: absolute;
+    top: 250px;
+    left: 50px;
+}
+
+.registerPatientWi .publicInfoLa  {
+    position: absolute;
+    top: 310px;
+    left: 90px;
+}
+
+.registerPatientWi .bloodLa  {
+    position: absolute;
+    top: 340px;
+    left: 50px;
+}
+
+.registerPatientWi .allergiesLa  {
+    position: absolute;
+    top: 370px;
+    left: 50px;
+}
+
+.registerPatientWi .diabetesLa  {
+    position: absolute;
+    top: 400px;
+    left: 50px;
+}
+
+.registerPatientWi .foodRestrictLa  {
+    position: absolute;
+    top: 430px;
+    left: 50px;
+}
+
+.registerPatientWi .medicineRestricLa  {
+    position: absolute;
+    top: 460px;
+    left: 50px;
+}
+
+.registerPatientWi .adminInfoLa  {
+    position: absolute;
+    top: 520px;
+    left: 90px;
+}
+
+.registerPatientWi .insuranceLa  {
+    position: absolute;
+    top: 550px;
+    left: 50px;
+}
+
+.registerPatientWi .accountLa  {
+    position: absolute;
+    top: 580px;
+    left: 50px;
+}
+
+.registerPatientWi .departmentsLa  {
+    position: absolute;
+    top: 640px;
+    left: 90px;
+}
+
+.registerPatientWi .doctorsLa  {
+    position: absolute;
+    top: 880px;
+    left: 90px;
+}
+
+.registerPatientWi .idEn  {
+    position: absolute;
+    top: 80px;
+    left: 180px;
+}
+
+.registerPatientWi .nameEn  {
+    position: absolute;
+    top: 110px;
+    left: 180px;
+}
+
+.registerPatientWi .surnameEn  {
+    position: absolute;
+    top: 140px;
+    left: 180px;
+}
+
+.registerPatientWi .addressEn  {
+    position: absolute;
+    top: 230px;
+    left: 180px;
+}
+
+.registerPatientWi .bloodEn  {
+    position: absolute;
+    top: 340px;
+    left: 180px;
+}
+
+.registerPatientWi .allergiesEn  {
+    position: absolute;
+    top: 370px;
+    left: 180px;
+}
+
+.registerPatientWi .diabetesEn  {
+    position: absolute;
+    top: 400px;
+    left: 180px;
+}
+
+.registerPatientWi .foodRestrictEn  {
+    position: absolute;
+    top: 430px;
+    left: 180px;
+}
+
+.registerPatientWi .medicineRestrictEn  {
+    position: absolute;
+    top: 460px;
+    left: 180px;
+}
+
+.registerPatientWi .insuranceEn  {
+    position: absolute;
+    top: 550px;
+    left: 180px;
+}
+
+.registerPatientWi .accountEn  {
+    position: absolute;
+    top: 580px;
+    left: 180px;
+}
+
+.registerPatientWi .birthCa  {
+    position: absolute;
+    top: 200px;
+    left: 180px;
+}
+
+.registerPatientWi .vipBf  {
+    position: absolute;
+    top: 250px;
+    left: 180px;
+}
+
+.registerPatientWi .genderCb  {
+    position: absolute;
+    top: 170px;
+    left: 180px;
+}
+
+
+.registerPatientWi .genderCb .genderLa  {
+}
+
+.registerPatientWi .departmentsTa  {
+    position: absolute;
+    top: 670px;
+    left: 50px;
+    height: 150px;
+    width: 200px; 
+}
+
+
+.registerPatientWi .departmentsTa .departmentLa  {
+}
+
+.registerPatientWi .doctorsTa  {
+    position: absolute;
+    top: 910px;
+    left: 50px;
+    height: 150px;
+    width: 200px; 
+}
+
+
+.registerPatientWi .doctorsTa .doctorLa  {
+}
+
+.registerPatientWi .cancelBu  {
+    position: absolute;
+    top: 1120px;
+    left: 50px;
+}
+
+.registerPatientWi .registerBu  {
+    position: absolute;
+    top: 1090px;
+    left: 50px;
+}
+

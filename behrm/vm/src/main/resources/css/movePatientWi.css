@@ -1,0 +1,67 @@
+
+.movePatientWi .patientLa  {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+}
+
+.movePatientWi .departmentLa  {
+    position: absolute;
+    top: 80px;
+    left: 50px;
+}
+
+.movePatientWi .doctorLa  {
+    position: absolute;
+    top: 110px;
+    left: 50px;
+}
+
+.movePatientWi .departmentsLa  {
+    position: absolute;
+    top: 170px;
+    left: 50px;
+}
+
+.movePatientWi .doctorsLa  {
+    position: absolute;
+    top: 410px;
+    left: 50px;
+}
+
+.movePatientWi .departmentsTa  {
+    position: absolute;
+    top: 200px;
+    left: 50px;
+    height: 150px;
+    width: 200px; 
+}
+
+
+.movePatientWi .departmentsTa .department  {
+}
+
+.movePatientWi .doctorsTa  {
+    position: absolute;
+    top: 440px;
+    left: 50px;
+    height: 150px;
+    width: 200px; 
+}
+
+
+.movePatientWi .doctorsTa .doctor  {
+}
+
+.movePatientWi .moveBu  {
+    position: absolute;
+    top: 620px;
+    left: 50px;
+}
+
+.movePatientWi .cancelBu  {
+    position: absolute;
+    top: 650px;
+    left: 50px;
+}
+

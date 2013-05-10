@@ -1,0 +1,85 @@
+Window movePatientWi{
+    MedicalCenter medicalCenter
+    Patient patient
+    String text := ['Move a patient']
+
+    Label patientLa{
+        String text := ['Patient: '.concat($movePatientWi.patient$.contact->any(true).name).concat(' ').concat($movePatientWi.patient$.contact->any(true).surname)]
+    }
+    Label departmentLa{
+        String text := ['Department: '.concat($movePatientWi.patient$.department->any(true).name)]
+    }
+    Label doctorLa{
+        String text := ['Doctor: '.concat($movePatientWi.patient$.doctor.professional->any(true).name).concat(' ').concat($movePatientWi.patient$.doctor.professional->any(true).surname)]
+    }
+    Label departmentsLa{
+        String text := ['Select the new department:']
+    }
+    Label doctorsLa{
+        String text := ['Select the new doctor:']
+    }
+    Table departmentsTa{
+        Department selected {
+            if [not $selected$.oclIsUndefined()] {
+                movePatientWi.doctorsTa.rows := [$selected$.doctors]
+            }
+        }
+        Set(Department) rows := [$movePatientWi.medicalCenter$.departments]
+    }
+    Table doctorsTa{ 
+        Set(Doctor) rows := [Doctor.allInstances()->select(false)]
+    }
+    Button moveBu{
+        String text := ['Move the patient']
+    }
+    Button cancelBu{
+        String text := ['Back']
+    }
+}
+
+Table movePatientWi.departmentsTa{
+    columns {
+        ['Department'] : Label department {
+            String text := [$departmentsTa.row$.name]
+        }
+    }
+}
+
+Table movePatientWi.doctorsTa{
+    columns {
+        ['Doctor'] : Label doctor {
+            String text := [$doctorsTa.row$.professional->any(true).name.concat(' ').concat($doctorsTa.row$.professional->any(true).surname)]
+        }
+    }
+}
+
+Button movePatientWi.moveBu{
+    event onClick{
+        if [not $departmentsTa.selected$.oclIsUndefined()]{
+            if [not $doctorsTa.selected$.oclIsUndefined()]{
+                [$movePatientWi.patient$.department] -= [$movePatientWi.patient$.department->any(true)]
+                [$movePatientWi.patient$.doctor] -= [$movePatientWi.patient$.doctor->any(true)]
+                [$movePatientWi.patient$.department] += [$departmentsTa.selected$]
+                [$movePatientWi.patient$.doctor] += [$doctorsTa.selected$]
+
+                // full path in target var because otherwise there are conflicts with other vars
+                movePatientWi.departmentLa.text := ['Department: '.concat($movePatientWi.patient$.department->any(true).name)]
+                movePatientWi.doctorLa.text := ['Doctor: '.concat($movePatientWi.patient$.doctor.professional->any(true).name).concat(' ').concat($movePatientWi.patient$.doctor.professional->any(true).surname)]
+                
+                notification(['Message'],['The patient has been moved properly.'],[-1])
+            }
+            else{
+                notification(['Message'],['You have the select a doctor.'],[-1])
+            }
+        }
+        else{
+            notification(['Message'],['You have to select a department.'],[-1])
+        }
+    }
+}
+
+Button movePatientWi.cancelBu{
+    event onClick{
+        back
+    }
+}

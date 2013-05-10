@@ -1,0 +1,52 @@
+
+.patientsWi .medicalCenterLa  {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+}
+
+.patientsWi .patientsLa  {
+    position: absolute;
+    top: 110px;
+    left: 300px;
+}
+
+.patientsWi .patientsTa  {
+    position: absolute;
+    top: 140px;
+    left: 50px;
+    height: 300px;
+    width: 700px; 
+}
+
+
+.patientsWi .patientsTa .nameLa  {
+}
+
+.patientsWi .patientsTa .surnameLa  {
+}
+
+.patientsWi .patientsTa .genderLa  {
+}
+
+.patientsWi .patientsTa .floorLa  {
+}
+
+.patientsWi .patientsTa .roomLa  {
+}
+
+.patientsWi .patientsTa .socialInfoLa  {
+}
+
+.patientsWi .movePatientBu  {
+    position: absolute;
+    top: 470px;
+    left: 50px;
+}
+
+.patientsWi .backBu  {
+    position: absolute;
+    top: 500px;
+    left: 50px;
+}
+

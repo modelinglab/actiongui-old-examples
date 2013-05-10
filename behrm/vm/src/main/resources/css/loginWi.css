@@ -1,0 +1,43 @@
+
+.loginWi .loginLa  {
+    position: absolute;
+    top: 50px;
+    left: 100px;
+}
+
+.loginWi .userLa  {
+    position: absolute;
+    top: 100px;
+    left: 50px;
+}
+
+.loginWi .passLa  {
+    position: absolute;
+    top: 140px;
+    left: 50px;
+}
+
+.loginWi .messageLa  {
+    position: absolute;
+    top: 200px;
+    left: 200px;
+}
+
+.loginWi .userEn  {
+    position: absolute;
+    top: 100px;
+    left: 120px;
+}
+
+.loginWi .passEn  {
+    position: absolute;
+    top: 140px;
+    left: 120px;
+}
+
+.loginWi .loginBu  {
+    position: absolute;
+    top: 200px;
+    left: 100px;
+}
+
