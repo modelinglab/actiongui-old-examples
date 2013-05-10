@@ -1,4 +1,4 @@
-use eHRMApp;
+use behrm;
 
 -- Inserts the application roles
 insert into Role VALUES (1,'Default'),(2,'Doctor'),(3,'Nurse'),(4,'Administrative'),(5,'Director');
