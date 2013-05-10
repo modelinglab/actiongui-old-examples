@@ -1,0 +1,169 @@
+
+.createProfessionalWi .generalInfoLa  {
+    position: absolute;
+    top: 50px;
+    left: 90px;
+}
+
+.createProfessionalWi .nameLa  {
+    position: absolute;
+    top: 80px;
+    left: 50px;
+}
+
+.createProfessionalWi .loginInfoLa  {
+    position: absolute;
+    top: 170px;
+    left: 90px;
+}
+
+.createProfessionalWi .userLa  {
+    position: absolute;
+    top: 200px;
+    left: 50px;
+}
+
+.createProfessionalWi .chooseProflLa  {
+    position: absolute;
+    top: 290px;
+    left: 90px;
+}
+
+.createProfessionalWi .doctorLa  {
+    position: absolute;
+    top: 320px;
+    left: 50px;
+}
+
+.createProfessionalWi .surnameLa  {
+    position: absolute;
+    top: 110px;
+    left: 50px;
+}
+
+.createProfessionalWi .passwordLa  {
+    position: absolute;
+    top: 230px;
+    left: 50px;
+}
+
+.createProfessionalWi .nurseLa  {
+    position: absolute;
+    top: 350px;
+    left: 50px;
+}
+
+.createProfessionalWi .doctorLicenseLa  {
+    position: absolute;
+    top: 320px;
+    left: 220px;
+}
+
+.createProfessionalWi .nursingLicenseLa  {
+    position: absolute;
+    top: 350px;
+    left: 220px;
+}
+
+.createProfessionalWi .statusLa  {
+    position: absolute;
+    top: 320px;
+    left: 550px;
+}
+
+.createProfessionalWi .chooseDepartmentLa  {
+    position: absolute;
+    top: 440px;
+    left: 90px;
+}
+
+.createProfessionalWi .administrativeLa  {
+    position: absolute;
+    top: 380px;
+    left: 50px;
+}
+
+.createProfessionalWi .nameEn  {
+    position: absolute;
+    top: 80px;
+    left: 130px;
+}
+
+.createProfessionalWi .surnameEn  {
+    position: absolute;
+    top: 110px;
+    left: 130px;
+}
+
+.createProfessionalWi .userEn  {
+    position: absolute;
+    top: 200px;
+    left: 130px;
+}
+
+.createProfessionalWi .passwordEn  {
+    position: absolute;
+    top: 230px;
+    left: 130px;
+}
+
+.createProfessionalWi .doctorLicenseEn  {
+    position: absolute;
+    top: 320px;
+    left: 330px;
+}
+
+.createProfessionalWi .nursingLicenseEn  {
+    position: absolute;
+    top: 350px;
+    left: 330px;
+}
+
+.createProfessionalWi .doctorBf  {
+    position: absolute;
+    top: 320px;
+    left: 150px;
+}
+
+.createProfessionalWi .nurseBf  {
+    position: absolute;
+    top: 350px;
+    left: 150px;
+}
+
+.createProfessionalWi .administrativeBf  {
+    position: absolute;
+    top: 380px;
+    left: 150px;
+}
+
+.createProfessionalWi .statusBf  {
+    position: absolute;
+    top: 320px;
+    left: 600px;
+}
+
+.createProfessionalWi .departmentsTa  {
+    position: absolute;
+    top: 470px;
+    left: 50px;
+    height: 150px;
+    width: 200px; 
+}
+
+
+.createProfessionalWi .departmentsTa .departmentLa  {
+}
+
+.createProfessionalWi .createProfessionalBu  {
+    position: absolute;
+    top: 670px;
+    left: 90px;
+}
+
+.createProfessionalWi .cancelBu  {
+    position: absolute;
+    top: 700px;
+    left: 90px;
+}
+

@@ -1,0 +1,63 @@
+entity Professional isUser{
+    String user
+    String password
+    String name
+    String surname
+
+    Set(Nurse) asNurse oppositeTo professional
+    Set(Doctor) asDoctor oppositeTo professional
+    Set(Director) asDirector oppositeTo professional
+    Set(Administrative) asAdministrative oppositeTo professional
+    Set(Role) myRole oppositeTo users
+    /*
+    A professional can work in more than one department,
+    but just in one department of the same medical center.
+    */
+    Set(MedicalCenter) worksIn oppositeTo employees
+    Set(EHR) createdEHRs oppositeTo createdBy
+}
+
+entity Director{
+    Set(Professional) professional oppositeTo asDirector
+}
+
+entity Administrative{
+    Set(Professional) professional oppositeTo asAdministrative
+}
+
+entity Doctor{
+    String medicalLicense
+    /*
+    status:
+        - false: Unavailable
+        - true: Available
+    */
+    Boolean status
+
+    Set(Professional) professional oppositeTo asDoctor
+    Set(Department) departments oppositeTo doctors
+    Set(Patient) patients oppositeTo doctor
+    Set(Referal) referedPatients oppositeTo refered
+    Set(Referal) referingPatients oppositeTo refering
+    Set(Doctor) coveringDoctor oppositeTo substitutions
+    Set(Doctor) substitutions oppositeTo coveringDoctor
+}
+
+entity Nurse{
+    String nursingLicense
+
+    Set(Professional) professional oppositeTo asNurse
+    Set(Department) departments oppositeTo nurses
+}
+
+entity Referal{
+    Set(Doctor) refered oppositeTo referedPatients
+    Set(Doctor) refering oppositeTo referingPatients
+    Set(Patient) patient oppositeTo referedDoctors
+}
+
+entity Role{
+    String role
+
+    Set(Professional) users oppositeTo myRole
+}

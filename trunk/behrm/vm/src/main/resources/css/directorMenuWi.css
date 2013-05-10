@@ -1,0 +1,19 @@
+
+.directorMenuWi .createProfBu  {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+}
+
+.directorMenuWi .reassignProfBu  {
+    position: absolute;
+    top: 80px;
+    left: 50px;
+}
+
+.directorMenuWi .backBu  {
+    position: absolute;
+    top: 120px;
+    left: 50px;
+}
+
