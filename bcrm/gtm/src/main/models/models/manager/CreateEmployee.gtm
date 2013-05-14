@@ -19,18 +19,13 @@ Window CreateEmployee_W {
         String text := ['Role:']
     }
     ComboBox NewEmployee_F_myRole {
-        // NOT YET IMPLEMENTED --> NOT WORKING
-        // Set(Role) rows := [Role.allInstances()]
-        Set(Role) rows := [Set{Role::MANAGER, Role::SALESMANAGER}]
+        OrderedSet(Role) rows := [Role.allInstances()]
+        //Set(Role) rows := [Set{Role::MANAGER, Role::SALESMANAGER}]
 
         Role selected := [null]
         Label myRole {
-            //String text := [$NewEmployee_F_role.row$.role]
-
-            // NOT YET IMPLEMENTED
             String text := [$NewEmployee_F_myRole.row$.name()]
-            // String text := [if $NewEmployee_F_myRole.row$ = Role::MANAGER then 'MANAGER' else 'SALESMANAGER' endif]
-        }
+            }
     }
 
     Button Create_B {
@@ -57,7 +52,6 @@ Window CreateEmployee_W {
                         [$newEmployee$.login] := [$NewEmployee_F_login.text$]
                         [$newEmployee$.password] := [$NewEmployee_F_password.text$]
                         [$newEmployee$.myRole] := [$NewEmployee_F_myRole.selected$]
-                        // [$newEmployee$.roles] += [$NewEmployee_F_role.selected$]
                         notification (['Success'],['An instance of Employee has been created successfully.'],[-1])
                     }
                     catch (SecurityException) {
