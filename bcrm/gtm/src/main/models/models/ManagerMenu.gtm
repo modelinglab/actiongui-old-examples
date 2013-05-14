@@ -1,0 +1,65 @@
+Window ManagerMenu_W {
+    String text := ['Manager Menu']
+    
+    /* macro menu
+    #menu Manager_M {
+        item {
+            target: CreateEmployee_W
+            label: ['Create employee']
+        }
+        item {
+            target: SearchEmployees_W
+            label: ['Search employees']
+        }
+        item {
+            target: CreateCustomer_W
+            label: ['Create customers']
+        }
+        item {
+            target: SearchCustomers_W
+            label: ['Search customers']
+        }
+        item {
+            target: Login_W
+            label: ['Logout']
+        }
+    }#
+    */
+    // begin expanded code for macro menu
+    Button Manager_M_CreateEmployee_W_B {
+        String text := ['Create employee']
+
+        event onClick {
+            open CreateEmployee_W()
+        }
+    }
+    Button Manager_M_SearchEmployees_W_B {
+        String text := ['Search employees']
+
+        event onClick {
+            open SearchEmployees_W()
+        }
+    }
+    Button Manager_M_CreateCustomer_W_B {
+        String text := ['Create customer']
+
+        event onClick {
+            open CreateCustomer_W()
+        }
+    }
+    Button Manager_M_SearchCustomers_W_B {
+        String text := ['Search customers']
+
+        event onClick {
+            open SearchCustomers_W()
+        }
+    }
+    Button Manager_M_Login_W_B {
+        String text := ['Logout']
+
+        event onClick {
+            open Login_W()
+        }
+    }
+    // end expanded code for macro menu
+}

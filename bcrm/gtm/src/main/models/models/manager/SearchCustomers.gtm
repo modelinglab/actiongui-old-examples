@@ -1,0 +1,3 @@
+Window SearchCustomers_W {
+    String text := ['Search Customers']
+}

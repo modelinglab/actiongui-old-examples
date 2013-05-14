@@ -1,0 +1,100 @@
+Window CreateCustomer_W {
+    String text := ['Create Customer']
+
+    /* macro form
+    #form NewCustomer_F {
+        entity: Customer
+    }#
+    */
+    // begin expanded code for macro form
+    String name
+    String surname
+    Date birthday
+    String email
+    String phone
+    Integer loyalty
+
+    Label NewCustomer_F_name_L {
+        String text := ['name:']
+    }
+    TextField NewCustomer_F_name {
+        String text := [null]
+    }   
+
+    Label NewCustomer_F_surname_L {
+        String text := ['surname:']
+    }
+    TextField NewCustomer_F_surname {
+        String text := [null]
+    }   
+
+    Label NewCustomer_F_birthday_L {
+        String text := ['birthday:']
+    }
+    DateField NewCustomer_F_birthday {
+        Date date := [null]
+    }   
+
+    Label NewCustomer_F_email_L {
+        String text := ['email:']
+    }
+    TextField NewCustomer_F_email {
+        String text := [null]
+    }   
+
+    Label NewCustomer_F_phone_L {
+        String text := ['phone:']
+    }
+    TextField NewCustomer_F_phone {
+        String text := [null]
+    }   
+
+    Label NewCustomer_F_loyalty_L {
+        String text := ['loyalty:']
+    }
+    TextField NewCustomer_F_loyalty {
+        String text := [null]
+    }   
+    // end expanded code for macro form
+
+    Button Create_B {
+        String text := ['Create']
+        event onClick {
+            /* create macro
+            #create {
+                entity: Customer
+                form: NewCustomer_F
+            }#
+            */
+            // begin expanded code for create macro
+            createCustomer := new Customer
+            [$createCustomer$.name] := [$NewCustomer_F_name.text$]
+            [$createCustomer$.surname] := [$NewCustomer_F_surname.text$]
+            [$createCustomer$.birthday] := [$NewCustomer_F_birthday.date$]
+            [$createCustomer$.email] := [$NewCustomer_F_email.text$]
+            [$createCustomer$.phone] := [$NewCustomer_F_phone.text$]
+            [$createCustomer$.loyalty] := [$NewCustomer_F_loyalty.text$.toInteger()]
+            notification (['Success'],['An instance of Customer has been created successfully.'],[-1])
+            // end expanded code for create macro
+
+            /* refresh macro
+            #refresh NewCustomer_F#     
+            */
+            // begin expanded code for refresh macro
+            reevaluate NewCustomer_F_name.text
+            reevaluate NewCustomer_F_surname.text
+            reevaluate NewCustomer_F_birthday.date
+            reevaluate NewCustomer_F_email.text
+            reevaluate NewCustomer_F_phone.text
+            reevaluate NewCustomer_F_loyalty.text
+            // end expanded code for refresh macro
+        }
+    }
+
+    Button Back_B {
+        String text := ['Back']
+        event onClick {
+            back
+        }
+    }
+}
