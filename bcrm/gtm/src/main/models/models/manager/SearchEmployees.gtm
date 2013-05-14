@@ -1,3 +1,47 @@
 Window SearchEmployees_W {
     String text := ['Search Employees']
+
+    /*
+    #table Employee_T {
+        entity: Employee
+        column: login {
+            label: ['User:]
+        }
+        size: [10]
+        sortedBy: [$row$.user]
+    }
+    */
+
+    Button Edit_B {
+        String text := ['Edit']
+        event onClick {
+            /*
+            #forward {
+                target: EditEmployee_W
+                arg: $selectedEmployee$ {
+                    value: [$Employees_T.selected$]
+                }
+                check: [not($Employees_T.selected.oclIsUndefined())]
+            }
+            */
+        }
+    }
+
+    Button Delete_B {
+        String text := ['Delete']
+        event onClick {
+            /*
+            #delete {
+                instance: [$Customers_T.selected$]
+            }
+            */
+        }
+    }
+
+    Button Back_B {
+        String text := ['Back']
+        event onClick {
+            back
+        }
+    }
 }

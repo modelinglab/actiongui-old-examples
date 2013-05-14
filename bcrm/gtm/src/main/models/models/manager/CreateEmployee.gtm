@@ -46,12 +46,17 @@ Window CreateEmployee_W {
 
             if [$NewEmployee_F_login.error$ = null and $NewEmployee_F_password.error$ = null and $NewEmployee_F_role.error$ = null] {
                 if [not(Employee.allInstances()->exists(u|u.login=$NewEmployee_F_login.text$ and u.password=$NewEmployee_F_password.text$))] {
-                    newEmployee := new Employee
-                    [$newEmployee$.login] := [$NewEmployee_F_login.text$]
-                    [$newEmployee$.password] := [$NewEmployee_F_password.text$]
-                    // ENUM [$newEmployee$.role] := [$NewEmployee_F_role.selected$]
-                    [$newEmployee$.roles] += [$NewEmployee_F_role.selected$]
-                    notification (['Success'],['An instance of Employee has been created successfully.'],[-1])
+                    try {
+                        newEmployee := new Employee
+                        [$newEmployee$.login] := [$NewEmployee_F_login.text$]
+                        [$newEmployee$.password] := [$NewEmployee_F_password.text$]
+                        // ENUM [$newEmployee$.role] := [$NewEmployee_F_role.selected$]
+                        [$newEmployee$.roles] += [$NewEmployee_F_role.selected$]
+                        notification (['Success'],['An instance of Employee has been created successfully.'],[-1])
+                    }
+                    catch (SecurityException) {
+                        notification(['Security error'],['You do not have permission to create an instance of Employee.'],[-1])
+                    }
                 }
                 else {
                    notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
