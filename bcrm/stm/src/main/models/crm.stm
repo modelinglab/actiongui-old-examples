@@ -14,13 +14,16 @@ role SALESMANAGER {
 role MANAGER extends SALESMANAGER {
     Employee {
         create
-        read roles, read customers
+        // read roles, read customers
+        read myRole, read customers
         update
         delete
         }
+    /*
     Role {
         read
     }
+    */
     Customer {
         fullAccess
     }
