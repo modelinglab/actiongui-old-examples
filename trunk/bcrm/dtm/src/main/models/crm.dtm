@@ -1,10 +1,11 @@
-//entity employee
 entity Employee isUser {
     String login
     String password 
+    // Role as enum
+    // Role role
     Set(Role) roles oppositeTo users
     Set(Customer) customers oppositeTo contacts
-    }
+}
  
 entity Role {
     String role
@@ -19,5 +20,13 @@ entity Customer {
     String email
     String phone
     Integer loyalty
+
     Set(Employee) contacts oppositeTo customers
 }
+
+/*
+enum Role {
+    MANAGER // 0
+    SALESMANAGER // 1
+}
+*/
