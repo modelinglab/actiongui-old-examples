@@ -15,15 +15,21 @@ Window CreateEmployee_W {
         String text := [null]
     }
 
-    Label NewEmployee_F_role_L {
+    Label NewEmployee_F_myRole_L {
         String text := ['Role:']
     }
-    ComboBox NewEmployee_F_role {
-        Set(Role) rows := [Role.allInstances()]
+    ComboBox NewEmployee_F_myRole {
+        // NOT YET IMPLEMENTED
+        // Set(Role) rows := [Role.allInstances()]
+        Set(Role) rows := [Set{Role::MANAGER, Role::SALESMANAGER}]
+
         Role selected := [null]
-        Label role {
-            String text := [$NewEmployee_F_role.row$.role]
-            // ENUM String text := [$NewEmployee_F_role.row$.toString()]
+        Label myRole {
+            //String text := [$NewEmployee_F_role.row$.role]
+
+            // NOT YET IMPLEMENTED
+            // String text := [$NewEmployee_F_myRole.row$.toString()]
+            String text := [if $NewEmployee_F_myRole.row$ = Role::MANAGER then 'MANAGER' else 'SALESMANAGER' endif]
         }
     }
 
@@ -32,7 +38,7 @@ Window CreateEmployee_W {
         event onClick {
             NewEmployee_F_login.error := [null]
             NewEmployee_F_password.error := [null]
-            NewEmployee_F_role.error := [null]
+            NewEmployee_F_myRole.error := [null]
 
             if [not(not($NewEmployee_F_login.text$.oclIsUndefined()))] {
                 NewEmployee_F_login.error := ['Error']
@@ -40,18 +46,18 @@ Window CreateEmployee_W {
             if [not(not($NewEmployee_F_password.text$.oclIsUndefined()))] {
                 NewEmployee_F_password.error := ['Error']
             }
-            if [not(not($NewEmployee_F_role.selected$.oclIsUndefined()))] {
-                NewEmployee_F_role.error := ['Error']
+            if [not(not($NewEmployee_F_myRole.selected$.oclIsUndefined()))] {
+                NewEmployee_F_myRole.error := ['Error']
             }
 
-            if [$NewEmployee_F_login.error$ = null and $NewEmployee_F_password.error$ = null and $NewEmployee_F_role.error$ = null] {
+            if [$NewEmployee_F_login.error$ = null and $NewEmployee_F_password.error$ = null and $NewEmployee_F_myRole.error$ = null] {
                 if [not(Employee.allInstances()->exists(u|u.login=$NewEmployee_F_login.text$ and u.password=$NewEmployee_F_password.text$))] {
                     try {
                         newEmployee := new Employee
                         [$newEmployee$.login] := [$NewEmployee_F_login.text$]
                         [$newEmployee$.password] := [$NewEmployee_F_password.text$]
-                        // ENUM [$newEmployee$.role] := [$NewEmployee_F_role.selected$]
-                        [$newEmployee$.roles] += [$NewEmployee_F_role.selected$]
+                        [$newEmployee$.myRole] := [$NewEmployee_F_myRole.selected$]
+                        // [$newEmployee$.roles] += [$NewEmployee_F_role.selected$]
                         notification (['Success'],['An instance of Employee has been created successfully.'],[-1])
                     }
                     catch (SecurityException) {
@@ -68,7 +74,7 @@ Window CreateEmployee_W {
 
             reevaluate NewEmployee_F_login.text
             reevaluate NewEmployee_F_password.text
-            reevaluate NewEmployee_F_role.selected
+            reevaluate NewEmployee_F_myRole.selected
         }
     }
 
