@@ -1,0 +1,3 @@
+Window CreateEmployee_W {
+    String text := ['Create Employee']
+}
