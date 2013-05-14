@@ -1,4 +1,4 @@
-role SalesPerson {
+role SALESMANAGER {
     Employee {
         read login
         update password, read password constrainedBy [self = caller]
@@ -11,7 +11,7 @@ role SalesPerson {
     }
 }
 
-role Manager extends SalesPerson {
+role MANAGER extends SALESMANAGER {
     Employee {
         create
         read roles, read customers
@@ -23,5 +23,5 @@ role Manager extends SalesPerson {
     }
     Customer {
         fullAccess
-        }
+    }
 }
