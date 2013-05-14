@@ -1,31 +1,6 @@
 Window ManagerMenu_W {
     String text := ['Manager Menu']
-    
-    /* macro menu
-    #menu Manager_M {
-        item {
-            target: CreateEmployee_W
-            label: ['Create employee']
-        }
-        item {
-            target: SearchEmployees_W
-            label: ['Search employees']
-        }
-        item {
-            target: CreateCustomer_W
-            label: ['Create customers']
-        }
-        item {
-            target: SearchCustomers_W
-            label: ['Search customers']
-        }
-        item {
-            target: Login_W
-            label: ['Logout']
-        }
-    }#
-    */
-    // begin expanded code for macro menu
+
     Button Manager_M_CreateEmployee_W_B {
         String text := ['Create employee']
 
@@ -61,5 +36,4 @@ Window ManagerMenu_W {
             open Login_W()
         }
     }
-    // end expanded code for macro menu
 }

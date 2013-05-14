@@ -1,24 +1,6 @@
 Window SalesManagerMenu_W {
     String text := ['Sales Manager Menu']
 
-    /* macro menu
-    #menu SalesManager_M {
-        item {
-            target: EditEmployee_W
-            label: ['Edit employee']
-        }
-
-        item {
-            target: ChangePassword_W
-            label: ['Change password']
-        }
-        item {
-            target: Login_W
-            label: ['Logout']
-        }
-    }#
-    */
-    // begin expanded code for macro menu
     Button Manager_M_EditEmployee_W_B {
         String text := ['Edit employee']
 
@@ -40,5 +22,4 @@ Window SalesManagerMenu_W {
             open Login_W()
         }
     }
-    // end expanded code for macro menu
 }

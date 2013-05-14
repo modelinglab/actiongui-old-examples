@@ -1,57 +1,29 @@
 Window Login_W isMain{
     String text := ['Log In']
 
-    /* macro Credentiasl_F
-    #form Credentiasl_F {
-        entity: Employee
-        attr: login {
-            label: ['Login:']
-        }
-        attr: password {
-            label: ['Passw:']
-        }
-    }#
-    */
-    // begin expanded code for macro Credentiasl_F
     Label Credentiasl_F_login_L {
         String text := ['Login:']
     }
     TextField Credentiasl_F_login {
 
     }
-
     Label Credentiasl_F_password_L {
         String text := ['Passw:']
     }
     TextField Credentiasl_F_password {
 
     }
-    // end expanded code for macro Credentiasl_F
-
 
     Button Login_B {
         String text := ['Log in']
         Boolean success
         event onClick {
-            /* macro login
-            #login {
-                entity: Employee
-                window: Login_W
-                role: roles
-                // isRole: role
-                credentials: Credentials_F
-                result: success
-            }#
-            */
-            // begin expanded code for login
             Login_W.caller := [Employee.allInstances()->any(c|c.login = $Credentiasl_F_login.text$ and c.password = $Credentiasl_F_password.text$)]
             if [not $Login_W.caller$.oclIsUndefined()] {
                 // Login_W.role := [$Login_W.caller$.role] 
                 Login_W.role := [$Login_W.caller$.roles->any(true)] 
             }
             success := [not ($Login_W.caller$.oclIsUndefined() or $Login_W.role$.oclIsUndefined())]           
-            // end expanded code for login
-
             if [$success$] {
                 // if [$Login_W.role$ = Role::SALESMANAGER]
                 if [$Login_W.role$ = Role.allInstances()->any(r|r.role = 'SALESMANAGER')] {
@@ -63,26 +35,12 @@ Window Login_W isMain{
                         open ManagerMenu_W()
                     }
                     else {
-                        /* macro message
-                        #message {
-                            body: ['You have no role assigned.']
-                        }#
-                        */
-                        // begin expanded code for macro message
                         notification (['Message'],['You have no role assigned.'],[-1])
-                        // begin expanded code for macro message
                     }
                 } 
             }
             else {
-                /* macro message
-                #message {
-                    body: ['Wrong credentials.']
-                }#
-                */
-                // begin expanded code for macro message
                 notification (['Message'],['Wrong credentials.'],[-1])
-                // begin expanded code for macro message
             }
         }
     }

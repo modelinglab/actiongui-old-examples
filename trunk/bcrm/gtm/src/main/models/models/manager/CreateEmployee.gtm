@@ -1,3 +1,100 @@
 Window CreateEmployee_W {
     String text := ['Create Employee']
+
+    /*
+    #form NewEmployee_F {
+        entity: Employee
+        attr: login {
+            label: ['Login:']
+        }
+        attr: password {
+            label: ['Password:']
+        }
+        attr: role {
+            label: ['Role:']
+        }
+    }
+    */
+    Label NewEmployee_F_login_L {
+        String text := ['Login:']
+    }
+    TextField NewEmployee_F_login {
+        String text := [null]
+    }
+
+    Label NewEmployee_F_password_L {
+        String text := ['Password:']
+    }
+    TextField NewEmployee_F_password {
+        String text := [null]
+    }
+
+    Label NewEmployee_F_role_L {
+        String text := ['Role:']
+    }
+    ComboBox NewEmployee_F_role {
+        Set(Role) rows := [Role.allInstances()]
+        Role selected := [null]
+        Label role {
+            String text := [$NewEmployee_F_role.row$.role]
+            // ENUM String text := [$NewEmployee_F_role.row$.toString()]
+        }
+    }
+
+    Button Create_B {
+        String text := ['Create']
+        event onClick {
+            /*
+            #create {
+                entity: Employee
+                form: NewEmployee_F
+                attr: login { check:[not($text$.oclIsUndefined())] }
+                attr: password { check:[not($text$.oclIsUndefined())] }
+                attr: role { check:[not($text$.oclIsUndefined())] }
+                check: [not(Employee.allInstances()->exists(u|u.login=$NewEmployee_F.login.text$ and u.password=$NewEmployee_F.password.text$)) ]
+            }
+            */
+            NewEmployee_F_login.error := [null]
+            NewEmployee_F_password.error := [null]
+            NewEmployee_F_role.error := [null]
+
+            if [not(not($NewEmployee_F_login.text$.oclIsUndefined()))] {
+                NewEmployee_F_login.error := ['Error']
+            }
+            if [not(not($NewEmployee_F_password.text$.oclIsUndefined()))] {
+                NewEmployee_F_password.error := ['Error']
+            }
+            if [not(not($NewEmployee_F_role.selected$.oclIsUndefined()))] {
+                NewEmployee_F_role.error := ['Error']
+            }
+
+            if [$NewEmployee_F_login.error$ = null and $NewEmployee_F_password.error$ = null and $NewEmployee_F_role.error$ = null] {
+                if [not(Employee.allInstances()->exists(u|u.login=$NewEmployee_F_login.text$ and u.password=$NewEmployee_F_password.text$))] {
+                    newEmployee := new Employee
+                    [$newEmployee$.login] := [$NewEmployee_F_login.text$]
+                    [$newEmployee$.password] := [$NewEmployee_F_password.text$]
+                    // ENUM [$newEmployee$.role] := [$NewEmployee_F_role.selected$]
+                    [$newEmployee$.roles] += [$NewEmployee_F_role.selected$]
+                    notification (['Success'],['An instance of Employee has been created successfully.'],[-1])
+                }
+                else {
+                   notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
+                }
+            }
+            else {
+                notification(['Error'],['The form contains errors. Please, check the form.'],[-1])
+            }
+
+            reevaluate NewEmployee_F_login.text
+            reevaluate NewEmployee_F_password.text
+            reevaluate NewEmployee_F_role.selected
+        }
+    }
+
+    Button Back_B {
+        String text := ['Back']
+        event onClick {
+            back
+        }
+    }
 }
