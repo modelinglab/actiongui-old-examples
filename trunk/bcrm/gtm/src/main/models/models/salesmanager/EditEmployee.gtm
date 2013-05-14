@@ -1,3 +1,0 @@
-Window EditEmployee_W {
-    String text := ['Edit Employee']
-}   
