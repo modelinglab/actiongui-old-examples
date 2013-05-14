@@ -1,0 +1,29 @@
+Window EditCustomer_W {
+    Customer selectedCustomer
+
+    /*
+    #form SelectedCustomer_F {
+        entity: Customer
+        instance: [$EditCustomer_W.selectedCustomer$]
+    }
+    */
+
+    Button Edit_B {
+        event onClick {
+            /*
+            #update {
+                entity: Customer
+                instance: [$EditCustomer_W.selectedCustomer$]
+                form: SelectedCustomer_F
+            }
+            */
+        }
+    }
+
+    Button Back_B {
+        String text := ['Back']
+        event onClick {
+            back
+        }
+    }
+}

@@ -60,16 +60,20 @@ Window CreateCustomer_W {
     Button Create_B {
         String text := ['Create']
         event onClick {
-
-            newCustomer := new Customer
-            [$newCustomer$.name] := [$NewCustomer_F_name.text$]
-            [$newCustomer$.surname] := [$NewCustomer_F_surname.text$]
-            [$newCustomer$.birthday] := [$NewCustomer_F_birthday.date$]
-            [$newCustomer$.email] := [$NewCustomer_F_email.text$]
-            [$newCustomer$.phone] := [$NewCustomer_F_phone.text$]
-            [$newCustomer$.loyalty] := [$NewCustomer_F_loyalty.text$.toInteger()]
-            [$newCustomer$.contacts] += [$NewCustomer_F_contacts.selected$]
-            notification (['Success'],['An instance of Customer has been created successfully.'],[-1])
+            try {
+                newCustomer := new Customer
+                [$newCustomer$.name] := [$NewCustomer_F_name.text$]
+                [$newCustomer$.surname] := [$NewCustomer_F_surname.text$]
+                [$newCustomer$.birthday] := [$NewCustomer_F_birthday.date$]
+                [$newCustomer$.email] := [$NewCustomer_F_email.text$]
+                [$newCustomer$.phone] := [$NewCustomer_F_phone.text$]
+                [$newCustomer$.loyalty] := [$NewCustomer_F_loyalty.text$.toInteger()]
+                [$newCustomer$.contacts] += [$NewCustomer_F_contacts.selected$]               
+                notification (['Success'],['An instance of Customer has been created successfully.'],[-1])
+            }
+            catch (SecurityException) {
+                notification (['Security error'],['You do not have permission to create an instance of Customer.'],[-1])
+            }
 
             reevaluate NewCustomer_F_name.text
             reevaluate NewCustomer_F_surname.text

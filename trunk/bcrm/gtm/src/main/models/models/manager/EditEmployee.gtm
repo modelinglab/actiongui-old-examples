@@ -1,0 +1,49 @@
+Window EditEmployee_W {
+    String text := ['Edit Employee']
+    Employee selectedEmployee
+
+    /*
+    #form EditEmployee_F {
+        entity: Employee
+        instance: [$EditEmpoyee_W.selectedEmployee$]
+        attr: login {
+            label: ['Login:']
+        }
+        attr: password {
+            label: ['Password:']
+        }
+        attr: role {
+            label: ['Role:']
+        }
+    }
+    */
+
+    Button Update_B {
+        event onClick {
+            /*
+            #update {
+                entity: Employee
+                instance:$EditEmployee_F.selectedEmployee$
+                form: EditEmployee_F
+                attr: login {
+                    check:[not($text$.oclIsUndefined())]
+                }
+                attr: password {
+                    check:[not($text$.oclIsUndefined())]
+                }
+                attr: role {
+                    check:[not($text$.oclIsUndefined())]
+                }
+                check: [not(Employee.allInstances()->exists(u|u.login=$EditEmployee_F.login.text$ and u.password=$EditEmployee_F.password.text$)) ]
+            }
+            */
+        }
+    }
+
+    Button Back_B {
+        String text := ['Back']
+        event onClick {
+            back
+        }
+    }
+}
