@@ -1,1 +1,103 @@
 
+.CreateCustomer_W .NewCustomer_F_name_L  {
+    position : absolute;
+    left: 10px;
+    top: 30px;
+}
+
+.CreateCustomer_W .NewCustomer_F_name  {
+    position : absolute;
+    left: 80px;
+    top: 30px;
+}
+
+.CreateCustomer_W .NewCustomer_F_surname_L  {
+    position : absolute;
+    left: 10px;
+    top: 60px;
+}
+
+.CreateCustomer_W .NewCustomer_F_surname  {
+    position : absolute;
+    left: 80px;
+    top: 60px;
+}
+
+.CreateCustomer_W .NewCustomer_F_birthday_L  {
+    position : absolute;
+    left: 10px;
+    top: 90px;
+}
+
+.CreateCustomer_W .NewCustomer_F_birthday  {
+    position : absolute;
+    left: 80px;
+    top: 90px;
+}
+
+.CreateCustomer_W .NewCustomer_F_email_L  {
+    position : absolute;
+    left: 10px;
+    top: 120px;
+}
+
+.CreateCustomer_W .NewCustomer_F_email  {
+    position : absolute;
+    left: 80px;
+    top: 120px;
+}
+
+.CreateCustomer_W .NewCustomer_F_phone_L  {
+    position : absolute;
+    left: 10px;
+    top: 150px;
+}
+
+.CreateCustomer_W .NewCustomer_F_phone  {
+    position : absolute;
+    left: 80px;
+    top: 150px;
+}
+
+.CreateCustomer_W .NewCustomer_F_loyalty_L  {
+    position : absolute;
+    left: 10px;
+    top: 180px;
+}
+
+.CreateCustomer_W .NewCustomer_F_loyalty  {
+    position : absolute;
+    left: 80px;
+    top: 180px;
+}
+
+.CreateCustomer_W .NewCustomer_F_contacts_L  {
+    position : absolute;
+    left: 10px;
+    top: 210px;
+}
+
+.CreateCustomer_W .NewCustomer_F_contacts  {
+    position : absolute;
+    left: 10px;
+    top: 230px;
+    width: 250px;
+    height: 100px;
+}
+
+
+.CreateCustomer_W .NewCustomer_F_contacts .login_L  {
+}
+
+.CreateCustomer_W .Create_B  {
+    position : absolute;
+    left: 80px;
+    top: 360px;
+}
+
+.CreateCustomer_W .Back_B  {
+    position : absolute;
+    left: 10px;
+    top: 360px;
+}
+
