@@ -1,8 +1,10 @@
-insert into Role (role) values ('Manager'),('SalesPerson');
-insert into Employee (login,password) values ('alice', '1111');
-insert into Employee (login,password) values ('bob', '1111');
-insert into Employee (login,password) values ('charlie', '1111');
-insert into Employee_roles__Role_users (Employee_roles, Role_users) values (1, 1);
-insert into Employee_roles__Role_users (Employee_roles, Role_users) values (2, 2);
-insert into Employee_roles__Role_users (Employee_roles, Role_users) values (3, 2);
+/*
+enum Role {
+    MANAGER // 0
+    SALESMANAGER // 1
+}
+*/
+insert into Employee (login,password,role) values ('alice', '1111',0);
+insert into Employee (login,password,role) values ('bob', '1111',1);
+insert into Employee (login,password,role) values ('charlie', '1111',1);
 

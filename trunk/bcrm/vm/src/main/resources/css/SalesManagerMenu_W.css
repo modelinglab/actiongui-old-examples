@@ -1,0 +1,19 @@
+
+.SalesManagerMenu_W .Manager_M_EditEmployee_W_B  {
+    position : absolute;
+    left: 10px;
+    top: 30px;
+}
+
+.SalesManagerMenu_W .Manager_M_ChangePassword_W_B  {
+    position : absolute;
+    left: 10px;
+    top: 60px;
+}
+
+.SalesManagerMenu_W .Manager_M_Login_W_B  {
+    position : absolute;
+    left: 10px;
+    top: 90px;
+}
+
