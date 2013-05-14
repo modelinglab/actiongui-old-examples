@@ -19,7 +19,7 @@ Window CreateEmployee_W {
         String text := ['Role:']
     }
     ComboBox NewEmployee_F_myRole {
-        // NOT YET IMPLEMENTED
+        // NOT YET IMPLEMENTED --> NOT WORKING
         // Set(Role) rows := [Role.allInstances()]
         Set(Role) rows := [Set{Role::MANAGER, Role::SALESMANAGER}]
 
@@ -28,8 +28,8 @@ Window CreateEmployee_W {
             //String text := [$NewEmployee_F_role.row$.role]
 
             // NOT YET IMPLEMENTED
-            // String text := [$NewEmployee_F_myRole.row$.toString()]
-            String text := [if $NewEmployee_F_myRole.row$ = Role::MANAGER then 'MANAGER' else 'SALESMANAGER' endif]
+            String text := [$NewEmployee_F_myRole.row$.name()]
+            // String text := [if $NewEmployee_F_myRole.row$ = Role::MANAGER then 'MANAGER' else 'SALESMANAGER' endif]
         }
     }
 
