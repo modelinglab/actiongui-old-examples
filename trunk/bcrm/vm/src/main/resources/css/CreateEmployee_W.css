@@ -23,13 +23,13 @@
     top: 60px;
 }
 
-.CreateEmployee_W .NewEmployee_F_role_L  {
+.CreateEmployee_W .NewEmployee_F_myRole_L  {
     position : absolute;
     left: 10px;
     top: 90px;
 }
 
-.CreateEmployee_W .NewEmployee_F_role  {
+.CreateEmployee_W .NewEmployee_F_myRole  {
     position : absolute;
     left: 80px;
     top: 90px;
