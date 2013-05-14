@@ -1,20 +1,6 @@
 Window CreateEmployee_W {
     String text := ['Create Employee']
 
-    /*
-    #form NewEmployee_F {
-        entity: Employee
-        attr: login {
-            label: ['Login:']
-        }
-        attr: password {
-            label: ['Password:']
-        }
-        attr: role {
-            label: ['Role:']
-        }
-    }
-    */
     Label NewEmployee_F_login_L {
         String text := ['Login:']
     }
@@ -44,16 +30,6 @@ Window CreateEmployee_W {
     Button Create_B {
         String text := ['Create']
         event onClick {
-            /*
-            #create {
-                entity: Employee
-                form: NewEmployee_F
-                attr: login { check:[not($text$.oclIsUndefined())] }
-                attr: password { check:[not($text$.oclIsUndefined())] }
-                attr: role { check:[not($text$.oclIsUndefined())] }
-                check: [not(Employee.allInstances()->exists(u|u.login=$NewEmployee_F.login.text$ and u.password=$NewEmployee_F.password.text$)) ]
-            }
-            */
             NewEmployee_F_login.error := [null]
             NewEmployee_F_password.error := [null]
             NewEmployee_F_role.error := [null]
