@@ -32,7 +32,7 @@ Window SearchCustomers_W {
         Integer lower
         Integer upper
         OrderedSet(Customer) rows
-        Customer selected := [null]
+        OrderedSet(Customer) selected := [Customer.allInstances()->select(false)->asOrderedSet()]
 
         columns {
             ['name'] : Label name {
@@ -144,8 +144,8 @@ Window SearchCustomers_W {
     Button Edit_B {
         String text := ['Edit']
         event onClick {
-            if [not($Customers_T.selected$.oclIsUndefined())] {
-                open EditCustomer_W(selectedCustomer : [$Customers_T.selected$])
+            if [$Customers_T.selected$->size() = 1] {
+                open EditCustomer_W(selectedCustomer : [$Customers_T.selected$->at(1)])
             }
         }
     }
@@ -153,9 +153,9 @@ Window SearchCustomers_W {
     Button Delete_B {
         String text := ['Delete']
         event onClick {
-            if [not($Customers_T.selected$.oclIsUndefined())] {
+            if [$Customers_T.selected$->size() = 1] {
                 try {
-                    delete [$Customers_T.selected$]
+                    delete [$Customers_T.selected$->at(1)]
                     notification (['Success'],['The Customer has been deleted successfully.'],[-1])
                 }
                 catch (SecurityException) {
