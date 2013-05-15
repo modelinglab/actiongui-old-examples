@@ -9,6 +9,7 @@ Window EditCustomer_W {
     */
 
     Button Edit_B {
+        String text := ['Edit']
         event onClick {
             /*
             #update {

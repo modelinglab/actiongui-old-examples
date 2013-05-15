@@ -133,16 +133,11 @@ Window SearchCustomers_W {
     Button Edit_B {
         String text := ['Edit']
         event onClick {
-            if [$Customers_T.selected$->oclIsUndefined()] {
-                notification(['Error'],['You must select exactly one customer, in order to edit it.'],[-1]) 
+            if [if $Customers_T.selected$->oclIsUndefined() then false else $Customers_T.selected$->size() = 1 endif] {
+                open EditCustomer_W(selectedCustomer : [$Customers_T.selected$->any(true)])
             }
             else {
-                if [$Customers_T.selected$->size() = 1] {
-                    open EditCustomer_W(selectedCustomer : [$Customers_T.selected$->any(true)])
-                }
-                else {
-                   notification(['Error'],['You must select exactly one customer.'],[-1]) 
-                }
+                notification(['Error'],['You must select exactly one customer.'],[-1]) 
             }
         }
     }
@@ -150,7 +145,7 @@ Window SearchCustomers_W {
     Button Delete_B {
         String text := ['Delete']
         event onClick {
-            if [not ($Customers_T.selected$->oclIsUndefined())] {
+            if [if $Customers_T.selected$->oclIsUndefined() then false else $Customers_T.selected$->notEmpty() endif] {
                 try {
                     foreach deleteObject in [$Customers_T.selected$] {
                        delete [$deleteObject$] 
