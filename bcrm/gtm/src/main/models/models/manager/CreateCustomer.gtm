@@ -101,6 +101,11 @@ Window CreateCustomer_W {
             if [$NewCustomer_F_contacts.selected$->oclIsUndefined()] {
                 NewCustomer_F_contacts.error := ['Required selection']
             }
+            else {
+                if [$NewCustomer_F_contacts.selected$->isEmpty()] {
+                    NewCustomer_F_contacts.error := ['Required selection']
+                }
+            }
 
             if [$NewCustomer_F_name.error$ = null and $NewCustomer_F_surname.error$ = null and
                     $NewCustomer_F_birthday.error$ = null and $NewCustomer_F_email.error$ = null and

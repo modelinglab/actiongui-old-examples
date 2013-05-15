@@ -2,14 +2,12 @@ Window SearchCustomers_W {
     String text := ['Search Customers']
 
     Label Customers_T_page {
-        Integer current
+        Integer current := [1]
+        Integer size := [2]
         Integer total
-        Integer size
         String text := [$current$.toString().concat(' of ').concat($total$.toString())]
-
-        event onCreate {
-            current := [1]
-            size := [10]
+        
+        event onView(total) {
             total := [Customer.allInstances()->size()]
             if [$total$ = 0] {
                 total := [1]
@@ -26,13 +24,13 @@ Window SearchCustomers_W {
     }
 
     Table Customers_T {
-        OrderedSet(Customer) all
-        Integer total
-        Integer size
-        Integer lower
-        Integer upper
-        OrderedSet(Customer) rows
-        OrderedSet(Customer) selected := [Customer.allInstances()->select(false)->asOrderedSet()]
+        OrderedSet(Customer) all := [Customer.allInstances()->asOrderedSet()]
+        Integer total := [$all$->size()]
+        Integer size := [2]
+        Integer lower := [1]
+        Integer upper := [if $lower$+$size$-1 > $total$ then $total$ else $lower$+$size$-1 endif]
+        OrderedSet(Customer) rows := [$all$->subOrderedSet($lower$,$upper$)]
+        OrderedSet(Customer) selected := [null]
 
         columns {
             ['name'] : Label name {
@@ -100,15 +98,6 @@ Window SearchCustomers_W {
                 }
             }
         }
-
-        event onCreate {
-            all := [Customer.allInstances()->asOrderedSet()]
-            total := [$all$->size()]
-            size := [10]
-            lower := [1]
-            upper := [if $lower$+$size$-1 > $total$ then $total$ else $lower$+$size$-1 endif]
-            rows := [$all$->subOrderedSet($lower$,$upper$)]
-        }
     }
 
     Button Customers_T_prev_B {
@@ -144,8 +133,16 @@ Window SearchCustomers_W {
     Button Edit_B {
         String text := ['Edit']
         event onClick {
-            if [$Customers_T.selected$->size() = 1] {
-                open EditCustomer_W(selectedCustomer : [$Customers_T.selected$->at(1)])
+            if [$Customers_T.selected$->oclIsUndefined()] {
+                notification(['Error'],['You must select exactly one customer, in order to edit it.'],[-1]) 
+            }
+            else {
+                if [$Customers_T.selected$->size() = 1] {
+                    open EditCustomer_W(selectedCustomer : [$Customers_T.selected$->any(true)])
+                }
+                else {
+                   notification(['Error'],['You must select exactly one customer.'],[-1]) 
+                }
             }
         }
     }
@@ -153,13 +150,28 @@ Window SearchCustomers_W {
     Button Delete_B {
         String text := ['Delete']
         event onClick {
-            if [$Customers_T.selected$->size() = 1] {
+            if [not ($Customers_T.selected$->oclIsUndefined())] {
                 try {
-                    delete [$Customers_T.selected$->at(1)]
-                    notification (['Success'],['The Customer has been deleted successfully.'],[-1])
+                    foreach deleteObject in [$Customers_T.selected$] {
+                       delete [$deleteObject$] 
+                    }
+                    notification (['Success'],['The selected elements been deleted successfully.'],[-1])
+
+                    reevaluate Customers_T_page.current
+                    reevaluate Customers_T_page.size
+                    reevaluate Customers_T_page.total
+                    reevaluate Customers_T_page.text
+
+                    reevaluate Customers_T.all
+                    reevaluate Customers_T.total
+                    reevaluate Customers_T.size
+                    reevaluate Customers_T.lower
+                    reevaluate Customers_T.upper
+                    reevaluate Customers_T.rows
+                    reevaluate Customers_T.selected
                 }
                 catch (SecurityException) {
-                    notification(['Security error'],['You do not have permission to delete the Customer.'],[-1])
+                    notification(['Security error'],['You do not have permission to delete a Customer.'],[-1])
                 }
             }        
         }
