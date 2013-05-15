@@ -1,5 +1,6 @@
 Window Login_W isMain{
     String text := ['Log In']
+    Role role := [Role::DEFAULT]
 
     Label Credentiasl_F_login_L {
         String text := ['Login:']

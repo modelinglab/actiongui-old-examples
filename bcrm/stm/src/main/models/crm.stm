@@ -1,4 +1,10 @@
-role SALESMANAGER {
+role DEFAULT {
+    Employee {
+        read myRole
+    }
+}
+
+role SALESMANAGER extends DEFAULT{
     Employee {
         read login
         update password, read password constrainedBy [self = caller]
@@ -14,8 +20,7 @@ role SALESMANAGER {
 role MANAGER extends SALESMANAGER {
     Employee {
         create
-        // read roles, read customers
-        read myRole, read customers
+        read customers
         update
         delete
         }
