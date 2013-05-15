@@ -10,7 +10,7 @@ Window Login_W isMain{
     Label Credentiasl_F_password_L {
         String text := ['Passw:']
     }
-    TextField Credentiasl_F_password {
+    PasswordField Credentiasl_F_password {
 
     }
 
