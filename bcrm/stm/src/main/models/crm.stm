@@ -19,11 +19,6 @@ role MANAGER extends SALESMANAGER {
         update
         delete
         }
-    /*
-    Role {
-        read
-    }
-    */
     Customer {
         fullAccess
     }

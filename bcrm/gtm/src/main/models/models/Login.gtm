@@ -21,17 +21,14 @@ Window Login_W isMain{
             Login_W.caller := [Employee.allInstances()->any(c|c.login = $Credentiasl_F_login.text$ and c.password = $Credentiasl_F_password.text$)]
             if [not $Login_W.caller$.oclIsUndefined()] {
                 Login_W.role := [$Login_W.caller$.myRole] 
-                // Login_W.role := [$Login_W.caller$.roles->any(true)] 
             }
             success := [not ($Login_W.caller$.oclIsUndefined() or $Login_W.role$.oclIsUndefined())]           
             if [$success$] {
                 if [$Login_W.role$ = Role::SALESMANAGER] {
-                // if [$Login_W.role$ = Role.allInstances()->any(r|r.role = 'SALESMANAGER')] {
                     open SalesManagerMenu_W()
                 }
                 else {
                     if [$Login_W.role$ = Role::MANAGER] {
-                    // if [$Login_W.role$ = Role.allInstances()->any(r|r.role = 'MANAGER')] {
                         open ManagerMenu_W()
                     }
                     else {
