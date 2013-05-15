@@ -22,13 +22,11 @@ Window CreateEmployee_W {
     }
     ComboBox NewEmployee_F_myRole {
         String error := [null]
-        OrderedSet(Role) rows := [Role.allInstances()]
-        //Set(Role) rows := [Set{Role::MANAGER, Role::SALESMANAGER}]
-
+        Set(Role) rows := [Role.allInstances()]
         Role selected := [null]
         Label myRole {
             String text := [$NewEmployee_F_myRole.row$.name()]
-            }
+        }
     }
 
     Button Create_B {
@@ -39,13 +37,13 @@ Window CreateEmployee_W {
             reevaluate NewEmployee_F_myRole.error           
 
             if [not(not($NewEmployee_F_login.text$.oclIsUndefined()))] {
-                NewEmployee_F_login.error := ['Error']
+                NewEmployee_F_login.error := ['Required field']
             }
             if [not(not($NewEmployee_F_password.text$.oclIsUndefined()))] {
-                NewEmployee_F_password.error := ['Error']
+                NewEmployee_F_password.error := ['Required field']
             }
             if [not(not($NewEmployee_F_myRole.selected$.oclIsUndefined()))] {
-                NewEmployee_F_myRole.error := ['Error']
+                NewEmployee_F_myRole.error := ['Required field']
             }
 
             if [$NewEmployee_F_login.error$ = null and $NewEmployee_F_password.error$ = null and $NewEmployee_F_myRole.error$ = null] {
@@ -55,7 +53,9 @@ Window CreateEmployee_W {
                         [$newEmployee$.login] := [$NewEmployee_F_login.text$]
                         [$newEmployee$.password] := [$NewEmployee_F_password.text$]
                         [$newEmployee$.myRole] := [$NewEmployee_F_myRole.selected$]
+                        
                         notification (['Success'],['An instance of Employee has been created successfully.'],[-1])
+                        
                         reevaluate NewEmployee_F_login.text
                         reevaluate NewEmployee_F_password.text
                         reevaluate NewEmployee_F_myRole.selected
@@ -65,7 +65,7 @@ Window CreateEmployee_W {
                     }
                 }
                 else {
-                   notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
+                   notification(['Error'],['There already exists an employee with this login and password.'],[-1]) 
                 }
             }
             else {
