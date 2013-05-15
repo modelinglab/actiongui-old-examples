@@ -21,13 +21,11 @@ Window Login_W isMain{
             loggedUser := [Employee.allInstances()->any(c|c.login = $Credentiasl_F_login.text$ and c.password = $Credentiasl_F_password.text$)]
             if [not($loggedUser$.oclIsUndefined())] {
                 if [$loggedUser$.myRole = Role::SALESMANAGER] {
-                    //open SalesManagerMenu_W(caller:[$loggedUser$])
-                    open SalesManagerMenu_W(caller:[$loggedUser$], role:[$loggedUser$.myRole])
+                    open SalesManagerMenu_W(caller:[$loggedUser$], role:[$loggedUser$.myRole->any(true)])
                 }
                 else {
                     if [$loggedUser$.myRole = Role::MANAGER] {
-                        //open ManagerMenu_W(caller:[$loggedUser$])
-                        open SalesManagerMenu_W(caller:[$loggedUser$], role:[$loggedUser$.myRole])
+                        open ManagerMenu_W(caller:[$loggedUser$], role:[$loggedUser$.myRole->any(true)])
                     }
                     else {
                         notification (['Message'],['You have no role assigned.'],[-1])
