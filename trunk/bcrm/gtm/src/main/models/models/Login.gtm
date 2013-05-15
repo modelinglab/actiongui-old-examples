@@ -1,6 +1,5 @@
 Window Login_W isMain{
     String text := ['Log In']
-    Role role := [Role::DEFAULT]
 
     Label Credentiasl_F_login_L {
         String text := ['Login:']
@@ -17,20 +16,18 @@ Window Login_W isMain{
 
     Button Login_B {
         String text := ['Log in']
-        Boolean success
+        Employee loggedUser
         event onClick {
-            Login_W.caller := [Employee.allInstances()->any(c|c.login = $Credentiasl_F_login.text$ and c.password = $Credentiasl_F_password.text$)]
-            if [not $Login_W.caller$.oclIsUndefined()] {
-                Login_W.role := [$Login_W.caller$.myRole] 
-            }
-            success := [not ($Login_W.caller$.oclIsUndefined() or $Login_W.role$.oclIsUndefined())]           
-            if [$success$] {
-                if [$Login_W.role$ = Role::SALESMANAGER] {
-                    open SalesManagerMenu_W()
+            loggedUser := [Employee.allInstances()->any(c|c.login = $Credentiasl_F_login.text$ and c.password = $Credentiasl_F_password.text$)]
+            if [not($loggedUser$.oclIsUndefined())] {
+                if [$loggedUser$.myRole = Role::SALESMANAGER] {
+                    open SalesManagerMenu_W(caller:[$loggedUser$])
+//open SalesManagerMenu_W(caller:[$loggedUser$], role:[$loggedUser$.myRole])
                 }
                 else {
-                    if [$Login_W.role$ = Role::MANAGER] {
-                        open ManagerMenu_W()
+                    if [$loggedUser$.myRole = Role::MANAGER] {
+                        open ManagerMenu_W(caller:[$loggedUser$])
+//open SalesManagerMenu_W(caller:[$loggedUser$], role:[$loggedUser$.myRole])
                     }
                     else {
                         notification (['Message'],['You have no role assigned.'],[-1])
