@@ -1,1 +1,49 @@
 
+.SearchEmployees_W .Employees_T_page  {
+    position : absolute;
+    left: 10px;
+    top: 30px;
+}
+
+.SearchEmployees_W .Employees_T  {
+    position : absolute;
+    left: 10px;
+    top: 50px;
+    width: 200px;
+    height: 100px;
+}
+
+
+.SearchEmployees_W .Employees_T .login  {
+}
+
+.SearchEmployees_W .Employees_T_prev_B  {
+    position : absolute;
+    left: 10px;
+    top: 150px;
+}
+
+.SearchEmployees_W .Employees_T_next_B  {
+    position : absolute;
+    left: 90px;
+    top: 150px;
+}
+
+.SearchEmployees_W .Edit_B  {
+    position : absolute;
+    left: 10px;
+    top: 200px;
+}
+
+.SearchEmployees_W .Delete_B  {
+    position : absolute;
+    left: 10px;
+    top: 230px;
+}
+
+.SearchEmployees_W .Back_B  {
+    position : absolute;
+    left: 10px;
+    top: 260px;
+}
+

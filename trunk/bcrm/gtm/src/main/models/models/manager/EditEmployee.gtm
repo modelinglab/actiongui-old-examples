@@ -19,6 +19,7 @@ Window EditEmployee_W {
     */
 
     Button Update_B {
+        String text := ['Edit']
         event onClick {
             /*
             #update {
