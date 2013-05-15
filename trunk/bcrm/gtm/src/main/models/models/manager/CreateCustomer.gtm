@@ -48,7 +48,7 @@ Window CreateCustomer_W {
     }
     Table NewCustomer_F_contacts {
         Set(Employee) rows := [Employee.allInstances()]
-        Employee selected := [null]
+        Set(Employee) selected := [Employee.allInstances()->select(false)]
         columns {
             ['login'] : Label login {
                 String text := [$NewCustomer_F_contacts.row$.login]
@@ -68,7 +68,7 @@ Window CreateCustomer_W {
                 [$newCustomer$.email] := [$NewCustomer_F_email.text$]
                 [$newCustomer$.phone] := [$NewCustomer_F_phone.text$]
                 [$newCustomer$.loyalty] := [$NewCustomer_F_loyalty.text$.toInteger()]
-                [$newCustomer$.contacts] += [$NewCustomer_F_contacts.selected$]               
+                [$newCustomer$.contacts] += [$NewCustomer_F_contacts.selected$->any(true)]               
                 notification (['Success'],['An instance of Customer has been created successfully.'],[-1])
             }
             catch (SecurityException) {
