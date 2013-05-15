@@ -3,7 +3,7 @@ Window SearchEmployees_W {
 
     Label Employees_T_page {
         Integer current := [1]
-        Integer size := [2]
+        Integer size := [5]
         Integer total
         String text := [$current$.toString().concat(' of ').concat($total$.toString())]
         
@@ -26,7 +26,7 @@ Window SearchEmployees_W {
     Table Employees_T {
         OrderedSet(Employee) all := [Employee.allInstances()->asOrderedSet()->sortedBy(login)]
         Integer total := [$all$->size()]
-        Integer size := [2]
+        Integer size := [5]
         Integer lower := [1]
         Integer upper := [if $lower$+$size$-1 > $total$ then $total$ else $lower$+$size$-1 endif]
         OrderedSet(Employee) rows := [$all$->subOrderedSet($lower$,$upper$)]
