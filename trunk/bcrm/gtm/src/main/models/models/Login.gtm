@@ -18,7 +18,12 @@ Window Login_W isMain{
         String text := ['Log in']
         Employee loggedUser
         event onClick {
-            loggedUser := [Employee.allInstances()->any(c|c.login = $Credentiasl_F_login.text$ and c.password = $Credentiasl_F_password.text$)]
+            try {
+                loggedUser := [Employee.allInstances()->any(c|c.login = $Credentiasl_F_login.text$ and c.password = $Credentiasl_F_password.text$)]
+            }
+            catch (SecurityException) {
+                notification(['Security Error'],['you do not hace permission to read the login information'],[-1])
+            }
             if [not($loggedUser$.oclIsUndefined())] {
                 if [$loggedUser$.myRole = Role::SALESMANAGER] {
                     open SalesManagerMenu_W(caller:[$loggedUser$], role:[$loggedUser$.myRole->any(true)])

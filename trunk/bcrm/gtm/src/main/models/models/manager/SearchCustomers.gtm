@@ -133,11 +133,16 @@ Window SearchCustomers_W {
     Button Edit_B {
         String text := ['Edit']
         event onClick {
-            if [if $Customers_T.selected$->oclIsUndefined() then false else $Customers_T.selected$->size() = 1 endif] {
-                open EditCustomer_W(selectedCustomer : [$Customers_T.selected$->any(true)])
+            try {
+                if [if $Customers_T.selected$->oclIsUndefined() then false else $Customers_T.selected$->size() = 1 endif] {
+                    open EditCustomer_W(selectedCustomer : [$Customers_T.selected$->any(true)])
+                }
+                else {
+                    notification(['Error'],['You must select exactly one customer.'],[-1]) 
+                }
             }
-            else {
-                notification(['Error'],['You must select exactly one customer.'],[-1]) 
+            catch (SecurityException) {
+                notification (['Security error'],[''],[-1])
             }
         }
     }
@@ -145,30 +150,35 @@ Window SearchCustomers_W {
     Button Delete_B {
         String text := ['Delete']
         event onClick {
-            if [if $Customers_T.selected$->oclIsUndefined() then false else $Customers_T.selected$->notEmpty() endif] {
-                try {
-                    foreach deleteObject in [$Customers_T.selected$] {
-                       delete [$deleteObject$] 
+            try {
+                if [if $Customers_T.selected$->oclIsUndefined() then false else $Customers_T.selected$->notEmpty() endif] {
+                    try {
+                        foreach deleteObject in [$Customers_T.selected$] {
+                           delete [$deleteObject$] 
+                        }
+                        notification (['Success'],['The selected elements been deleted successfully.'],[-1])
+
+                        reevaluate Customers_T_page.current
+                        reevaluate Customers_T_page.size
+                        reevaluate Customers_T_page.total
+                        reevaluate Customers_T_page.text
+
+                        reevaluate Customers_T.all
+                        reevaluate Customers_T.total
+                        reevaluate Customers_T.size
+                        reevaluate Customers_T.lower
+                        reevaluate Customers_T.upper
+                        reevaluate Customers_T.rows
+                        reevaluate Customers_T.selected
                     }
-                    notification (['Success'],['The selected elements been deleted successfully.'],[-1])
-
-                    reevaluate Customers_T_page.current
-                    reevaluate Customers_T_page.size
-                    reevaluate Customers_T_page.total
-                    reevaluate Customers_T_page.text
-
-                    reevaluate Customers_T.all
-                    reevaluate Customers_T.total
-                    reevaluate Customers_T.size
-                    reevaluate Customers_T.lower
-                    reevaluate Customers_T.upper
-                    reevaluate Customers_T.rows
-                    reevaluate Customers_T.selected
+                    catch (SecurityException) {
+                        notification(['Security error'],['You do not have permission to delete a Customer.'],[-1])
+                    }
                 }
-                catch (SecurityException) {
-                    notification(['Security error'],['You do not have permission to delete a Customer.'],[-1])
-                }
-            }        
+            }
+            catch (SecurityException) {
+                notification (['Security error'],[''],[-1])
+            }
         }
     }
 
