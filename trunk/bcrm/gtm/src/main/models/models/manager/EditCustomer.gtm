@@ -82,7 +82,7 @@ Window EditCustomer_W {
     TextField EditCustomer_F_loyalty {
         String error := [null]
         Integer loyalty
-        String text := [if $loyalty$.oclIsUndefined() then '---' else $loyalty$.toString() endif]
+        //String text := [if $loyalty$.oclIsUndefined() then '---' else $loyalty$.toString() endif]
         event onView(loyalty) {
             try {
                 loyalty := [$EditCustomer_W.selectedCustomer$.loyalty]
@@ -90,6 +90,10 @@ Window EditCustomer_W {
             catch (SecurityException) {
                 loyalty := [null]
             }
+        }
+
+        event onView(text) {
+            text := [if $loyalty$.oclIsUndefined() then '---' else $loyalty$.toString() endif]
         }
     }
 
@@ -158,6 +162,11 @@ Window EditCustomer_W {
             if [$EditCustomer_F_loyalty.text$.oclIsUndefined()] {
                 EditCustomer_F_loyalty.error := ['Required field']
             }
+            else {
+                if [$EditCustomer_F_loyalty.text$.toInteger().oclIsUndefined()]{
+                    EditCustomer_F_loyalty.error := ['The input must be a valid integer']
+                    }
+                }
             if [$EditCustomer_F_contacts.selected$->oclIsUndefined()] {
                 EditCustomer_F_contacts.error := ['Required selection']
             }
@@ -196,6 +205,7 @@ Window EditCustomer_W {
                     reevaluate EditCustomer_F_birthday.date
                     reevaluate EditCustomer_F_email.text
                     reevaluate EditCustomer_F_phone.text
+                    reevaluate EditCustomer_F_loyalty.loyalty
                     reevaluate EditCustomer_F_loyalty.text
                     reevaluate EditCustomer_F_contacts.selected
 
@@ -215,6 +225,7 @@ Window EditCustomer_W {
         String text := ['Back']
         event onClick {
             back
+            //open SearchCustomers_W ()
         }
     }
 }

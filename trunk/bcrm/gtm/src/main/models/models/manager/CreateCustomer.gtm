@@ -102,9 +102,15 @@ Window CreateCustomer_W {
             if [$NewCustomer_F_phone.text$.oclIsUndefined()] {
                 NewCustomer_F_phone.error := ['Required field']
             }
+
             if [$NewCustomer_F_loyalty.text$.oclIsUndefined()] {
                 NewCustomer_F_loyalty.error := ['Required field']
             }
+            else {
+                if [$NewCustomer_F_loyalty.text$.toInteger().oclIsUndefined()]{
+                    NewCustomer_F_loyalty.error := ['The input must be a valid integer']
+                    }
+                }
             if [$NewCustomer_F_contacts.selected$->oclIsUndefined()] {
                 NewCustomer_F_contacts.error := ['Required selection']
             }
