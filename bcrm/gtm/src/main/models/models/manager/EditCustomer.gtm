@@ -126,7 +126,6 @@ Window EditCustomer_W {
 
     Button Edit_B {
         String text := ['Edit']
-        Set(Employee) contacts
         event onClick {
             reevaluate EditCustomer_F_name.error
             reevaluate EditCustomer_F_surname.error
@@ -180,8 +179,7 @@ Window EditCustomer_W {
                     [$EditCustomer_W.selectedCustomer$.email] := [$EditCustomer_F_email.text$]
                     [$EditCustomer_W.selectedCustomer$.phone] := [$EditCustomer_F_phone.text$]
                     [$EditCustomer_W.selectedCustomer$.loyalty] := [$EditCustomer_F_loyalty.text$.toInteger()]
-                    contacts := [$EditCustomer_W.selectedCustomer$.contacts]
-                    foreach contacts_remove in [$contacts$] {
+                    foreach contacts_remove in [$EditCustomer_W.selectedCustomer$.contacts] {
                         [$EditCustomer_W.selectedCustomer$.contacts] -= [$contacts_remove$]     
                     }  
                     foreach contacts_add in [$EditCustomer_F_contacts.selected$] {
