@@ -3,7 +3,7 @@ Window SearchCustomers_W {
 
     Label Customers_T_page {
         Integer current := [1]
-        Integer size := [2]
+        Integer size := [5]
         Integer total
         String text := [$current$.toString().concat(' of ').concat($total$.toString())]
 
@@ -26,7 +26,7 @@ Window SearchCustomers_W {
     Table Customers_T {
         OrderedSet(Customer) all := [Customer.allInstances()->asOrderedSet()]
         Integer total := [$all$->size()]
-        Integer size := [2]
+        Integer size := [5]
         Integer lower := [1]
         Integer upper := [if $lower$+$size$-1 > $total$ then $total$ else $lower$+$size$-1 endif]
         OrderedSet(Customer) rows := [$all$->subOrderedSet($lower$,$upper$)]
@@ -34,7 +34,7 @@ Window SearchCustomers_W {
 
         columns {
             ['name'] : Label name {
-                event onCreate {
+                event onView (text) {
                     try {
                         text := [$Customers_T.row$.name]
                     }
@@ -44,7 +44,7 @@ Window SearchCustomers_W {
                 }
             }
             ['surname'] : Label surname {
-                event onCreate {
+                event onView (text) {
                     try {
                         text := [$Customers_T.row$.surname]
                     }
@@ -55,18 +55,20 @@ Window SearchCustomers_W {
             }
             ['birthday'] : Label birthday {
                 Date value
-                event onCreate {
+                event onView (value) {
                     try {
                         value := [$Customers_T.row$.birthday]
-                        text := [$value$.truncate(TimeUnit::DAY).toString().substring(1,10)]
                     }
                     catch(SecurityException) {
-                        text := ['---']
+                        value := [null]
                     }
                 }
-            }
+                event onView (text) {
+                    text := [if $value$.oclIsUndefined() then '---' else $value$.truncate(TimeUnit::DAY).toString().substring(1,10) endif]
+                    }
+                }
             ['email'] : Label email {
-                event onCreate {
+                event onView (text) {
                     try {
                         text := [$Customers_T.row$.email]
                     }
@@ -76,7 +78,7 @@ Window SearchCustomers_W {
                 }
             }
             ['phone'] : Label phone {
-                event onCreate {
+                event onView (text) {
                     try {
                         text := [$Customers_T.row$.phone]
                     }
@@ -87,14 +89,17 @@ Window SearchCustomers_W {
             }
             ['loyalty'] : Label loyalty {
                 Integer value
-                event onCreate {
+                event onView (value) {
                     try {
                         value := [$Customers_T.row$.loyalty]
-                        text := [$value$.toString()]
                     }
                     catch(SecurityException) {
-                        text := ['---']
+                        value := [null]
                     }
+                }
+                event onView (text) {
+                    text := [if $value$.oclIsUndefined() then '---' else $value$.toString() endif]
+
                 }
             }
         }
@@ -186,6 +191,6 @@ Window SearchCustomers_W {
         String text := ['Back']
         event onClick {
             back
-        }
+            }
     }
 }
