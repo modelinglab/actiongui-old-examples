@@ -173,18 +173,23 @@ Window EditCustomer_W {
                     $EditCustomer_F_contacts.error$ = null] {
                 
                 try {
+                    foreach contacts_remove in [$EditCustomer_W.selectedCustomer$.contacts] {
+                        if [$EditCustomer_F_contacts.selected$->excludes($contacts_remove$)]{
+                            [$EditCustomer_W.selectedCustomer$.contacts] -= [$contacts_remove$]
+                            }
+                    }  
+                    foreach contacts_add in [$EditCustomer_F_contacts.selected$] {
+                        if [$EditCustomer_W.selectedCustomer$.contacts->excludes($contacts_add$)] {
+                            [$EditCustomer_W.selectedCustomer$.contacts] += [$contacts_add$] 
+                            }
+                    } 
                     [$EditCustomer_W.selectedCustomer$.name] := [$EditCustomer_F_name.text$]
                     [$EditCustomer_W.selectedCustomer$.surname] := [$EditCustomer_F_surname.text$]
                     [$EditCustomer_W.selectedCustomer$.birthday] := [$EditCustomer_F_birthday.date$]
                     [$EditCustomer_W.selectedCustomer$.email] := [$EditCustomer_F_email.text$]
                     [$EditCustomer_W.selectedCustomer$.phone] := [$EditCustomer_F_phone.text$]
                     [$EditCustomer_W.selectedCustomer$.loyalty] := [$EditCustomer_F_loyalty.text$.toInteger()]
-                    foreach contacts_remove in [$EditCustomer_W.selectedCustomer$.contacts] {
-                        [$EditCustomer_W.selectedCustomer$.contacts] -= [$contacts_remove$]     
-                    }  
-                    foreach contacts_add in [$EditCustomer_F_contacts.selected$] {
-                        [$EditCustomer_W.selectedCustomer$.contacts] += [$contacts_add$]     
-                    }           
+                              
                     
                     reevaluate EditCustomer_F_name.text
                     reevaluate EditCustomer_F_surname.text

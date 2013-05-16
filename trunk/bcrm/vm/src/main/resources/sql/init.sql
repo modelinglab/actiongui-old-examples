@@ -1,7 +1,7 @@
 /*
 enum Role {
     MANAGER // 0
-    SALESMANAGER // 1
+    SALESPERSON // 1
 }
 */
 insert into Employee (login,password,myRole) values ('alice', '1111',0);

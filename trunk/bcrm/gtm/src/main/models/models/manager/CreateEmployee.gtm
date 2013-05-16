@@ -7,12 +7,12 @@ Window CreateEmployee_W {
     TextField NewEmployee_F_login {
         String text := [null]
         String error := [null]
-    }
+    } 
 
     Label NewEmployee_F_password_L {
         String text := ['Password:']
     }
-    TextField NewEmployee_F_password {
+    PasswordField NewEmployee_F_password {
         String text := [null]
         String error := [null]
     }

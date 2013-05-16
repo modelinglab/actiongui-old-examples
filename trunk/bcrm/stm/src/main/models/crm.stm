@@ -1,18 +1,20 @@
 
-role SALESMANAGER {
+role SALESPERSON {
     Employee {
         read login
         update password, read password constrainedBy [self = caller]
     }
     Customer {
-        read name, read surname, read email, read phone
+        read name, read surname, read email, read phone, read contacts
         read birthday, read loyalty constrainedBy [self.contacts->includes(caller)]
         update birthday, update loyalty constrainedBy [self.contacts->includes(caller)]
         update name, update surname, update email, update phone constrainedBy [self.contacts->includes(caller)] 
+        add contacts constrainedBy [target = caller]
+        remove contacts constrainedBy [target = caller]
     }
 }
 
-role MANAGER extends SALESMANAGER{
+role MANAGER extends SALESPERSON{
     Employee {
         create
         read customers, read password, read myRole
