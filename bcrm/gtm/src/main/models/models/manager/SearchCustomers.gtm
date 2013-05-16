@@ -58,7 +58,7 @@ Window SearchCustomers_W {
                 event onCreate {
                     try {
                         value := [$Customers_T.row$.birthday]
-                        text := [$value$.truncate(TimeUnit::DAY).toString()]
+                        text := [$value$.truncate(TimeUnit::DAY).toString().substring(1,10)]
                     }
                     catch(SecurityException) {
                         text := ['---']

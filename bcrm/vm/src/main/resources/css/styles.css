@@ -1,13 +1,13 @@
 @import "../reindeer/styles.css";
 
 @import "EditCustomer_W.css";
-@import "SearchEmployees_W.css";
-@import "Login_W.css";
 @import "ChangePassword_W.css";
+@import "SearchEmployees_W.css";
 @import "CreateEmployee_W.css";
-@import "SearchCustomers_W.css";
-@import "SalesManagerMenu_W.css";
 @import "CreateCustomer_W.css";
+@import "SalesPersonMenu_W.css";
+@import "SearchCustomers_W.css";
+@import "Login_W.css";
 @import "EditEmployee_W.css";
 @import "ManagerMenu_W.css";
 

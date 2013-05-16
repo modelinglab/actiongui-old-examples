@@ -34,12 +34,15 @@ Window SearchEmployees_W {
 
         columns {
             ['User'] : Label login {
-                event onCreate {
+                event onView (text) {
                     try {
                         text := [$Employees_T.row$.login]
                     }
                     catch(SecurityException) {
                         text := ['---']
+                    }
+                    catch(ModelException) {
+                        text := ['+++']
                     }
                 }
             }

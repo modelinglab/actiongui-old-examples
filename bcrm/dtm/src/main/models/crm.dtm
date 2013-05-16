@@ -18,5 +18,5 @@ entity Customer {
 
 enum Role {
     MANAGER
-    SALESMANAGER 
+    SALESPERSON 
 }
