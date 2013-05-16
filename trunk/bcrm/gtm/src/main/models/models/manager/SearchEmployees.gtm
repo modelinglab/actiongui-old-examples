@@ -88,7 +88,7 @@ Window SearchEmployees_W {
                 }
             }
             catch (SecurityException) {
-                notification (['Security error'],[''],[-1])
+                notification (['Security error'],['You do not have permission to open the window.'],[-1])
             }
         }
     }
@@ -123,7 +123,7 @@ Window SearchEmployees_W {
                 } 
             }
             catch (SecurityException) {
-                notification (['Security error'],[''],[-1])
+                notification(['Security error'],['You do not have permission to delete an Employee.'],[-1])
             }
         }
     }

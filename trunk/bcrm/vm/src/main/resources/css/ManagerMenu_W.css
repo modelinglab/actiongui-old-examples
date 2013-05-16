@@ -22,10 +22,15 @@
     left: 10px;
     top: 120px;
 }
+.ManagerMenu_W .Manager_M_ChangePassword_W_B {
+    position : absolute;
+    left: 10px;
+    top: 150px;
+}
 
 .ManagerMenu_W .Manager_M_Login_W_B  {
     position : absolute;
     left: 10px;
-    top: 150px;
+    top: 180px;
 }
 

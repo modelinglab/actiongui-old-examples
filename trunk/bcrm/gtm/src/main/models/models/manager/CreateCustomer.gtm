@@ -58,7 +58,14 @@ Window CreateCustomer_W {
         Set(Employee) selected := [null]
         columns {
             ['login'] : Label login {
-                String text := [$NewCustomer_F_contacts.row$.login]
+                event onView (text) {
+                    try {
+                        text := [$NewCustomer_F_contacts.row$.login]
+                    }
+                    catch (SecurityException) {
+                        text := ['---']
+                    }
+                }
             }
         }
             

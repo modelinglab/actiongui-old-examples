@@ -1,11 +1,11 @@
 Window SalesManagerMenu_W {
     String text := ['Sales Manager Menu']
 
-    Button Manager_M_EditEmployee_W_B {
-        String text := ['Edit employee']
+    Button Manager_M_SearchCustomers_W_B {
+        String text := ['Search customers']
 
         event onClick {
-            open EditEmployee_W()
+            open SearchCustomers_W()
         }
     }
     Button Manager_M_ChangePassword_W_B {

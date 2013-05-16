@@ -29,6 +29,13 @@ Window ManagerMenu_W {
             open SearchCustomers_W()
         }
     }
+    Button Manager_M_ChangePassword_W_B {
+        String text := ['Change password']
+
+        event onClick {
+            open ChangePassword_W()
+        }
+    }
     Button Manager_M_Login_W_B {
         String text := ['Logout']
 

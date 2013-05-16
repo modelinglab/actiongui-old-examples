@@ -128,13 +128,6 @@ Window EditCustomer_W {
         String text := ['Edit']
         Set(Employee) contacts
         event onClick {
-            /*
-            #update {
-                entity: Customer
-                instance: [$EditCustomer_W.selectedCustomer$]
-                form: SelectedCustomer_F
-            }
-            */
             reevaluate EditCustomer_F_name.error
             reevaluate EditCustomer_F_surname.error
             reevaluate EditCustomer_F_birthday.error
