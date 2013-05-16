@@ -6,7 +6,7 @@ Window SearchCustomers_W {
         Integer size := [2]
         Integer total
         String text := [$current$.toString().concat(' of ').concat($total$.toString())]
-        
+
         event onView(total) {
             total := [Customer.allInstances()->size()]
             if [$total$ = 0] {
@@ -142,7 +142,7 @@ Window SearchCustomers_W {
                 }
             }
             catch (SecurityException) {
-                notification (['Security error'],[''],[-1])
+                notification (['Security error'],['You do not have permission to open the window.'],[-1])
             }
         }
     }
@@ -177,7 +177,7 @@ Window SearchCustomers_W {
                 }
             }
             catch (SecurityException) {
-                notification (['Security error'],[''],[-1])
+                notification(['Security error'],['You do not have permission to delete a Customer.'],[-1])
             }
         }
     }
