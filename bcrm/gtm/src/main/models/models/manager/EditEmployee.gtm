@@ -38,6 +38,7 @@ Window EditEmployee_W {
     ComboBox EditEmployee_F_myRole {
         String error := [null]
         Set(Role) rows := [Role.allInstances()]
+        Role selected
 
         Label myRole {
             String text := [$EditEmployee_F_myRole.row$.name()]
@@ -56,23 +57,6 @@ Window EditEmployee_W {
     Button Update_B {
         String text := ['Edit']
         event onClick {
-            /*
-            #update {
-                entity: Employee
-                instance:$EditEmployee_F.selectedEmployee$
-                form: EditEmployee_F
-                attr: login {
-                    check:[not($text$.oclIsUndefined())]
-                }
-                attr: password {
-                    check:[not($text$.oclIsUndefined())]
-                }
-                attr: role {
-                    check:[not($text$.oclIsUndefined())]
-                }
-                check: [not(Employee.allInstances()->exists(u|u.login=$EditEmployee_F.login.text$ and u.password=$EditEmployee_F.password.text$)) ]
-            }
-            */
             reevaluate EditEmployee_F_login.error
             reevaluate EditEmployee_F_password.error
             reevaluate EditEmployee_F_myRole.error           
@@ -94,7 +78,7 @@ Window EditEmployee_W {
                         [$EditEmployee_W.selectedEmployee$.password] := [$EditEmployee_F_password.text$]
                         [$EditEmployee_W.selectedEmployee$.myRole] := [$EditEmployee_F_myRole.selected$]
                         
-                        notification (['Success'],['The instance of Employee has been edited successfully.'],[-1])
+                        notification (['Success'],['The Employee has been edited successfully.'],[-1])
                         
                         reevaluate EditEmployee_F_login.text
                         reevaluate EditEmployee_F_password.text
