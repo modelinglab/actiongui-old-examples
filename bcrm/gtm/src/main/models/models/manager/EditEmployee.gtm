@@ -2,22 +2,57 @@ Window EditEmployee_W {
     String text := ['Edit Employee']
     Employee selectedEmployee
 
-    /*
-    #form EditEmployee_F {
-        entity: Employee
-        instance: [$EditEmpoyee_W.selectedEmployee$]
-        attr: login {
-            label: ['Login:']
-        }
-        attr: password {
-            label: ['Password:']
-        }
-        attr: role {
-            label: ['Role:']
+    Label EditEmployee_F_login_L {
+        String text := ['Login:']
+    }
+    TextField EditEmployee_F_login {
+        String error := [null]
+        event onView(text) {
+            try {
+                text := [$EditEmployee_W.selectedEmployee$.login]
+            }
+            catch (SecurityException) {
+                text := ['---']
+            }
         }
     }
-    */
 
+    Label EditEmployee_F_password_L {
+        String text := ['Password:']
+    }
+    PasswordField EditEmployee_F_password {
+        String error := [null]
+        event onView(text) {
+            try {
+                text := [$EditEmployee_W.selectedEmployee$.password]
+            }
+            catch (SecurityException) {
+                text := ['---']
+            }
+        }
+    }
+    
+    Label EditEmployee_F_myRole_L {
+        String text := ['Role:']
+    }
+    ComboBox EditEmployee_F_myRole {
+        String error := [null]
+        Set(Role) rows := [Role.allInstances()]
+
+        Label myRole {
+            String text := [$EditEmployee_F_myRole.row$.name()]
+        }
+
+        event onView (selected) {
+            try {
+                selected := [$EditEmployee_W.selectedEmployee$.myRole]
+            }
+            catch (SecurityException) {
+                selected := [null]
+            }
+        }
+    }
+    
     Button Update_B {
         String text := ['Edit']
         event onClick {
@@ -38,6 +73,44 @@ Window EditEmployee_W {
                 check: [not(Employee.allInstances()->exists(u|u.login=$EditEmployee_F.login.text$ and u.password=$EditEmployee_F.password.text$)) ]
             }
             */
+            reevaluate EditEmployee_F_login.error
+            reevaluate EditEmployee_F_password.error
+            reevaluate EditEmployee_F_myRole.error           
+
+            if [not(not($EditEmployee_F_login.text$.oclIsUndefined()))] {
+                EditEmployee_F_login.error := ['Required field']
+            }
+            if [not(not($EditEmployee_F_password.text$.oclIsUndefined()))] {
+                EditEmployee_F_password.error := ['Required field']
+            }
+            if [not(not($EditEmployee_F_myRole.selected$.oclIsUndefined()))] {
+                EditEmployee_F_myRole.error := ['Required field']
+            }
+
+            if [$EditEmployee_F_login.error$ = null and $EditEmployee_F_password.error$ = null and $EditEmployee_F_myRole.error$ = null] {
+                if [not Employee.allInstances()->exists(u|u <> $EditEmployee_W.selectedEmployee$ and u.login=$EditEmployee_F_login.text$)] {
+                    try {
+                        [$EditEmployee_W.selectedEmployee$.login] := [$EditEmployee_F_login.text$]
+                        [$EditEmployee_W.selectedEmployee$.password] := [$EditEmployee_F_password.text$]
+                        [$EditEmployee_W.selectedEmployee$.myRole] := [$EditEmployee_F_myRole.selected$]
+                        
+                        notification (['Success'],['The instance of Employee has been edited successfully.'],[-1])
+                        
+                        reevaluate EditEmployee_F_login.text
+                        reevaluate EditEmployee_F_password.text
+                        reevaluate EditEmployee_F_myRole.selected
+                    }
+                    catch (SecurityException) {
+                        notification(['Security error'],['You do not have permission to edit the Employee.'],[-1])
+                    }
+                }
+                else {
+                   notification(['Error'],['There already exists an Employee with this login.'],[-1]) 
+                }
+            }
+            else {
+                notification(['Error'],['The form contains errors. Please, check the form.'],[-1])
+            }
         }
     }
 

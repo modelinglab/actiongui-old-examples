@@ -79,11 +79,16 @@ Window SearchEmployees_W {
     Button Edit_B {
         String text := ['Edit']
         event onClick {
-            if [if $Employees_T.selected$->oclIsUndefined() then false else $Employees_T.selected$->size() = 1 endif] {
-                open EditEmployee_W(selectedEmployee : [$Employees_T.selected$->any(true)])
+            try {
+                if [if $Employees_T.selected$->oclIsUndefined() then false else $Employees_T.selected$->size() = 1 endif] {
+                    open EditEmployee_W(selectedEmployee : [$Employees_T.selected$->any(true)])
+                }
+                else {
+                    notification(['Error'],['You must select exactly one employee.'],[-1]) 
+                }
             }
-            else {
-                notification(['Error'],['You must select exactly one employee.'],[-1]) 
+            catch (SecurityException) {
+                notification (['Security error'],[''],[-1])
             }
         }
     }
@@ -91,30 +96,35 @@ Window SearchEmployees_W {
     Button Delete_B {
         String text := ['Delete']
         event onClick {
-            if [if $Employees_T.selected$->oclIsUndefined() then false else $Employees_T.selected$->notEmpty() endif] {
-                try {
-                    foreach deleteObject in [$Employees_T.selected$] {
-                       delete [$deleteObject$] 
+            try {
+                if [if $Employees_T.selected$->oclIsUndefined() then false else $Employees_T.selected$->notEmpty() endif] {
+                    try {
+                        foreach deleteObject in [$Employees_T.selected$] {
+                           delete [$deleteObject$] 
+                        }
+                        notification (['Success'],['The selected elements been deleted successfully.'],[-1])
+
+                        reevaluate Employees_T_page.current
+                        reevaluate Employees_T_page.size
+                        reevaluate Employees_T_page.total
+                        reevaluate Employees_T_page.text
+
+                        reevaluate Employees_T.all
+                        reevaluate Employees_T.total
+                        reevaluate Employees_T.size
+                        reevaluate Employees_T.lower
+                        reevaluate Employees_T.upper
+                        reevaluate Employees_T.rows
+                        reevaluate Employees_T.selected
                     }
-                    notification (['Success'],['The selected elements been deleted successfully.'],[-1])
-
-                    reevaluate Employees_T_page.current
-                    reevaluate Employees_T_page.size
-                    reevaluate Employees_T_page.total
-                    reevaluate Employees_T_page.text
-
-                    reevaluate Employees_T.all
-                    reevaluate Employees_T.total
-                    reevaluate Employees_T.size
-                    reevaluate Employees_T.lower
-                    reevaluate Employees_T.upper
-                    reevaluate Employees_T.rows
-                    reevaluate Employees_T.selected
-                }
-                catch (SecurityException) {
-                    notification(['Security error'],['You do not have permission to delete an Employee.'],[-1])
-                }
-            } 
+                    catch (SecurityException) {
+                        notification(['Security error'],['You do not have permission to delete an Employee.'],[-1])
+                    }
+                } 
+            }
+            catch (SecurityException) {
+                notification (['Security error'],[''],[-1])
+            }
         }
     }
 
