@@ -1,0 +1,283 @@
+Window EditCustomer_atom_W {
+    Customer selectedCustomer
+
+    Label EditCustomer_F_name_L {
+        String text := ['name:']
+    }
+    TextField EditCustomer_F_name {
+        String error := [null]
+        event onView(text) {
+            try {
+                text := [$EditCustomer_atom_W.selectedCustomer$.name]
+            }
+            catch (SecurityException) {
+                text := ['---']
+            }
+        }
+    }   
+
+Button Edit_Name_B {
+        String text := ['Update name']
+        event onClick {
+            reevaluate EditCustomer_F_name.error
+
+            if [$EditCustomer_F_name.text$.oclIsUndefined()] {
+                EditCustomer_F_name.error := ['Error']
+            }
+            if [$EditCustomer_F_name.error$ = null] {
+                try {
+                    [$EditCustomer_atom_W.selectedCustomer$.name] := [$EditCustomer_F_name.text$]
+                    notification (['Success'],['The name of this customer has been updated.'],[-1])
+                }
+                catch (SecurityException) {
+                    notification (['Security error'],['You do not have permission to update the name of this customer.'],[-1])
+                    }
+                }
+            else {
+                notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
+                }
+            }
+      }
+    
+
+    Label EditCustomer_F_surname_L {
+        String text := ['surname:']
+    }
+    TextField EditCustomer_F_surname {
+        String error := [null]
+        event onView(text) {
+            try {
+                text := [$EditCustomer_atom_W.selectedCustomer$.surname]
+            }
+            catch (SecurityException) {
+                text := ['---']
+            }
+        }
+    }   
+
+Button Edit_Surname_B {
+        String text := ['Update surname']
+        event onClick {
+            reevaluate EditCustomer_F_surname.error
+
+            if [$EditCustomer_F_surname.text$.oclIsUndefined()] {
+                EditCustomer_F_surname.error := ['Error']
+            }
+            if [$EditCustomer_F_surname.error$ = null] {
+                try {
+                    [$EditCustomer_atom_W.selectedCustomer$.surname] := [$EditCustomer_F_surname.text$]
+                    notification (['Success'],['The surname of this customer has been updated.'],[-1])
+                }
+                catch (SecurityException) {
+                    notification (['Security error'],['You do not have permission to update the surname of this customer.'],[-1])
+                    }
+                }
+            else {
+                notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
+                }
+            }
+      }
+    
+
+    Label EditCustomer_F_birthday_L {
+        String text := ['birthday:']
+    }
+    DateField EditCustomer_F_birthday {
+        String error := [null]
+        event onView(date) {
+            try {
+                date := [$EditCustomer_atom_W.selectedCustomer$.birthday]
+            }
+            catch (SecurityException) {
+                date := [null]
+            }
+        }
+    }   
+
+    Label EditCustomer_F_email_L {
+        String text := ['email:']
+    }
+    TextField EditCustomer_F_email {
+        String error := [null]
+        event onView(text) {
+            try {
+                text := [$EditCustomer_atom_W.selectedCustomer$.email]
+            }
+            catch (SecurityException) {
+                text := ['---']
+            }
+        }
+    }   
+
+    Button Edit_Email_B {
+        String text := ['Update email']
+        event onClick {
+            reevaluate EditCustomer_F_email.error
+
+            if [$EditCustomer_F_email.text$.oclIsUndefined()] {
+                EditCustomer_F_email.error := ['Error']
+            }
+            if [$EditCustomer_F_email.error$ = null] {
+                try {
+                    [$EditCustomer_atom_W.selectedCustomer$.email] := [$EditCustomer_F_email.text$]
+                    notification (['Success'],['The email of this customer has been updated.'],[-1])
+                }
+                catch (SecurityException) {
+                    notification (['Security error'],['You do not have permission to update the email of this customer.'],[-1])
+                    }
+                }
+            else {
+                notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
+                }
+            }
+      }
+    
+
+    Label EditCustomer_F_phone_L {
+        String text := ['phone:']
+    }
+    TextField EditCustomer_F_phone {
+        String error := [null]
+        event onView(text) {
+            try {
+                text := [$EditCustomer_atom_W.selectedCustomer$.phone]
+            }
+            catch (SecurityException) {
+                text := ['---']
+            }
+        }
+    }   
+
+Button Edit_Phone_B {
+        String text := ['Update phone']
+        event onClick {
+            reevaluate EditCustomer_F_phone.error
+
+            if [$EditCustomer_F_phone.text$.oclIsUndefined()] {
+                EditCustomer_F_phone.error := ['Error']
+            }
+            if [$EditCustomer_F_phone.error$ = null] {
+                try {
+                    [$EditCustomer_atom_W.selectedCustomer$.phone] := [$EditCustomer_F_phone.text$]
+                    notification (['Success'],['The phone of this customer has been updated.'],[-1])
+                }
+                catch (SecurityException) {
+                    notification (['Security error'],['You do not have permission to update the phone of this customer.'],[-1])
+                    }
+                }
+            else {
+                notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
+                }
+            }
+      }
+    
+
+    Label EditCustomer_F_loyalty_L {
+        String text := ['loyalty:']
+    }
+    TextField EditCustomer_F_loyalty {
+        String error := [null]
+        Integer loyalty
+        //String text := [if $loyalty$.oclIsUndefined() then '---' else $loyalty$.toString() endif]
+        event onView(loyalty) {
+            try {
+                loyalty := [$EditCustomer_atom_W.selectedCustomer$.loyalty]
+            }
+            catch (SecurityException) {
+                loyalty := [null]
+            }
+        }
+
+        event onView(text) {
+            text := [if $loyalty$.oclIsUndefined() then '---' else $loyalty$.toString() endif]
+        }
+    }
+
+    Label EditCustomer_F_contacts_L {
+        String text := ['contacts:']
+    }
+    Table EditCustomer_F_contacts {
+        Set(Employee) rows := [Employee.allInstances()]
+        String error := [null]
+        Set(Employee) selected
+        
+        columns {
+            ['login'] : Label login {
+                event onView (text) {
+                    try {
+                        text := [$EditCustomer_F_contacts.row$.login]
+                    }
+                    catch (SecurityException) {
+                        text := ['---']
+                    }
+                }
+            }
+        }
+         
+        event onView (selected) {
+            try {
+                selected := [$EditCustomer_atom_W.selectedCustomer$.contacts]
+            }
+            catch (SecurityException) {
+                selected := [null]
+            }
+        }   
+    }
+
+    Button Edit_contacts_B {
+        String text := ['Update contacts']
+        event onClick {
+            reevaluate EditCustomer_F_contacts.error
+
+            if [$EditCustomer_F_contacts.selected$->oclIsUndefined()] {
+                EditCustomer_F_contacts.error := ['Required selection']
+            }
+            else {
+                if [$EditCustomer_F_contacts.selected$->isEmpty()] {
+                    EditCustomer_F_contacts.error := ['Required selection']
+                }
+            }
+
+            if [$EditCustomer_F_contacts.error$ = null] {
+                
+                try {
+                    foreach contacts_remove in [$EditCustomer_atom_W.selectedCustomer$.contacts] {
+                        if [$EditCustomer_F_contacts.selected$->excludes($contacts_remove$)]{
+                            [$EditCustomer_atom_W.selectedCustomer$.contacts] -= [$contacts_remove$]
+                            }
+                    }  
+                    foreach contacts_add in [$EditCustomer_F_contacts.selected$] {
+                        if [$EditCustomer_atom_W.selectedCustomer$.contacts->excludes($contacts_add$)] {
+                            [$EditCustomer_atom_W.selectedCustomer$.contacts] += [$contacts_add$] 
+                            }
+                    }          
+                    
+                    reevaluate EditCustomer_F_name.text
+                    reevaluate EditCustomer_F_surname.text
+                    reevaluate EditCustomer_F_birthday.date
+                    reevaluate EditCustomer_F_email.text
+                    reevaluate EditCustomer_F_phone.text
+                    reevaluate EditCustomer_F_loyalty.loyalty
+                    reevaluate EditCustomer_F_loyalty.text
+                    //reevaluate EditCustomer_F_contacts.selected
+
+                    notification (['Success'],['The contacts of this customer has been updated.'],[-1])
+                }
+                catch (SecurityException) {
+                    notification (['Security error'],['You do not have permission to edit the Customer.'],[-1])
+                }
+            }
+            else {
+                notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
+            }
+        }
+    }
+
+    Button Back_B {
+        String text := ['Back']
+        event onClick {
+            back
+            //open SearchCustomers_W ()
+        }
+    }
+}
