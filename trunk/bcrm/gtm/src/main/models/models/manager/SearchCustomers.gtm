@@ -53,6 +53,7 @@ Window SearchCustomers_W {
                     }
                 }
             }
+/*
             ['birthday'] : Label birthday {
                 Date value
                 event onView (value) {
@@ -67,7 +68,8 @@ Window SearchCustomers_W {
                     text := [if $value$.oclIsUndefined() then '' else $value$.truncate(TimeUnit::DAY).toString().substring(1,10) endif]
                     }
                 }
-            ['email'] : Label email {
+
+            ['email'] : Label email__________ {
                 event onView (text) {
                     try {
                         text := [$Customers_T.row$.email]
@@ -77,6 +79,7 @@ Window SearchCustomers_W {
                     }
                 }
             }
+
             ['phone'] : Label phone {
                 event onView (text) {
                     try {
@@ -87,6 +90,7 @@ Window SearchCustomers_W {
                     }
                 }
             }
+
             ['loyalty'] : Label loyalty {
                 Integer value
                 event onView (value) {
@@ -102,6 +106,7 @@ Window SearchCustomers_W {
 
                 }
             }
+*/
         }
     }
 
