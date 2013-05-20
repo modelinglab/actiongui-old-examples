@@ -87,7 +87,7 @@ Button Edit_Surname_B {
         event onView(date) {
             try {
                 date := [$EditCustomer_atom_W.selectedCustomer$.birthday]
-            }
+                }
             catch (SecurityException) {
                 date := [null]
             }
@@ -99,10 +99,7 @@ Button Edit_Birthday_B {
         event onClick {
             reevaluate EditCustomer_F_birthday.error
 
-            if [$EditCustomer_F_birthday.date$.oclIsUndefined()] {
-                EditCustomer_F_birthday.error := ['Required field']
-            }
-            else {
+            if [not($EditCustomer_F_birthday.date$.oclIsUndefined())] {
                 if [$EditCustomer_F_birthday.date$ >= Date.now()] {
                     EditCustomer_F_birthday.error := ['The selected date must be previous to the current date']
                 }
@@ -110,8 +107,13 @@ Button Edit_Birthday_B {
              
             if [$EditCustomer_F_birthday.error$ = null] {
                 try {
-                    [$EditCustomer_atom_W.selectedCustomer$.birthday] := [$EditCustomer_F_birthday.date$]        
-                    reevaluate EditCustomer_F_birthday.date
+                    if [$EditCustomer_F_birthday.date$.oclIsUndefined()] {
+                        [$EditCustomer_atom_W.selectedCustomer$.birthday] := [$EditCustomer_F_birthday.date$]
+                        //notification(['Message'], ['HERE'], [-1])
+                    }
+                    else{
+                        [$EditCustomer_atom_W.selectedCustomer$.birthday] := [$EditCustomer_F_birthday.date$]
+                    }
                     notification (['Success'],['The birthday of this customer has been successfully updated.'],[-1])
                     }
                 catch (SecurityException) {
@@ -209,18 +211,24 @@ Button Edit_Phone_B {
     TextField EditCustomer_F_loyalty {
         String error := [null]
         Integer loyalty
-        event onView(loyalty) {
+        String text := [if $loyalty$.oclIsUndefined() then '' else $loyalty$.toString() endif]
+                {if [$EditCustomer_F_loyalty.text$.toInteger().oclIsUndefined()
+                     and $EditCustomer_F_loyalty.text$ <> '']{
+                    EditCustomer_F_loyalty.error := ['The input must be a valid integer']
+                    }
+                 else {
+                    EditCustomer_F_loyalty.error := [null]
+                 }
+                }
+         event onView(loyalty) {
             try {
                 loyalty := [$EditCustomer_atom_W.selectedCustomer$.loyalty]
             }
             catch (SecurityException) {
                 loyalty := [null]
             }
-        }
-
-        event onView(text) {
-            text := [if $loyalty$.oclIsUndefined() then '---' else $loyalty$.toString() endif]
-        }
+        }  
+        //event onView(text) 
     }
 
 Button Edit_Loyalty_B {
@@ -232,14 +240,19 @@ Button Edit_Loyalty_B {
                 EditCustomer_F_loyalty.error := ['Required field']
             }
             else {
-                if [$EditCustomer_F_loyalty.text$.toInteger().oclIsUndefined()]{
+                if [$EditCustomer_F_loyalty.text$.toInteger().oclIsUndefined()
+                    and $EditCustomer_F_loyalty.text$ <> '']{
                     EditCustomer_F_loyalty.error := ['The input must be a valid integer']
                     }
                 }
              
             if [$EditCustomer_F_loyalty.error$ = null] {
                 try {
-                    [$EditCustomer_atom_W.selectedCustomer$.loyalty] := [$EditCustomer_F_loyalty.text$.toInteger()]        
+                    if [$EditCustomer_F_loyalty.text$ = ''] {
+                        [$EditCustomer_atom_W.selectedCustomer$.loyalty] := [null]
+                    } else {
+                    [$EditCustomer_atom_W.selectedCustomer$.loyalty] := [$EditCustomer_F_loyalty.text$.toInteger()]
+                    }
                     reevaluate EditCustomer_F_loyalty.loyalty
                     reevaluate EditCustomer_F_loyalty.text
                     notification (['Success'],['The loyalty of this customer has been successfully updated.'],[-1])
