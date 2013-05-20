@@ -1,7 +1,7 @@
 
 role SALESPERSON {
     Employee {
-        read login
+        read login // do not remove this permission
         update password, read password constrainedBy [self = caller]
     }
     Customer {
