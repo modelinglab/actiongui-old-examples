@@ -140,7 +140,7 @@ Window SearchCustomers_W {
         event onClick {
             try {
                 if [if $Customers_T.selected$->oclIsUndefined() then false else $Customers_T.selected$->size() = 1 endif] {
-                    open EditCustomer_W(selectedCustomer : [$Customers_T.selected$->any(true)])
+                    open EditCustomer_atom_W(selectedCustomer : [$Customers_T.selected$->any(true)])
                 }
                 else {
                     notification(['Error'],['You must select exactly one customer.'],[-1]) 

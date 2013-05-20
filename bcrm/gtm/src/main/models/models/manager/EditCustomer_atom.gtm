@@ -94,6 +94,37 @@ Button Edit_Surname_B {
         }
     }   
 
+Button Edit_Birthday_B {
+        String text := ['Update birthday']
+        event onClick {
+            reevaluate EditCustomer_F_birthday.error
+
+            if [$EditCustomer_F_birthday.date$.oclIsUndefined()] {
+                EditCustomer_F_birthday.error := ['Required field']
+            }
+            else {
+                if [$EditCustomer_F_birthday.date$ >= Date.now()] {
+                    EditCustomer_F_birthday.error := ['The selected date must be previous to the current date']
+                }
+            }
+             
+            if [$EditCustomer_F_birthday.error$ = null] {
+                try {
+                    [$EditCustomer_atom_W.selectedCustomer$.birthday] := [$EditCustomer_F_birthday.date$]        
+                    reevaluate EditCustomer_F_birthday.date
+                    notification (['Success'],['The birthday of this customer has been successfully updated.'],[-1])
+                    }
+                catch (SecurityException) {
+                    notification (['Security error'],['You do not have permission to update the birthday of this Customer.'],[-1])
+                    }
+                }
+            else {
+                notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
+            }
+        }
+    }
+
+
     Label EditCustomer_F_email_L {
         String text := ['email:']
     }
@@ -178,7 +209,6 @@ Button Edit_Phone_B {
     TextField EditCustomer_F_loyalty {
         String error := [null]
         Integer loyalty
-        //String text := [if $loyalty$.oclIsUndefined() then '---' else $loyalty$.toString() endif]
         event onView(loyalty) {
             try {
                 loyalty := [$EditCustomer_atom_W.selectedCustomer$.loyalty]
@@ -192,6 +222,39 @@ Button Edit_Phone_B {
             text := [if $loyalty$.oclIsUndefined() then '---' else $loyalty$.toString() endif]
         }
     }
+
+Button Edit_Loyalty_B {
+        String text := ['Update loyalty']
+        event onClick {
+            reevaluate EditCustomer_F_loyalty.error
+
+            if [$EditCustomer_F_loyalty.text$.oclIsUndefined()] {
+                EditCustomer_F_loyalty.error := ['Required field']
+            }
+            else {
+                if [$EditCustomer_F_loyalty.text$.toInteger().oclIsUndefined()]{
+                    EditCustomer_F_loyalty.error := ['The input must be a valid integer']
+                    }
+                }
+             
+            if [$EditCustomer_F_loyalty.error$ = null] {
+                try {
+                    [$EditCustomer_atom_W.selectedCustomer$.loyalty] := [$EditCustomer_F_loyalty.text$.toInteger()]        
+                    reevaluate EditCustomer_F_loyalty.loyalty
+                    reevaluate EditCustomer_F_loyalty.text
+                    notification (['Success'],['The loyalty of this customer has been successfully updated.'],[-1])
+                    }
+                catch (SecurityException) {
+                    notification (['Security error'],['You do not have permission to update the loyalty of this Customer.'],[-1])
+                    }
+                }
+            else {
+                notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
+            }
+        }
+    }
+
+
 
     Label EditCustomer_F_contacts_L {
         String text := ['contacts:']
