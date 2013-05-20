@@ -11,7 +11,7 @@ Window EditCustomer_atom_W {
                 text := [$EditCustomer_atom_W.selectedCustomer$.name]
             }
             catch (SecurityException) {
-                text := ['---']
+                text := [null]
             }
         }
     }   
@@ -32,7 +32,9 @@ Button Edit_Name_B {
                 catch (SecurityException) {
                     notification (['Security error'],['You do not have permission to update the name of this customer.'],[-1])
                     }
+                reevaluate EditCustomer_F_name.text 
                 }
+
             else {
                 notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
                 }
@@ -50,7 +52,7 @@ Button Edit_Name_B {
                 text := [$EditCustomer_atom_W.selectedCustomer$.surname]
             }
             catch (SecurityException) {
-                text := ['---']
+                text := [null]
             }
         }
     }   
@@ -71,6 +73,7 @@ Button Edit_Surname_B {
                 catch (SecurityException) {
                     notification (['Security error'],['You do not have permission to update the surname of this customer.'],[-1])
                     }
+                reevaluate EditCustomer_F_surname.text
                 }
             else {
                 notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
@@ -108,7 +111,7 @@ Button Edit_Birthday_B {
             if [$EditCustomer_F_birthday.error$ = null] {
                 try {
                     if [$EditCustomer_F_birthday.date$.oclIsUndefined()] {
-                        [$EditCustomer_atom_W.selectedCustomer$.birthday] := [$EditCustomer_F_birthday.date$]
+                        [$EditCustomer_atom_W.selectedCustomer$.birthday] := [null]
                         //notification(['Message'], ['HERE'], [-1])
                     }
                     else{
@@ -119,6 +122,7 @@ Button Edit_Birthday_B {
                 catch (SecurityException) {
                     notification (['Security error'],['You do not have permission to update the birthday of this Customer.'],[-1])
                     }
+                reevaluate EditCustomer_F_birthday.date
                 }
             else {
                 notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
@@ -137,7 +141,7 @@ Button Edit_Birthday_B {
                 text := [$EditCustomer_atom_W.selectedCustomer$.email]
             }
             catch (SecurityException) {
-                text := ['---']
+                text := [null]
             }
         }
     }   
@@ -158,6 +162,7 @@ Button Edit_Birthday_B {
                 catch (SecurityException) {
                     notification (['Security error'],['You do not have permission to update the email of this customer.'],[-1])
                     }
+                reevaluate EditCustomer_F_email.text
                 }
             else {
                 notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
@@ -176,7 +181,7 @@ Button Edit_Birthday_B {
                 text := [$EditCustomer_atom_W.selectedCustomer$.phone]
             }
             catch (SecurityException) {
-                text := ['---']
+                text := [null]
             }
         }
     }   
@@ -197,6 +202,7 @@ Button Edit_Phone_B {
                 catch (SecurityException) {
                     notification (['Security error'],['You do not have permission to update the phone of this customer.'],[-1])
                     }
+                reevaluate EditCustomer_F_phone.text
                 }
             else {
                 notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
@@ -260,6 +266,7 @@ Button Edit_Loyalty_B {
                 catch (SecurityException) {
                     notification (['Security error'],['You do not have permission to update the loyalty of this Customer.'],[-1])
                     }
+                 reevaluate EditCustomer_F_loyalty.text
                 }
             else {
                 notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
@@ -327,7 +334,12 @@ Button Edit_Loyalty_B {
                             [$EditCustomer_atom_W.selectedCustomer$.contacts] += [$contacts_add$] 
                             }
                     }          
-                    
+
+                    notification (['Success'],['The contacts of this customer has been updated.'],[-1])
+                }
+                catch (SecurityException) {
+                    notification (['Security error'],['You do not have permission to edit the Customer.'],[-1])
+                }
                     reevaluate EditCustomer_F_name.text
                     reevaluate EditCustomer_F_surname.text
                     reevaluate EditCustomer_F_birthday.date
@@ -335,13 +347,7 @@ Button Edit_Loyalty_B {
                     reevaluate EditCustomer_F_phone.text
                     reevaluate EditCustomer_F_loyalty.loyalty
                     reevaluate EditCustomer_F_loyalty.text
-                    //reevaluate EditCustomer_F_contacts.selected
-
-                    notification (['Success'],['The contacts of this customer has been updated.'],[-1])
-                }
-                catch (SecurityException) {
-                    notification (['Security error'],['You do not have permission to edit the Customer.'],[-1])
-                }
+                    reevaluate EditCustomer_F_contacts.selected
             }
             else {
                 notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
