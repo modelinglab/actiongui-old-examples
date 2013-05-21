@@ -9,8 +9,8 @@
     position : absolute;
     left: 10px;
     top: 50px;
-    width: 250px;
-    height: 100px;
+    width: 550px;
+    height: 130px;
 }
 
 
@@ -35,30 +35,30 @@
 .SearchCustomers_W .Customers_T_prev_B  {
     position : absolute;
     left: 10px;
-    top: 150px;
+    top: 180px;
 }
 
 .SearchCustomers_W .Customers_T_next_B  {
     position : absolute;
     left: 90px;
-    top: 150px;
+    top: 180px;
 }
 
 .SearchCustomers_W .Edit_B  {
     position : absolute;
     left: 10px;
-    top: 200px;
+    top: 230px;
 }
 
 .SearchCustomers_W .Delete_B  {
     position : absolute;
     left: 10px;
-    top: 230px;
+    top: 260px;
 }
 
 .SearchCustomers_W .Back_B  {
     position : absolute;
     left: 10px;
-    top: 260px;
+    top: 290px;
 }
 
