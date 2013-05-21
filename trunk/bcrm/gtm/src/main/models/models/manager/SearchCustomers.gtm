@@ -39,7 +39,7 @@ Window SearchCustomers_W {
                         text := [$Customers_T.row$.name]
                     }
                     catch(SecurityException) {
-                        text := ['---']
+                        text := [null]
                     }
                 }
             }
@@ -49,11 +49,11 @@ Window SearchCustomers_W {
                         text := [$Customers_T.row$.surname]
                     }
                     catch(SecurityException) {
-                        text := ['---']
+                        text := [null]
                     }
                 }
             }
-/*
+
             ['birthday'] : Label birthday {
                 Date value
                 event onView (value) {
@@ -75,7 +75,7 @@ Window SearchCustomers_W {
                         text := [$Customers_T.row$.email]
                     }
                     catch(SecurityException) {
-                        text := ['---']
+                        text := [null]
                     }
                 }
             }
@@ -86,7 +86,7 @@ Window SearchCustomers_W {
                         text := [$Customers_T.row$.phone]
                     }
                     catch(SecurityException) {
-                        text := ['---']
+                        text := [null]
                     }
                 }
             }
@@ -106,7 +106,7 @@ Window SearchCustomers_W {
 
                 }
             }
-*/
+
         }
     }
 
