@@ -1,0 +1,157 @@
+=================
+author: Manuel Clavel
+requires: ActionGUI 2.1
+
+=================
+1. Preliminaries
+=================
+This simple example can be used to illustrate:
+
+a) how web-based data-centric applications can be 
+automatically generated from their data, security, and GUI models.
+
+b) how fine-grained access control policy can be defined
+in the security model.
+
+c) how changes in the security model are automatically
+reflected in the generated application, without having to
+change the GUI models.
+
+=====================
+2. About the example
+=====================
+This example is a very basic CRM.
+
+A) Data model
+- There are two entities: customers are employees.
+- Employees have a login and a password.
+- Customers have a name, a surname, a date of birth (of type Date),
+an email, a phone, and a loyalty-level (of type Integer).
+- Employees may be in charge of customers (association customers<->contacts)
+
+- Employees are the "users" of the applications. 
+- There are two roles: "Manager" and "SalesPerson".
+- Every employee has exactly one role.
+
+B) Security model
+B.1. SalesPerson
+* With respect to employees
+- It can read every employee's login.
+- It can read and update its own password.
+* With respect to customers
+- It can read every customer's name, surname and loyalty level.
+- It can access the employees in charge of every customer.
+- It can read and update the birthday, email, and phone of its own customrs.
+- For every customer, it can add itself to the employees in charge of this customer.
+
+B.2. Manager
+- It can do everything a salesperson can do.
+
+- It can create new employees.
+- It can read every employee's role.
+- It can update every employee's data.
+- It can delete every employee except itself.
+
+- It can create, delete new customers.
+- It can read and update every customer's data.
+
+
+C) GUI model
+- Users need to login first, by introducing their login
+and password.
+
+C.1. SalesPerson
+* Window: Search customers (under the given security policy)
+- It can review all customers' information
+- It can select a customer and  delete it.
+- It can select a customer and edit it (in a different window)
+
+* Window: Edit customer (under the given security policy)
+- It can review the selected customer's information
+(including its contacts points)
+_ it can update the selected customer's information
+(including its contacts points)
+
+* Window: Change password: 
+- It can change its own password
+
+C.2. Manager 
+* Window: Create employee (under the given security policy)
+- It can create a new employee (and assign it a role)
+
+* Window: Search employees (under the given security policy)
+- It can review all employees' login information
+- It can select an employee and  delete it.
+- It can select an employee and edit it (in a different window)
+
+* Window: Edit employee (under the given security policy)
+- It can review the selected customer's information
+(including its role)
+_ it can update the selected customer's information
+(including its role)
+
+* Window: Create customer (under the given security policy)
+- It can create a new customer
+* Window: Search customers (under the given security policy)
+- As explained above.
+* Window: Edit customer (under the given security policy)
+- As explained above.
+* Window: Change password (under the given security policy)
+- As explained above.
+
+=====================
+2. About the demo
+=====================
+These are mere suggestions. 
+Probably we can find even better scenarios.
+
+0. Explain the init-scenario: 
+- employees: alice (passwd:1111) with role Manager;
+bob (passwd: 1111) with role SalesPerson;
+charlie (passwd: 1111) with role SalesPerson.
+- no customers.
+
+1. Show the basic functionality of the application:
+1.1) login as alice
+- create a new customer X 
+- create another customer Y
+- edit the customer X: assign this customer X to bob
+- create another customer Z
+- delete the customer Y.
+
+1.2) log in as bob
+- edit the customer X
+- delete the customer Z (you should not not)
+- edit the customer Z, without changing the contact points (you should not)
+
+1.3) log in as charlie
+- edit the customer X (you should not)
+- edit the customer X, adding charlie as contact point (you should)
+
+2. Change the security model and check the consequences
+2.1) Comment the employee-delete permission for Managers
+- login as alice
+- delete charlie (you should not)
+
+2.2) i) Remove the unconstrained email-read permission for SalesPerson,
+and  ii) add an email-read permission for SalesPerson constrained by
+self.contacts->includes(caller) 
+- log in as alice
+- search customers (nothing should be hidden)
+
+- log in as bob
+- search customers (emails should be hidden except for customer X)
+
+3. Change the GUI model and check the consequences
+(Before anything, add again the unconstrained email-red permission for
+SalesPerson.)
+
+3.1.) Change the order of execution of the actions
+triggered by clicking on the button Edit in the window
+Edit customers. In particular, move the add-action to the very last
+position in the sequence.
+
+3.1) log in as charlie
+- edit the customer X, removing charlie as contact point (you should)
+- edit the customer X, adding charlie as contact point (you should not)
+
