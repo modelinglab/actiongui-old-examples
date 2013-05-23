@@ -86,13 +86,16 @@ Button Edit_Surname_B {
         String text := ['birthday:']
     }
     DateField EditCustomer_F_birthday {
-        String error := [null]
+        String error := [null] 
+        Date date {
+                    if [$date$.oclIsInvalid()] {error := ['no permission']} else {error := [null]}
+                    }
         event onView(date) {
             try {
                 date := [$EditCustomer_atom_W.selectedCustomer$.birthday]
                 }
             catch (SecurityException) {
-                date := [null]
+                date := [invalid]
             }
         }
     }   
