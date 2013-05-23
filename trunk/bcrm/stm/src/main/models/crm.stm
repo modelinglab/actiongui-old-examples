@@ -1,4 +1,8 @@
-
+role SYSTEM {
+    Employee {
+        read login, read password, read myRole
+        }
+}
 role SALESPERSON {
     Employee {
         read login // do not remove this permission

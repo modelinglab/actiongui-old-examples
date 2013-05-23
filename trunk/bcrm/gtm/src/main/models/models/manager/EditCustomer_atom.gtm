@@ -112,7 +112,6 @@ Button Edit_Birthday_B {
                 try {
                     if [$EditCustomer_F_birthday.date$.oclIsUndefined()] {
                         [$EditCustomer_atom_W.selectedCustomer$.birthday] := [null]
-                        //notification(['Message'], ['HERE'], [-1])
                     }
                     else{
                         [$EditCustomer_atom_W.selectedCustomer$.birthday] := [$EditCustomer_F_birthday.date$]
@@ -216,9 +215,7 @@ Button Edit_Phone_B {
     }
     TextField EditCustomer_F_loyalty {
         String error := [null]
-        Integer loyalty
-        String text := [if $loyalty$.oclIsUndefined() then '' else $loyalty$.toString() endif]
-                {if [$EditCustomer_F_loyalty.text$.toInteger().oclIsUndefined()
+        String text {if [$EditCustomer_F_loyalty.text$.toInteger().oclIsUndefined()
                      and $EditCustomer_F_loyalty.text$ <> '']{
                     EditCustomer_F_loyalty.error := ['The input must be a valid integer']
                     }
@@ -226,13 +223,13 @@ Button Edit_Phone_B {
                     EditCustomer_F_loyalty.error := [null]
                  }
                 }
-         event onView(loyalty) {
+        event onView (text){
             try {
-                loyalty := [$EditCustomer_atom_W.selectedCustomer$.loyalty]
-            }
+                text := [$EditCustomer_atom_W.selectedCustomer$.loyalty.toString()]
+                }
             catch (SecurityException) {
-                loyalty := [null]
-            }
+                text := [null]
+            }     
         }  
         //event onView(text) 
     }
@@ -259,7 +256,6 @@ Button Edit_Loyalty_B {
                     } else {
                     [$EditCustomer_atom_W.selectedCustomer$.loyalty] := [$EditCustomer_F_loyalty.text$.toInteger()]
                     }
-                    reevaluate EditCustomer_F_loyalty.loyalty
                     reevaluate EditCustomer_F_loyalty.text
                     notification (['Success'],['The loyalty of this customer has been successfully updated.'],[-1])
                     }
@@ -345,7 +341,6 @@ Button Edit_Loyalty_B {
                     reevaluate EditCustomer_F_birthday.date
                     reevaluate EditCustomer_F_email.text
                     reevaluate EditCustomer_F_phone.text
-                    reevaluate EditCustomer_F_loyalty.loyalty
                     reevaluate EditCustomer_F_loyalty.text
                     reevaluate EditCustomer_F_contacts.selected
             }
