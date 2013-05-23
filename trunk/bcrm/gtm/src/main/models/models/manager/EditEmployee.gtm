@@ -20,14 +20,15 @@ Window EditEmployee_W {
     Label EditEmployee_F_password_L {
         String text := ['Password:']
     }
-    PasswordField EditEmployee_F_password {
+    
+    TextField EditEmployee_F_password {
         String error := [null]
         event onView(text) {
             try {
                 text := [$EditEmployee_W.selectedEmployee$.password]
             }
             catch (SecurityException) {
-                text := ['---']
+                text := [null]
             }
         }
     }
@@ -61,13 +62,13 @@ Window EditEmployee_W {
             reevaluate EditEmployee_F_password.error
             reevaluate EditEmployee_F_myRole.error           
 
-            if [not(not($EditEmployee_F_login.text$.oclIsUndefined()))] {
+            if [$EditEmployee_F_login.text$.oclIsUndefined()] {
                 EditEmployee_F_login.error := ['Required field']
             }
-            if [not(not($EditEmployee_F_password.text$.oclIsUndefined()))] {
-                EditEmployee_F_password.error := ['Required field']
-            }
-            if [not(not($EditEmployee_F_myRole.selected$.oclIsUndefined()))] {
+            //if [$EditEmployee_F_password.text$.oclIsUndefined()] {
+            //    EditEmployee_F_password.error := ['Required field']
+            //}
+            if [$EditEmployee_F_myRole.selected$.oclIsUndefined()] {
                 EditEmployee_F_myRole.error := ['Required field']
             }
 
@@ -75,7 +76,9 @@ Window EditEmployee_W {
                 if [not Employee.allInstances()->exists(u|u <> $EditEmployee_W.selectedEmployee$ and u.login=$EditEmployee_F_login.text$)] {
                     try {
                         [$EditEmployee_W.selectedEmployee$.login] := [$EditEmployee_F_login.text$]
-                        [$EditEmployee_W.selectedEmployee$.password] := [$EditEmployee_F_password.text$]
+                        if [not($EditEmployee_F_password.text$.oclIsUndefined())]{
+                            [$EditEmployee_W.selectedEmployee$.password] := [$EditEmployee_F_password.text$]
+                        }
                         [$EditEmployee_W.selectedEmployee$.myRole] := [$EditEmployee_F_myRole.selected$]
                         
                         notification (['Success'],['The Employee has been edited successfully.'],[-1])

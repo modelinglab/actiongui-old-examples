@@ -120,7 +120,7 @@ Window SearchEmployees_W {
                         reevaluate Employees_T.rows
                         reevaluate Employees_T.selected
                     }
-                    catch (SecurityException) {
+                    catch (Exception) {
                         notification(['Security error'],['You do not have permission to delete an Employee.'],[-1])
                     }
                 } 

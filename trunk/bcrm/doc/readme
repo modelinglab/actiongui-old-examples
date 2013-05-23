@@ -47,6 +47,7 @@ B.1. SalesPerson
 B.2. Manager
 - It can do everything a salesperson can do.
 
+* With respect to employees
 - It can create new employees.
 - It can read every employee's role.
 - It can update every employee's data.
@@ -55,6 +56,8 @@ B.2. Manager
 - It can create, delete new customers.
 - It can read and update every customer's data.
 
+B.3. System
+- It can read
 
 C) GUI model
 - Users need to login first, by introducing their login
