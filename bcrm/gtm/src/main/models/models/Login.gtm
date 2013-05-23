@@ -1,4 +1,6 @@
 Window Login_W isMain{
+    Role role := [Role::SYSTEM]
+
     String text := ['Log In']
 
     Label Credentiasl_F_login_L {
@@ -26,11 +28,11 @@ Window Login_W isMain{
             }
             if [not($loggedUser$.oclIsUndefined())] {
                 if [$loggedUser$.myRole = Role::SALESPERSON] {
-                    open SalesPersonMenu_W(caller:[$loggedUser$], role:[$loggedUser$.myRole->any(true)])
+                    open SalesPersonMenu_W(caller:[$loggedUser$], role:[$loggedUser$.myRole])
                 }
                 else {
                     if [$loggedUser$.myRole = Role::MANAGER] {
-                        open ManagerMenu_W(caller:[$loggedUser$], role:[$loggedUser$.myRole->any(true)])
+                        open ManagerMenu_W(caller:[$loggedUser$], role:[$loggedUser$.myRole])
                     }
                     else {
                         notification (['Message'],['You have no role assigned.'],[-1])

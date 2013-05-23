@@ -92,21 +92,16 @@ Window SearchCustomers_W {
             }
 
             ['loyalty'] : Label loyalty {
-                Integer value
-                event onView (value) {
+                event onView (text) {
                     try {
-                        value := [$Customers_T.row$.loyalty]
+                        text := [$Customers_T.row$.loyalty.toString()]
                     }
                     catch(SecurityException) {
-                        value := [null]
+                        text := [null]
                     }
                 }
-                event onView (text) {
-                    text := [if $value$.oclIsUndefined() then '' else $value$.toString() endif]
 
-                }
             }
-
         }
     }
 
