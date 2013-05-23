@@ -5,11 +5,11 @@ role SYSTEM {
 }
 role SALESPERSON {
     Employee {
-        read login // do not remove this permission
+        read login 
         update password, read password constrainedBy [self = caller]
     }
     Customer {
-        read name, read surname, read loyalty, read contacts // do not remove these permissions
+        read name, read surname, read loyalty, read contacts 
         read email, read phone, read birthday constrainedBy [self.contacts->includes(caller)]
         update email, update phone, update birthday constrainedBy [self.contacts->includes(caller)] 
         add contacts constrainedBy [target = caller]
@@ -22,7 +22,7 @@ role MANAGER extends SALESPERSON{
         create
         read myRole
         update
-        delete constrainedBy [caller <> self] // do not remove this authorization constraint
+        delete // constrainedBy [caller <> self] // do not remove this authorization constraint
         }
     Customer {
         fullAccess

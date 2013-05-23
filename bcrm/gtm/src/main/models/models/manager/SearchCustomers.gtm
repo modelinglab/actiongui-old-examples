@@ -55,17 +55,13 @@ Window SearchCustomers_W {
             }
 
             ['birthday'] : Label birthday {
-                Date value
-                event onView (value) {
+                event onView (text) {
                     try {
-                        value := [$Customers_T.row$.birthday]
+                        text := [if $Customers_T.row$.birthday.oclIsUndefined() then '' else $Customers_T.row$.birthday.truncate(TimeUnit::DAY).toString().substring(1,10) endif]
                     }
                     catch(SecurityException) {
-                        value := [null]
-                    }
-                }
-                event onView (text) {
-                    text := [if $value$.oclIsUndefined() then '' else $value$.truncate(TimeUnit::DAY).toString().substring(1,10) endif]
+                        text := [null]
+                        }
                     }
                 }
 
@@ -94,7 +90,7 @@ Window SearchCustomers_W {
             ['loyalty'] : Label loyalty {
                 event onView (text) {
                     try {
-                        text := [$Customers_T.row$.loyalty.toString()]
+                        text := [if $Customers_T.row$.loyalty.oclIsUndefined() then '' else $Customers_T.row$.loyalty.toString() endif]
                     }
                     catch(SecurityException) {
                         text := [null]

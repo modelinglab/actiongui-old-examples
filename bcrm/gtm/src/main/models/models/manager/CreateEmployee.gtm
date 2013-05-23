@@ -12,7 +12,7 @@ Window CreateEmployee_W {
     Label NewEmployee_F_password_L {
         String text := ['Password:']
     }
-    PasswordField NewEmployee_F_password {
+    TextField NewEmployee_F_password {
         String text := [null]
         String error := [null]
     }

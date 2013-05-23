@@ -110,12 +110,7 @@ Button Edit_Birthday_B {
              
             if [$EditCustomer_F_birthday.error$ = null] {
                 try {
-                    if [$EditCustomer_F_birthday.date$.oclIsUndefined()] {
-                        [$EditCustomer_atom_W.selectedCustomer$.birthday] := [null]
-                    }
-                    else{
-                        [$EditCustomer_atom_W.selectedCustomer$.birthday] := [$EditCustomer_F_birthday.date$]
-                    }
+                    [$EditCustomer_atom_W.selectedCustomer$.birthday] := [$EditCustomer_F_birthday.date$]
                     notification (['Success'],['The birthday of this customer has been successfully updated.'],[-1])
                     }
                 catch (SecurityException) {
@@ -215,17 +210,18 @@ Button Edit_Phone_B {
     }
     TextField EditCustomer_F_loyalty {
         String error := [null]
-        String text {if [$EditCustomer_F_loyalty.text$.toInteger().oclIsUndefined()
-                     and $EditCustomer_F_loyalty.text$ <> '']{
-                    EditCustomer_F_loyalty.error := ['The input must be a valid integer']
+        String text {if [$EditCustomer_F_loyalty.text$ <> ''] {
+                        if [$EditCustomer_F_loyalty.text$.toInteger().oclIsUndefined()]{
+                              EditCustomer_F_loyalty.error := ['The input must be a valid integer']
+                        }
                     }
                  else {
                     EditCustomer_F_loyalty.error := [null]
-                 }
+                    }
                 }
         event onView (text){
             try {
-                text := [$EditCustomer_atom_W.selectedCustomer$.loyalty.toString()]
+                text := [if $EditCustomer_atom_W.selectedCustomer$.loyalty.oclIsUndefined() then '' else $EditCustomer_atom_W.selectedCustomer$.loyalty.toString() endif]
                 }
             catch (SecurityException) {
                 text := [null]
