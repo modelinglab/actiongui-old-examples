@@ -10,7 +10,7 @@ role SALESPERSON {
     }
     Customer {
         read name, read surname, read loyalty, read contacts 
-        read email, read phone, read birthday constrainedBy [self.contacts->includes(caller)]
+        read phone, read birthday constrainedBy [self.contacts->includes(caller)]
         update email, update phone, update birthday constrainedBy [self.contacts->includes(caller)] 
         add contacts constrainedBy [target = caller]
         //remove contacts constrainedBy [target = caller]

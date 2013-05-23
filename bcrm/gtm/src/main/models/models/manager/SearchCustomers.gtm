@@ -55,6 +55,9 @@ Window SearchCustomers_W {
             }
 
             ['birthday'] : Label birthday {
+                String text {
+                    if [$text$.oclIsUndefined()] {error := ['no permission']} else {error := [null]}
+                        }
                 event onView (text) {
                     try {
                         text := [if $Customers_T.row$.birthday.oclIsUndefined() then '' else $Customers_T.row$.birthday.truncate(TimeUnit::DAY).toString().substring(1,10) endif]
@@ -66,9 +69,12 @@ Window SearchCustomers_W {
                 }
 
             ['email'] : Label email__________ {
+                String text {
+                    if [$text$.oclIsUndefined()] {error := ['no permission']} else {error := [null]}
+                        }
                 event onView (text) {
                     try {
-                        text := [$Customers_T.row$.email]
+                        text := [if $Customers_T.row$.email.oclIsUndefined() then '' else  $Customers_T.row$.email endif]
                     }
                     catch(SecurityException) {
                         text := [null]
