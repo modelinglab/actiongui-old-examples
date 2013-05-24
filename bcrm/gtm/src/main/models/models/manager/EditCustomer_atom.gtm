@@ -6,24 +6,37 @@ Window EditCustomer_atom_W {
     }
     TextField EditCustomer_F_name {
         String error := [null]
+        String text {
+            if [$text$.oclIsInvalid()] {
+                error := ['no permission']
+            }
+            else {
+                error := [null]
+            }
+        }
         event onView(text) {
+            text := [null]
             try {
                 text := [$EditCustomer_atom_W.selectedCustomer$.name]
             }
             catch (SecurityException) {
-                text := [null]
+                text := [invalid]
             }
         }
     }   
 
-Button Edit_Name_B {
+    Button Edit_Name_B {
         String text := ['Update name']
         event onClick {
             reevaluate EditCustomer_F_name.error
-
-            if [$EditCustomer_F_name.text$.oclIsUndefined()] {
-                EditCustomer_F_name.error := ['Error']
+            if [$EditCustomer_F_name.text$.oclIsInvalid()] {
+                EditCustomer_F_name.text := [null]
             }
+
+            if [$EditCustomer_F_name.text$.oclIsUndefined() or $EditCustomer_F_name.text$ = ''] {
+                EditCustomer_F_name.error := ['Required field']
+            }
+
             if [$EditCustomer_F_name.error$ = null] {
                 try {
                     [$EditCustomer_atom_W.selectedCustomer$.name] := [$EditCustomer_F_name.text$]
@@ -31,15 +44,14 @@ Button Edit_Name_B {
                 }
                 catch (SecurityException) {
                     notification (['Security error'],['You do not have permission to update the name of this customer.'],[-1])
-                    }
+                } 
                 reevaluate EditCustomer_F_name.text 
-                }
-
-            else {
-                notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
-                }
             }
-      }
+            else {
+                notification(['Error'],['The field "name" contains errors. Please, check the field.'],[-1]) 
+            }
+        }
+    }
     
 
     Label EditCustomer_F_surname_L {
@@ -47,24 +59,37 @@ Button Edit_Name_B {
     }
     TextField EditCustomer_F_surname {
         String error := [null]
+        String text {
+            if [$text$.oclIsInvalid()] {
+                error := ['no permission']
+            }
+            else {
+                error := [null]
+            }
+        }
         event onView(text) {
+            text := [null]
             try {
                 text := [$EditCustomer_atom_W.selectedCustomer$.surname]
             }
             catch (SecurityException) {
-                text := [null]
+                text := [invalid]
             }
         }
     }   
-
-Button Edit_Surname_B {
+    
+    Button Edit_Surname_B {
         String text := ['Update surname']
         event onClick {
             reevaluate EditCustomer_F_surname.error
-
-            if [$EditCustomer_F_surname.text$.oclIsUndefined()] {
-                EditCustomer_F_surname.error := ['Error']
+            if [$EditCustomer_F_surname.text$.oclIsInvalid()] {
+                EditCustomer_F_surname.text := [null]
             }
+
+            if [$EditCustomer_F_surname.text$.oclIsUndefined() or $EditCustomer_F_surname.text$ = ''] {
+                EditCustomer_F_surname.error := ['Required field']
+            }
+
             if [$EditCustomer_F_surname.error$ = null] {
                 try {
                     [$EditCustomer_atom_W.selectedCustomer$.surname] := [$EditCustomer_F_surname.text$]
@@ -72,14 +97,14 @@ Button Edit_Surname_B {
                 }
                 catch (SecurityException) {
                     notification (['Security error'],['You do not have permission to update the surname of this customer.'],[-1])
-                    }
+                }
                 reevaluate EditCustomer_F_surname.text
-                }
-            else {
-                notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
-                }
             }
-      }
+            else {
+                notification(['Error'],['The field "surname" contains errors. Please, check the field.'],[-1]) 
+            }
+        }
+    }
     
 
     Label EditCustomer_F_birthday_L {
@@ -88,22 +113,31 @@ Button Edit_Surname_B {
     DateField EditCustomer_F_birthday {
         String error := [null] 
         Date date {
-                    if [$date$.oclIsInvalid()] {error := ['no permission']} else {error := [null]}
-                    }
+            if [$date$.oclIsInvalid()] {
+                error := ['no permission']
+            }
+            else {
+                error := [null]
+            }
+        }
         event onView(date) {
+            date := [null]
             try {
                 date := [$EditCustomer_atom_W.selectedCustomer$.birthday]
-                }
+            }
             catch (SecurityException) {
                 date := [invalid]
             }
         }
     }   
 
-Button Edit_Birthday_B {
+    Button Edit_Birthday_B {
         String text := ['Update birthday']
         event onClick {
             reevaluate EditCustomer_F_birthday.error
+            if [$EditCustomer_F_birthday.date$.oclIsInvalid()] {
+                EditCustomer_F_birthday.date := [null]
+            }
 
             if [not($EditCustomer_F_birthday.date$.oclIsUndefined())] {
                 if [$EditCustomer_F_birthday.date$ >= Date.now()] {
@@ -113,16 +147,16 @@ Button Edit_Birthday_B {
              
             if [$EditCustomer_F_birthday.error$ = null] {
                 try {
-                    [$EditCustomer_atom_W.selectedCustomer$.birthday] := [$EditCustomer_F_birthday.date$]
+                    [$EditCustomer_atom_W.selectedCustomer$.birthday] := [$EditCustomer_F_birthday.date$] 
                     notification (['Success'],['The birthday of this customer has been successfully updated.'],[-1])
-                    }
+                }
                 catch (SecurityException) {
                     notification (['Security error'],['You do not have permission to update the birthday of this Customer.'],[-1])
-                    }
-                reevaluate EditCustomer_F_birthday.date
                 }
+                reevaluate EditCustomer_F_birthday.date
+            }
             else {
-                notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
+                notification(['Error'],['The field "birthday" contains errors. Please, check the field.'],[-1]) 
             }
         }
     }
@@ -133,12 +167,21 @@ Button Edit_Birthday_B {
     }
     TextField EditCustomer_F_email {
         String error := [null]
+        String text {
+            if [$text$.oclIsInvalid()] {
+                error := ['no permission']
+            }
+            else {
+                error := [null]
+            }
+        }
         event onView(text) {
+            text := [null]
             try {
                 text := [$EditCustomer_atom_W.selectedCustomer$.email]
             }
             catch (SecurityException) {
-                text := [null]
+                text := [invalid]
             }
         }
     }   
@@ -147,9 +190,12 @@ Button Edit_Birthday_B {
         String text := ['Update email']
         event onClick {
             reevaluate EditCustomer_F_email.error
+            if [$EditCustomer_F_email.text$.oclIsInvalid()] {
+                EditCustomer_F_email.text := [null]
+            }
 
-            if [$EditCustomer_F_email.text$.oclIsUndefined()] {
-                EditCustomer_F_email.error := ['Error']
+            if [$EditCustomer_F_email.text$.oclIsUndefined() or $EditCustomer_F_email.text$ = ''] {
+                EditCustomer_F_email.error := ['Required field']
             }
             if [$EditCustomer_F_email.error$ = null] {
                 try {
@@ -158,14 +204,14 @@ Button Edit_Birthday_B {
                 }
                 catch (SecurityException) {
                     notification (['Security error'],['You do not have permission to update the email of this customer.'],[-1])
-                    }
+                }
                 reevaluate EditCustomer_F_email.text
-                }
-            else {
-                notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
-                }
             }
-      }
+            else {
+                notification(['Error'],['The field "email" contains errors. Please, check the field.'],[-1]) 
+            }
+        }
+    }
     
 
     Label EditCustomer_F_phone_L {
@@ -173,23 +219,35 @@ Button Edit_Birthday_B {
     }
     TextField EditCustomer_F_phone {
         String error := [null]
+        String text {
+            if [$text$.oclIsInvalid()] {
+                error := ['no permission']
+            }
+            else {
+                error := [null]
+            }
+        }
         event onView(text) {
+            text := [null]
             try {
                 text := [$EditCustomer_atom_W.selectedCustomer$.phone]
             }
             catch (SecurityException) {
-                text := [null]
+                text := [invalid]
             }
         }
     }   
 
-Button Edit_Phone_B {
+    Button Edit_Phone_B {
         String text := ['Update phone']
         event onClick {
             reevaluate EditCustomer_F_phone.error
+            if [$EditCustomer_F_phone.text$.oclIsInvalid()] {
+                EditCustomer_F_phone.text := [null]
+            }
 
-            if [$EditCustomer_F_phone.text$.oclIsUndefined()] {
-                EditCustomer_F_phone.error := ['Error']
+            if [$EditCustomer_F_phone.text$.oclIsUndefined() or $EditCustomer_F_phone.text$ = ''] {
+                EditCustomer_F_phone.error := ['Required field']
             }
             if [$EditCustomer_F_phone.error$ = null] {
                 try {
@@ -198,14 +256,14 @@ Button Edit_Phone_B {
                 }
                 catch (SecurityException) {
                     notification (['Security error'],['You do not have permission to update the phone of this customer.'],[-1])
-                    }
+                }
                 reevaluate EditCustomer_F_phone.text
-                }
-            else {
-                notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
-                }
             }
-      }
+            else {
+                notification(['Error'],['The field "phone" contains errors. Please, check the field.'],[-1]) 
+            }
+        }
+    }
     
 
     Label EditCustomer_F_loyalty_L {
@@ -213,58 +271,64 @@ Button Edit_Phone_B {
     }
     TextField EditCustomer_F_loyalty {
         String error := [null]
-        String text {if [$EditCustomer_F_loyalty.text$ <> ''] {
-                        if [$EditCustomer_F_loyalty.text$.toInteger().oclIsUndefined()]{
-                              EditCustomer_F_loyalty.error := ['The input must be a valid integer']
-                        }
-                    }
-                 else {
-                    EditCustomer_F_loyalty.error := [null]
-                    }
+        String text {
+            /*
+            if [$EditCustomer_F_loyalty.text$ <> ''] {
+                if [$EditCustomer_F_loyalty.text$.toInteger().oclIsUndefined()]{
+                      EditCustomer_F_loyalty.error := ['The input must be a valid integer']
                 }
+            }
+            else {
+                EditCustomer_F_loyalty.error := [null]
+            }
+            */
+            if [$text$.oclIsInvalid()] {
+                error := ['no permission']
+            }
+            else {
+                error := [null]
+            }           
+        }
         event onView (text){
+            text := [null]
             try {
-                text := [if $EditCustomer_atom_W.selectedCustomer$.loyalty.oclIsUndefined() then '' else $EditCustomer_atom_W.selectedCustomer$.loyalty.toString() endif]
-                }
+                text := [$EditCustomer_atom_W.selectedCustomer$.loyalty.toString()]
+            }
             catch (SecurityException) {
-                text := [null]
+                text := [invalid]
             }     
-        }  
-        //event onView(text) 
+        }
     }
 
-Button Edit_Loyalty_B {
+    Button Edit_Loyalty_B {
         String text := ['Update loyalty']
         event onClick {
             reevaluate EditCustomer_F_loyalty.error
+            if [$EditCustomer_F_loyalty.text$.oclIsInvalid()] {
+                EditCustomer_F_loyalty.text := [null]
+            }
 
-            if [$EditCustomer_F_loyalty.text$.oclIsUndefined()] {
+            if [$EditCustomer_F_loyalty.text$.oclIsUndefined() or $EditCustomer_F_loyalty.text$ = ''] {
                 EditCustomer_F_loyalty.error := ['Required field']
             }
             else {
-                if [$EditCustomer_F_loyalty.text$.toInteger().oclIsUndefined()
-                    and $EditCustomer_F_loyalty.text$ <> '']{
+                if [$EditCustomer_F_loyalty.text$.toInteger().oclIsUndefined()]{
                     EditCustomer_F_loyalty.error := ['The input must be a valid integer']
-                    }
                 }
+            }
              
             if [$EditCustomer_F_loyalty.error$ = null] {
                 try {
-                    if [$EditCustomer_F_loyalty.text$ = ''] {
-                        [$EditCustomer_atom_W.selectedCustomer$.loyalty] := [null]
-                    } else {
                     [$EditCustomer_atom_W.selectedCustomer$.loyalty] := [$EditCustomer_F_loyalty.text$.toInteger()]
-                    }
-                    reevaluate EditCustomer_F_loyalty.text
                     notification (['Success'],['The loyalty of this customer has been successfully updated.'],[-1])
-                    }
+                }
                 catch (SecurityException) {
                     notification (['Security error'],['You do not have permission to update the loyalty of this Customer.'],[-1])
-                    }
-                 reevaluate EditCustomer_F_loyalty.text
                 }
+                reevaluate EditCustomer_F_loyalty.text
+            }
             else {
-                notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
+                notification(['Error'],['The field "loyalty" contains errors. Please, check the field.'],[-1]) 
             }
         }
     }
@@ -277,27 +341,45 @@ Button Edit_Loyalty_B {
     Table EditCustomer_F_contacts {
         Set(Employee) rows := [Employee.allInstances()]
         String error := [null]
-        Set(Employee) selected
+        Set(Employee) selected {
+            if [$selected$->oclIsInvalid()] {
+                error := ['no permission']
+            }
+            else {
+                error := [null]
+            }
+        }
         
         columns {
             ['login'] : Label login {
+                String error := [null]
+                String text {
+                    if [$text$.oclIsInvalid()] {
+                        error := ['no permission']
+                    }
+                    else {
+                        error := [null]
+                    }     
+                }
                 event onView (text) {
+                    text := [null]
                     try {
                         text := [$EditCustomer_F_contacts.row$.login]
                     }
                     catch (SecurityException) {
-                        text := ['---']
+                        text := [invalid]
                     }
                 }
             }
         }
          
         event onView (selected) {
+            selected := [null]
             try {
                 selected := [$EditCustomer_atom_W.selectedCustomer$.contacts]
             }
             catch (SecurityException) {
-                selected := [null]
+                selected := [invalid]
             }
         }   
     }
@@ -306,28 +388,25 @@ Button Edit_Loyalty_B {
         String text := ['Update contacts']
         event onClick {
             reevaluate EditCustomer_F_contacts.error
-
-            if [$EditCustomer_F_contacts.selected$->oclIsUndefined()] {
-                EditCustomer_F_contacts.error := ['Required selection']
+            if [$EditCustomer_F_contacts.selected$->oclIsInvalid()] {
+                EditCustomer_F_contacts.selected := [null]
             }
-            else {
-                if [$EditCustomer_F_contacts.selected$->isEmpty()] {
-                    EditCustomer_F_contacts.error := ['Required selection']
-                }
+
+            if [$EditCustomer_F_contacts.selected$->oclIsUndefined() or $EditCustomer_F_contacts.selected$->isEmpty()] {
+                EditCustomer_F_contacts.error := ['Required selection']
             }
 
             if [$EditCustomer_F_contacts.error$ = null] {
-                
                 try {
                     foreach contacts_remove in [$EditCustomer_atom_W.selectedCustomer$.contacts] {
                         if [$EditCustomer_F_contacts.selected$->excludes($contacts_remove$)]{
                             [$EditCustomer_atom_W.selectedCustomer$.contacts] -= [$contacts_remove$]
-                            }
+                        }
                     }  
                     foreach contacts_add in [$EditCustomer_F_contacts.selected$] {
                         if [$EditCustomer_atom_W.selectedCustomer$.contacts->excludes($contacts_add$)] {
                             [$EditCustomer_atom_W.selectedCustomer$.contacts] += [$contacts_add$] 
-                            }
+                        }
                     }          
 
                     notification (['Success'],['The contacts of this customer has been updated.'],[-1])
@@ -335,16 +414,10 @@ Button Edit_Loyalty_B {
                 catch (SecurityException) {
                     notification (['Security error'],['You do not have permission to edit the Customer.'],[-1])
                 }
-                    reevaluate EditCustomer_F_name.text
-                    reevaluate EditCustomer_F_surname.text
-                    reevaluate EditCustomer_F_birthday.date
-                    reevaluate EditCustomer_F_email.text
-                    reevaluate EditCustomer_F_phone.text
-                    reevaluate EditCustomer_F_loyalty.text
-                    reevaluate EditCustomer_F_contacts.selected
+                reevaluate EditCustomer_F_contacts.selected               
             }
             else {
-                notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
+                notification(['Error'],['The field "contacts" contains errors. Please, check the field.'],[-1]) 
             }
         }
     }
@@ -353,7 +426,6 @@ Button Edit_Loyalty_B {
         String text := ['Back']
         event onClick {
             back
-            //open SearchCustomers_W ()
         }
     }
 }
