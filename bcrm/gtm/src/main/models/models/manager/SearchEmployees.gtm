@@ -34,15 +34,21 @@ Window SearchEmployees_W {
 
         columns {
             ['User'] : Label login {
+                String text {
+                    if [$text$.oclIsInvalid()] {
+                        error := ['no permission']
+                    }
+                    else {
+                        error := [null]
+                    }
+                }
                 event onView (text) {
+                    text := [null]
                     try {
                         text := [$Employees_T.row$.login]
                     }
                     catch(SecurityException) {
-                        text := ['---']
-                    }
-                    catch(ModelException) {
-                        text := ['+++']
+                        text := [invalid]
                     }
                 }
             }

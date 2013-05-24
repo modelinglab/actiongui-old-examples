@@ -7,12 +7,21 @@ Window EditEmployee_W {
     }
     TextField EditEmployee_F_login {
         String error := [null]
+        String text {
+            if [$text$.oclIsInvalid()] {
+                error := ['no permission']
+            }
+            else {
+                error := [null]
+            }
+        }
         event onView(text) {
+            text := [null]
             try {
                 text := [$EditEmployee_W.selectedEmployee$.login]
             }
             catch (SecurityException) {
-                text := ['---']
+                text := [invalid]
             }
         }
     }
@@ -23,12 +32,21 @@ Window EditEmployee_W {
     
     TextField EditEmployee_F_password {
         String error := [null]
+        String text {
+            if [$text$.oclIsInvalid()] {
+                error := ['no permission']
+            }
+            else {
+                error := [null]
+            }
+        }
         event onView(text) {
+            text := [null]
             try {
                 text := [$EditEmployee_W.selectedEmployee$.password]
             }
             catch (SecurityException) {
-                text := [null]
+                text := [invalid]
             }
         }
     }
@@ -39,18 +57,26 @@ Window EditEmployee_W {
     ComboBox EditEmployee_F_myRole {
         String error := [null]
         Set(Role) rows := [Role.allInstances()]
-        Role selected
+        Role selected {
+            if [$selected$.oclIsInvalid()] {
+                error := ['no permission']
+            }
+            else {
+                error := [null]
+            }
+        }
 
         Label myRole {
             String text := [$EditEmployee_F_myRole.row$.name()]
         }
 
         event onView (selected) {
+            selected := [null]
             try {
                 selected := [$EditEmployee_W.selectedEmployee$.myRole]
             }
             catch (SecurityException) {
-                selected := [null]
+                selected := [invalid]
             }
         }
     }
@@ -62,37 +88,40 @@ Window EditEmployee_W {
             reevaluate EditEmployee_F_password.error
             reevaluate EditEmployee_F_myRole.error           
 
-            if [$EditEmployee_F_login.text$.oclIsUndefined()] {
-                EditEmployee_F_login.error := ['Required field']
+            if [not $EditEmployee_F_login.text$.oclIsInvalid()] {
+                if [$EditEmployee_F_login.text$.oclIsUndefined()] {
+                    EditEmployee_F_login.error := ['Required field']
+                }
             }
-            //if [$EditEmployee_F_password.text$.oclIsUndefined()] {
-            //    EditEmployee_F_password.error := ['Required field']
-            //}
-            if [$EditEmployee_F_myRole.selected$.oclIsUndefined()] {
-                EditEmployee_F_myRole.error := ['Required field']
+
+            if [not $EditEmployee_F_myRole.selected$->oclIsInvalid()] {
+                if [$EditEmployee_F_myRole.selected$->oclIsUndefined()] {
+                    EditEmployee_F_myRole.error := ['Required field']
+                }
             }
 
             if [$EditEmployee_F_login.error$ = null and $EditEmployee_F_password.error$ = null and $EditEmployee_F_myRole.error$ = null] {
-                if [not Employee.allInstances()->exists(u|u <> $EditEmployee_W.selectedEmployee$ and u.login=$EditEmployee_F_login.text$)] {
-                    try {
-                        [$EditEmployee_W.selectedEmployee$.login] := [$EditEmployee_F_login.text$]
-                        if [not($EditEmployee_F_password.text$.oclIsUndefined())]{
-                            [$EditEmployee_W.selectedEmployee$.password] := [$EditEmployee_F_password.text$]
+                if [(not $EditEmployee_F_login.text$.oclIsInvalid()) and (not $EditEmployee_F_password.text$.oclIsInvalid()) and (not $EditEmployee_F_myRole.selected$->oclIsInvalid())] {
+                    if [not Employee.allInstances()->exists(u|u <> $EditEmployee_W.selectedEmployee$ and u.login=$EditEmployee_F_login.text$)] {
+                        try {
+                            [$EditEmployee_W.selectedEmployee$.login] := [$EditEmployee_F_login.text$]
+                            if [not($EditEmployee_F_password.text$.oclIsUndefined())]{
+                                [$EditEmployee_W.selectedEmployee$.password] := [$EditEmployee_F_password.text$]
+                            }
+                            [$EditEmployee_W.selectedEmployee$.myRole] := [$EditEmployee_F_myRole.selected$]
+
+                            notification (['Success'],['The Employee has been edited successfully.'],[-1])
                         }
-                        [$EditEmployee_W.selectedEmployee$.myRole] := [$EditEmployee_F_myRole.selected$]
-                        
-                        notification (['Success'],['The Employee has been edited successfully.'],[-1])
-                        
+                        catch (SecurityException) {
+                            notification(['Security error'],['You do not have permission to edit the Employee.'],[-1])
+                        }
                         reevaluate EditEmployee_F_login.text
                         reevaluate EditEmployee_F_password.text
                         reevaluate EditEmployee_F_myRole.selected
                     }
-                    catch (SecurityException) {
-                        notification(['Security error'],['You do not have permission to edit the Employee.'],[-1])
+                    else {
+                       notification(['Error'],['There already exists an Employee with this login.'],[-1]) 
                     }
-                }
-                else {
-                   notification(['Error'],['There already exists an Employee with this login.'],[-1]) 
                 }
             }
             else {

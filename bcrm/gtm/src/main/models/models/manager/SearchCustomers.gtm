@@ -34,72 +34,120 @@ Window SearchCustomers_W {
 
         columns {
             ['name'] : Label name {
+                String text {
+                    if [$text$.oclIsInvalid()] {
+                        error := ['no permission']
+                    }
+                    else {
+                        error := [null]
+                    }
+                }
                 event onView (text) {
+                    text := [null]
                     try {
                         text := [$Customers_T.row$.name]
                     }
                     catch(SecurityException) {
-                        text := [null]
+                        text := [invalid]
                     }
                 }
             }
             ['surname'] : Label surname {
+                String text {
+                    if [$text$.oclIsInvalid()] {
+                        error := ['no permission']
+                    }
+                    else {
+                        error := [null]
+                    }
+                }
                 event onView (text) {
+                    text := [null]
                     try {
                         text := [$Customers_T.row$.surname]
                     }
                     catch(SecurityException) {
-                        text := [null]
+                        text := [invalid]
                     }
                 }
             }
 
             ['birthday'] : Label birthday {
                 String text {
-                    if [$text$.oclIsUndefined()] {error := ['no permission']} else {error := [null]}
-                        }
-                event onView (text) {
-                    try {
-                        text := [if $Customers_T.row$.birthday.oclIsUndefined() then '' else $Customers_T.row$.birthday.truncate(TimeUnit::DAY).toString().substring(1,10) endif]
+                    if [$text$.oclIsInvalid()] {
+                        error := ['no permission']
                     }
-                    catch(SecurityException) {
-                        text := [null]
-                        }
+                    else {
+                        error := [null]
                     }
                 }
+                event onView (text) {
+                    text := [null]
+                    try {
+                        text := [$Customers_T.row$.birthday.toString().substring(1,10)]
+                    }
+                    catch(SecurityException) {
+                        text := [invalid]
+                    }
+                }
+            }
 
             ['email'] : Label email__________ {
                 String text {
-                    if [$text$.oclIsUndefined()] {error := ['no permission']} else {error := [null]}
-                        }
+                    if [$text$.oclIsInvalid()] {
+                        error := ['no permission']
+                    }
+                    else {
+                        error := [null]
+                    }
+                }
                 event onView (text) {
+                    text := [null]
                     try {
-                        text := [if $Customers_T.row$.email.oclIsUndefined() then '' else  $Customers_T.row$.email endif]
+                        text := [$Customers_T.row$.email]
                     }
                     catch(SecurityException) {
-                        text := [null]
+                        text := [invalid]
                     }
                 }
             }
 
             ['phone'] : Label phone {
+                String text {
+                    if [$text$.oclIsInvalid()] {
+                        error := ['no permission']
+                    }
+                    else {
+                        error := [null]
+                    }
+                }
                 event onView (text) {
+                    text := [null]
                     try {
                         text := [$Customers_T.row$.phone]
                     }
                     catch(SecurityException) {
-                        text := [null]
+                        text := [invalid]
                     }
                 }
             }
 
             ['loyalty'] : Label loyalty {
+                String text {
+                    if [$text$.oclIsInvalid()] {
+                        error := ['no permission']
+                    }
+                    else {
+                        error := [null]
+                    }
+                }
                 event onView (text) {
+                    text := [null]
                     try {
-                        text := [if $Customers_T.row$.loyalty.oclIsUndefined() then '' else $Customers_T.row$.loyalty.toString() endif]
+                        text := [$Customers_T.row$.loyalty.toString()]
                     }
                     catch(SecurityException) {
-                        text := [null]
+                        text := [invalid]
                     }
                 }
 

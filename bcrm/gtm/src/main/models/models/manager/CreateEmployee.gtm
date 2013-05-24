@@ -47,7 +47,7 @@ Window CreateEmployee_W {
             }
 
             if [$NewEmployee_F_login.error$ = null and $NewEmployee_F_password.error$ = null and $NewEmployee_F_myRole.error$ = null] {
-                if [not(Employee.allInstances()->exists(u|u.login=$NewEmployee_F_login.text$ and u.password=$NewEmployee_F_password.text$))] {
+                if [not(Employee.allInstances()->exists(u|u.login=$NewEmployee_F_login.text$))] {
                     try {
                         newEmployee := new Employee
                         [$newEmployee$.login] := [$NewEmployee_F_login.text$]
