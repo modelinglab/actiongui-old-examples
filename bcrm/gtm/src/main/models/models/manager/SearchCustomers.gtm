@@ -84,7 +84,7 @@ Window SearchCustomers_W {
                 event onView (text) {
                     text := [null]
                     try {
-                        text := [$Customers_T.row$.birthday.toString().substring(1,10)]
+                        text := [if $Customers_T.row$.birthday.oclIsUndefined() then '' else $Customers_T.row$.birthday.toString().substring(1,10) endif]
                     }
                     catch(SecurityException) {
                         text := [invalid]
@@ -144,7 +144,7 @@ Window SearchCustomers_W {
                 event onView (text) {
                     text := [null]
                     try {
-                        text := [$Customers_T.row$.loyalty.toString()]
+                        text := [if $Customers_T.row$.loyalty.oclIsUndefined() then '' else $Customers_T.row$.loyalty.toString() endif]
                     }
                     catch(SecurityException) {
                         text := [invalid]
