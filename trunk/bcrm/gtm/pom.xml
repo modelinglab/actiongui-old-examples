@@ -21,19 +21,7 @@
                 <version>2.2-SNAPSHOT</version>
                 <extensions>true</extensions>
             </plugin>
-            <plugin>
-                <groupId>org.modelinglab.actiongui.tasks.gtm-macro</groupId>
-                <artifactId>gtm-macro-maven-plugin</artifactId>
-                <version>1.0-SNAPSHOT</version>
-                <executions>
-                    <execution>
-                        <id>expand-macros</id>
-                        <goals>
-                            <goal>expand-macros</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            
         </plugins>
     </build>
     
