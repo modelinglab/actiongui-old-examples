@@ -1,4 +1,4 @@
-entity Employee isUser {
+entity Employee {
     String login
     String password 
     Role myRole

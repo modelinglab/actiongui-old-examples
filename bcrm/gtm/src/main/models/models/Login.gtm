@@ -1,5 +1,5 @@
 Window Login_W isMain{
-    Role role := [Role::SYSTEM]
+    //Role role := [Role::SYSTEM]
 
     String text := ['Log In']
 
