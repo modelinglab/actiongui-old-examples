@@ -109,10 +109,14 @@ Window SearchEmployees_W {
                 if [if $Employees_T.selected$->oclIsUndefined() then false else $Employees_T.selected$->notEmpty() endif] {
                     try {
                         foreach deleteObject in [$Employees_T.selected$] {
-                           delete [$deleteObject$] 
+                           if [$deleteObject$<>$SearchEmployees_W.caller$] {
+                                delete [$deleteObject$] 
+                                }
+                           else {
+                                notification (['Error'], ['You can not delete yourself while you are logged-in'], [-1])
+                                }
                         }
-                        notification (['Success'],['The selected elements been deleted successfully.'],[-1])
-
+                        
                         reevaluate Employees_T_page.current
                         reevaluate Employees_T_page.size
                         reevaluate Employees_T_page.total
