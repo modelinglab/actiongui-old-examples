@@ -40,7 +40,7 @@ Window ManagerMenu_W {
         String text := ['Logout']
 
         event onClick {
-            open Login_W()
+            exit
         }
     }
 }
