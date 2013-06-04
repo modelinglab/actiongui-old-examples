@@ -275,23 +275,24 @@ Window EditCustomer_atom_W {
     }
     TextField EditCustomer_F_loyalty {
         String error := [null]
-        String text {
-            /*
-            if [$EditCustomer_F_loyalty.text$ <> ''] {
-                if [$EditCustomer_F_loyalty.text$.toInteger().oclIsUndefined()]{
-                      EditCustomer_F_loyalty.error := ['The input must be a valid integer']
-                }
-            }
-            else {
-                EditCustomer_F_loyalty.error := [null]
-            }
-            */
+        String text {     
+            
             if [$text$.oclIsInvalid()] {
                 error := ['no permission']
             }
             else {
-                error := [null]
-            }           
+                if [$text$ <> '' and $text$.oclIsUndefined()=false] {
+                    if [$text$.toInteger().oclIsUndefined()]{
+                        error := ['The input must be a valid integer']
+                    }   
+                    else {
+                        error := [null]
+                    }
+                }
+                else {
+                    error := [null]
+                }
+            }             
         }
         event onView (text){
             text := [null]
