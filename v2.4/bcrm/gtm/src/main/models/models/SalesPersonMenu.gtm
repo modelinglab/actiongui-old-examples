@@ -1,0 +1,25 @@
+Window SalesPersonMenu_W {
+    String text := ['SalesPerson Menu']
+
+    Button Manager_M_SearchCustomers_W_B {
+        String text := ['Search customers']
+
+        event onClick {
+            open SearchCustomers_W()
+        }
+    }
+    Button Manager_M_ChangePassword_W_B {
+        String text := ['Change password']
+
+        event onClick {
+            open ChangePassword_W()
+        }
+    }
+    Button Manager_M_Login_W_B {
+        String text := ['Logout']
+
+        event onClick {
+            exit
+        }
+    }
+}
