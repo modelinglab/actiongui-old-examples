@@ -1,0 +1,47 @@
+Window Login_W isMain{
+    //Role role := [Role::SYSTEM]
+
+    String text := ['Log In']
+
+    Label Credentiasl_F_login_L {
+        String text := ['Login:']
+    }
+    TextField Credentiasl_F_login {
+
+    }
+    Label Credentiasl_F_password_L {
+        String text := ['Passw:']
+    }
+    PasswordField Credentiasl_F_password {
+
+    }
+
+    Button Login_B {
+        String text := ['Log in']
+        Employee loggedUser
+        event onClick {
+            try {
+                loggedUser := [Employee.allInstances()->any(c|c.login = $Credentiasl_F_login.text$ and c.password = $Credentiasl_F_password.text$)]
+            }
+            catch (SecurityException) {
+                notification(['Security Error'],['you do not hace permission to read the login information'],[-1])
+            }
+            if [not($loggedUser$.oclIsUndefined())] {
+                if [$loggedUser$.myRole = Role::SALESPERSON] {
+                    open SalesPersonMenu_W(caller:[$loggedUser$], role:[$loggedUser$.myRole])
+                }
+                else {
+                    if [$loggedUser$.myRole = Role::MANAGER] {
+                        open ManagerMenu_W(caller:[$loggedUser$], role:[$loggedUser$.myRole])
+                    }
+                    else {
+                        notification (['Message'],['You have no role assigned.'],[-1])
+                    }
+                } 
+            }
+            else {
+                notification (['Message'],['Wrong credentials.'],[-1])
+            }
+        }
+    }
+}

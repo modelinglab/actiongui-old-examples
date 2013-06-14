@@ -1,0 +1,53 @@
+
+.CreateEmployee_W .NewEmployee_F_login_L  {
+    position : absolute;
+    left: 10px;
+    top: 30px;
+}
+
+.CreateEmployee_W .NewEmployee_F_login  {
+    position : absolute;
+    left: 80px;
+    top: 30px;
+}
+
+.CreateEmployee_W .NewEmployee_F_password_L  {
+    position : absolute;
+    left: 10px;
+    top: 60px;
+}
+
+.CreateEmployee_W .NewEmployee_F_password  {
+    position : absolute;
+    left: 80px;
+    top: 60px;
+}
+
+.CreateEmployee_W .NewEmployee_F_myRole_L  {
+    position : absolute;
+    left: 10px;
+    top: 90px;
+}
+
+.CreateEmployee_W .NewEmployee_F_myRole  {
+    position : absolute;
+    left: 80px;
+    top: 90px;
+}
+
+
+.CreateEmployee_W .NewEmployee_F_role .role  {
+}
+
+.CreateEmployee_W .Create_B  {
+    position : absolute;
+    left: 80px;
+    top: 120px;
+}
+
+.CreateEmployee_W .Back_B  {
+    position : absolute;
+    left: 10px;
+    top: 120px;
+}
+

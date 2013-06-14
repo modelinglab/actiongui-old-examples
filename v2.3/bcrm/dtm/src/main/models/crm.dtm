@@ -1,0 +1,23 @@
+entity Employee {
+    String login
+    String password 
+    Role myRole
+    Set(Customer) customers oppositeTo contacts
+}
+
+entity Customer {
+    String name
+    String surname
+    Date birthday
+    String email
+    String phone
+    Integer loyalty
+
+    Set(Employee) contacts oppositeTo customers
+}
+
+enum Role {
+    MANAGER
+    SALESPERSON
+    SYSTEM
+}
