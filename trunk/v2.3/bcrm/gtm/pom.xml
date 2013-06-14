@@ -18,7 +18,7 @@
             <plugin>
                 <groupId>org.modelinglab.actiongui.maven</groupId>
                 <artifactId>ag-gtm-maven-plugin</artifactId>
-                <version>2.2-SNAPSHOT</version>
+                <version>2.3</version>
                 <extensions>true</extensions>
             </plugin>
             
