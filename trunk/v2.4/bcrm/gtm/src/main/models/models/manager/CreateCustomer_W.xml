@@ -8,8 +8,8 @@ and open the template in the editor.
 <ns1:window-layout
     ns1:id="CreateCustomer_W"
     xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-    xmlns:ns1='http://actiongui.org/schemas/ag-layout/2.4'
-    xsi:schemaLocation='http://actiongui.org/schemas/ag-layout/2.4 http://actiongui.org/schemas/ag-layout/2.4/schema.xsd'>
+    xmlns:ns1='http://actiongui.org/schemes/ag-layout/2.4'
+    xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
     <ns1:line-layout orientation="horizontal" ns1:height="100%">
         <ns1:entry expand-ratio="1">
             <ns1:line-layout orientation="horizontal"/>
