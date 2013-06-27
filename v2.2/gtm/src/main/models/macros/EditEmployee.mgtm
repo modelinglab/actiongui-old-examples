@@ -1,0 +1,52 @@
+Window EditEmployee_W {
+    String text := ['Edit Employee']
+    Employee selectedEmployee
+
+    #form EditEmployee_F {
+        entity: Employee
+        instance: [$EditEmployee_W.selectedEmployee$]
+        attr: login {
+            label: ['Login:']
+            assert: [not $text$.oclIsUndefined()] {
+                message: ['Required field']
+                assert: [$text$ <> ''] {
+                    message: ['Required field']
+                }
+            }
+        }
+        attr: password {
+            label: ['Password:']
+            assert: [not $text$.oclIsUndefined()] {
+                message: ['Required field']
+                assert: [$text$ <> ''] {
+                    message: ['Required field']
+                }
+            }
+        }
+        attr: myRole  {
+            label: ['Role:']
+            assert: [not $selected$.oclIsUndefined()] {
+                message: ['Required field']
+            }
+        }
+    }#
+    
+    Button Update_B {
+        String text := ['Edit']
+        event onClick {
+            #update {
+                form: EditEmployee_F
+                assert: [not Employee.allInstances()->exists(u|u <> $EditEmployee_W.selectedEmployee$ and u.login=$EditEmployee_F_login.text$)] {
+                    message: ['There already exists an Employee with this login']
+                }
+            }#
+        }
+    }
+
+    Button Back_B {
+        String text := ['Back']
+        event onClick {
+            back
+        }
+    }
+}

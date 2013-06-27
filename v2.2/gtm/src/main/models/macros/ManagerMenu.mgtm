@@ -1,0 +1,24 @@
+Window ManagerMenu_W {
+    String text := ['Manager Menu']
+
+    #menu Manager_M{
+        target: CreateEmployee_W {
+            label: ['Create employee']
+        }
+        target: SearchEmployees_W {
+            label: ['Search employees']
+        }
+        target: CreateCustomer_W {
+            label: ['Create customer']
+        }
+        target: SearchCustomers_W {
+            label: ['Search customers']
+        }
+        target: ChangePassword_W {
+            label: ['Change password']
+        }
+        target: Login_W {
+            label: ['Logout']
+        }
+    }#
+}

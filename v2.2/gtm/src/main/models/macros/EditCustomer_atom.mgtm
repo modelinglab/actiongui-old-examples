@@ -1,0 +1,169 @@
+Window EditCustomer_atom_W {
+    String text := ['Edit Customer']
+    Customer selectedCustomer
+
+    #form Edit_Name {
+        entity: Customer
+        instance: [$EditCustomer_atom_W.selectedCustomer$]
+        attr: name {
+            assert: [not $text$.oclIsUndefined()] {
+                message: ['Required field']
+                assert: [$text$ <> ''] {
+                    message: ['Required field'] 
+                }
+            }
+        }
+    }#
+
+    Button Edit_Name_B {
+        String text := ['Update name']
+        event onClick {
+            #update {
+                form: Edit_Name
+            }#
+        }
+    }
+
+    #form Edit_Surname {
+        entity: Customer
+        instance: [$EditCustomer_atom_W.selectedCustomer$]
+        attr: surname {
+            assert: [not $text$.oclIsUndefined()] {
+                message: ['Required field']
+                assert: [$text$ <> ''] {
+                    message: ['Required field'] 
+                }
+            }
+        }
+    }#
+    
+    Button Edit_Surname_B {
+        String text := ['Update surname']
+        event onClick {
+            #update {
+                form: Edit_Surname
+            }#
+        }
+    }
+
+    #form Edit_Birthday {
+        entity: Customer
+        instance: [$EditCustomer_atom_W.selectedCustomer$]
+        attr: birthday {
+            assert: [not $date$.oclIsUndefined()] {
+                message: ['Required field']
+                assert: [$date$ < Date.now()] {
+                    message: ['The selected date must be previous to the current date']
+                }
+            }
+        }
+    }#
+
+    Button Edit_Birthday_B {
+        String text := ['Update birthday']
+        event onClick {
+            #update {
+                form: Edit_Birthday
+            }#
+        }
+    }
+
+    #form Edit_Email {
+        entity: Customer
+        instance: [$EditCustomer_atom_W.selectedCustomer$]
+        attr: email {
+            assert: [not $text$.oclIsUndefined()] {
+                message: ['Required field']
+                assert: [$text$ <> ''] {
+                    message: ['Required field'] 
+                }
+            }
+        }   
+    }#
+
+    Button Edit_Email_B {
+        String text := ['Update birthday']
+        event onClick {
+            #update {
+                form: Edit_Email
+            }#
+        }
+    }
+
+    #form Edit_Phone {
+        entity: Customer
+        instance: [$EditCustomer_atom_W.selectedCustomer$]
+        attr: phone {
+                assert: [not $text$.oclIsUndefined()] {
+                message: ['Required field']
+                assert: [$text$ <> ''] {
+                    message: ['Required field'] 
+                }
+            }
+        }
+    }#
+
+    Button Edit_Phone_B {
+        String text := ['Update phone']
+        event onClick {
+            #update {
+                form: Edit_Phone
+            }#
+        }
+    }
+
+    #form Edit_Loyalty {
+        entity: Customer
+        instance: [$EditCustomer_atom_W.selectedCustomer$]
+        attr: loyalty {
+            assert: [not $text$.oclIsUndefined()] {
+                message: ['Required field']
+                assert: [$text$ <> ''] {
+                    message: ['Required field'] 
+                    assert: [not $text$.toInteger().oclIsUndefined()] {
+                        message: ['The input must be a valid integer']
+                    }
+                }
+            }
+        }
+    }#
+
+    Button Edit_Loyalty_B {
+        String text := ['Update loyalty']
+        event onClick {
+            #update {
+                form: Edit_Loyalty
+            }#
+        }
+    }
+    
+    #form Edit_Contacts {
+        entity: Customer
+        instance: [$EditCustomer_atom_W.selectedCustomer$]
+        assoc: contacts {
+            column: login
+            assert: [not $selected$->oclIsUndefined()] {
+                message: ['Required field']
+                assert: [not $selected$->isEmpty()] {
+                    message: ['Required field'] 
+                }
+            }
+        }
+    }#
+
+    Button Edit_Contacts_B {
+        String text := ['Update contacts']
+        event onClick {
+            #update {
+                form: Edit_Contacts
+            }#
+        }
+    }
+
+    Button Back_B {
+        String text := ['Back']
+        event onClick {
+            back
+        }
+    }
+}
