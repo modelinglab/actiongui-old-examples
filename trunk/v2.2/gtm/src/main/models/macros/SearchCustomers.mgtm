@@ -1,0 +1,48 @@
+Window SearchCustomers_W {
+    String text := ['Search Customers']
+
+    #table Customers_T{
+        entity: Customer
+        size: [5]
+    }#
+
+    Button Edit_B {
+        String text := ['Edit']
+        event onClick {
+
+            #forward {
+                target: EditCustomer_atom_W
+                arg: selectedCustomer {
+                    value: [$Customers_T.selected$->any(true)]
+                }
+                assert: [if $Customers_T.selected$->oclIsUndefined() then false else $Customers_T.selected$->size() = 1 endif] {
+                    message: ['You must select exactly one customer']
+                }
+            }#
+
+        }
+    }
+
+    Button Delete_B {
+        String text := ['Delete']
+        event onClick {
+            #delete {
+                instance: [$Customers_T.selected$]
+                refresh: Customers_T
+                assert: [not $Customers_T.selected$->oclIsUndefined()] {
+                    message: ['You must select at least one customer'] 
+                    assert: [$Customers_T.selected$->notEmpty()] {
+                        message: ['You must select at least one customer']
+                    }
+                }
+            }#
+        }
+    }
+
+    Button Back_B {
+        String text := ['Back']
+        event onClick {
+            back
+        }
+    }
+}

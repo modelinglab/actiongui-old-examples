@@ -1,0 +1,50 @@
+Window SearchEmployees_W {
+    String text := ['Search Employees']
+
+    #table Employees_T{
+        entity: Employee      
+        column: login {
+            label: ['User']
+        }
+        size: [5]
+        sortedBy: [login]
+    }#
+
+    Button Edit_B {
+        String text := ['Edit']
+        event onClick {
+            #forward {
+                target: EditEmployee_W
+                arg: selectedEmployee {
+                    value: [$Employees_T.selected$->any(true)]
+                }
+                assert: [if $Employees_T.selected$->oclIsUndefined() then false else $Employees_T.selected$->size() = 1 endif] {
+                    message: ['You must select exactly one employee']
+                }
+            }#
+        }
+    }
+
+    Button Delete_B {
+        String text := ['Delete']
+        event onClick {
+            #delete {
+                instance: [$Employees_T.selected$]
+                refresh: Employees_T
+                assert: [not $Employees_T.selected$->oclIsUndefined()] {
+                    message: ['You must select at least one employee']
+                    assert: [$Employees_T.selected$->notEmpty()] {
+                        message: ['You must select at least one employee']
+                    }
+                }
+            }#
+        }
+    }
+
+    Button Back_B {
+        String text := ['Back']
+        event onClick {
+            back
+        }
+    }
+}

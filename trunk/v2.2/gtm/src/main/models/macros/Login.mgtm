@@ -1,0 +1,40 @@
+Window Login_W isMain{
+    String text := ['Log In']
+
+    #form Credentials_F {
+        entity: Employee
+        attr: login {
+            label: ['Login:']
+        }
+        attr: password {
+            label: ['Passw:']
+        }
+    }#
+
+    Button Login_B {
+        String text := ['Log in']
+        Employee loggedUser
+        event onClick {
+            #login {
+                credentials: Credentials_F
+                result: loggedUser
+            }#
+            if [not($loggedUser$.oclIsUndefined())] {
+                if [$loggedUser$.myRole = Role::SALESPERSON] {
+                    open SalesPersonMenu_W(caller:[$loggedUser$], role:[$loggedUser$.myRole])
+                }
+                else {
+                    if [$loggedUser$.myRole = Role::MANAGER] {
+                        open ManagerMenu_W(caller:[$loggedUser$], role:[$loggedUser$.myRole])
+                    }
+                    else {
+                        notification (['Message'],['You have no role assigned.'],[-1])
+                    }
+                } 
+            }
+            else {
+                notification (['Message'],['Wrong credentials.'],[-1])
+            }
+        }
+    }
+}

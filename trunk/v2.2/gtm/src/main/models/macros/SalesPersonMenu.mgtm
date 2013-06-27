@@ -1,0 +1,16 @@
+Window SalesPersonMenu_W {
+    String text := ['SalesPerson Menu']
+
+    #menu SalesPerson_M{
+        target: SearchCustomers_W {
+            label: ['Search customers']
+        }
+        target: ChangePassword_W {
+            label: ['Change password']
+        }
+        target: Login_W {
+            label: ['Logout']
+        }
+    }#
+
+}

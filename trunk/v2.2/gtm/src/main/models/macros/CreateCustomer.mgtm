@@ -1,0 +1,70 @@
+Window CreateCustomer_W {
+    String text := ['Create Customer']
+
+    #form NewCustomer_F {
+        entity: Customer
+        attr: name {
+            assert: [not $text$.oclIsUndefined()] {
+                message: ['Required field']
+            }
+        }
+        attr: surname {
+            assert: [not $text$.oclIsUndefined()] {
+                message: ['Required field']
+            }
+        }
+        attr: birthday  {
+            assert: [not $date$.oclIsUndefined()] {
+                message: ['Required field']
+                assert: [$date$ < Date.now()] {
+                    message: ['The selected date must be previous to the current date']
+                }
+            }
+        }
+        attr: email {
+            assert: [not $text$.oclIsUndefined()] {
+                message: ['Required field']
+            }
+        }
+        attr: phone {
+            assert: [not $text$.oclIsUndefined()] {
+                message: ['Required field']
+            }
+        }
+        attr: loyalty {
+            assert: [not $text$.oclIsUndefined()] {
+                message: ['Required field']
+                assert: [not $text$.toInteger().oclIsUndefined()] {
+                    message: ['The input must be a valid integer']
+                }
+            }
+        }
+        assoc: contacts {
+            assert: [not $selected$->oclIsUndefined()] {
+                message: ['Select at least one contact from the table']
+                assert: [$selected$->size() > 0] {
+                    message: ['Select at least one contact from the table']
+                }
+            }
+            column: login
+        }
+    }#
+
+    Button Create_B {
+        String text := ['Create']
+        event onClick {
+
+            #create {
+                form: NewCustomer_F
+            }#
+           
+        }
+    }
+
+    Button Back_B {
+        String text := ['Back']
+        event onClick {
+            back
+        }
+    }
+}

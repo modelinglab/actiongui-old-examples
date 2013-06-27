@@ -1,0 +1,231 @@
+Window EditCustomer_W {
+    Customer selectedCustomer
+
+    Label EditCustomer_F_name_L {
+        String text := ['name:']
+    }
+    TextField EditCustomer_F_name {
+        String error := [null]
+        event onView(text) {
+            try {
+                text := [$EditCustomer_W.selectedCustomer$.name]
+            }
+            catch (SecurityException) {
+                text := ['---']
+            }
+        }
+    }   
+
+    Label EditCustomer_F_surname_L {
+        String text := ['surname:']
+    }
+    TextField EditCustomer_F_surname {
+        String error := [null]
+        event onView(text) {
+            try {
+                text := [$EditCustomer_W.selectedCustomer$.surname]
+            }
+            catch (SecurityException) {
+                text := ['---']
+            }
+        }
+    }   
+
+    Label EditCustomer_F_birthday_L {
+        String text := ['birthday:']
+    }
+    DateField EditCustomer_F_birthday {
+        String error := [null]
+        event onView(date) {
+            try {
+                date := [$EditCustomer_W.selectedCustomer$.birthday]
+            }
+            catch (SecurityException) {
+                date := [null]
+            }
+        }
+    }   
+
+    Label EditCustomer_F_email_L {
+        String text := ['email:']
+    }
+    TextField EditCustomer_F_email {
+        String error := [null]
+        event onView(text) {
+            try {
+                text := [$EditCustomer_W.selectedCustomer$.email]
+            }
+            catch (SecurityException) {
+                text := ['---']
+            }
+        }
+    }   
+
+    Label EditCustomer_F_phone_L {
+        String text := ['phone:']
+    }
+    TextField EditCustomer_F_phone {
+        String error := [null]
+        event onView(text) {
+            try {
+                text := [$EditCustomer_W.selectedCustomer$.phone]
+            }
+            catch (SecurityException) {
+                text := ['---']
+            }
+        }
+    }   
+
+    Label EditCustomer_F_loyalty_L {
+        String text := ['loyalty:']
+    }
+    TextField EditCustomer_F_loyalty {
+        String error := [null]
+        Integer loyalty
+        //String text := [if $loyalty$.oclIsUndefined() then '---' else $loyalty$.toString() endif]
+        event onView(loyalty) {
+            try {
+                loyalty := [$EditCustomer_W.selectedCustomer$.loyalty]
+            }
+            catch (SecurityException) {
+                loyalty := [null]
+            }
+        }
+
+        event onView(text) {
+            text := [if $loyalty$.oclIsUndefined() then '---' else $loyalty$.toString() endif]
+        }
+    }
+
+    Label EditCustomer_F_contacts_L {
+        String text := ['contacts:']
+    }
+    Table EditCustomer_F_contacts {
+        Set(Employee) rows := [Employee.allInstances()]
+        String error := [null]
+        Set(Employee) selected
+        
+        columns {
+            ['login'] : Label login {
+                event onView (text) {
+                    try {
+                        text := [$EditCustomer_F_contacts.row$.login]
+                    }
+                    catch (SecurityException) {
+                        text := ['---']
+                    }
+                }
+            }
+        }
+         
+        event onView (selected) {
+            try {
+                selected := [$EditCustomer_W.selectedCustomer$.contacts]
+            }
+            catch (SecurityException) {
+                selected := [null]
+            }
+        }   
+    }
+
+    Button Edit_B {
+        String text := ['Edit']
+        event onClick {
+            reevaluate EditCustomer_F_name.error
+            reevaluate EditCustomer_F_surname.error
+            reevaluate EditCustomer_F_birthday.error
+            reevaluate EditCustomer_F_email.error
+            reevaluate EditCustomer_F_phone.error
+            reevaluate EditCustomer_F_loyalty.error
+            reevaluate EditCustomer_F_contacts.error
+
+            if [$EditCustomer_F_name.text$.oclIsUndefined()] {
+                EditCustomer_F_name.error := ['Error']
+            }
+            if [$EditCustomer_F_surname.text$.oclIsUndefined()] {
+                EditCustomer_F_surname.error := ['Required field']
+            }
+            if [$EditCustomer_F_birthday.date$.oclIsUndefined()] {
+                EditCustomer_F_birthday.error := ['Required field']
+            }
+            else {
+                if [$EditCustomer_F_birthday.date$ >= Date.now()] {
+                    EditCustomer_F_birthday.error := ['The selected date must be previous to the current date']
+                }
+            }
+            if [$EditCustomer_F_email.text$.oclIsUndefined()] {
+                EditCustomer_F_email.error := ['Required field']
+            }
+            if [$EditCustomer_F_phone.text$.oclIsUndefined()] {
+                EditCustomer_F_phone.error := ['Required field']
+            }
+            if [$EditCustomer_F_loyalty.text$.oclIsUndefined()] {
+                EditCustomer_F_loyalty.error := ['Required field']
+            }
+            else {
+                if [$EditCustomer_F_loyalty.text$.toInteger().oclIsUndefined()]{
+                    EditCustomer_F_loyalty.error := ['The input must be a valid integer']
+                    }
+                }
+            if [$EditCustomer_F_contacts.selected$->oclIsUndefined()] {
+                EditCustomer_F_contacts.error := ['Required selection']
+            }
+            else {
+                if [$EditCustomer_F_contacts.selected$->isEmpty()] {
+                    EditCustomer_F_contacts.error := ['Required selection']
+                }
+            }
+
+            if [$EditCustomer_F_name.error$ = null and $EditCustomer_F_surname.error$ = null and
+                    $EditCustomer_F_birthday.error$ = null and $EditCustomer_F_email.error$ = null and
+                    $EditCustomer_F_phone.error$ = null and $EditCustomer_F_loyalty.error$ = null and
+                    $EditCustomer_F_contacts.error$ = null] {
+                
+                try {
+                    foreach contacts_remove in [$EditCustomer_W.selectedCustomer$.contacts] {
+                        if [$EditCustomer_F_contacts.selected$->excludes($contacts_remove$)]{
+                            [$EditCustomer_W.selectedCustomer$.contacts] -= [$contacts_remove$]
+                            }
+                    }  
+                    foreach contacts_add in [$EditCustomer_F_contacts.selected$] {
+                        if [$EditCustomer_W.selectedCustomer$.contacts->excludes($contacts_add$)] {
+                            [$EditCustomer_W.selectedCustomer$.contacts] += [$contacts_add$] 
+                            }
+                    } 
+                    [$EditCustomer_W.selectedCustomer$.name] := [$EditCustomer_F_name.text$]
+                    [$EditCustomer_W.selectedCustomer$.surname] := [$EditCustomer_F_surname.text$]
+                    [$EditCustomer_W.selectedCustomer$.birthday] := [$EditCustomer_F_birthday.date$]
+                    [$EditCustomer_W.selectedCustomer$.email] := [$EditCustomer_F_email.text$]
+                    [$EditCustomer_W.selectedCustomer$.phone] := [$EditCustomer_F_phone.text$]
+                    [$EditCustomer_W.selectedCustomer$.loyalty] := [$EditCustomer_F_loyalty.text$.toInteger()]
+                              
+                    
+                    reevaluate EditCustomer_F_name.text
+                    reevaluate EditCustomer_F_surname.text
+                    reevaluate EditCustomer_F_birthday.date
+                    reevaluate EditCustomer_F_email.text
+                    reevaluate EditCustomer_F_phone.text
+                    reevaluate EditCustomer_F_loyalty.loyalty
+                    reevaluate EditCustomer_F_loyalty.text
+                    reevaluate EditCustomer_F_contacts.selected
+
+                    notification (['Success'],['The Customer has been edited successfully.'],[-1])
+                }
+                catch (SecurityException) {
+                    notification (['Security error'],['You do not have permission to edit the Customer.'],[-1])
+                }
+            }
+            else {
+                notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
+            }
+        }
+    }
+
+    Button Back_B {
+        String text := ['Back']
+        event onClick {
+            back
+            //open SearchCustomers_W ()
+        }
+    }
+}
