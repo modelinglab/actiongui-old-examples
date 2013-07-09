@@ -1,0 +1,99 @@
+enum Role {
+    RESIDENT
+    MANAGER
+    ADMINISTRATION
+}
+
+enum DayType {
+    MONDAY
+    TUESDAY
+    WEDNESDAY
+    THURSDAY
+    FRIDAY
+    SATURDAY
+    SUNDAY
+    FEASTDAY
+}
+
+entity User {
+    // attributes
+    String name
+    String surname
+    String login
+    String password
+    Role myRole
+    // associations
+    Set(DailyMealSelection) dailyMeals oppositeTo selectedBy
+    Set(Residency) periods oppositeTo ownedBy
+    Set(PersonalFoodRegime) regimes oppositeTo ownedBy
+}
+
+entity Guest {
+    String name
+    String surname
+    // associations
+    Set(DailyMealSelection) dailyMeals oppositeTo offeredTo
+}
+
+entity Residency {
+    Date start
+    Date end
+    Set(User) ownedBy oppositeTo periods
+}
+
+entity DailyMealSelection {
+    Date date
+    Integer breakfast
+    Integer lunch
+    Integer dinner
+    Integer timestamp
+    // associations
+    // 0..1
+    Set(User) selectedBy oppositeTo dailyMeals
+    // 0..1
+    Set(Guest) offeredTo oppositeTo dailyMeals
+}
+
+entity PersonalFoodRegime {
+    Date start
+    Date end
+    // associations
+    Set(User) ownedBy oppositeTo regimes
+    Set(FoodRegime) regimes oppositeTo residents
+}
+
+entity FoodRegime {
+    String name
+    String description
+    // associations
+    Set(PersonalFoodRegime) residents oppositeTo regimes
+}
+
+entity MealOption {
+    Integer id
+    String literal
+    Integer meal
+    // associations
+    Set(MealOptionDeadline) deadlines oppositeTo mealOption
+    // 0..1
+    Set(Meal) ownedBy oppositeTo options
+}
+
+entity Meal {
+    Integer id
+    String literal
+    // associations
+    Set(MealOption) options oppositeTo ownedBy
+}
+
+entity MealOptionDeadline {
+    Integer id
+    String literal
+    DayType type
+    Integer cday // dias de antelacion
+    Integer chour
+    Integer cminute
+    // associations
+    // 0..1
+    Set(MealOption) mealOption oppositeTo deadlines
+}

@@ -1,0 +1,36 @@
+Window Login_W isMain{
+    String text := ['Log In']
+
+    #table Meals_T {
+        entity : Meal
+        column : literal {
+                    label : ['Meal']
+                }
+        size: [10]
+        sortedBy : [literal]
+    }#
+
+    #table Meal_Options_T {
+        entity : MealOption
+        rows : [$Meals_T.selected$.options]
+        column : literal {
+                    label : ['Option']
+                    }
+        size: [10]
+        sortedby : [literal]
+    }#
+
+    #table Meal_Option_Deadlines_T {
+        entity : MealOptionDeadline
+        rows : [$Meal_Options_T.selected$.deadlines]
+        column : cday {
+                    label : ['Day']
+                    }
+        column : chour {
+                    label :['Hour']
+                    }
+        column : cminute {
+                    label : ['Minute']
+                }
+    }#
+}
