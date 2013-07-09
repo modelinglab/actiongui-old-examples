@@ -17,8 +17,13 @@ Window ManagerMenu_W {
         target: ChangePassword_W {
             label: ['Change password']
         }
-        target: Login_W {
-            label: ['Logout']
-        }
     }#
+
+    Button Manager_M_Login_W  {
+        String text := ['Logout']
+        event onClick {
+            exit
+        }
+    }
+
 }
