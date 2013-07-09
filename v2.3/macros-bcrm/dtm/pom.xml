@@ -18,7 +18,7 @@
             <plugin>
                 <groupId>org.modelinglab.actiongui.maven</groupId>
                 <artifactId>ag-dtm-maven-plugin</artifactId>
-                <version>2.3</version>
+                <version>2.4-SNAPSHOT</version>
                 <extensions>true</extensions>
                 <configuration>
                     <role-enum>Role</role-enum>
