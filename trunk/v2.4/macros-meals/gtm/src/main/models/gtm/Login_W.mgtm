@@ -33,4 +33,13 @@ Window Login_W isMain{
                     label : ['Minute']
                 }
     }#
+
+    event onChange(Meals_T.selected) {
+        reevaluate Meal_Options_T.rows
+        reevaluate Meal_Option_Deadlines_T.rows
+    }
+
+    event onChange(Meal_Options_T.selected) {
+        reevaluate Meal_Option_Deadlines_T.rows
+    }
 }
