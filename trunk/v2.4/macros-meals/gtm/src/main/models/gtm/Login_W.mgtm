@@ -35,11 +35,11 @@ Window Login_W isMain{
     }#
 
     event onChange(Meals_T.selected) {
-        reevaluate Meal_Options_T.rows
-        reevaluate Meal_Option_Deadlines_T.rows
+        #refresh Meal_Options_T #
+        #refresh Meal_Option_Deadlines_T #
     }
 
     event onChange(Meal_Options_T.selected) {
-        reevaluate Meal_Option_Deadlines_T.rows
+        #refresh Meal_Option_Deadlines_T #
     }
 }

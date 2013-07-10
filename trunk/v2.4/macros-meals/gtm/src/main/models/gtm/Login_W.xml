@@ -36,19 +36,22 @@ and open the template in the editor.
                         </ns1:entry>
                     </ns1:line-layout>
                 </ns1:entry>
+                <ns1:entry>
+                    <ns1:line-layout orientation="vertical" ns1:height="30px"></ns1:line-layout>
+                </ns1:entry>
             </ns1:line-layout>
         </ns1:entry>
       
         <!-- SECOND TABLE -->
         <ns1:entry>          
-            <ns1:line-layout orientation="vertical" bottom-margin="100px" ns1:height="auto">
+            <ns1:line-layout orientation="vertical" ns1:height="auto">
                 <ns1:entry>
                     <ns1:widget ns1:id="Meal_Options_T_page" ns1:height="30px" ns1:width="100px"></ns1:widget>
                 </ns1:entry>
                 <ns1:entry>
                     <ns1:table ns1:id="Meal_Options_T" ns1:height="200px" ns1:width="300px">
                         <ns1:column>
-                            <ns1:widget ns1:id="literal"></ns1:widget>
+                            <ns1:widget ns1:id="literal" ns1:height="30px"></ns1:widget>
                         </ns1:column>
                     </ns1:table>
                 </ns1:entry>
@@ -65,6 +68,9 @@ and open the template in the editor.
                         </ns1:entry>
                     </ns1:line-layout>
                 </ns1:entry>
+                <ns1:entry>
+                    <ns1:line-layout orientation="vertical" ns1:height="50px"></ns1:line-layout>
+                </ns1:entry>
             </ns1:line-layout>
         </ns1:entry>  
         
@@ -77,13 +83,13 @@ and open the template in the editor.
                 <ns1:entry>
                     <ns1:table ns1:id="Meal_Option_Deadlines_T" ns1:height="200px" ns1:width="300px">
                         <ns1:column>
-                            <ns1:widget ns1:id="cday"></ns1:widget>
+                            <ns1:widget ns1:id="cday" ns1:height="30px"></ns1:widget>
                         </ns1:column>
                         <ns1:column>
-                            <ns1:widget ns1:id="chour"></ns1:widget>
+                            <ns1:widget ns1:id="chour" ns1:height="30px"></ns1:widget>
                         </ns1:column>
                         <ns1:column>
-                            <ns1:widget ns1:id="cminute"></ns1:widget>
+                            <ns1:widget ns1:id="cminute" ns1:height="30px"></ns1:widget>
                         </ns1:column>
                     </ns1:table>
                 </ns1:entry>
@@ -99,6 +105,9 @@ and open the template in the editor.
                             <ns1:widget ns1:id="Meal_Option_Deadlines_T_next_B" ns1:height="30px" ns1:width="100px"></ns1:widget>
                         </ns1:entry>
                     </ns1:line-layout>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:line-layout orientation="vertical" ns1:height="50px"></ns1:line-layout>
                 </ns1:entry>
             </ns1:line-layout>
         </ns1:entry>
