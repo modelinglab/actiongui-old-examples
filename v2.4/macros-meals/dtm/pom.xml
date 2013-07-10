@@ -23,7 +23,7 @@
                 <configuration>
                     <role-enum>Role</role-enum>
                     <user-entity>User</user-entity>
-                    <initial-role>RESIDENT</initial-role>
+                    <initial-role>ADMINISTRATION</initial-role>
                 </configuration>
             </plugin>
         </plugins>
