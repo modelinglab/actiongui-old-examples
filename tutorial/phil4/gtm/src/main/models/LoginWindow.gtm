@@ -1,0 +1,35 @@
+Window LoginWindow isMain{
+    //Role role := [Role::SYSTEM]
+
+    String text := ['Log In']
+
+    Label Name_L {
+        String text := ['Login']
+    }
+    TextField Name_TF {
+    }
+
+    Button Register_B {
+        String text := ['Register']
+        event onClick {
+            if [$Name_TF.text$.oclIsUndefined()] {
+                Name_TF.error := ['Error']
+            } else {
+                Name_TF.error := [null]
+            }
+            if [$Name_TF.error$ = null] {           
+                 newUser := new Person
+                 [$newUser$.name] := [$Name_TF.text$]
+                 [$newUser$.myRole] := [Role::USER]
+                    
+                 //Name_TF.text :=  [null]  //necessary?
+
+                 open MainWindow(caller:[$newUser$], role:[$newUser$.myRole])
+            }
+            else {
+                notification(['Error'],['The form contains errors. Please, check the form.'],[500]) 
+            }
+        }
+    }
+
+}
