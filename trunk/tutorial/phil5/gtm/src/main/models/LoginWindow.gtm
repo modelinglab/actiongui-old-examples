@@ -1,0 +1,80 @@
+Window LoginWindow isMain{
+    //Role role := [Role::SYSTEM]
+
+    String text := ['Log In']
+
+    Label Name_L {
+        String text := ['Login']
+    }
+    TextField Name_TF {
+        String text :=  [null] 
+    }
+    Label Password_L {
+        String text := ['Passw']
+    }
+    PasswordField Password_TF {
+        String text :=  [null] 
+    }
+
+    Button Register_B {
+        String text := ['Register']
+//        Person loggedUser
+        event onClick {
+            if [$Name_TF.text$.oclIsUndefined()] {
+                Name_TF.error := ['Error']
+            } else {
+                Name_TF.error := [null]
+            }
+            if [$Password_TF.text$.oclIsUndefined()] {
+                Password_TF.error := ['Error']
+            } else {
+                Password_TF.error := [null]
+            }
+            if [$Name_TF.error$ = null and $Password_TF.error$ = null] {           
+                if[Person.allInstances()->forAll(c|c.name <> $Name_TF.text$)] {
+                    newUser := new Person
+                    [$newUser$.name] := [$Name_TF.text$]
+                    [$newUser$.password] := [$Password_TF.text$]
+                    [$newUser$.myRole] := [Role::USER] //not necessary? - is default
+                    //Name_TF.text :=  [null]  //necessary?
+                    //Password_TF.text :=  [null] //necessary?
+                    open MainWindow(caller:[$newUser$], role:[$newUser$.myRole])
+                 } else {
+                    notification(['Error'],['This login name already exists. Choose another one.'],[500]) 
+                    Name_TF.text :=  [null]  //necessary?
+                    Password_TF.text :=  [null] //necessary?
+                    //reevaluate????
+                 }   
+            }
+            else {
+                notification(['Error'],['The form contains errors. Please, check the form.'],[500]) 
+            }
+        }
+    }
+
+    Button Login_B {
+        String text := ['Log in']
+        Person loggedUser
+        event onClick {
+ //           try {
+                loggedUser := [Person.allInstances()->any(c|c.name = $Name_TF.text$ and c.password = $Password_TF.text$)]
+ //           }
+ //           catch (SecurityException) {
+ //               notification(['Security Error'],['you do not hace permission to read the login information'],[-1])
+ //           }
+            if [not($loggedUser$.oclIsUndefined())] {
+  //              if [$loggedUser$.myRole = Role::USER] {
+                    open MainWindow(caller:[$loggedUser$], role:[$loggedUser$.myRole])
+  //              }
+  //              else {
+  //                  notification (['Message'],['You have no role assigned.'],[-1])
+  //              } 
+            }
+            else {
+                notification (['Message'],['Wrong credentials.'],[500])
+                Name_TF.text :=  [null]  //necessary?
+                Password_TF.text :=  [null] //necessary?
+            }
+        }
+    }
+}

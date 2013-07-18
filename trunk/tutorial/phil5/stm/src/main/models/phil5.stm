@@ -1,0 +1,17 @@
+role ADMIN {
+    Person {
+        fullAccess
+    }
+    Thought{
+    }
+}
+
+role USER {
+    Person {
+        read name
+        update name, update password, read password constrainedBy [self = caller]
+    }    
+    Thought {
+        fullAccess
+    }
+}
