@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.thilolab</groupId>
+        <artifactId>phil6</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>gtm</artifactId>
+    <packaging>ag-gtm</packaging>
+    <name>phil6-gtm</name>
+    
+    <build>
+        <sourceDirectory>${project.basedir}/src/main/models</sourceDirectory>
+        <plugins>
+            <plugin>
+                <groupId>org.modelinglab.actiongui.maven</groupId>
+                <artifactId>ag-gtm-maven-plugin</artifactId>
+                <version>2.3</version>
+                <extensions>true</extensions>
+            </plugin>
+        </plugins>
+    </build>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.thilolab</groupId>
+            <artifactId>dtm</artifactId>
+            <version>${project.version}</version>
+            <type>ag-dtm</type>
+        </dependency>
+    </dependencies>
+</project>
