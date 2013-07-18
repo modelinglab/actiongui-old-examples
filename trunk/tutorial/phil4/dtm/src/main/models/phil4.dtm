@@ -1,0 +1,15 @@
+entity Person {
+    String  name
+    Role    myRole
+}
+
+entity Thought {
+    String  content
+    String  creator
+    Integer votes
+}
+
+enum Role {
+    USER
+    ADMIN //necessary
+}

@@ -1,0 +1,87 @@
+Window MainWindow {
+//    Role role := [Role::USER]
+
+    Label Thoughts_L {
+        String text := ['All Thoughts']
+    }
+    Table ListOfThoughts {
+        Set(Thought) rows := [Thought.allInstances()]
+        Set(Thought) selected := [null]
+        columns {
+            ['thoughts'] : Label thoughts {
+                event onView (text) {
+                   text := [$ListOfThoughts.row$.content]
+                }
+            }
+            ['creator'] : Label creator {
+                event onView (text) {
+                   text := [$ListOfThoughts.row$.creator]
+                }
+            }
+            ['votes'] : Label votes {
+                event onView (text) {
+                      text := [$ListOfThoughts.row$.votes.toString()]
+                }
+            }     
+        }
+    }
+
+    Label MyThought_L {
+        String text := ['My Thought']
+    }
+    TextField MyThought_TF {
+        String text := [null]
+    }
+
+   Button Publish_B {
+        String text := ['Publish it']
+        event onClick {
+            if [$MyThought_TF.text$.oclIsUndefined()] {
+                MyThought_TF.error := ['Error']
+            }
+            if [$MyThought_TF.error$ = null] {           
+                 newThought := new Thought
+                 [$newThought$.content] := [$MyThought_TF.text$]
+                 [$newThought$.creator] := [$MainWindow.caller$.name]
+                 [$newThought$.votes] := [0]
+                    
+                 MyThought_TF.text :=  [null]
+                 ListOfThoughts.rows := [null]
+                 reevaluate ListOfThoughts.rows
+
+                 notification (['Success'],['An instance of Thought has been created successfully.'],[500])
+            }
+            else {
+                notification(['Error'],['The form contains errors. Please, check the form.'],[500]) 
+            }
+        }
+     }
+
+   Button Vote_B {
+        String text := ['Vote for it']
+         event onClick {
+           if [if $ListOfThoughts.selected$->oclIsUndefined() then false else $ListOfThoughts.selected$->size() = 1 endif] {
+               [$ListOfThoughts.selected$->any(true).votes] := [$ListOfThoughts.selected$->any(true).votes+1]              
+           }
+           else {
+               notification(['Error'],['You must select exactly one thought.'],[500]) 
+           }
+           ListOfThoughts.rows := [null]
+           reevaluate ListOfThoughts.rows
+        }
+    }
+   
+
+/*    Button Delete_B {
+        String text := ['Delete']
+        event onClick {
+          foreach deleteObject in [$ListOfThoughts.selected$] {
+             delete [$deleteObject$]
+          }
+          ListOfThoughts.rows := [null]
+          reevaluate ListOfThoughts.rows
+       }
+    }
+*/
+
+}

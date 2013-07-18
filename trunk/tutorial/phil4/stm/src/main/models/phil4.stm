@@ -1,0 +1,16 @@
+role ADMIN {
+    Person {
+        fullAccess
+    }
+    Thought{
+    }
+}
+
+role USER {
+    Person {
+        read name
+    }    
+    Thought {
+       fullAccess
+    }
+}

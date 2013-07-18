@@ -1,0 +1,20 @@
+
+.LoginWindow .Name_L  {
+    position : absolute;
+    left: 10px;
+    top: 30px;
+}
+
+.LoginWindow .Name_TF  {
+    position : absolute;
+    left: 80px;
+    top: 30px;
+}
+
+.LoginWindow .Register_B  {
+    position : absolute;
+    left: 80px;
+    top: 90px;
+}
+
+

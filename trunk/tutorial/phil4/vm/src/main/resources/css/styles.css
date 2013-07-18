@@ -1,0 +1,9 @@
+@import "../reindeer/styles.css";
+
+@import "LoginWindow.css";
+@import "MainWindow.css";
+
+/* The following rule is to avoid resizeable text fields */
+.v-textarea {
+    resize: none
+}
