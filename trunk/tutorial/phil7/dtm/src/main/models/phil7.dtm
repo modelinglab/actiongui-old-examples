@@ -1,0 +1,26 @@
+entity Person {
+    String  name
+    String  password
+    Role    myRole
+    Set(Thought) created oppositeTo createdBy
+    Set(Thought) voted oppositeTo votedBy
+
+    Set(Person) sharedTo oppositeTo recievedFrom
+    Set(Person) recievedFrom oppositeTo sharedTo //necessary??
+    Set(Thought) shared oppositeTo sharedBy
+    Set(Thought) recieved oppositeTo recievedBy
+}
+
+entity Thought {
+    String  content
+    Set(Person) createdBy oppositeTo created
+    Set(Person) votedBy oppositeTo voted
+
+    Set(Person) sharedBy oppositeTo shared
+    Set(Person) recievedBy oppositeTo recieved
+}
+
+enum Role {
+    USER
+    ADMIN //necessary?
+}

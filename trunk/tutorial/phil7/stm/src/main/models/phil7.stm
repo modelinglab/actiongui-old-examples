@@ -1,0 +1,29 @@
+role ADMIN {
+    Person {
+        fullAccess
+    }
+    Thought{
+    }
+}
+
+role USER {
+    Person {
+        read voted, read created, read shared, read name, 
+        read recieved
+        read sharedTo
+        add recieved
+        add sharedTo
+//        add voted 
+//        add created
+//        read name
+//        update password, read password constrainedBy [self = caller]
+    }    
+    Thought {
+       read content, read createdBy, read votedBy, read sharedBy
+       add votedBy //constrainedBy [caller <> target]
+       add createdBy //constrainedBy [caller = target]
+       add sharedBy
+       update content // constrainedBy [self = caller]
+       create // constrainedBy [self = caller] //necessary?
+    }
+}

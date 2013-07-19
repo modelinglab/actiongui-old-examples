@@ -1,0 +1,102 @@
+Window MainWindow {
+//    Role role := [Role::USER]
+
+    Label Thoughts_L {
+        String text := ['All Thoughts']
+    }
+    Table ListOfThoughts {
+        Set(Thought) rows := [$MainWindow.caller$.recieved]
+//  [Thought.allInstances()->select(t : Thought | $MainWindow.caller$.recieved->includes(t))]
+//        String error := [null]
+        Set(Thought) selected := [null]
+        columns {
+            ['thoughts'] : Label thoughts {
+                event onView (text) {
+                   text := [$ListOfThoughts.row$.content]
+                }
+            }
+            ['creator'] : Label creator {
+                event onView (text) {
+                   text := [$ListOfThoughts.row$.createdBy->any(true).name]
+                }
+            }
+            ['votes'] : Label votes {
+                event onView (text) {
+                      text := [$ListOfThoughts.row$.votedBy->size().toString()]
+                }
+            }     
+        }
+    }
+
+    Label MyThought_L {
+        String text := ['My Thought']
+    }
+    TextField MyThought_TF {
+//        String text := [null]
+    }
+
+   Button Publish_B {
+        String text := ['Publish it']
+        event onClick {
+            if [$MyThought_TF.text$.oclIsUndefined()] {
+                MyThought_TF.error := ['Error']
+            }
+            if [$MyThought_TF.error$ = null] {           
+                 newThought := new Thought
+                 [$newThought$.content] := [$MyThought_TF.text$]
+                 [$newThought$.createdBy] += [$MainWindow.caller$]
+                 [$newThought$.sharedBy] += [$MainWindow.caller$]
+                 //if one creats a thought, one also receives it
+                 //if it were a 3-pointed association (shared-sharedTo-recievedBy), 
+                 //the next line would be superfluous
+                 [$newThought$.recievedBy] += [$MainWindow.caller$]
+                 //[$newThought$.votes] := [0] //initiate with empty set?      
+                 notification (['Success'],['An instance of Thought has been created successfully.'],[500])
+            }
+            else {
+                notification(['Error'],['The form contains errors. Please, check the form.'],[500]) 
+            }
+            MyThought_TF.error := [null]
+            MyThought_TF.text :=  [null]
+            ListOfThoughts.rows := [null]
+            reevaluate ListOfThoughts.rows
+        }
+     }
+
+
+    Button Vote_B {
+        String text := ['Vote for it']
+         event onClick {
+           if [if $ListOfThoughts.selected$->oclIsUndefined() then false else $ListOfThoughts.selected$->size() = 1 endif] {
+               if[($MainWindow.caller$.created->intersection($ListOfThoughts.selected$))->isEmpty()] {
+                    if[($MainWindow.caller$.voted->intersection($ListOfThoughts.selected$))->isEmpty()] {
+                        [$ListOfThoughts.selected$->any(true).votedBy] += [$MainWindow.caller$]
+                    }
+                    else {
+                        notification(['Error'],['You cannot vote more than once for each thought.'],[500]) 
+                    }
+               }
+               else {
+                    notification(['Error'],['You cannot vote for your own thoughts.'],[500]) 
+               }
+           }
+           else {
+               notification(['Error'],['You must select exactly one thought.'],[500]) 
+           }
+           ListOfThoughts.rows := [null]
+           reevaluate ListOfThoughts.rows
+        }
+      }
+
+    Button Share_B {
+        String text := ['Share With']
+         event onClick {
+           if [if $ListOfThoughts.selected$->oclIsUndefined() then false else $ListOfThoughts.selected$->size() = 1 endif] {
+                open ShareWindow(selectedThought:[$ListOfThoughts.selected$->any(true)])
+           } else {
+               notification(['Error'],['You must select exactly one thought.'],[500]) 
+           }
+        }
+     }
+
+}
