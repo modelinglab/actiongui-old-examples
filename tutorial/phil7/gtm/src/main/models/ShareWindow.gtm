@@ -1,0 +1,76 @@
+Window ShareWindow {
+    Thought selectedThought
+
+    Label SelectedThought_L {
+        String text := ['Selected Thought: '.concat($ShareWindow.selectedThought$.content)]
+        //String text := ['Selected Thought: ']
+    }
+
+    Label SharedWith_L {
+        String text := ['Persons to share with:']
+    }
+    Table ListOfPersons {
+        Set(Person) rows := [Person.allInstances()->select(p : Person | p <> $ShareWindow.caller$)]
+
+// better would be to choose from persons, who haven*t recieved this thought yet
+// [Person.allInstances()->select(p : Person | p.recieved->excludes($ShareWindow.selectedThought$))]
+// -> not admissible, because it checks other persons* "recieved-folders"
+
+// "All persons, the caller hasn*t shared the $selectedThought$ to"
+// This is not possible since one needs a 3-pointed association
+//[Person.allInstances()->select(p : Person | $ShareWindow.caller$.sharedWith->excludes(t.sharedTo))]
+//        String error := [null]
+        Set(Person) selected := [null]
+        columns {
+            ['Persons'] : Label Persons {
+                event onView (text) {
+                   text := [$ListOfPersons.row$.name]
+                }
+            }
+        }
+    }
+
+    
+    Button Share_B {
+        String text := ['Share it']
+        event onClick {
+            //reevaluate ListOfPersons.error
+            if [not $ListOfPersons.selected$->oclIsInvalid()] {
+                if [$ListOfPersons.selected$->oclIsUndefined() or $ListOfPersons.selected$->isEmpty()] {
+                    ListOfPersons.error := ['Required selection']
+                }
+            }
+            if [$ListOfPersons.error$ = null] {
+//                try {
+                    if [not $ListOfPersons.selected$->oclIsInvalid()] {
+                        [$ShareWindow.selectedThought$.sharedBy] += [$ShareWindow.caller$]
+                        //equivalently?
+                        // [$person$.shared] += [$ShareWindow.selectedThought$.sharedBy] 
+                        foreach person in [$ListOfPersons.selected$] {
+                            if [$ShareWindow.selectedThought$.sharedBy->excludes($person$)] {
+                                [$ShareWindow.caller$.sharedTo] += [$person$]
+                                //equivalently?
+                                // [$person$.recievedFrom] += [$ShareWindow.caller$] 
+                                [$person$.recieved] += [$ShareWindow.selectedThought$]
+                                //equivalently?
+                                //[$ShareWindow.selectedThought$.recievedBy] += [$person$]
+                            }
+                        }          
+                        notification (['Success'],['The thought was shared with the selected persons.'],[500])
+                    }
+//                }
+           ListOfPersons.rows := [null]
+           reevaluate ListOfPersons.rows
+           }
+        }
+     }
+
+    Button Back_B {
+        String text := ['Back']
+        event onClick {
+            back
+        }
+    }
+
+
+}
