@@ -1,0 +1,20 @@
+role SYSTEM {
+    Person {
+        read name, update name
+        read password, update password 
+        read myRole, update myRole
+        create
+    }
+    Thought{
+    }
+}
+
+role USER {
+    Person {
+        read name
+        read password, update password, update name constrainedBy [self = caller]
+    }    
+    Thought {
+       fullAccess
+    }
+}
