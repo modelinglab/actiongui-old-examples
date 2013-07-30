@@ -1,0 +1,48 @@
+.MainWindow .Thoughts_L  {
+    position : absolute;
+    left: 10px;
+    top: 10px;
+}
+
+.MainWindow .ListOfThoughts  {
+    position : absolute;
+    left: 10px;
+    top: 30px;
+    width: 550px;
+    height: 130px;
+}
+
+.MainWindow .ListOfThoughts .thoughts  {
+}
+
+.MainWindow .ListOfThoughts .votes  {
+}
+
+.MainWindow .MyThought_L  {
+    position : absolute;
+    left: 10px;
+    top: 200px;
+}
+
+.MainWindow .MyThought_TF  {
+    position : absolute;
+    left: 10px;
+    top: 230px;
+}
+.MainWindow .Publish_B  {
+    position : absolute;
+    left: 10px;
+    top: 260px;
+}
+
+.MainWindow .Vote_B  {
+    position : absolute;
+    left: 490px;
+    top: 260px;
+}
+
+.MainWindow .Delete_B  {
+    position : absolute;
+    left: 490px;
+    top: 290px;
+}

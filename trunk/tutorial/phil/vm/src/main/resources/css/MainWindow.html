@@ -1,0 +1,46 @@
+<!--
+-->
+<!DOCTYPE html>
+<html style="overflow: hidden; height: 100% ; width: 100% ;">
+    <head>
+        <title>MainWindow</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link type="text/css" rel="stylesheet" href="styles.css">
+        
+        <script type="text/javascript">
+            <!--
+            function timedRefresh(timedoutperiod) {
+                setTimeout("location.reload(true);", timedoutperiod);
+            }
+            //-->
+        </script>
+    
+    </head>
+    <body style="overflow: hidden; height: 100% ; width: 100% ;"  onload="Javascript:timedRefresh(5000);">
+        <div class="v-app v-theme-ag v-app-ViewerApplication">
+            <div class="v-view" >
+                <div class="v-csslayout MainWindow">
+                    <div class="v-panel Thoughts_L v-panel-light light" style="overflow: hidden; width: 100% ;">
+                        <div class="v-captiontext">Thoughts_L</div>
+                    </div>
+                    <div class="v-csslayout ListOfThoughts" style="background-color: white; border-width: 2px;border-color: black; border-style: dotted;">
+                        <div style="margin-left: auto; margin-right: auto; width: 5em; font-size: large">ListOfThoughts</div>
+                    </div>
+                    <div class="v-panel MyThought_L v-panel-light light" style="overflow: hidden; width: 100% ;">
+                        <div class="v-captiontext">MyThought_L</div>
+                    </div>
+                    <input class="v-textfield MyThought_TF" type="text" value="MyThought_TF">
+                    <button class="v-nativebutton Publish_B" type="button">
+                        <span class="v-nativebutton-caption">Publish_B</span>
+                    </button>
+                    <button class="v-nativebutton Vote_B" type="button">
+                        <span class="v-nativebutton-caption">Vote_B</span>
+                    </button>
+                    <button class="v-nativebutton Delete_B" type="button">
+                        <span class="v-nativebutton-caption">Delete_B</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
