@@ -5,7 +5,7 @@ and open the template in the editor.
 -->
 
 
-<ns1:window-layout ns1:id="Login_w"
+<ns1:window-layout ns1:id="ConfigurationWI"
     xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
     xmlns:ns1='http://actiongui.org/schemes/ag-layout/2.4'
     xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://www.actiongui.org/schemes/ag-layout/2.4/schema.xsd'>

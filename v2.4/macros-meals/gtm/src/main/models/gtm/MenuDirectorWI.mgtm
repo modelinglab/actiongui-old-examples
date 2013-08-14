@@ -1,0 +1,8 @@
+Window MenuDirectorWI isMain {
+
+#menu MenuDirector {
+    target: ConfigurationWI { label : ['Configuration'] }
+    target: ChangePasswordWI { label : ['Change password'] }
+}#
+
+}
