@@ -4,13 +4,13 @@
 
     <parent>
         <groupId>org.examples</groupId>
-        <artifactId>macros-meals</artifactId>
+        <artifactId>mmeals</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>stm</artifactId>
     <packaging>ag-stm</packaging>
-    <name>macros-meals-stm</name>
+    <name>mmeals-stm</name>
     
     <build>
         <sourceDirectory>${project.basedir}/src/main/models</sourceDirectory>

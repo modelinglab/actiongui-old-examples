@@ -4,16 +4,16 @@
 
     <parent>
         <groupId>org.examples</groupId>
-        <artifactId>macros-meals</artifactId>
+        <artifactId>mmeals</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>vm</artifactId>
     <packaging>ag-vm</packaging>
-    <name>macros-meals VM</name>
+    <name>mmeals VM</name>
     
     <build>
-        <finalName>macros-meals.war</finalName>
+        <finalName>mmeals.war</finalName>
         <plugins>
             <plugin>
                 <groupId>org.modelinglab.actiongui.maven</groupId>
@@ -22,8 +22,8 @@
                 <extensions>true</extensions>
                 <configuration>
                     <cssFolder>src/main/resources/css</cssFolder>
-                    <datasource>jdbc/macros-meals</datasource> <!--TODO: write here your datasource JNDI name -->
-                    <databaseName>macros-meals</databaseName> <!--TODO: write here your database name -->
+                    <datasource>jdbc/mmeals</datasource> <!--TODO: write here your datasource JNDI name -->
+                    <databaseName>mmeals</databaseName> <!--TODO: write here your database name -->
                 </configuration>
             </plugin>
             
@@ -34,7 +34,7 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.0.0.v20130308</version>
                 <configuration>
-                    <war>${basedir}/target/macros-meals</war>
+                    <war>${basedir}/target/mmeals</war>
                     <webAppConfig>
                         <jettyEnvXml>src/test/resources/jetty/jetty-env.xml</jettyEnvXml>
                         <descriptor>target/classes/WEB-INF/web.xml</descriptor>
