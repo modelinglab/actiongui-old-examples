@@ -1,4 +1,4 @@
-Window Login_W isMain{
+Window ConfigurationWI {
     String text := ['Log In']
 
     #table Meals_T {
