@@ -1,4 +1,4 @@
-Window MenuDirectorWI isMain {
+Window MenuDirectorWI  {
 
 #menu MenuDirector {
     target: ConfigurationWI { label : ['Configuration'] }
