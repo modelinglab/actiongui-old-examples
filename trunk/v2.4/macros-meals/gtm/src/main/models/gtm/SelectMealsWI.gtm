@@ -1,0 +1,52 @@
+Window SelectMealsWI  {
+    Table WeekMealsTB {
+        Set(Meal) rows := [Meal.allInstances()]
+        Set(Meal) selected := [null]
+        columns {
+        ['First'] : ComboBox FirstCB {
+                            Set(MealOption) rows := [$WeekMealsTB.row$.options]
+                            Label Literal {
+                                String text := [$FirstCB.row$.literal]
+                                }
+                    }
+        ['Second'] : ComboBox SecondCB {
+                            Set(MealOption) rows := [$WeekMealsTB.row$.options]
+                            Label Literal {
+                                String text := [$SecondCB.row$.literal]
+                                }
+                    }
+         ['Third'] : ComboBox ThirdCB {
+                            Set(MealOption) rows := [$WeekMealsTB.row$.options]
+                            Label Literal {
+                                String text := [$ThirdCB.row$.literal]
+                                }
+                    }
+         ['Fourth'] : ComboBox FourthCB {
+                            Set(MealOption) rows := [$WeekMealsTB.row$.options]
+                            Label Literal {
+                                String text := [$FourthCB.row$.literal]
+                                }
+                    }
+         ['Fifth'] : ComboBox FifthCB {
+                            Set(MealOption) rows := [$WeekMealsTB.row$.options]
+                            Label Literal {
+                                String text := [$FifthCB.row$.literal]
+                                }
+                    }
+          ['Sixth'] : ComboBox SixthCB {
+                            Set(MealOption) rows := [$WeekMealsTB.row$.options]
+                            Label Literal {
+                                String text := [$SixthCB.row$.literal]
+                                }
+                    }
+          ['Seventh'] : ComboBox SeventhCB {
+                            Set(MealOption) rows := [$WeekMealsTB.row$.options]
+                            Label Literal {
+                                String text := [$SeventhCB.row$.literal]
+                                }
+                    }
+         }
+    }
+}
+
+            

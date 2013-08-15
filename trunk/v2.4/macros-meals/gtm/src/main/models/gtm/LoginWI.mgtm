@@ -17,6 +17,19 @@ Button LoginBU {
             catch (SecurityException) {
                 notification(['Security Error'],['you do not hace permission to read the login information'],[-1])
             }
+            if [not($loggedUser$.oclIsUndefined())] {
+                if [$loggedUser$.myRole = Role::RESIDENT] {
+                    open MenuResidentWI(caller:[$loggedUser$], role:[$loggedUser$.myRole])
+                }
+                else {
+                    if [$loggedUser$.myRole = Role::DIRECTOR] {
+                        open MenuDirectorWI(caller:[$loggedUser$], role:[$loggedUser$.myRole])
+                    }
+                    else {
+                        notification (['Message'],['You have no role assigned.'],[-1])
+                    }
+                } 
+            }
 }
 }
 }

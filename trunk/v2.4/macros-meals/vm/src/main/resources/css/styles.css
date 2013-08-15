@@ -1,6 +1,8 @@
 @import "../reindeer/styles.css";
 
 @import "MenuDirectorWI.css";
+@import "MenuResidentWI.css";
+@import "SelectMealsWI.css";
 @import "LoginWI.css";
 @import "ConfigurationWI.css";
 @import "ChangePasswordWI.css";

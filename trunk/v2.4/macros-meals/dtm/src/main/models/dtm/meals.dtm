@@ -1,7 +1,8 @@
 enum Role {
     RESIDENT
-    MANAGER
+    DIRECTOR
     ADMINISTRATION
+    SYSTEM
 }
 
 enum DayType {
