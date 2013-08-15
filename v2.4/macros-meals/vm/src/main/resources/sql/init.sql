@@ -1,3 +1,6 @@
+insert into mmeals.User (pk, login, password, myRole) values (1, 'mgc', '111', 0);
+insert into mmeals.User (pk, login, password, myRole) values (2, 'scl', '111', 1);
+
 insert into mmeals.Meal (pk,id,literal) values (1,1,'Breakfast'), (2,2,'Lunch'), (3,3,'Dinner');
 
 insert into mmeals.MealOption (pk,id,meal,literal) values (1,1,1,'Nothing'), (2,2,1,'Early Breakfast'), (3,3,1,'Normal Breakfast'), (4,4,1,'Normal Breakfast'), (5,5,1,'Take Away Early Breakfast'), (6,6,1,'Take Away Early Breakfast');

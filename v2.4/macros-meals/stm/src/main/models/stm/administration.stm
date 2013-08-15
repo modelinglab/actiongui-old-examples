@@ -1,4 +1,31 @@
-role ADMINISTRATION {
+role SYSTEM {
+    User {
+        read login, read password, read myRole
+    }
+    MealOption {
+        fullAccess
+    }
+    Meal {
+        fullAccess
+    }
+    MealOptionDeadline {
+        fullAccess
+    }
+}
+
+role DIRECTOR {
+    MealOption {
+        fullAccess
+    }
+    Meal {
+        fullAccess
+    }
+    MealOptionDeadline {
+        fullAccess
+    }
+}
+
+role RESIDENT {
     MealOption {
         fullAccess
     }
