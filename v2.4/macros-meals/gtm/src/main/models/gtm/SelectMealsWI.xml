@@ -5,6 +5,10 @@
     xmlns:ns1='http://actiongui.org/schemes/ag-layout/2.4'
     xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://www.actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
 <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto"> 
+    <!-- <ns1:entry>
+            <ns1:widget ns1:id="Message"></ns1:widget>    
+    </ns1:entry>
+    -->
     <!--FIRST T-->
         <ns1:entry>
             <ns1:line-layout orientation="vertical" ns1:height="auto">
