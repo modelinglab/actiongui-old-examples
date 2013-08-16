@@ -1,13 +1,41 @@
 Window SelectMealsWI  {
+    Date selectedDay := [Date.now()]
+    //Date firstDaySelectedWeek := [if ($selectedDay$.dayOfWeek()= 1) then $selectedDay$ else $selectedDay$ endif]
+    //     else (if [selectedDay].dayOfWeek()=2 then [selectedDay] 
+    //              else [selectedDay].addDay((-1)*([selectedDay].dayOfWeek()-2)) endif) endif]
+
+    //Label Message {
+    //    String text := [$SelectMealsWI.selectedDay$]
+    //}
     Table WeekMealsTB {
         Set(Meal) rows := [Meal.allInstances()]
         Set(Meal) selected := [null]
         columns {
         ['First'] : ComboBox FirstCB {
                             Set(MealOption) rows := [$WeekMealsTB.row$.options]
+                            MealOption selected := [MealOption.allInstances()->any(o|o.id = $SelectMealsWI.caller$.dailyMeals->any(d|d.date=$SelectMealsWI.selectedDay$).selections->any(s|s.meal=$WeekMealsTB.row$.id).mealOption)]
+
                             Label Literal {
                                 String text := [$FirstCB.row$.literal]
                                 }
+                            
+                            event onChange (selected) {
+                                if [$selected$.oclIsUndefined()=false] 
+                                {
+                                    if [$SelectMealsWI.caller$.dailyMeals->exists(d|d.date=$SelectMealsWI.selectedDay$)]
+                                    {
+                                        notification(['Error'], ['Yes'], [-1])
+                                    }
+                                    else {
+                                        newDailyMealSelection := new DailyMealSelection
+                                        [$SelectMealsWI.caller$.dailyMeals] += [$newDailyMealSelection$]
+                                        [$newDailyMealSelection$.date] := [$SelectMealsWI.selectedDay$]
+                                        newMealSelection := new MealSelection
+                                        [$newMealSelection$.meal] := [$WeekMealsTB.row$.id]
+                                        [$newMealSelection$.mealOption] := [$selected$.id]
+                                 }       
+                                }
+                            }
                     }
         ['Second'] : ComboBox SecondCB {
                             Set(MealOption) rows := [$WeekMealsTB.row$.options]

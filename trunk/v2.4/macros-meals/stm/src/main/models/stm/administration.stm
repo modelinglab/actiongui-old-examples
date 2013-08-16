@@ -35,4 +35,17 @@ role RESIDENT {
     MealOptionDeadline {
         fullAccess
     }
+    User {
+        read constrainedBy [self=caller]
+        add dailyMeals constrainedBy [self=caller]
+    }
+    DailyMealSelection {
+        fullAccess
+        //create
+        //read constrainedBy [self.selectedBy->any(true) = caller]
+        //update constrainedBy [self.selectedBy->any(true) = caller]
+    }
+    MealSelection {
+        fullAccess
+    }
 }

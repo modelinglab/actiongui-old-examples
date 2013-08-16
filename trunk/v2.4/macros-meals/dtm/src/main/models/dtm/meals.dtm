@@ -44,16 +44,25 @@ entity Residency {
 
 entity DailyMealSelection {
     Date date
-    Integer breakfast
-    Integer lunch
-    Integer dinner
-    Integer timestamp
+    //Integer breakfast
+    //Integer lunch
+    //Integer dinner
+    //Integer timestamp
     // associations
     // 0..1
     User selectedBy oppositeTo dailyMeals
     // 0..1
     Guest offeredTo oppositeTo dailyMeals
+    // 0..1
+    Set(MealSelection) selections oppositeTo ownedBy
 }
+
+entity MealSelection {
+    Integer meal
+    Integer mealOption
+    // 0..1
+    DailyMealSelection ownedBy oppositeTo selections
+    }
 
 entity PersonalFoodRegime {
     Date start
