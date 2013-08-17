@@ -12,54 +12,95 @@ Window SelectMealsWI  {
         Set(Meal) selected := [null]
         columns {
         ['First'] : ComboBox FirstCB {
+                            //auxiliary
+                            Date today := [$SelectMealsWI.selectedDay$]
                             Set(MealOption) rows := [$WeekMealsTB.row$.options]
                             MealOption selected
-                            DailyMealSelection todayMealSelection
-                            MealSelection thisMealSelection
-                            
-                            //[MealOption.allInstances()->any(o|o.id = $thisMealSelection$.mealOption)]
-                            //if [$selected$.oclIsUndefined()] { notification(['OJO', ['ojo'], [-1])}
 
                             Label Literal {
                                 String text := [$FirstCB.row$.literal]
                                 }
                             
                             event onView (selected) {
-                                    //todayMealSelection := [$SelectMealsWI.caller$.dailyMeals->any(d|d.date=$SelectMealsWI.selectedDay$)]
-                                    //thisMealSelection := [$todayMealSelection$.selections->any(s|s.meal = $WeekMealsTB.row$.id)] 
-                                     selected := [MealOption.allInstances()->any(o|o.id = $SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY) = $SelectMealsWI.selectedDay$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).mealOption)]
+                                    selected := [MealOption.allInstances()->any(o|o.id = $SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).mealOption)]
                                     }
                             event onChange (selected) {
                                 if [$selected$.oclIsUndefined()=false] 
-                                { 
-                                    if [$SelectMealsWI.caller$.dailyMeals->exists(d|d.date.truncate(TimeUnit::DAY)=$SelectMealsWI.selectedDay$.truncate(TimeUnit::DAY))]
-                                    //if [false]
+                                {   
+                                    if [not($SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY)).oclIsUndefined())]
                                     {
-                                        notification(['Error'], ['Yes'], [-1])
+                                        if [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).oclIsUndefined()]
+                                        {
+                                        newMealSelection := new MealSelection
+                                        [$newMealSelection$.ownedBy] := [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY))]
+                                        [$newMealSelection$.meal] := [$WeekMealsTB.row$.id]
+                                        [$newMealSelection$.mealOption] := [$selected$.id]
+                                        }
+                                        else {
+                                        [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).mealOption] := [$selected$.id]
+                                        }
                                     }
                                     else {
                                         newDailyMealSelection := new DailyMealSelection
-                                        // why does this not work?
                                         [$SelectMealsWI.caller$.dailyMeals] += [$newDailyMealSelection$]
-                                        //[$newDailyMealSelection$.selectedBy] := [$SelectMealsWI.caller$]
-                                        [$newDailyMealSelection$.date] := [$SelectMealsWI.selectedDay$.truncate(TimeUnit::DAY)]
+                                        [$newDailyMealSelection$.date] := [$today$.truncate(TimeUnit::DAY)]
                                         newMealSelection := new MealSelection
                                         [$newMealSelection$.meal] := [$WeekMealsTB.row$.id]
                                         [$newMealSelection$.mealOption] := [$selected$.id]
-                                        //[$newMealSelection$.ownedBy] := [$newDailyMealSelection$]
-                                        // why does this not work?
                                         [$newDailyMealSelection$.selections] += [$newMealSelection$]
-                                        reevaluate selected
-                                 }       
-                                }
-                            }
+                                 }
+                                 }
+                                else {
+                                    if [not(MealOption.allInstances()->any(o|o.id = $SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).mealOption).oclIsUndefined())]
+                                        { reevaluate selected }
+                                 }
+                           } 
                     }
         ['Second'] : ComboBox SecondCB {
+                            Date today := [$SelectMealsWI.selectedDay$.add(1,TimeUnit::DAY)]
                             Set(MealOption) rows := [$WeekMealsTB.row$.options]
+                            MealOption selected
+
                             Label Literal {
                                 String text := [$SecondCB.row$.literal]
                                 }
-                    }
+                            
+                            event onView (selected) {
+                                    selected := [MealOption.allInstances()->any(o|o.id = $SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).mealOption)]
+                                    }
+                            event onChange (selected) {
+                                if [$selected$.oclIsUndefined()=false] 
+                                {   
+                                    if [not($SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY)).oclIsUndefined())]
+                                    {
+                                        if [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).oclIsUndefined()]
+                                        {
+                                        newMealSelection := new MealSelection
+                                        [$newMealSelection$.ownedBy] := [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY))]
+                                        [$newMealSelection$.meal] := [$WeekMealsTB.row$.id]
+                                        [$newMealSelection$.mealOption] := [$selected$.id]
+}
+                                        else {
+                                        [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).mealOption] := [$selected$.id]
+                                        }
+                                    }
+                                    else {
+                                        newDailyMealSelection := new DailyMealSelection
+                                        [$SelectMealsWI.caller$.dailyMeals] += [$newDailyMealSelection$]
+                                        [$newDailyMealSelection$.date] := [$today$.truncate(TimeUnit::DAY)]
+                                        newMealSelection := new MealSelection
+                                        [$newMealSelection$.meal] := [$WeekMealsTB.row$.id]
+                                        [$newMealSelection$.mealOption] := [$selected$.id]
+                                        [$newDailyMealSelection$.selections] += [$newMealSelection$]
+                                 }
+                                 }
+                                else {
+                                    if [not(MealOption.allInstances()->any(o|o.id = $SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).mealOption).oclIsUndefined())]
+                                        { reevaluate selected }
+                                 }
+                           } 
+                     }
+                    
          ['Third'] : ComboBox ThirdCB {
                             Set(MealOption) rows := [$WeekMealsTB.row$.options]
                             Label Literal {
