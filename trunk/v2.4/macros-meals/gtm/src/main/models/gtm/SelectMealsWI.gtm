@@ -1,19 +1,40 @@
 Window SelectMealsWI  {
-    Date selectedDay := [Date.now()]
-    //Date firstDaySelectedWeek := [if ($selectedDay$.dayOfWeek()= 1) then $selectedDay$ else $selectedDay$ endif]
-    //     else (if [selectedDay].dayOfWeek()=2 then [selectedDay] 
-    //              else [selectedDay].addDay((-1)*([selectedDay].dayOfWeek()-2)) endif) endif]
+    Date selDate := [Date.now().truncate(TimeUnit::DAY)]
+    //DayOfWeek selDateDayOfWeek := [$selDate$.dayOfWeek()]
+    //Date selDateWeekFirstDay := [if $selDateDayOfWeek$=DayOfWeek::MONDAY then $selDate$ else (if $selDateDayOfWeek$=DayOfWeek::TUESDAY then $selDate$.add(1,TimeUnit::DAY) else (if $selDateDayOfWeek$=DayOfWeek::WEDNESDAY then $selDate$.add(2,TimeUnit::DAY) else (if $selDateDayOfWeek$=DayOfWeek::THURSDAY then $selDate$.add(3,TimeUnit::DAY) else (if $selDateDayOfWeek$=DayOfWeek::FRIDAY then $selDate$.add(4,TimeUnit::DAY) else (if $selDateDayOfWeek$=DayOfWeek::SATURDAY then $selDate$.add(5,TimeUnit::DAY) else $selDate$.add(6,TimeUnit::DAY) endif) endif) endif) endif) endif)endif]
 
-    //Label Message {
-    //    String text := [$SelectMealsWI.selectedDay$]
+    //Label DayOfWeekLB {
+    //    DayOfWeek thisDayOfWeek := [Date.now().dayOfWeek()]
+    //    String text := [if $thisDayOfWeek$=DayOfWeek::MONDAY then 'Monday' else (if $thisDayOfWeek$=DayOfWeek::TUESDAY then 'Tuesday' else (if $thisDayOfWeek$=DayOfWeek::WEDNESDAY then 'Wednesday' else (if $thisDayOfWeek$=DayOfWeek::THURSDAY then 'Thursday' else (if $thisDayOfWeek$=DayOfWeek::FRIDAY then 'Friday' else (if $thisDayOfWeek$=DayOfWeek::SATURDAY then 'Saturday' else (if $thisDayOfWeek$=DayOfWeek::SUNDAY then 'Sunday' else 'Error' endif) endif) endif) endif) endif) endif) endif]
     //}
+    //Label firstDayWeekLB {
+    //    Date thisDate := [Date.now().truncate(TimeUnit::DAY)]
+    //    DayOfWeek thisDayOfWeek := [Date.now().dayOfWeek()]
+    //    Date thisWeekFirstDay := [if $thisDayOfWeek$=DayOfWeek::MONDAY then $thisDate$ else (if $thisDayOfWeek$=DayOfWeek::TUESDAY then $thisDate$.add(1,TimeUnit::DAY) else (if $thisDayOfWeek$=DayOfWeek::WEDNESDAY then $thisDate$.add(2,TimeUnit::DAY) else (if $thisDayOfWeek$=DayOfWeek::THURSDAY then $thisDate$.add(3,TimeUnit::DAY) else (if $thisDayOfWeek$=DayOfWeek::FRIDAY then $thisDate$.add(4,TimeUnit::DAY) else (if $thisDayOfWeek$=DayOfWeek::SATURDAY then $thisDate$.add(5,TimeUnit::DAY) else $thisDate$.add(6,TimeUnit::DAY) endif) endif) endif) endif) endif)endif]
+    //}
+    
+
+    Button NextWeekBU {
+        String text := ['Next']
+        event onClick {
+              SelectMealsWI.selDate := [$SelectMealsWI.selDate$.add(7, TimeUnit::DAY)]
+        }
+    }
+
+    Button PreviousWeekBU {
+        String text := ['Previous']
+        event onClick {
+              SelectMealsWI.selDate := [$SelectMealsWI.selDate$.add(-7, TimeUnit::DAY)]
+        }
+    }
+
     Table WeekMealsTB {
         Set(Meal) rows := [Meal.allInstances()]
         Set(Meal) selected := [null]
         columns {
         ['First'] : ComboBox FirstCB {
-                            //auxiliary
-                            Date today := [$SelectMealsWI.selectedDay$]
+                            //Date thisDate := [$SelectMealsWI.selDateWeekFirstDay$]
+                            Date thisDate := [$SelectMealsWI.selDate$]
                             Set(MealOption) rows := [$WeekMealsTB.row$.options]
                             MealOption selected
 
@@ -22,28 +43,28 @@ Window SelectMealsWI  {
                                 }
                             
                             event onView (selected) {
-                                    selected := [MealOption.allInstances()->any(o|o.id = $SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).mealOption)]
+                                    selected := [MealOption.allInstances()->any(o|o.id = $SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$thisDate$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).mealOption)]
                                     }
                             event onChange (selected) {
                                 if [$selected$.oclIsUndefined()=false] 
                                 {   
-                                    if [not($SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY)).oclIsUndefined())]
+                                    if [not($SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$thisDate$.truncate(TimeUnit::DAY)).oclIsUndefined())]
                                     {
-                                        if [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).oclIsUndefined()]
+                                        if [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$thisDate$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).oclIsUndefined()]
                                         {
                                         newMealSelection := new MealSelection
-                                        [$newMealSelection$.ownedBy] := [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY))]
+                                        [$newMealSelection$.ownedBy] := [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$thisDate$.truncate(TimeUnit::DAY))]
                                         [$newMealSelection$.meal] := [$WeekMealsTB.row$.id]
                                         [$newMealSelection$.mealOption] := [$selected$.id]
                                         }
                                         else {
-                                        [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).mealOption] := [$selected$.id]
+                                        [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$thisDate$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).mealOption] := [$selected$.id]
                                         }
                                     }
                                     else {
                                         newDailyMealSelection := new DailyMealSelection
                                         [$SelectMealsWI.caller$.dailyMeals] += [$newDailyMealSelection$]
-                                        [$newDailyMealSelection$.date] := [$today$.truncate(TimeUnit::DAY)]
+                                        [$newDailyMealSelection$.date] := [$thisDate$.truncate(TimeUnit::DAY)]
                                         newMealSelection := new MealSelection
                                         [$newMealSelection$.meal] := [$WeekMealsTB.row$.id]
                                         [$newMealSelection$.mealOption] := [$selected$.id]
@@ -51,13 +72,14 @@ Window SelectMealsWI  {
                                  }
                                  }
                                 else {
-                                    if [not(MealOption.allInstances()->any(o|o.id = $SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).mealOption).oclIsUndefined())]
+                                    if [not(MealOption.allInstances()->any(o|o.id = $SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$thisDate$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).mealOption).oclIsUndefined())]
                                         { reevaluate selected }
                                  }
                            } 
                     }
         ['Second'] : ComboBox SecondCB {
-                            Date today := [$SelectMealsWI.selectedDay$.add(1,TimeUnit::DAY)]
+                            Date thisDate := [$SelectMealsWI.selDate$.add(1,TimeUnit::DAY)]
+                            //Date thisDate := [$SelectMealsWI.selDateWeekFirstDay$.add(1,TimeUnit::DAY)]
                             Set(MealOption) rows := [$WeekMealsTB.row$.options]
                             MealOption selected
 
@@ -66,28 +88,28 @@ Window SelectMealsWI  {
                                 }
                             
                             event onView (selected) {
-                                    selected := [MealOption.allInstances()->any(o|o.id = $SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).mealOption)]
+                                    selected := [MealOption.allInstances()->any(o|o.id = $SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$thisDate$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).mealOption)]
                                     }
                             event onChange (selected) {
                                 if [$selected$.oclIsUndefined()=false] 
                                 {   
-                                    if [not($SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY)).oclIsUndefined())]
+                                    if [not($SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$thisDate$.truncate(TimeUnit::DAY)).oclIsUndefined())]
                                     {
-                                        if [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).oclIsUndefined()]
+                                        if [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$thisDate$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).oclIsUndefined()]
                                         {
                                         newMealSelection := new MealSelection
-                                        [$newMealSelection$.ownedBy] := [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY))]
+                                        [$newMealSelection$.ownedBy] := [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$thisDate$.truncate(TimeUnit::DAY))]
                                         [$newMealSelection$.meal] := [$WeekMealsTB.row$.id]
                                         [$newMealSelection$.mealOption] := [$selected$.id]
 }
                                         else {
-                                        [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).mealOption] := [$selected$.id]
+                                        [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$thisDate$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).mealOption] := [$selected$.id]
                                         }
                                     }
                                     else {
                                         newDailyMealSelection := new DailyMealSelection
                                         [$SelectMealsWI.caller$.dailyMeals] += [$newDailyMealSelection$]
-                                        [$newDailyMealSelection$.date] := [$today$.truncate(TimeUnit::DAY)]
+                                        [$newDailyMealSelection$.date] := [$thisDate$.truncate(TimeUnit::DAY)]
                                         newMealSelection := new MealSelection
                                         [$newMealSelection$.meal] := [$WeekMealsTB.row$.id]
                                         [$newMealSelection$.mealOption] := [$selected$.id]
@@ -95,7 +117,7 @@ Window SelectMealsWI  {
                                  }
                                  }
                                 else {
-                                    if [not(MealOption.allInstances()->any(o|o.id = $SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$today$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).mealOption).oclIsUndefined())]
+                                    if [not(MealOption.allInstances()->any(o|o.id = $SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$thisDate$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$.id).mealOption).oclIsUndefined())]
                                         { reevaluate selected }
                                  }
                            } 
@@ -132,6 +154,12 @@ Window SelectMealsWI  {
                                 }
                     }
          }
+    }
+    // QUESTION: how many times is redrawn the table when the window is created?
+    // QUESTION: can we have a "refresh" actions?
+     event onChange (selDate) {
+        WeekMealsTB.rows := [Meal.allInstances()->select(m|false)]
+        WeekMealsTB.rows := [Meal.allInstances()]
     }
 }
 

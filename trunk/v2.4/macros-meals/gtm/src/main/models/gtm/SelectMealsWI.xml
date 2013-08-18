@@ -13,6 +13,12 @@
         <ns1:entry>
             <ns1:line-layout orientation="vertical" ns1:height="auto">
                 <ns1:entry>
+                    <ns1:widget ns1:id="NextWeekBU"></ns1:widget>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:widget ns1:id="PreviousWeekBU"></ns1:widget>
+                </ns1:entry>
+                <ns1:entry>
                     <ns1:table ns1:id="WeekMealsTB" ns1:height="auto" ns1:width="auto">
                         <ns1:column>
                             <ns1:widget  ns1:id="FirstCB" ns1:height="30px" ns1:width="200px"></ns1:widget>
