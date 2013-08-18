@@ -1,0 +1,10 @@
+Window UserAccountsWI {
+    #table UsersTB {
+        entity: User
+        rows : [User.allInstances()]
+        column : surname {label : ['Surname'] }
+        column : name {name : ['Name'] }
+        column : login {login : ['Login']}
+        size : [10]
+    }#
+}

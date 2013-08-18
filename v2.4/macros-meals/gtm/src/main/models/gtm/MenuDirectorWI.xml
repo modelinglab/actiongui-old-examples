@@ -7,6 +7,9 @@
 
     <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="200px"> 
     <ns1:entry>
+       <ns1:widget ns1:id="MenuDirector_UserAccountsWI_B" ns1:height="30px" ></ns1:widget>
+    </ns1:entry>
+    <ns1:entry>
        <ns1:widget ns1:id="MenuDirector_ConfigurationWI_B" ns1:height="30px" ></ns1:widget>
     </ns1:entry>
     <ns1:entry>
