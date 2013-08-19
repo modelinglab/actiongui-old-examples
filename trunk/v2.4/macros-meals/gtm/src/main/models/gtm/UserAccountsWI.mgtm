@@ -3,8 +3,16 @@ Window UserAccountsWI {
         entity: User
         rows : [User.allInstances()]
         column : surname {label : ['Surname'] }
-        column : name {name : ['Name'] }
-        column : login {login : ['Login']}
+        column : name {label : ['Name'] }
+        column : login {label : ['Login']}
+        column : myRole {label : ['Role']}
         size : [10]
     }#
+
+Button CreateBU {
+    String text := ['Create']
+    event onClick {
+        open CreateUserWI ()
+        }
+    }
 }

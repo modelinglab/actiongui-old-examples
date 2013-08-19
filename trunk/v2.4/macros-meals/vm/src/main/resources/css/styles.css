@@ -6,6 +6,7 @@
 @import "SelectMealsWI.css";
 @import "LoginWI.css";
 @import "ConfigurationWI.css";
+@import "CreateUserWI.css";
 @import "ChangePasswordWI.css";
 
 /* The following rule is to avoid resizeable text fields */

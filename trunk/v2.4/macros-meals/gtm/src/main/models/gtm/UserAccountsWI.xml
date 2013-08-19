@@ -9,10 +9,10 @@
         <ns1:entry>
             <ns1:line-layout orientation="vertical" ns1:height="auto">
                 <ns1:entry>
-                    <ns1:widget ns1:id="UsersTB_page" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                    <ns1:widget ns1:id="UsersTB_page" ns1:height="30px" ns1:width="600px"></ns1:widget>
                 </ns1:entry>
                 <ns1:entry>
-                    <ns1:table ns1:id="UsersTB" ns1:height="200px" ns1:width="300px">
+                    <ns1:table ns1:id="UsersTB" ns1:height="200px" ns1:width="600px">
                         <ns1:column>
                             <ns1:widget ns1:id="surname" ns1:height="30px"></ns1:widget>
                         </ns1:column>
@@ -21,6 +21,9 @@
                         </ns1:column>
                         <ns1:column>
                             <ns1:widget ns1:id="login" ns1:height="30px"></ns1:widget>
+                        </ns1:column>
+                         <ns1:column>
+                            <ns1:widget ns1:id="myRole" ns1:height="30px"></ns1:widget>
                         </ns1:column>
                     </ns1:table>
                 </ns1:entry>
@@ -41,6 +44,9 @@
                     <ns1:line-layout orientation="vertical" ns1:height="30px"></ns1:line-layout>
                 </ns1:entry>
             </ns1:line-layout>
+        </ns1:entry>
+         <ns1:entry>
+            <ns1:widget ns1:id="CreateBU" ns1:height="30px" ns1:width="60px"></ns1:widget>
         </ns1:entry>
   </ns1:line-layout> 
 </ns1:window-layout>
