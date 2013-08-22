@@ -1,0 +1,41 @@
+Window CreateEmployeeWI {
+   
+    Label IdLB {
+        String text := ['Id']
+    }
+
+    TextField NewIdTF {
+        String text := [null]
+    }
+
+    Label SalaryLB {
+        String text := ['Salary']
+    }
+
+    TextField NewSalaryTF {
+        String text := [null]
+    }
+    
+ Button CreateEmployeeBU {
+        String text := ['Create']
+        event onClick {
+            if [not($NewIdTF.text$.oclIsUndefined())]{
+                if [not($NewSalaryTF.text$.oclIsUndefined())] {
+                    if [Employee.allInstances()->forAll(e|e.id <> $NewIdTF.text$.toInteger())] {
+                          newEmployee := new Employee
+                         [$newEmployee$.id] := [$NewIdTF.text$.toInteger()]
+                         newContract := new Contract
+                         [$newContract$.salary] := [$NewSalaryTF.text$.toReal()]
+                         [$newContract$.employee] += [$newEmployee$]
+                     } else {
+                        notification(['Error'],['The id already exists'],[50]) 
+                    }
+                } else {
+                    notification(['Error'],['Salary is undefined'],[50]) 
+                }
+            } else {
+                notification(['Error'],['Id is undefined'],[50]) 
+          }
+       }
+    }
+}

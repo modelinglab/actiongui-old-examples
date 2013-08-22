@@ -1,0 +1,45 @@
+Window LoginWI isMain{
+    //Role role := [Role::SYSTEM]
+
+    //String text := ['Log In']
+
+    Label LoginLB {
+        String text := ['Login: ']
+    }
+    TextField LoginTF {
+        String text :=  [null] 
+    }
+    Label PasswordLB {
+        String text := ['Passw: ']
+    }
+    PasswordField PasswordTF {
+        String text :=  [null] 
+    }
+
+    Button LoginBU {
+        String text := ['Log in']
+        Employee loggedUser
+        event onClick {
+ //           try {
+                //loggedUser := [Employee.allInstances()->any(c|c.login = $LoginTF.text$ and c.password = $PasswordTF.text$ )]
+ //           }
+ //           catch (SecurityException) {
+ //               notification(['Security Error'],['you do not hace permission to read the login information'],[-1])
+ //           }
+            if [not($loggedUser$.oclIsUndefined())] {
+  //              if [$loggedUser$.myRole = Role::USER] {
+                    // open CreateEmployeeWI(caller:[$loggedUser$], role:[$loggedUser$.myRole])
+                    open CreateEmployeeWI()
+                }
+  //              else {
+  //                  notification (['Message'],['You have no role assigned.'],[-1])
+  //              } 
+            //}
+            else {
+                notification (['Message'],['Wrong credentials.'],[500])
+                LoginTF.text :=  [null]  //necessary?
+                PasswordTF.text :=  [null] //necessary?
+            }
+        }
+    }
+}
