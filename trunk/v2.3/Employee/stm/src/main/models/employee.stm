@@ -1,0 +1,27 @@
+role ADMIN {
+   Employee {
+      create
+      read
+      update 
+    }
+   Contract {
+     create
+     read
+     update salary constrainedBy [value < 100000 
+                        and caller.contracts->excludes(self)]
+     add employee, remove employee constrainedBy  [target <> caller]
+   } 
+}
+
+role DIRECTOR extends ADMIN {
+    Contract {
+      update salary constrainedBy [caller.contracts->excludes(self)]
+ }
+}
+
+ role SYSTEM 
+     {
+     Employee {
+        read login, read password
+        }
+}
