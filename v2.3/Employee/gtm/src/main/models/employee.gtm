@@ -4,7 +4,7 @@ Window CreateEmployeeWI {
         String text := ['Id']
     }
 
-    TextField NewIdTF {
+    TextField NewId {
         String text := [null]
     }
 
@@ -12,7 +12,7 @@ Window CreateEmployeeWI {
         String text := ['Salary']
     }
 
-    TextField NewSalaryTF {
+    TextField NewSalary {
         String text := [null]
     }
     
@@ -20,24 +20,21 @@ Window CreateEmployeeWI {
         String text := ['Create']
         event onClick {
 try {
-            if [not($NewIdTF.text$.oclIsUndefined())]{
-                if [not($NewSalaryTF.text$.oclIsUndefined())] {
-                    if [Employee.allInstances()->forAll(e|e.id <> $NewIdTF.text$.toInteger())] {
-                          newEmployee := new Employee
-                         [$newEmployee$.id] := [$NewIdTF.text$.toInteger()]
-                         newContract := new Contract
-                         [$newContract$.salary] := [$NewSalaryTF.text$.toReal()]
-                         [$newContract$.employee] += [$newEmployee$]
-                     } else {
-                        notification(['Error'],['The id already exists'],[50]) 
-                    }
+// []
+            if [Employee.allInstances()->forAll(e|e.id <> $NewId.text$.toInteger())]{
+                if [not($NewId.text$.oclIsUndefined()) and not($NewSalary.text$.oclIsUndefined())] {
+                         newEmp := new Employee
+                         [$newEmp$.id] := [$NewId.text$.toInteger()]
+                         newCont := new Contract
+                         [$newCont$.salary] := [$NewSalary.text$.toReal()]
+                         [$newCont$.employee] += [$newEmp$]
+                    } else {
+                         notification(['Error'],['Some information is missing'],[50]) 
+                         }
                 } else {
-                    notification(['Error'],['Salary is undefined'],[50]) 
-                }
-            } else {
-                notification(['Error'],['Id is undefined'],[50]) 
-          }
-       }
+                     notification(['Error'],['There exists an employee with this id'],[50]) 
+                     }
+    }
 catch (SecurityException)
     { 
         notification(['Error'], ['Unauthorized'], [50])
