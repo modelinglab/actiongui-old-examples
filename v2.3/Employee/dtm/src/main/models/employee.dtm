@@ -1,0 +1,18 @@
+entity Employee {
+    Integer id
+    String login
+    String password
+    Role myRole
+    Set(Contract) contracts oppositeTo employee
+}
+
+entity Contract {
+    Real salary
+    Set(Employee) employee oppositeTo contracts
+}
+
+enum Role {
+   SYSTEM
+    ADMIN
+    DIRECTOR
+}
