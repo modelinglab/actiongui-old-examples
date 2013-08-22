@@ -12,7 +12,7 @@ entity Contract {
 }
 
 enum Role {
-   SYSTEM
+    SYSTEM
     ADMIN
     DIRECTOR
 }

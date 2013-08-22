@@ -22,6 +22,6 @@ role DIRECTOR extends ADMIN {
  role SYSTEM 
      {
      Employee {
-        read login, read password
+        read login, read password, read myRole
         }
 }

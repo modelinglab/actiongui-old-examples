@@ -21,7 +21,7 @@ Window LoginWI isMain{
         Employee loggedUser
         event onClick {
  //           try {
-                //loggedUser := [Employee.allInstances()->any(c|c.login = $LoginTF.text$ and c.password = $PasswordTF.text$ )]
+             loggedUser := [Employee.allInstances()->any(c|c.login = $LoginTF.text$ and c.password = $PasswordTF.text$ )]
  //           }
  //           catch (SecurityException) {
  //               notification(['Security Error'],['you do not hace permission to read the login information'],[-1])
