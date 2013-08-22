@@ -19,6 +19,7 @@ Window CreateEmployeeWI {
  Button CreateEmployeeBU {
         String text := ['Create']
         event onClick {
+try {
             if [not($NewIdTF.text$.oclIsUndefined())]{
                 if [not($NewSalaryTF.text$.oclIsUndefined())] {
                     if [Employee.allInstances()->forAll(e|e.id <> $NewIdTF.text$.toInteger())] {
@@ -37,5 +38,10 @@ Window CreateEmployeeWI {
                 notification(['Error'],['Id is undefined'],[50]) 
           }
        }
-    }
+catch (SecurityException)
+    { 
+        notification(['Error'], ['Unauthorized'], [50])
+       }
+     }
+  }
 }
