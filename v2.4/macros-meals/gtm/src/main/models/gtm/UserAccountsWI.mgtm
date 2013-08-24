@@ -15,4 +15,20 @@ Button CreateBU {
         open CreateUserWI ()
         }
     }
+
+Button EditBU {
+    String text := ['Edit']
+    event onClick {
+        #forward {
+            target: EditUserWI
+            arg: thisUser {
+                    value: [$UsersTB.selected$->any(true)]
+                    }
+            assert: [not($UsersTB.selected$->oclIsUndefined())] 
+                    {message: ['Please, select first a user']
+                       assert: [not($UsersTB.selected$->size()>1)]
+                        {message: ['Please, select only one user']} } 
+                }#
+        }
+    }
 }
