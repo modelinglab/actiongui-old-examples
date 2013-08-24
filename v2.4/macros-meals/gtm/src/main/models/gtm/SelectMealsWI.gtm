@@ -5,7 +5,8 @@ Window SelectMealsWI  {
 
 
     Button NextWeekBU {
-        String text := [Date.now().dayOfWeek().toString()]
+        String text := ['Next'] 
+        //[Date.now().dayOfWeek().toString()]
         event onClick {
               SelectMealsWI.selDate := [$SelectMealsWI.selDate$.add(7, TimeUnit::DAY)]
         }
@@ -18,12 +19,29 @@ Window SelectMealsWI  {
         }
     }
 
-    Label firstDayTableLB {
-        DayOfWeek aux := [$SelectMealsWI.selDateWeekFirstDay$.dayOfWeek()]
-        String selDateWeekFirstDayLiteral := [if $aux$=DayOfWeek::MONDAY then 'MONDAY' else (if $aux$=DayOfWeek::TUESDAY then 'TUESDAY' else (if $aux$=DayOfWeek::WEDNESDAY then 'WEDNESDAY' else (if $aux$=DayOfWeek::THURSDAY then 'THURSDAY' else (if $aux$=DayOfWeek::FRIDAY then 'FRIDAY' else (if $aux$=DayOfWeek::SATURDAY then 'SATURDAY' else 'SUNDAY' endif) endif) endif) endif) endif)endif]
-        //String text := [$SelectMealsWI.selDateWeekFirstDay$.dayOfWeek().toString().concat(' ').concat($SelectMealsWI.selDateWeekFirstDay$.dayOfMonth().toString())]
-        String text := [$selDateWeekFirstDayLiteral$.concat(' ').concat(($SelectMealsWI.selDateWeekFirstDay$.dayOfMonth() + 1).toString())]
+    Label firstDayThisWeekLB {
+        String text := [$SelectMealsWI.selDateWeekFirstDay$.dayOfWeek().name().concat(' ').concat(($SelectMealsWI.selDateWeekFirstDay$.dayOfMonth()).toString())]
     } 
+    Label secondDayThisWeekLB {
+        String text := [$SelectMealsWI.selDateWeekFirstDay$.add(1,TimeUnit::DAY).dayOfWeek().name().concat(' ').concat(($SelectMealsWI.selDateWeekFirstDay$.add(1,TimeUnit::DAY).dayOfMonth()).toString())]
+    } 
+    Label thirdDayThisWeekLB {
+        String text := [$SelectMealsWI.selDateWeekFirstDay$.add(2,TimeUnit::DAY).dayOfWeek().name().concat(' ').concat(($SelectMealsWI.selDateWeekFirstDay$.add(2,TimeUnit::DAY).dayOfMonth()).toString())]
+    } 
+    Label fourthDayThisWeekLB {
+        String text := [$SelectMealsWI.selDateWeekFirstDay$.add(3,TimeUnit::DAY).dayOfWeek().name().concat(' ').concat(($SelectMealsWI.selDateWeekFirstDay$.add(3,TimeUnit::DAY).dayOfMonth()).toString())]
+    } 
+    Label fifthDayThisWeekLB {
+        String text := [$SelectMealsWI.selDateWeekFirstDay$.add(4,TimeUnit::DAY).dayOfWeek().name().concat(' ').concat(($SelectMealsWI.selDateWeekFirstDay$.add(4,TimeUnit::DAY).dayOfMonth()).toString())]
+    } 
+    Label sixthDayThisWeekLB {
+        String text := [$SelectMealsWI.selDateWeekFirstDay$.add(5,TimeUnit::DAY).dayOfWeek().name().concat(' ').concat(($SelectMealsWI.selDateWeekFirstDay$.add(5,TimeUnit::DAY).dayOfMonth()).toString())]
+    } 
+    Label seventhDayThisWeekLB {
+        String text := [$SelectMealsWI.selDateWeekFirstDay$.add(6,TimeUnit::DAY).dayOfWeek().name().concat(' ').concat(($SelectMealsWI.selDateWeekFirstDay$.add(6,TimeUnit::DAY).dayOfMonth()).toString())]
+    } 
+    
+
 
 
     Table WeekMealsTB {
@@ -346,7 +364,7 @@ Window SelectMealsWI  {
      event onChange (selDate) {     
         reevaluate selDateDayOfWeek
         reevaluate selDateWeekFirstDay
-        reevaluate firstDayTableLB.text
+        reevaluate firstDayThisWeekLB.text
         WeekMealsTB.rows := [Meal.allInstances()->select(m|false)]
         WeekMealsTB.rows := [Meal.allInstances()]
     }
