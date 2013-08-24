@@ -1,0 +1,12 @@
+Window EditUserWI {
+    User thisUser
+    #form thisUserFO {
+    entity: User
+    instance: [$EditUserWI.thisUser$]
+    attr: name {label: ['Name: '] }
+    attr: surname {label: ['Surname: ']}
+    attr: login {label: ['Login: ']}
+    attr: password {label : ['Password: ']}
+    attr: myRole {label: ['Role: ']}
+    }#
+}

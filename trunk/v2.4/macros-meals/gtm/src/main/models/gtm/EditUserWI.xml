@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ns1:window-layout ns1:id="EditUserWI"
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:ns1='http://actiongui.org/schemes/ag-layout/2.4'
+    xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://www.actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
+    <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="400px">
+        <ns1:entry>
+            <ns1:line-layout orientation="horizontal">
+                <ns1:entry>
+                    <ns1:widget ns1:id="thisUserFO_name_L" ns1:height="30px" ns1:width="60px"></ns1:widget>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:widget ns1:id="thisUserFO_name" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                </ns1:entry>
+            </ns1:line-layout>
+        </ns1:entry>
+                <ns1:entry>
+            <ns1:line-layout orientation="horizontal">
+                <ns1:entry>
+                    <ns1:widget ns1:id="thisUserFO_surname_L" ns1:height="30px" ns1:width="60px"></ns1:widget>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:widget ns1:id="thisUserFO_surname" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                </ns1:entry>
+            </ns1:line-layout>
+        </ns1:entry>
+                <ns1:entry>
+            <ns1:line-layout orientation="horizontal">
+                <ns1:entry>
+                    <ns1:widget ns1:id="thisUserFO_login_L" ns1:height="30px" ns1:width="60px"></ns1:widget>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:widget ns1:id="thisUserFO_login" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                </ns1:entry>
+            </ns1:line-layout>
+        </ns1:entry>
+                <ns1:entry>
+            <ns1:line-layout orientation="horizontal">
+                <ns1:entry>
+                    <ns1:widget ns1:id="thisUserFO_password_L" ns1:height="30px" ns1:width="60px"></ns1:widget>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:widget ns1:id="thisUserFO_password" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                </ns1:entry>
+            </ns1:line-layout>
+        </ns1:entry>
+                <ns1:entry>
+            <ns1:line-layout orientation="horizontal">
+                <ns1:entry>
+                    <ns1:widget ns1:id="thisUserFO_myRole_L" ns1:height="30px" ns1:width="60px"></ns1:widget>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:widget ns1:id="thisUserFO_myRole" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                </ns1:entry>
+            </ns1:line-layout>
+        </ns1:entry>
+        
+  </ns1:line-layout> 
+</ns1:window-layout>

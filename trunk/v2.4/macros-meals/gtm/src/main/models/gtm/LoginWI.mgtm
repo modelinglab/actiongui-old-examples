@@ -9,14 +9,11 @@ Window LoginWI isMain {
 Button LoginBU {
     String text := ['Login']
     User loggedUser
-
     event onClick {
-            try {
-                loggedUser := [User.allInstances()->any(c|c.login = $LoginFO_login.text$ and c.password = $LoginFO_password.text$)]
-            }
-            catch (SecurityException) {
-                notification(['Security Error'],['you do not hace permission to read the login information'],[-1])
-            }
+            #login {
+                credentials: LoginFO
+                result: loggedUser
+            }#
             if [not($loggedUser$.oclIsUndefined())] {
                 if [$loggedUser$.myRole = Role::RESIDENT] {
                     open MenuResidentWI(caller:[$loggedUser$], role:[$loggedUser$.myRole])
@@ -30,6 +27,6 @@ Button LoginBU {
                     }
                 } 
             }
-}
-}
+        }
+    }
 }
