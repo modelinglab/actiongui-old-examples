@@ -20,7 +20,6 @@ Window CreateEmployeeWI {
         String text := ['Create']
         event onClick {
 try {
-// []
             if [Employee.allInstances()->forAll(e|e.id <> $NewId.text$.toInteger())]{
                 if [not($NewId.text$.oclIsUndefined()) and not($NewSalary.text$.oclIsUndefined())] {
                          newEmp := new Employee
