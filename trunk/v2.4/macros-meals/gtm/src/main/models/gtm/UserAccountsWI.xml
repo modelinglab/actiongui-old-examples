@@ -30,13 +30,13 @@
                 <ns1:entry>
                     <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
                         <ns1:entry>
-                            <ns1:widget ns1:id="UsersTB_prev_B" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                            <ns1:widget ns1:id="UsersTB_prev_B" ns1:height="30px" ns1:width="120px"></ns1:widget>
                         </ns1:entry>
                         <ns1:entry>
                             <ns1:line-layout orientation="vertical" ns1:height="30px" ns1:width="30px"></ns1:line-layout>
                         </ns1:entry>
                         <ns1:entry>
-                            <ns1:widget ns1:id="UsersTB_next_B" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                            <ns1:widget ns1:id="UsersTB_next_B" ns1:height="30px" ns1:width="120px"></ns1:widget>
                         </ns1:entry>
                     </ns1:line-layout>
                 </ns1:entry>
@@ -46,10 +46,13 @@
             </ns1:line-layout>
         </ns1:entry>
          <ns1:entry>
-            <ns1:widget ns1:id="CreateBU" ns1:height="30px" ns1:width="60px"></ns1:widget>
+            <ns1:widget ns1:id="CreateBU" ns1:height="30px" ns1:width="120px"></ns1:widget>
         </ns1:entry>
         <ns1:entry>
-            <ns1:widget ns1:id="EditBU" ns1:height="30px" ns1:width="60px"></ns1:widget>
+            <ns1:widget ns1:id="EditBU" ns1:height="30px" ns1:width="120px"></ns1:widget>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:widget ns1:id="BackBU" ns1:height="30px" ns1:width="60px"></ns1:widget>        
         </ns1:entry>
   </ns1:line-layout> 
 </ns1:window-layout>

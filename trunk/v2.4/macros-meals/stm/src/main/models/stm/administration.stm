@@ -26,6 +26,9 @@ role DIRECTOR {
     MealOptionDeadline {
         fullAccess
     }
+    Residency {
+        fullAccess
+    }
 }
 
 role RESIDENT {
@@ -43,10 +46,14 @@ role RESIDENT {
         add dailyMeals constrainedBy [self=caller]
     }
     DailyMealSelection {
-        fullAccess
-        //create
-        //read constrainedBy [self.selectedBy->any(true) = caller]
-        //update constrainedBy [self.selectedBy->any(true) = caller]
+        //fullAccess
+        create
+        read
+        update date  constrainedBy [self.date.oclIsUndefined()] // and value => Date.now().year()] and value  >= date.now().dayOfYear()
+        update selectedBy constrainedBy [value = caller]
+        add selections
+        //update dailyMeals
+
     }
     MealSelection {
         fullAccess

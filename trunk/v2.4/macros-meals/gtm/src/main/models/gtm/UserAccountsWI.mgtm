@@ -31,4 +31,11 @@ Button EditBU {
                 }#
         }
     }
+
+Button BackBU {
+    String text := ['Back']
+    event onClick {
+        back
+    }
+}
 }
