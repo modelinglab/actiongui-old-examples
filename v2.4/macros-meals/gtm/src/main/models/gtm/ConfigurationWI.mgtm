@@ -10,6 +10,58 @@ Window ConfigurationWI {
         sortedBy : [literal]
     }#
 
+    #form NewMealFO {
+        entity: Meal
+        attr: literal {label : ['Meal: ']}
+    }#
+
+    Button NewMealBU {
+        String text := ['New meal']
+        Meal newMeal
+        event onClick {
+            #create {
+                form: NewMealFO
+                result: newMeal
+                assert: [not($NewMealFO_literal.text$.oclIsUndefined())]
+                        {message: ['NM0: Please, write the name of the new meal']
+                         assert : [not(Meal.allInstances()->exists(m|m.literal = $NewMealFO_literal.text$))]
+                         {message: ['NM1: There is already a meal with this name. Please, choose a different name']
+                            } }     
+            }#
+            if [not($newMeal$.oclIsUndefined())] {
+                #refresh Meals_T#
+                Meals_T.selected := [$newMeal$->asOrderedSet()]
+            }
+        }
+
+    }
+
+    #form EditMealFO {
+        entity: Meal
+        instance: [$Meals_T.selected$->any(true)]
+        attr: literal {label : ['Meal: ']}
+    }#
+
+    Button EditMealBU {
+        String text := ['Change name']
+        event onClick {
+            #update {
+                form: EditMealFO
+                result: newMeal
+                assert: [not($Meals_T.selected$->oclIsUndefined())]
+                    {messsage: ['EM0: Please, select first a meal']
+                    assert: [not($Meals_T.selected$->size()=0)]
+                      {message: ['EM1: Please, select first a meal']
+                        assert: [not($EditMealFO_literal.text$.oclIsUndefined())]
+                        {message: ['EM3: Please, write the new name of the meal']
+                          assert : [not(Meal.allInstances()->exists(m|m.literal = $EditMealFO_literal.text$))]
+                          {message: ['EM4:There is already a meal with this name. Please, choose a different name']
+                            } } } }
+                 refresh: Meals_T
+            }#          
+        }
+    }
+
     #table Meal_Options_T {
         entity : MealOption
         rows : [$Meals_T.selected$.options]
@@ -17,8 +69,130 @@ Window ConfigurationWI {
                     label : ['Option']
                     }
         size: [10]
-        sortedby : [literal]
     }#
+
+
+#form NewOptionFO {
+        entity: MealOption
+        attr: literal {label : ['Meal: ']}
+    }#
+
+    Button NewOptionBU {
+        String text := ['New option']
+        MealOption newOption
+        event onClick {
+            #create {
+                form: NewOptionFO
+                result: newOption
+                assert: [not($Meals_T.selected$->oclIsUndefined())]
+                  {message: ['NO0: Please, select first a meal']
+                    assert: [not($Meals_T.selected$->size() = 0)]
+                    {message: ['NO1: Please, select first a meal']
+                      assert: [not($Meals_T.selected$->size() >1)] 
+                      {message: ['NO2: Please, select only one meal']
+                        assert: [not($NewOptionFO_literal.text$.oclIsUndefined())]
+                        {message: ['NO3: Please, write the name of the new option']
+                          assert : [not($Meals_T.selected$.options->exists(o|o.literal = $NewOptionFO_literal.text$))]
+                          {message: ['NO4: There is already an option for this meal with this name. Please, choose a different name']
+                            } } } } }
+            }#
+            if [not($newOption$.oclIsUndefined())] {
+                [$newOption$.ownedBy] := [$Meals_T.selected$->any(true)]
+                #refresh Meals_T#
+                Meals_T.selected := [$newOption$.ownedBy->asOrderedSet()]            
+                Meal_Options_T.selected := [$newOption$->asOrderedSet()]
+            }
+        }
+
+    }
+
+    #form EditOptionFO {
+        entity: Meal
+        instance: [$Meal_Options_T.selected$->any(true)]
+        attr: literal {label : ['Option: ']}
+    }#
+
+    Button EditOptionBU {
+        String text := ['Change name']
+        event onClick {
+            #update {
+                form: EditOptionFO
+                result: newOption
+                assert: [not($Meals_T.selected$->oclIsUndefined())]
+                  {message: ['EO0: Please, select first a meal']
+                    assert: [not($Meals_T.selected$->size() = 0)]
+                    {message: ['EO1: Please, select first a meal']
+                      assert: [not($Meals_T.selected$->size() >1)] 
+                      {message: ['EO2: Please, select only one meal']
+                        assert: [not($Meal_Options_T.selected$->oclIsUndefined())]
+                        {messsage: ['EO3: Please, select an option first']
+                          assert: [not($Meal_Options_T.selected$->size() = 0)] 
+                          {message: ['EO4: Please, select first an option']
+                            assert: [not($EditOptionFO_literal.text$.oclIsUndefined())]
+                            {message: ['EO5: Please, write the new name of the option']
+                              assert : [not($Meals_T.selected$->exists(m|m.literal = $EditOptionFO_literal.text$))]
+                              {message: ['EO6: There is already an option for this meal with this name. Please, choose a different name']
+                               } } }}}}}
+                 refresh: Meal_Options_T
+            }#          
+        }
+    }
+
+
+
+Table ThisOptionPeriodsFO {
+    Set(Residency) rows := [Residency.allInstances()]
+    columns {
+        ['start'] : Label startTHIS {
+                        //String text := [$ThisOptionPeriodsFO.row$.start.toString()]
+                        String text := ['hola']
+                    }
+               
+        ['end'] : Label endTHIS {
+                        //String text := [$ThisOptionPeriodsFO.row$.end.toString()]
+                        String text := ['hola']
+                   }
+    }
+}
+    
+   
+
+
+
+#form NewPeriodOptionFO {
+    entity: Residency
+    attr: start {label: ['Start: ']}
+    attr: end {label: ['End: ']}
+}#
+
+Button CreatePeriodOptionBU {
+    String text := ['New period']
+    Residency newPeriod
+    event onClick {
+        #create {
+            form: NewPeriodOptionFO 
+            result: newPeriod
+            assert: [not($NewPeriodOptionFO_start.date$.oclIsUndefined())]
+                {message: ['Please, select first a starting date'] 
+                 assert: [not($NewPeriodOptionFO_end.date$.oclIsUndefined())]
+                    {message: ['Please, select first an ending date']
+                        assert: [$NewPeriodOptionFO_start.date$ <= $NewPeriodOptionFO_end.date$]
+                        {message: ['Please, select an ending date that is later or equal than the starting date']
+                        assert: [$Meal_Options_T.selected$->any(true).periodsOption->select(p|
+                                    ($NewPeriodOptionFO_start.date$ <= p.start and $NewPeriodOptionFO_end.date$ >= p.start)
+                                    or ($NewPeriodOptionFO_start.date$ > p.start and $NewPeriodOptionFO_start.date$ <= p.end))
+                                ->isEmpty()]
+                            {message: ['The selected period overlaps with one or more existing periods. Please, change either the starting or the ending date']
+                                }} } }
+        }#
+        if [not($newPeriod$.oclIsUndefined())]
+           { [$Meal_Options_T.selected$->any(true).periodsOption]+= [$newPeriod$]
+             reevaluate ThisOptionPeriodsFO.rows
+             #refresh NewPeriodOptionFO#
+             }
+    }
+    } 
+
 
     #table Meal_Option_Deadlines_T {
         entity : MealOptionDeadline
@@ -34,12 +208,25 @@ Window ConfigurationWI {
                 }
     }#
 
-    event onChange(Meals_T.selected) {
-        #refresh Meal_Options_T #
-        #refresh Meal_Option_Deadlines_T #
+
+    Button ShowPeriodsBU {
+        String text := ['Show']
+        event onClick {
+            ThisOptionPeriodsFO.rows := [Residency.allInstances()->select(false)]
+            ThisOptionPeriodsFO.rows := [Residency.allInstances()->select(r|$Meal_Options_T.selected$->any(true).periodsOption->includes(r))]
+        }
     }
 
-    event onChange(Meal_Options_T.selected) {
-        #refresh Meal_Option_Deadlines_T #
+
+    event onChange(Meals_T.selected) {
+            #refresh EditMealFO #
+            #refresh Meal_Options_T #
+            // #refresh Meal_Option_Deadlines_T #
+            
     }
+
+
+   
+
+    
 }

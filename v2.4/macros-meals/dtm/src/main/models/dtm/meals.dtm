@@ -39,15 +39,12 @@ entity Guest {
 entity Residency {
     Date start
     Date end
-    Set(User) ownedBy oppositeTo periods
+    User ownedBy oppositeTo periods
+    MealOption ownedByOption oppositeTo periodsOption
 }
 
 entity DailyMealSelection {
     Date date
-    //Integer breakfast
-    //Integer lunch
-    //Integer dinner
-    //Integer timestamp
     // associations
     // 0..1
     User selectedBy oppositeTo dailyMeals
@@ -58,8 +55,8 @@ entity DailyMealSelection {
 }
 
 entity MealSelection {
-    Integer meal
-    Integer mealOption
+    Meal meal
+    MealOption mealOption
     // 0..1
     DailyMealSelection ownedBy oppositeTo selections
     }
@@ -82,24 +79,21 @@ entity FoodRegime {
 }
 
 entity MealOption {
-    Integer id
     String literal
-    Integer meal
     // associations
     Set(MealOptionDeadline) deadlines oppositeTo mealOption
     // 0..1
     Meal ownedBy oppositeTo options
+    Set(Residency) periodsOption oppositeTo ownedByOption
 }
 
 entity Meal {
-    Integer id
     String literal
     // associations
     Set(MealOption) options oppositeTo ownedBy
 }
 
 entity MealOptionDeadline {
-    Integer id
     String literal
     DayType type
     Integer cday // dias de antelacion

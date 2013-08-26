@@ -8,6 +8,7 @@
 @import "ConfigurationWI.css";
 @import "CreateUserWI.css";
 @import "ChangePasswordWI.css";
+@import "EditUserWI.css";
 
 /* The following rule is to avoid resizeable text fields */
 .v-textarea {

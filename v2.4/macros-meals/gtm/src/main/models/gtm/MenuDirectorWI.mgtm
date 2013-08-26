@@ -2,7 +2,7 @@ Window MenuDirectorWI  {
 
 #menu MenuDirector {
     target: UserAccountsWI { label : ['Users'] }
-    target: ConfigurationWI { label : ['Configuration'] }
+    target: ConfigurationWI { label : ['Meals'] }
     target: ChangePasswordWI { label : ['Change password'] }
 }#
 
