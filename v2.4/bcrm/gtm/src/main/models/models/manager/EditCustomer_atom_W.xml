@@ -15,14 +15,14 @@ and open the template in the editor.
             <ns1:line-layout orientation="horizontal"/>
         </ns1:entry>
         <ns1:entry>
-            <ns1:line-layout orientation="vertical" ns1:height="100%" ns1:width="-1px">
+            <ns1:line-layout orientation="vertical" ns1:height="100%" ns1:width="auto">
                 <ns1:entry expand-ratio="1">
                     <ns1:line-layout orientation="horizontal"/>
                 </ns1:entry>
                 <ns1:entry>
-                    <ns1:line-layout orientation="horizontal" ns1:height="-1px" ns1:width="-1px">
+                    <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
                         <ns1:entry>
-                            <ns1:line-layout orientation="vertical" ns1:height="-1px" ns1:width="-1px">
+                            <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto">
                                 <ns1:entry>
                                     <ns1:widget ns1:id="EditCustomer_F_name_L" ns1:height="25px"/>
                                 </ns1:entry>
@@ -175,7 +175,7 @@ and open the template in the editor.
                     <ns1:line-layout orientation="horizontal"/>
                 </ns1:entry>
                 <ns1:entry>
-                    <ns1:widget ns1:id="Back_B" ns1:height="-1px"/>
+                    <ns1:widget ns1:id="Back_B" ns1:height="auto"/>
                 </ns1:entry>
             </ns1:line-layout>
         </ns1:entry>
