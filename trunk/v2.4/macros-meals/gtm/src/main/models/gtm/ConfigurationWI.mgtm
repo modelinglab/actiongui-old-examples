@@ -170,8 +170,16 @@ Button CreatePeriodOptionBU {
     String text := ['New period']
     Residency newPeriod
     event onClick {
-        #create {
-            form: NewPeriodOptionFO 
+     if [$Meals_T.selected$->oclIsUndefined()]
+            { error := ['Please, select first a meal'] }
+        else {if [$Meals_T.selected$->size() = 0 or $Meals_T.selected$->size() > 1]
+                  { error := ['Please, select exactly one meal'] }
+              else {if [$Meal_Options_T.selected$->oclIsUndefined()]
+                       { error := ['Please, select an option first'] }
+                    else {if [$Meal_Options_T.selected$->size() = 0 or $Meal_Options_T.selected$->size() > 1]
+                             { error := ['Please, select exactlty one option'] }
+                          else {
+        #create {form: NewPeriodOptionFO 
             result: newPeriod
             assert: [not($NewPeriodOptionFO_start.date$.oclIsUndefined())]
                 {message: ['Please, select first a starting date'] 
@@ -187,27 +195,221 @@ Button CreatePeriodOptionBU {
                                 }} } }
         }#
         if [not($newPeriod$.oclIsUndefined())]
-           { [$Meal_Options_T.selected$->any(true).periodsOption]+= [$newPeriod$]
+           { 
+            [$Meal_Options_T.selected$->any(true).periodsOption]+= [$newPeriod$]
              #refresh ThisOptionPeriodsFO#
              #refresh NewPeriodOptionFO#
              }
-    }
+        } } } } 
+      }
     } 
 
-
-    #table Meal_Option_Deadlines_T {
-        entity : MealOptionDeadline
-        rows : [$Meal_Options_T.selected$.deadlines]
-        column : cday {
-                    label : ['Day']
-                    }
-        column : chour {
-                    label :['Hour']
-                    }
-        column : cminute {
-                    label : ['Minute']
+Table DeadlinesTB {
+    Set(MealOptionDeadline) rows := [$ThisOptionPeriodsFO.selected$  ->any(true).deadlines]
+    columns {
+        ['First'] : BooleanField Monday { 
+                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::MONDAY)) then true else false endif] 
+                {
+                if [not($value$.oclIsUndefined())] 
+                   { if [$value$] 
+                        { if [$DeadlinesTB.rows$->excluding($DeadlinesTB.row$)->exists(d|d.days->includes(DayOfWeek::MONDAY))]
+                            { value := [false]
+                              notification(['Error'], ['There is already a deadline fixed form Mondays'], [0]) }
+                         else { [$DeadlinesTB.row$.days] := 
+                              [if $DeadlinesTB.row$.days->oclIsUndefined()
+                              then DayOfWeek::MONDAY->asSet()
+                              else $DeadlinesTB.row$.days->including(DayOfWeek::MONDAY) endif] } } 
+                      else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::MONDAY)] }
+                   }    
+                } 
                 }
-    }#
+        ['Second'] : BooleanField Tuesday { 
+                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::TUESDAY)) then true else false endif] 
+                {
+                if [not($value$.oclIsUndefined())] 
+                   { if [$value$] 
+                        { if [$DeadlinesTB.rows$->excluding($DeadlinesTB.row$)->exists(d|d.days->includes(DayOfWeek::TUESDAY))]
+                            { value := [false]
+                              notification(['Error'], ['There is already a deadline fixed form Tuesdays'], [0]) }
+                         else { [$DeadlinesTB.row$.days] := 
+                              [if $DeadlinesTB.row$.days->oclIsUndefined()
+                              then DayOfWeek::TUESDAY->asSet()
+                              else $DeadlinesTB.row$.days->including(DayOfWeek::TUESDAY) endif] } } 
+                      else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::TUESDAY)] }
+                   }   
+                  
+                } 
+                  }
+        ['Third'] : BooleanField Wednesday { 
+                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::WEDNESDAY)) then true else false endif] 
+                {
+                if [not($value$.oclIsUndefined())] 
+                   { if [$value$] 
+                        { if [$DeadlinesTB.rows$->excluding($DeadlinesTB.row$)->exists(d|d.days->includes(DayOfWeek::WEDNESDAY))]
+                            { value := [false]
+                              notification(['Error'], ['There is already a deadline fixed form Wednesdays'], [0]) }
+                         else { [$DeadlinesTB.row$.days] := 
+                              [if $DeadlinesTB.row$.days->oclIsUndefined()
+                              then DayOfWeek::WEDNESDAY->asSet()
+                              else $DeadlinesTB.row$.days->including(DayOfWeek::WEDNESDAY) endif] } } 
+                      else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::WEDNESDAY)] }
+                   }   
+                  
+                } }
+        ['Fourth'] : BooleanField Thursday { 
+                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::THURSDAY)) then true else false endif] 
+                {
+                if [not($value$.oclIsUndefined())] 
+                   { if [$value$] 
+                        { if [$DeadlinesTB.rows$->excluding($DeadlinesTB.row$)->exists(d|d.days->includes(DayOfWeek::THURSDAY))]
+                            { value := [false]
+                              notification(['Error'], ['There is already a deadline fixed form Thursdays'], [0]) }
+                         else { [$DeadlinesTB.row$.days] := 
+                              [if $DeadlinesTB.row$.days->oclIsUndefined()
+                              then DayOfWeek::THURSDAY->asSet()
+                              else $DeadlinesTB.row$.days->including(DayOfWeek::THURSDAY) endif] } } 
+                      else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::THURSDAY)] }
+                   }             
+                } }
+        ['Firfth'] : BooleanField Friday { 
+                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::FRIDAY)) then true else false endif] 
+                {
+                if [not($value$.oclIsUndefined())] 
+                   { if [$value$] 
+                        { if [$DeadlinesTB.rows$->excluding($DeadlinesTB.row$)->exists(d|d.days->includes(DayOfWeek::FRIDAY))]
+                            { value := [false]
+                              notification(['Error'], ['There is already a deadline fixed form Fridays'], [0]) }
+                         else { [$DeadlinesTB.row$.days] := 
+                              [if $DeadlinesTB.row$.days->oclIsUndefined()
+                              then DayOfWeek::FRIDAY->asSet()
+                              else $DeadlinesTB.row$.days->including(DayOfWeek::FRIDAY) endif] } } 
+                      else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::FRIDAY)] }
+                   }   
+                  
+                }}
+        ['Sixth'] : BooleanField Saturday { 
+                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::SATURDAY)) then true else false endif] 
+                {
+                if [not($value$.oclIsUndefined())] 
+                   { if [$value$] 
+                        { if [$DeadlinesTB.rows$->excluding($DeadlinesTB.row$)->exists(d|d.days->includes(DayOfWeek::SATURDAY))]
+                            { value := [false]
+                              notification(['Error'], ['There is already a deadline fixed form Saturdays'], [0]) }
+                         else { [$DeadlinesTB.row$.days] := 
+                              [if $DeadlinesTB.row$.days->oclIsUndefined()
+                              then DayOfWeek::SATURDAY->asSet()
+                              else $DeadlinesTB.row$.days->including(DayOfWeek::SATURDAY) endif] } } 
+                      else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::SATURDAY)] }
+                   }   
+                  
+                } }
+        ['Seventh'] : BooleanField Sunday { 
+                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::SUNDAY)) then true else false endif] 
+                {
+                if [not($value$.oclIsUndefined())] 
+                   { if [$value$] 
+                        { if [$DeadlinesTB.rows$->excluding($DeadlinesTB.row$)->exists(d|d.days->includes(DayOfWeek::SUNDAY))]
+                            { value := [false]
+                              notification(['Error'], ['There is already a deadline fixed form Sundays'], [0]) }
+                         else { [$DeadlinesTB.row$.days] := 
+                              [if $DeadlinesTB.row$.days->oclIsUndefined()
+                              then DayOfWeek::SUNDAY->asSet()
+                              else $DeadlinesTB.row$.days->including(DayOfWeek::SUNDAY) endif] } } 
+                      else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::SUNDAY)] }
+                   }   
+                  
+                } }
+        ['DaysBefore'] : Label DaysBefore { String text := [$DeadlinesTB.row$.cday.toString()] }
+        ['UpDB'] : Button UpDB { 
+                    String text := ['+'] 
+                    event onClick {
+                        [$DeadlinesTB.row$.cday] := [$DeadlinesTB.row$.cday + 1]
+                        reevaluate DeadlinesTB.DaysBefore.text
+                        }           
+                    }
+        ['DownDB'] : Button DownDB { 
+                        String text := ['-']
+                        event onClick {
+                            if [$DeadlinesTB.row$.cday > 0 ]
+                                { [$DeadlinesTB.row$.cday] := [$DeadlinesTB.row$.cday - 1] 
+                                  reevaluate DeadlinesTB.DaysBefore.text }
+                            } 
+                        }
+        ['HourLimit'] : Label HourLimit { 
+            String text := [if $DeadlinesTB.row$.chour < 10 
+                            then '0'.concat($DeadlinesTB.row$.chour.toString())
+                            else $DeadlinesTB.row$.chour.toString() endif] 
+            }
+        ['UpHL'] : Button UpHL { 
+                    String text := ['+'] 
+                    event onClick {
+                            if [$DeadlinesTB.row$.chour < 23 ]
+                                { [$DeadlinesTB.row$.chour] := [$DeadlinesTB.row$.chour + 1] 
+                                  reevaluate DeadlinesTB.HourLimit.text }
+                            } 
+                        }
+        ['DownHL'] : Button DownHL { 
+                    String text := ['-'] 
+                    event onClick {
+                            if [$DeadlinesTB.row$.chour > 0 ]
+                                { [$DeadlinesTB.row$.chour] := [$DeadlinesTB.row$.chour - 1] 
+                                  reevaluate DeadlinesTB.HourLimit.text }
+                            } 
+                        }
+        ['MinutesLimit'] : Label MinutesLimit { 
+            String text := [if $DeadlinesTB.row$.cminute < 10 
+                            then '0'.concat($DeadlinesTB.row$.cminute.toString())
+                            else $DeadlinesTB.row$.cminute.toString() endif]
+            }
+        ['UpML'] : Button UpML { 
+                    String text := ['+'] 
+                    event onClick {
+                        if [$DeadlinesTB.row$.cminute < 59 ]
+                           { [$DeadlinesTB.row$.cminute] := [$DeadlinesTB.row$.cminute + 1] 
+                             reevaluate DeadlinesTB.MinutesLimit.text }
+                            } 
+                    }
+        ['DownML'] : Button DownML { 
+                        String text := ['-'] 
+                        event onClick {
+                            if [$DeadlinesTB.row$.cminute > 0 ]
+                                { [$DeadlinesTB.row$.cminute] := [$DeadlinesTB.row$.cminute - 1] 
+                                  reevaluate DeadlinesTB.MinutesLimit.text }
+                            } 
+
+        }
+    }
+}
+
+Button AddDeadlineBU {
+    String text := ['New deadline']
+    event onClick {
+         newDeadline := new MealOptionDeadline
+         // Default setting
+            [$newDeadline$.cday] := [0]
+            [$newDeadline$.chour] := [9]
+            [$newDeadline$.cminute] := [0]
+            [$newDeadline$.days] := [Set{DayOfWeek::MONDAY, DayOfWeek::TUESDAY, DayOfWeek::WEDNESDAY, DayOfWeek::THURSDAY, DayOfWeek::FRIDAY, DayOfWeek::SATURDAY, DayOfWeek::SUNDAY}->reject(d|$DeadlinesTB.rows$.days->includes(d))]
+          // End default setting
+         [$newDeadline$.ownedBy] := [$ThisOptionPeriodsFO.selected$->any(true)]
+         reevaluate DeadlinesTB.rows
+    }
+}
+
+
+Button DeleteDeadlinesBU {
+    String text := ['Delete deadline']
+    event onClick {
+        if [$DeadlinesTB.selected$->oclIsUndefined()]
+            {error := ['Please, select first a deadline'] }
+        else { foreach deadline in [$DeadlinesTB.selected$] {
+                    delete [$deadline$]
+                } }
+        reevaluate DeadlinesTB.rows
+   }
+}
+
+
 
 
     event onChange(Meals_T.selected) {
@@ -219,4 +421,8 @@ Button CreatePeriodOptionBU {
             #refresh EditOptionFO #
             #refresh ThisOptionPeriodsFO #
             } 
+    event onChange(ThisOptionPeriodsFO.selected) {
+            reevaluate DeadlinesTB.rows
+
+    }
 }

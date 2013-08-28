@@ -135,12 +135,12 @@ and open the template in the editor.
                     <ns1:widget ns1:id="ThisOptionPeriodsFO_page" ns1:height="30px" ns1:width="100px"></ns1:widget>
                 </ns1:entry>
                 <ns1:entry>
-                    <ns1:table ns1:id="ThisOptionPeriodsFO" ns1:height="200px" ns1:width="300px">
+                    <ns1:table ns1:id="ThisOptionPeriodsFO" ns1:height="100px" ns1:width="300px">
                         <ns1:column>
-                            <ns1:widget ns1:id="start" ns1:height="60px"></ns1:widget>
+                            <ns1:widget ns1:id="start" ns1:height="30px" ns1:width="120px"></ns1:widget>
                         </ns1:column>
                         <ns1:column>
-                            <ns1:widget ns1:id="end" ns1:height="60px"></ns1:widget>
+                            <ns1:widget ns1:id="end" ns1:height="30px" ns1:width="120px"></ns1:widget>
                         </ns1:column>           
                     </ns1:table>
                 </ns1:entry>
@@ -193,42 +193,73 @@ and open the template in the editor.
         </ns1:entry>
         
         <!-- FOURTH TABLE -->
+
         <ns1:entry>           
             <ns1:line-layout orientation="vertical" bottom-margin="100px" ns1:height="auto">
+
                 <ns1:entry>
-                    <ns1:widget ns1:id="Meal_Option_Deadlines_T_page" ns1:height="30px" ns1:width="100px"></ns1:widget>
-                </ns1:entry>
-                <ns1:entry>
-                    <ns1:table ns1:id="Meal_Option_Deadlines_T" ns1:height="200px" ns1:width="300px">
+                    <ns1:table ns1:id="DeadlinesTB" ns1:height="200px" ns1:width="600px">
                         <ns1:column>
-                            <ns1:widget ns1:id="cday" ns1:height="30px"></ns1:widget>
+                            <ns1:widget ns1:id="Monday" ns1:height="20px" ns1:width="20px"></ns1:widget>
                         </ns1:column>
                         <ns1:column>
-                            <ns1:widget ns1:id="chour" ns1:height="30px"></ns1:widget>
+                            <ns1:widget ns1:id="Tuesday" ns1:height="20px" ns1:width="20px"></ns1:widget>
                         </ns1:column>
                         <ns1:column>
-                            <ns1:widget ns1:id="cminute" ns1:height="30px"></ns1:widget>
+                            <ns1:widget ns1:id="Wednesday" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="Thursday" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="Friday" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="Saturday" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="Sunday" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="DaysBefore" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                         <ns1:column>
+                            <ns1:widget ns1:id="UpDB" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="DownDB" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="HourLimit" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                         <ns1:column>
+                            <ns1:widget ns1:id="UpHL" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="DownHL" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="MinutesLimit" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                         <ns1:column>
+                            <ns1:widget ns1:id="UpML" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="DownML" ns1:height="20px" ns1:width="20px"></ns1:widget>
                         </ns1:column>
                     </ns1:table>
                 </ns1:entry>
-                <ns1:entry>
-                    <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
-                        <ns1:entry>
-                            <ns1:widget ns1:id="Meal_Option_Deadlines_T_prev_B" ns1:height="30px" ns1:width="100px"></ns1:widget>
-                        </ns1:entry>
-                        <ns1:entry>
-                            <ns1:line-layout orientation="vertical" ns1:height="30px" ns1:width="30px"></ns1:line-layout>
-                        </ns1:entry>
-                        <ns1:entry>
-                            <ns1:widget ns1:id="Meal_Option_Deadlines_T_next_B" ns1:height="30px" ns1:width="100px"></ns1:widget>
-                        </ns1:entry>
-                    </ns1:line-layout>
-                </ns1:entry>
-                <ns1:entry>
-                    <ns1:line-layout orientation="vertical" ns1:height="50px"></ns1:line-layout>
-                </ns1:entry>
             </ns1:line-layout>
         </ns1:entry>
+        <ns1:entry>
+            <ns1:widget ns1:id="AddDeadlineBU" ns1:height="30px" ns1:width="120px"></ns1:widget>
+        </ns1:entry>
+        
+        <ns1:entry>
+            <ns1:widget ns1:id="DeleteDeadlinesBU" ns1:height="30px" ns1:width="120px"></ns1:widget>
+        </ns1:entry>
+        
+
     </ns1:line-layout>
 
 </ns1:window-layout>
