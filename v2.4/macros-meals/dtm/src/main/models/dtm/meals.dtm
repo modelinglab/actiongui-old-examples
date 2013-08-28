@@ -41,6 +41,7 @@ entity Residency {
     Date end
     User ownedBy oppositeTo periods
     MealOption ownedByOption oppositeTo periodsOption
+    Set(MealOptionDeadline) deadlines oppositeTo ownedBy
 }
 
 entity DailyMealSelection {
@@ -81,7 +82,6 @@ entity FoodRegime {
 entity MealOption {
     String literal
     // associations
-    Set(MealOptionDeadline) deadlines oppositeTo mealOption
     // 0..1
     Meal ownedBy oppositeTo options
     Set(Residency) periodsOption oppositeTo ownedByOption
@@ -95,11 +95,11 @@ entity Meal {
 
 entity MealOptionDeadline {
     String literal
-    DayType type
+    Set(DayOfWeek) days
     Integer cday // dias de antelacion
     Integer chour
     Integer cminute
     // associations
     // 0..1
-    MealOption mealOption oppositeTo deadlines
+    Residency  ownedBy oppositeTo deadlines
 }
