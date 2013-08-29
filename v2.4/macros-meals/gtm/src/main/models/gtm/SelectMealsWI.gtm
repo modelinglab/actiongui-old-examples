@@ -78,7 +78,8 @@ Window SelectMealsWI  {
                                         [$newMealSelection$.mealOption] := [$selected$]
                                         }
                                         else {
-                                        [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$thisDate$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$).mealOption] := [$selected$]
+                                            if [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$thisDate$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$).mealOption <> $selected$]
+                                             { [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.truncate(TimeUnit::DAY)=$thisDate$.truncate(TimeUnit::DAY)).selections->any(s|s.meal = $WeekMealsTB.row$).mealOption] := [$selected$] }
                                         }
                                     }
                                     else {
@@ -96,7 +97,11 @@ Window SelectMealsWI  {
                                         { reevaluate selected }
                                  }
                            } 
-                           catch (SecurityException) { notification(['MESSAGE'], ['UNAUTHORIZED'], [0]) }
+                           catch (SecurityException) { 
+                                    reevaluate selected
+                                    notification(['MESSAGE'], ['UNAUTHORIZED'], [-1]) 
+                                    }
+                           catch (Exception) { notification(['MESSAGE'], ['BIGGER PROBLEM'], [-1]) }
                            
                            }
                     } 

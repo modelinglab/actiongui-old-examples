@@ -1,6 +1,6 @@
 role SYSTEM {
     User {
-        read login, read password, read myRole
+        read(login), read(password), read(role)
     }
     MealOption {
         fullAccess
@@ -43,19 +43,30 @@ role RESIDENT {
     }
     User {
         read constrainedBy [self=caller]
-        add dailyMeals constrainedBy [self=caller]
+        add(dailyMeals) constrainedBy [self=caller]
     }
     DailyMealSelection {
-        //fullAccess
-        create
-        read
-        update date  constrainedBy [self.date.oclIsUndefined()] // and value => Date.now().year()] and value  >= date.now().dayOfYear()
-        update selectedBy constrainedBy [value = caller]
-        add selections
+        fullAccess
+        //create
+        //read
+        //update(date)  constrainedBy [self.date.oclIsUndefined()] // and value => Date.now().year()] and value  >= date.now().dayOfYear()
+        //update(selectedBy) constrainedBy [value = caller]
+        //add(selections)
         //update dailyMeals
 
     }
     MealSelection {
-        fullAccess
+        //fullAccess
+        create
+        read
+        update(meal)
+        update(mealOption) constrainedBy [self.ownedBy.selectedBy = caller
+                                          and value.periodsOption
+                                            ->exists(p|p.start <= self.ownedBy.date and p.end >= self.ownedBy.date
+                                                       and p.deadlines->exists(q|q.days->isEmpty()))]
+        update(ownedBy) constrainedBy [value.selectedBy = caller and 
+                                       caller.periods->exists(p|p.start <= value.date and p.end >= value.date)]
     }
 }
+
+

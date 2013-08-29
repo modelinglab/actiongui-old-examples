@@ -77,6 +77,7 @@ Window ConfigurationWI {
                     label : ['Option']
                     }
         size: [10]
+        sortedBy: [literal]
     }#
 
 
@@ -384,6 +385,19 @@ Table DeadlinesTB {
 Button AddDeadlineBU {
     String text := ['New deadline']
     event onClick {
+        if [$Meals_T.selected$->oclIsUndefined()]
+            { error := ['Please, select first a meal'] }
+        else {if [$Meals_T.selected$->size() = 0 or $Meals_T.selected$->size() > 1]
+                  { error := ['Please, select exactly one meal'] }
+              else {if [$Meal_Options_T.selected$->oclIsUndefined()]
+                       { error := ['Please, select an option first'] }
+                    else {if [$Meal_Options_T.selected$->size() = 0 or $Meal_Options_T.selected$->size() > 1]
+                             { error := ['Please, select exactlty one option'] }
+                          else {if [$ThisOptionPeriodsFO.selected$->oclIsUndefined()]
+                                    { error := ['Please, select a period first'] }
+                                else {if [$ThisOptionPeriodsFO.selected$->size() = 0 or $ThisOptionPeriodsFO.selected$->size() > 1]
+                                        { error := ['Please, select exactlty one period'] }
+                                        else {
          newDeadline := new MealOptionDeadline
          // Default setting
             [$newDeadline$.cday] := [0]
@@ -393,7 +407,8 @@ Button AddDeadlineBU {
           // End default setting
          [$newDeadline$.ownedBy] := [$ThisOptionPeriodsFO.selected$->any(true)]
          reevaluate DeadlinesTB.rows
-    }
+    } } } } } }
+}
 }
 
 
@@ -409,6 +424,12 @@ Button DeleteDeadlinesBU {
    }
 }
 
+Button BackBU {
+    String text := ['Back'] 
+    event onClick {
+        back
+    }
+}
 
 
 

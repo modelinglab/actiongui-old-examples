@@ -35,10 +35,10 @@
         </ns1:entry>
           <!-- ROLE -->
           <ns1:entry>
-            <ns1:widget ns1:id="CreateFO_myRole_L" ns1:height="30px" ns1:width="140px"></ns1:widget>
+            <ns1:widget ns1:id="CreateFO_role_L" ns1:height="30px" ns1:width="140px"></ns1:widget>
          </ns1:entry>
         <ns1:entry>
-            <ns1:widget ns1:id="CreateFO_myRole" ns1:height="30px" ns1:width="140px"></ns1:widget>
+            <ns1:widget ns1:id="CreateFO_role" ns1:height="30px" ns1:width="140px"></ns1:widget>
         </ns1:entry>
         <!-- CREATE BUTTON -->
         <ns1:entry>
