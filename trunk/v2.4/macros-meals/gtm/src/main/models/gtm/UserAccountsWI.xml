@@ -14,16 +14,16 @@
                 <ns1:entry>
                     <ns1:table ns1:id="UsersTB" ns1:height="200px" ns1:width="600px">
                         <ns1:column>
-                            <ns1:widget ns1:id="surname" ns1:height="30px"></ns1:widget>
+                            <ns1:widget ns1:id="surname" ns1:height="20px"></ns1:widget>
                         </ns1:column>
                         <ns1:column>
-                            <ns1:widget ns1:id="name" ns1:height="30px"></ns1:widget>
+                            <ns1:widget ns1:id="name" ns1:height="20px"></ns1:widget>
                         </ns1:column>
                         <ns1:column>
-                            <ns1:widget ns1:id="login" ns1:height="30px"></ns1:widget>
+                            <ns1:widget ns1:id="login" ns1:height="20px"></ns1:widget>
                         </ns1:column>
                          <ns1:column>
-                            <ns1:widget ns1:id="myRole" ns1:height="30px"></ns1:widget>
+                            <ns1:widget ns1:id="role" ns1:height="20px"></ns1:widget>
                         </ns1:column>
                     </ns1:table>
                 </ns1:entry>

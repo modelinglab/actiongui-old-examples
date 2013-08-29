@@ -13,7 +13,7 @@ Window CreateUserWI {
         attr: password {label: ['Password: '] 
                     init: ['']
                     }
-        attr: myRole {label: ['Role: '] 
+        attr: role {label: ['Role: '] 
                     }              
     }#
 
@@ -22,7 +22,7 @@ Button CreateBU {
     event onClick {
         #create {
             form: CreateFO
-            assert: [$CreateFO_myRole.selected$.oclIsUndefined() = false] {message: ['Please, select a role'] }
+            assert: [$CreateFO_role.selected$.oclIsUndefined() = false] {message: ['Please, select a role'] }
         }#
     }
   }

@@ -2,17 +2,18 @@ Window EditUserWI {
     User thisUser
     #form ThisUserFO {
     entity: User
-    instance: [$EditUserWI.thisUser$]
-    attr: name {label: ['Name: '] }
-    attr: surname {label: ['Surname: ']}
-    attr: login {label: ['Login: ']}
-    attr: password {label : ['Password: ']}
-    attr: myRole {label: ['Role: ']}
-    assoc: periods {
-        rows: [$EditUserWI.thisUser$.periods->sortedBy(start)]
-        selected: [null]
-        column: start 
-        column: end
+        instance: [$EditUserWI.thisUser$]
+        attr: name {label: ['Name: '] }
+        attr: surname {label: ['Surname: ']}
+        attr: login {label: ['Login: ']}
+        attr: password {label : ['Password: ']}
+        attr: role {label: ['Role: ']}
+        assoc: periods {
+            rows: [$EditUserWI.thisUser$.periods->sortedBy(start)]
+            selected: [null]
+            column: start 
+            column: end
+            sortedBy: [-1*(start.toInteger())]
         }
     }#
 
@@ -39,7 +40,7 @@ Button CreatePeriodBU {
                         assert: [$EditUserWI.caller$.periods->select(p|
                                     ($NewPeriodFO_start.date$ <= p.start and $NewPeriodFO_end.date$ >= p.start)
                                     or ($NewPeriodFO_start.date$ > p.start and $NewPeriodFO_start.date$ <= p.end))
-                                ->notEmpty()]
+                                ->isEmpty()]
                             {message: ['The selected period overlaps with one or more existing periods. Please, change either the starting or the ending date']
                                 }} } }
         }#

@@ -15,12 +15,12 @@ Button LoginBU {
                 result: loggedUser
             }#
             if [not($loggedUser$.oclIsUndefined())] {
-                if [$loggedUser$.myRole = Role::RESIDENT] {
-                    open MenuResidentWI(caller:[$loggedUser$], role:[$loggedUser$.myRole])
+                if [$loggedUser$.role = Role::RESIDENT] {
+                    open MenuResidentWI(caller:[$loggedUser$], role:[$loggedUser$.role])
                 }
                 else {
-                    if [$loggedUser$.myRole = Role::DIRECTOR] {
-                        open MenuDirectorWI(caller:[$loggedUser$], role:[$loggedUser$.myRole])
+                    if [$loggedUser$.role = Role::DIRECTOR] {
+                        open MenuDirectorWI(caller:[$loggedUser$], role:[$loggedUser$.role])
                     }
                     else {
                         notification (['Message'],['You have no role assigned.'],[-1])

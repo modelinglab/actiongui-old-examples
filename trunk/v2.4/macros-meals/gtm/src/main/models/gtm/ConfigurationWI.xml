@@ -258,6 +258,9 @@ and open the template in the editor.
         <ns1:entry>
             <ns1:widget ns1:id="DeleteDeadlinesBU" ns1:height="30px" ns1:width="120px"></ns1:widget>
         </ns1:entry>
+        <ns1:entry>
+            <ns1:widget ns1:id="BackBU" ns1:height="30px" ns1:width="60px"></ns1:widget>
+        </ns1:entry>
         
 
     </ns1:line-layout>

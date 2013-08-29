@@ -22,7 +22,7 @@ entity User {
     String surname
     String login
     String password
-    Role myRole
+    Role role
     // associations
     Set(DailyMealSelection) dailyMeals oppositeTo selectedBy
     Set(Residency) periods oppositeTo ownedBy
