@@ -1,0 +1,83 @@
+Window CountMealsWI {
+    Label StartLA {
+        String text := ['Start:']
+    }
+
+    DateField StartDF {
+        Date date := [Date.now()]
+
+        event onChange(date) {
+            error := ['']
+            if [$date$.oclIsUndefined()] {
+                error := ['Select the start date']
+            }
+            else {
+                if [not $EndDF.date$.oclIsUndefined()] {
+                    if [$date$ > $EndDF.date$] {
+                        error := ['The start date must be before the end date']
+                    }
+                    else {
+                        EndDF.error := ['']
+                        // reevaluate MealsTA.selections
+                        // MealsTA.rows := [Meal.allInstances()->select(false)]
+                        // reevaluate MealsTA.rows
+                    }
+                }
+            }
+        }
+    }
+
+    Label EndLA {
+        String text := ['End:']
+    }
+
+    DateField EndDF {
+        Date date := [Date.now()]
+
+        event onChange(date) {
+            error := ['']
+            if [$date$.oclIsUndefined()] {
+                error := ['Select the end date']
+            }
+            else {
+                if [not $StartDF.date$.oclIsUndefined()] {
+                    if [$date$ < $StartDF.date$] {
+                        error := ['The end date must be after the start date']
+                    }
+                    else {
+                        StartDF.error := ['']
+                        // reevaluate MealsTA.selections
+                        // MealsTA.rows := [Meal.allInstances()->select(false)]
+                        // reevaluate MealsTA.rows
+                    }
+                }
+            }
+        }
+    }
+    
+    Table MealsTA {
+        // Set(MealSelection) selections := [DailyMealSelection.allInstances()->select(dms| dms.date >= $StartDF.date$ and dms.date <= $EndDF.date$).selections->asSet()]
+        Set(Meal) rows := [Meal.allInstances()]
+
+        columns {
+            ['Meals'] : Label Meals {
+                String text := [$MealsTA.row$.literal]
+            }
+            /*
+            ['Meal Options'] : Table MealOptions {
+                Set(MealOption) rows := [$MealsTA.row$.options]
+
+                columns {
+                    ['Option'] : Label Option {
+                        String text := [$MealOptions.row$.literal]
+                    }
+                    ['Count'] : Label Count {
+                        String text := [$MealsTA.selections$->select(ms| ms.meal = $MealsTA.row$ and ms.mealOption = $MealOptions.row$)->size().toString()]
+                    }
+                }
+            }     
+            */
+        }
+    }
+    
+}
