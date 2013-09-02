@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<ns1:window-layout ns1:id="ListDinersWI"
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:ns1='http://actiongui.org/schemes/ag-layout/2.4'
+    xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://www.actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
+    <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto" top-margin="5px" right-margin="5px" bottom-margin="5px" left-margin="5px">
+        <ns1:entry>
+            <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
+                <ns1:entry>
+                    <ns1:widget ns1:id="DateLA" ns1:height="30px" ns1:width="150px"></ns1:widget>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:widget ns1:height="30px" ns1:id="DateDF" ns1:width="100px" ></ns1:widget>
+                </ns1:entry>
+            </ns1:line-layout>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
+                <ns1:entry>
+                    <ns1:widget ns1:id="MealLA" ns1:height="30px" ns1:width="150px"></ns1:widget>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:widget ns1:id="MealCB" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                </ns1:entry>
+            </ns1:line-layout>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
+                <ns1:entry>
+                    <ns1:widget ns1:id="MealOptionLA" ns1:height="30px" ns1:width="150px"></ns1:widget>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:widget ns1:id="MealOptionCB" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                </ns1:entry>
+            </ns1:line-layout>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:line-layout orientation="vertical" ns1:height="40px"></ns1:line-layout>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:widget ns1:id="DinersLA" ns1:height="30px" ns1:width="200px"></ns1:widget>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:table ns1:id="DinersTA" ns1:height="300px" ns1:width="300px">
+                <ns1:column>
+                    <ns1:widget ns1:id="Name" ns1:height="30px"></ns1:widget>
+                </ns1:column>
+                <ns1:column>
+                    <ns1:widget ns1:id="Surname" ns1:height="30px"></ns1:widget>
+                </ns1:column>
+            </ns1:table>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:line-layout orientation="vertical" ns1:height="40px"></ns1:line-layout>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:widget ns1:id="BackBU" ns1:height="30px" ns1:width="50px"></ns1:widget>
+        </ns1:entry>
+    </ns1:line-layout>
+
+</ns1:window-layout>
