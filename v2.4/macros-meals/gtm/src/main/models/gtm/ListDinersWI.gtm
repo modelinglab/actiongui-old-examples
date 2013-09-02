@@ -1,0 +1,88 @@
+Window ListDinersWI {
+    Label DateLA {
+        String text := ['Choose a date:']
+    }
+
+    DateField DateDF {
+        Date date :=  [Date.now()]
+
+        event onChange(date) {
+            reevaluate DinersTA.rows
+        }
+    }
+
+    Label MealLA {
+        String text := ['Choose a meal:']
+    }
+
+    ComboBox MealCB {
+        Set(Meal) rows := [Meal.allInstances()]
+        
+        Label Meal {
+            String text := [$MealCB.row$.literal]
+        }
+
+        event onChange(selected) {
+            reevaluate MealOptionCB.rows
+        }
+    }
+
+    Label MealOptionLA {
+        String text := ['Choose a meal option:']
+    }
+
+    ComboBox MealOptionCB {
+        Set(MealOption) rows
+
+        Label MealOption {
+            String text := [$MealOptionCB.row$.literal]
+        }
+
+        event onView(rows) {
+            if [$MealCB.selected$.oclIsUndefined()] {
+                rows := [MealOption.allInstances()->select(false)]
+            }
+            else {
+                rows := [$MealCB.selected$.options]
+            }
+        }
+
+        event onChange(selected) {
+            reevaluate DinersTA.rows
+        }
+    }
+
+    Label DinersLA {
+        String text := ['Diners for the selected data:']
+    }
+
+    Table DinersTA {
+        Set(User) rows
+
+        columns {
+            ['Name'] : Label Name {
+                String text := [$DinersTA.row$.name]
+            }
+            ['Surname'] : Label Surname {
+                String text := [$DinersTA.row$.surname]
+            }
+        }
+
+        event onView(rows) {
+            if [$MealOptionCB.selected$.oclIsUndefined() or $DateDF.date$.oclIsUndefined()] {
+                rows := [User.allInstances()->select(false)]
+            }
+            else {
+                rows := [User.allInstances()->select(u|u.dailyMeals->exists(dms| dms.date = $DateDF.date$.truncate(TimeUnit::DAY) and dms.selections->exists(ms| ms.mealOption = $MealOptionCB.selected$)))]
+            }
+        }
+    }
+
+    Button BackBU {
+        String text := ['Back']
+
+        event onClick {
+            back
+        }
+    }
+}
