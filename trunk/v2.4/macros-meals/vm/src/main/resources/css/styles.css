@@ -1,14 +1,15 @@
 @import "../reindeer/styles.css";
 
+@import "EditUserWI.css";
+@import "ChangePasswordWI.css";
+@import "LoginWI.css";
+@import "SelectMealsWI.css";
+@import "CreateUserWI.css";
+@import "ConfigurationWI.css";
+@import "CountMealsWI.css";
 @import "UserAccountsWI.css";
 @import "MenuDirectorWI.css";
 @import "MenuResidentWI.css";
-@import "SelectMealsWI.css";
-@import "LoginWI.css";
-@import "ConfigurationWI.css";
-@import "CreateUserWI.css";
-@import "ChangePasswordWI.css";
-@import "EditUserWI.css";
 
 /* The following rule is to avoid resizeable text fields */
 .v-textarea {

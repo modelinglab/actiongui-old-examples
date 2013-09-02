@@ -5,17 +5,6 @@ enum Role {
     SYSTEM
 }
 
-enum DayType {
-    MONDAY
-    TUESDAY
-    WEDNESDAY
-    THURSDAY
-    FRIDAY
-    SATURDAY
-    SUNDAY
-    FEASTDAY
-}
-
 entity User {
     // attributes
     String name

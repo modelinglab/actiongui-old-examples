@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<ns1:window-layout ns1:id="CountMealsWI"
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:ns1='http://actiongui.org/schemes/ag-layout/2.4'
+    xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
+    <ns1:line-layout orientation="vertical">
+        <ns1:entry>
+            <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
+                <ns1:entry>
+                    <ns1:widget ns1:id="StartLA" ns1:height="30px" ns1:width="90px"></ns1:widget>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:widget ns1:id="StartDF" ns1:height="30px" ns1:width="90px"></ns1:widget>
+                </ns1:entry>
+            </ns1:line-layout>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
+                <ns1:entry>
+                    <ns1:widget ns1:id="EndLA" ns1:height="30px" ns1:width="90px"></ns1:widget>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:widget ns1:id="EndDF" ns1:height="30px" ns1:width="90px"></ns1:widget>
+                </ns1:entry>
+            </ns1:line-layout>
+        </ns1:entry>
+    </ns1:line-layout>
+
+</ns1:window-layout>
