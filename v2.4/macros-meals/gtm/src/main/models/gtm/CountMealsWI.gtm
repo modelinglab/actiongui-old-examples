@@ -18,9 +18,9 @@ Window CountMealsWI {
                     }
                     else {
                         EndDF.error := ['']
-                        // reevaluate MealsTA.selections
-                        // MealsTA.rows := [Meal.allInstances()->select(false)]
-                        // reevaluate MealsTA.rows
+                        reevaluate MealsTA.selections
+                        MealsTA.rows := [Meal.allInstances()->select(false)]
+                        reevaluate MealsTA.rows
                     }
                 }
             }
@@ -46,9 +46,9 @@ Window CountMealsWI {
                     }
                     else {
                         StartDF.error := ['']
-                        // reevaluate MealsTA.selections
-                        // MealsTA.rows := [Meal.allInstances()->select(false)]
-                        // reevaluate MealsTA.rows
+                        reevaluate MealsTA.selections
+                        MealsTA.rows := [Meal.allInstances()->select(false)]
+                        reevaluate MealsTA.rows
                     }
                 }
             }
@@ -56,14 +56,13 @@ Window CountMealsWI {
     }
     
     Table MealsTA {
-        // Set(MealSelection) selections := [DailyMealSelection.allInstances()->select(dms| dms.date >= $StartDF.date$ and dms.date <= $EndDF.date$).selections->asSet()]
+        Set(MealSelection) selections := [DailyMealSelection.allInstances()->select(dms| dms.date >= $StartDF.date$.truncate(TimeUnit::DAY) and dms.date <= $EndDF.date$.truncate(TimeUnit::DAY)).selections->asSet()]
         Set(Meal) rows := [Meal.allInstances()]
 
         columns {
             ['Meals'] : Label Meals {
                 String text := [$MealsTA.row$.literal]
             }
-            /*
             ['Meal Options'] : Table MealOptions {
                 Set(MealOption) rows := [$MealsTA.row$.options]
 
@@ -76,8 +75,14 @@ Window CountMealsWI {
                     }
                 }
             }     
-            */
+        }
+    }    
+
+    Button BackBU {
+        String text := ['Back']
+
+        event onClick {
+            back
         }
     }
-    
 }

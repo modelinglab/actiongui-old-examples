@@ -29,6 +29,12 @@ role DIRECTOR {
     Residency {
         fullAccess
     }
+    DailyMealSelection {
+        fullAccess
+    }
+    MealSelection {
+        fullAccess
+    }
 }
 
 role RESIDENT {
