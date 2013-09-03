@@ -55,6 +55,7 @@ Window CountMealsWI {
         }
     }
     
+    // Can not be created using macro table since there is a "special" column (sub-column "Count") that can not be generated directly through an attribute
     Table MealsTA {
         Set(MealSelection) selections := [DailyMealSelection.allInstances()->select(dms| dms.date >= $StartDF.date$.truncate(TimeUnit::DAY) and dms.date <= $EndDF.date$.truncate(TimeUnit::DAY)).selections->asSet()]
         Set(Meal) rows := [Meal.allInstances()]

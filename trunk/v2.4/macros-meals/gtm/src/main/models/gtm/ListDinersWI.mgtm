@@ -7,7 +7,7 @@ Window ListDinersWI {
         Date date :=  [Date.now()]
 
         event onChange(date) {
-            reevaluate DinersTA.rows
+            #refresh DinersTA#
         }
     }
 
@@ -48,7 +48,7 @@ Window ListDinersWI {
         }
 
         event onChange(selected) {
-            reevaluate DinersTA.rows
+            #refresh DinersTA#
         }
     }
 
@@ -56,27 +56,18 @@ Window ListDinersWI {
         String text := ['Diners for the selected data:']
     }
 
-    Table DinersTA {
-        Set(User) rows
-
-        columns {
-            ['Name'] : Label Name {
-                String text := [$DinersTA.row$.name]
-            }
-            ['Surname'] : Label Surname {
-                String text := [$DinersTA.row$.surname]
-            }
+    #table DinersTA {
+        entity : User
+        rows : [(if $MealOptionCB.selected$.oclIsUndefined() or $DateDF.date$.oclIsUndefined() then User.allInstances()->select(false) else User.allInstances()->select(u|u.dailyMeals->exists(dms| dms.date = $DateDF.date$.truncate(TimeUnit::DAY) and dms.selections->exists(ms| ms.mealOption = $MealOptionCB.selected$))) endif)]
+        column : name {
+            label : ['Name']
         }
-
-        event onView(rows) {
-            if [$MealOptionCB.selected$.oclIsUndefined() or $DateDF.date$.oclIsUndefined()] {
-                rows := [User.allInstances()->select(false)]
-            }
-            else {
-                rows := [User.allInstances()->select(u|u.dailyMeals->exists(dms| dms.date = $DateDF.date$.truncate(TimeUnit::DAY) and dms.selections->exists(ms| ms.mealOption = $MealOptionCB.selected$)))]
-            }
+        column : surname {
+            label : ['Surname']
         }
-    }
+        size: [10]
+        sortedBy: [name]
+    }#
 
     Button BackBU {
         String text := ['Back']
