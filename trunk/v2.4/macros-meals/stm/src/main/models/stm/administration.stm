@@ -70,6 +70,7 @@ role RESIDENT {
         update(meal)
         update(ownedBy) constrainedBy [value.selectedBy = caller and 
                                        caller.periods->exists(p|p.start <= value.date and p.end >= value.date)]
+        /*
         update(mealOption) constrainedBy [self.ownedBy.selectedBy = caller
                                           and value.periodsOption
                                                 ->exists(p|p.start <= self.ownedBy.date and p.end >= self.ownedBy.date
@@ -81,6 +82,16 @@ role RESIDENT {
                                                                                      (Date.now().hour() < q.chour 
                                                                                       or 
                                                                                       (Date.now().hour() = q.chour and Date.now().minute() <= q.cminute))))))]
+        */
+        update(mealOption) constrainedBy [self.ownedBy.selectedBy = caller
+                                            and self.ownedBy.date >= Date.now().truncate(TimeUnit::DAY)   
+                                            and value.periodsOption->exists(p|p.start <= self.ownedBy.date and p.end >= self.ownedBy.date
+                                                and p.deadlines->exists(q|q.days->includes(self.ownedBy.date.dayOfWeek())
+                                                    and (if self.ownedBy.date = Date.now().truncate(TimeUnit::DAY) then
+                                                      Date.now().hour() < q.chour or (Date.now().hour() = q.chour and Date.now().minute() <= q.cminute)  
+                                                    else
+                                                        self.ownedBy.date <= Date.now().add(q.cday, TimeUnit::DAY).truncate(TimeUnit::DAY)
+                                                    endif)))]
     }
     Residency {
         fullAccess
