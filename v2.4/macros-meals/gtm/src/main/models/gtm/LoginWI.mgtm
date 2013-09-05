@@ -2,8 +2,8 @@ Window LoginWI isMain {
 
 #form LoginFO {
     entity: User
-    attr: login { label: ['Login: '] }
-    attr: password { label: ['Password: '] }
+    prop: login { label: ['Login: '] }
+    prop: password { label: ['Password: '] }
 }#
 
 Button LoginBU {

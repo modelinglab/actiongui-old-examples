@@ -3,12 +3,12 @@ Window EditUserWI {
     #form ThisUserFO {
     entity: User
         instance: [$EditUserWI.thisUser$]
-        attr: name {label: ['Name: '] }
-        attr: surname {label: ['Surname: ']}
-        attr: login {label: ['Login: ']}
-        attr: password {label : ['Password: ']}
-        attr: role {label: ['Role: ']}
-        assoc: periods {
+        prop: name {label: ['Name: '] }
+        prop: surname {label: ['Surname: ']}
+        prop: login {label: ['Login: ']}
+        prop: password {label : ['Password: ']}
+        prop: role {label: ['Role: ']}
+        prop: periods {
             rows: [$EditUserWI.thisUser$.periods->sortedBy(start)]
             selected: [null]
             column: start 
@@ -20,8 +20,8 @@ Window EditUserWI {
 
 #form NewPeriodFO {
     entity: Residency
-    attr: start {label: ['Start: ']}
-    attr: end {label: ['End: ']}
+    prop: start {label: ['Start: ']}
+    prop: end {label: ['End: ']}
 }#
 
 Button CreatePeriodBU {
