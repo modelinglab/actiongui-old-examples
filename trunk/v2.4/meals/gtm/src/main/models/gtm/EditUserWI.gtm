@@ -1,0 +1,372 @@
+Window EditUserWI {
+    User thisUser
+    Label ThisUserFO_name_L {
+    String text := ['Name: ']
+}
+TextField ThisUserFO_name {
+    String text {
+        error := [null]
+        if [$text$.oclIsInvalid()] {
+            error := ['no permission']
+        }
+        else {
+        }
+    }
+    String error := [null]
+    event onView(text) {
+        text := [null]
+        try {
+            text := [$EditUserWI.thisUser$.name]
+        }
+        catch (SecurityException) {
+            text := [invalid]
+        }
+        catch (ModelException) {
+            // do nothing
+            // notification(['Model exception'],[''],[3000])
+        }
+        catch (Exception) {
+            // do nothing
+            // notification(['Unknown exception'],[''],[3000])
+        }
+    }
+}
+
+Label ThisUserFO_surname_L {
+    String text := ['Surname: ']
+}
+TextField ThisUserFO_surname {
+    String text {
+        error := [null]
+        if [$text$.oclIsInvalid()] {
+            error := ['no permission']
+        }
+        else {
+        }
+    }
+    String error := [null]
+    event onView(text) {
+        text := [null]
+        try {
+            text := [$EditUserWI.thisUser$.surname]
+        }
+        catch (SecurityException) {
+            text := [invalid]
+        }
+        catch (ModelException) {
+            // do nothing
+            // notification(['Model exception'],[''],[3000])
+        }
+        catch (Exception) {
+            // do nothing
+            // notification(['Unknown exception'],[''],[3000])
+        }
+    }
+}
+
+Label ThisUserFO_login_L {
+    String text := ['Login: ']
+}
+TextField ThisUserFO_login {
+    String text {
+        error := [null]
+        if [$text$.oclIsInvalid()] {
+            error := ['no permission']
+        }
+        else {
+        }
+    }
+    String error := [null]
+    event onView(text) {
+        text := [null]
+        try {
+            text := [$EditUserWI.thisUser$.login]
+        }
+        catch (SecurityException) {
+            text := [invalid]
+        }
+        catch (ModelException) {
+            // do nothing
+            // notification(['Model exception'],[''],[3000])
+        }
+        catch (Exception) {
+            // do nothing
+            // notification(['Unknown exception'],[''],[3000])
+        }
+    }
+}
+
+Label ThisUserFO_password_L {
+    String text := ['Password: ']
+}
+TextField ThisUserFO_password {
+    String text {
+        error := [null]
+        if [$text$.oclIsInvalid()] {
+            error := ['no permission']
+        }
+        else {
+        }
+    }
+    String error := [null]
+    event onView(text) {
+        text := [null]
+        try {
+            text := [$EditUserWI.thisUser$.password]
+        }
+        catch (SecurityException) {
+            text := [invalid]
+        }
+        catch (ModelException) {
+            // do nothing
+            // notification(['Model exception'],[''],[3000])
+        }
+        catch (Exception) {
+            // do nothing
+            // notification(['Unknown exception'],[''],[3000])
+        }
+    }
+}
+
+Label ThisUserFO_role_L {
+    String text := ['Role: ']
+}
+ComboBox ThisUserFO_role {
+    Set(Role) rows := [Role.allInstances()]
+    Role selected {
+        error := [null]
+        if [$selected$.oclIsInvalid()] {
+            error := ['no permission']
+        }
+        else {
+        }
+    }
+    String error := [null]
+    
+    Label role {
+        String text := [$ThisUserFO_role.row$.name()]
+    }
+    
+    event onView(selected) {
+        selected := [null]
+        try {
+            selected := [$EditUserWI.thisUser$.role]
+        }
+        catch (SecurityException) {
+            selected := [invalid]
+        }
+        catch (ModelException) {
+            // do nothing
+            // notification(['Model exception'],[''],[3000])
+        }
+        catch (Exception) {
+            // do nothing
+            // notification(['Unknown exception'],[''],[3000])
+        }
+    }
+}
+
+Label ThisUserFO_periods_L {
+    String text := ['periods :']
+}
+Table ThisUserFO_periods {
+    OrderedSet(Residency) rows := [$EditUserWI.thisUser$.periods->sortedBy(start)->sortedBy(start)->reverse()]
+    OrderedSet(Residency) selected {
+        error := [null]
+        if [$selected$->oclIsInvalid()] {
+            error := ['no permission']
+        }
+        else {
+        }
+    }
+    String error := [null]
+    columns {
+        ['start'] : Label start {
+            String error := [null]
+            String text {
+                if [$text$.oclIsInvalid()] {
+                    error := ['no permission']
+                }
+                else {
+                    error := [null]
+                }
+            }
+            event onView (text) {
+                text := [null]
+                try {
+                    text := [$ThisUserFO_periods.row$.start.toString().substring(1,10)]
+                }
+                catch (SecurityException) {
+                    text := [invalid]
+                }
+                catch (ModelException) {
+                    // do nothing
+                    // notification(['Model exception'],[''],[3000])
+                }
+                catch (Exception) {
+                    // do nothing
+                    // notification(['Unknown exception'],[''],[3000])
+                }
+            }
+        }
+        ['end'] : Label end {
+            String error := [null]
+            String text {
+                if [$text$.oclIsInvalid()] {
+                    error := ['no permission']
+                }
+                else {
+                    error := [null]
+                }
+            }
+            event onView (text) {
+                text := [null]
+                try {
+                    text := [$ThisUserFO_periods.row$.end.toString().substring(1,10)]
+                }
+                catch (SecurityException) {
+                    text := [invalid]
+                }
+                catch (ModelException) {
+                    // do nothing
+                    // notification(['Model exception'],[''],[3000])
+                }
+                catch (Exception) {
+                    // do nothing
+                    // notification(['Unknown exception'],[''],[3000])
+                }
+            }
+        }
+    }
+    event onView(selected) {
+        selected := [null]
+        try {
+            selected := [null->asOrderedSet()]
+        }
+        catch (SecurityException) {
+            selected := [invalid]
+        }
+        catch (ModelException) {
+            // do nothing
+            // notification(['Model exception'],[''],[3000])
+        }
+        catch (Exception) {
+            // do nothing
+            // notification(['Unknown exception'],[''],[3000])
+        }
+    }
+}
+
+
+
+Label NewPeriodFO_start_L {
+    String text := ['Start: ']
+}
+DateField NewPeriodFO_start {
+    LocalDateTime value := [null]    
+    String error := [null]
+}
+
+Label NewPeriodFO_end_L {
+    String text := ['End: ']
+}
+DateField NewPeriodFO_end {
+    LocalDateTime value := [null]    
+    String error := [null]
+}
+
+
+
+Button CreatePeriodBU {
+    String text := ['New period']
+    Residency newPeriod
+    event onClick {
+        try {
+    NewPeriodFO_start.error := [null]
+    NewPeriodFO_end.error := [null]
+    error := [null]
+    
+    if [not ($NewPeriodFO_start.error$.oclIsUndefined()) or not ($NewPeriodFO_end.error$.oclIsUndefined())] {
+        notification (['The form contains errors. Please, check the form.'],[''],[2000])
+    }
+    else {
+        if [not(not($NewPeriodFO_start.value$.oclIsUndefined()))] {
+            error := ['Please, select first a starting date']
+        }
+        else {
+            if [not(not($NewPeriodFO_end.value$.oclIsUndefined()))] {
+                error := ['Please, select first an ending date']
+            }
+            else {
+                if [not($NewPeriodFO_start.value$ <= $NewPeriodFO_end.value$)] {
+                    error := ['Please, select an ending date that is later or equal than the starting date']
+                }
+                else {
+                    if [not($EditUserWI.caller$.periods->select(p|
+                                    ($NewPeriodFO_start.value$ <= p.start and $NewPeriodFO_end.value$ >= p.start)
+                                    or ($NewPeriodFO_start.value$ > p.start and $NewPeriodFO_start.value$ <= p.end))
+                                ->isEmpty())] {
+                        error := ['The selected period overlaps with one or more existing periods. Please, change either the starting or the ending date']
+                    }
+                }
+            }
+        }
+        if [$error$.oclIsUndefined()] {
+            newInstance := new Residency
+            [$newInstance$.start] := [$NewPeriodFO_start.value$]
+            [$newInstance$.end] := [$NewPeriodFO_end.value$]
+            newPeriod := [$newInstance$]
+            
+            reevaluate NewPeriodFO_start.value
+            reevaluate NewPeriodFO_start.error
+            reevaluate NewPeriodFO_end.value
+            reevaluate NewPeriodFO_end.error
+            
+            notification (['Success'],['An instance of Residency has been created successfully.'],[2000])
+        }
+    }
+}
+catch(SecurityException) {
+    notification(['Security error'],['You do not have permission to create an instance of Residency'],[2000])
+}
+catch(ModelException) {
+    notification(['Model error'],['There was an error creating the instance'],[2000])
+}
+catch(Exception) {
+    notification(['Unknown error'],['There was an unexpected error'],[2000])
+}
+
+        if [not($newPeriod$.oclIsUndefined())]
+           { [$EditUserWI.thisUser$.periods]+= [$newPeriod$]
+             reevaluate ThisUserFO_name.text
+reevaluate ThisUserFO_name.error
+reevaluate ThisUserFO_surname.text
+reevaluate ThisUserFO_surname.error
+reevaluate ThisUserFO_login.text
+reevaluate ThisUserFO_login.error
+reevaluate ThisUserFO_password.text
+reevaluate ThisUserFO_password.error
+reevaluate ThisUserFO_role.selected
+reevaluate ThisUserFO_role.error
+reevaluate ThisUserFO_periods.rows
+reevaluate ThisUserFO_periods.selected
+reevaluate ThisUserFO_periods.error
+
+
+             reevaluate NewPeriodFO_start.value
+reevaluate NewPeriodFO_start.error
+reevaluate NewPeriodFO_end.value
+reevaluate NewPeriodFO_end.error
+
+
+             }
+    }
+    }
+
+Button BackBU {
+    String text := ['Back']
+    event onClick {
+        back
+    }
+}
+}

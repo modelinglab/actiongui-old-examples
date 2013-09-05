@@ -1,0 +1,1101 @@
+/*
+- With (multiple) selected, two case to consider: null and empty
+- With update-macro, we may need to have a way of knowing whether the update was or not successful
+*/
+Window ConfigurationWI {
+    String text := ['Log In']
+
+    Label Meals_T_page {
+    Integer current := [1]
+    Integer size := [10]
+    Integer total
+    String text := [$current$.toString().concat(' of ').concat($total$.toString())]
+    
+    event onView(total) {
+        total := [Meal.allInstances()->size()]
+        if [$total$.oclIsInvalid() or $total$.oclIsUndefined()] {
+            total := [1]
+        }
+        if [$total$ = 0] {
+            total := [1]
+        }
+        else {
+            if [$total$.mod($size$) > 0] {
+                total := [$total$.div($size$) + 1]
+            }
+            else {
+                total := [$total$.div($size$)]
+            }
+        }
+    }
+}
+
+Table Meals_T {
+    OrderedSet(Meal) all
+    Integer total := [$all$->size()]
+    Integer size := [10]
+    Integer lower := [1]
+    Integer upper := [if $lower$+$size$-1 > $total$ then $total$ else $lower$+$size$-1 endif]
+    OrderedSet(Meal) rows := [$all$->subOrderedSet($lower$,$upper$)]
+    
+    OrderedSet(Meal) selected := [null]
+    columns {
+        ['Meal'] : Label literal {
+            String text {
+                if [$text$.oclIsInvalid()] {
+                    error := ['no permission']
+                }
+                else {
+                    error := [null]
+                }
+            }
+            event onView (text) {
+                text := [null]
+                try {
+                    if [not $Meals_T.row$.literal.oclIsUndefined()] {
+                        text := [$Meals_T.row$.literal]
+                    }
+                }
+                catch(SecurityException) {
+                    text := [invalid]
+                }
+                catch(ModelException) {
+                    // do nothing
+                    // notification(['Model exception'],[''],[3000])
+                }
+                catch(Exception) {
+                    // do nothing
+                    // notification(['Unknown exception'],[''],[3000])
+                }
+            }
+        }
+    }
+    
+    event onView(all) {
+        all := [Meal.allInstances()->asOrderedSet()->sortedBy(literal)]
+        if [$all$->oclIsInvalid() or $all$->oclIsUndefined()] {
+            all := [Meal.allInstances()->select(false)->asOrderedSet()]
+        }
+    }
+}
+
+Button Meals_T_prev_B {
+    String text := ['Previous']
+    
+    event onClick {
+        if [$Meals_T.lower$ > 1] {
+            Meals_T.lower := [if $Meals_T.lower$-$Meals_T.size$ < 1 then 1 else $Meals_T.lower$-$Meals_T.size$ endif]
+            Meals_T.upper := [if $Meals_T.lower$+$Meals_T.size$-1 > $Meals_T.total$ then $Meals_T.total$ else $Meals_T.lower$+$Meals_T.size$-1 endif]
+            Meals_T.rows := [$Meals_T.all$->subOrderedSet($Meals_T.lower$,$Meals_T.upper$)]
+            
+            Meals_T_page.current := [$Meals_T_page.current$ - 1]
+            reevaluate Meals_T_page.text
+        }
+    }
+}
+
+Button Meals_T_next_B {
+    String text := ['Next']
+    
+    event onClick {
+        if [$Meals_T.upper$ < $Meals_T.total$] {
+            Meals_T.lower := [$Meals_T.upper$+1]
+            Meals_T.upper := [if $Meals_T.lower$+$Meals_T.size$-1 > $Meals_T.total$ then $Meals_T.total$ else $Meals_T.lower$+$Meals_T.size$-1 endif]
+            Meals_T.rows := [$Meals_T.all$->subOrderedSet($Meals_T.lower$,$Meals_T.upper$)]
+            
+            Meals_T_page.current := [$Meals_T_page.current$ + 1]
+            reevaluate Meals_T_page.text
+        }
+    }
+}
+
+
+    Label NewMealFO_literal_L {
+    String text := ['Meal: ']
+}
+TextField NewMealFO_literal {
+    String text := [null]    
+    String error := [null]
+}
+
+
+
+    Button NewMealBU {
+        String text := ['New meal']
+        Meal newMeal
+        event onClick {
+            try {
+    NewMealFO_literal.error := [null]
+    error := [null]
+    
+    if [not ($NewMealFO_literal.error$.oclIsUndefined())] {
+        notification (['The form contains errors. Please, check the form.'],[''],[2000])
+    }
+    else {
+        if [not(not($NewMealFO_literal.text$.oclIsUndefined()))] {
+            error := ['NM0: Please, write the name of the new meal']
+        }
+        else {
+            if [not(not(Meal.allInstances()->exists(m|m.literal = $NewMealFO_literal.text$)))] {
+                error := ['NM1: There is already a meal with this name. Please, choose a different name']
+            }
+        }
+        if [$error$.oclIsUndefined()] {
+            newInstance := new Meal
+            [$newInstance$.literal] := [$NewMealFO_literal.text$]
+            newMeal := [$newInstance$]
+            
+            reevaluate NewMealFO_literal.text
+            reevaluate NewMealFO_literal.error
+            
+            notification (['Success'],['An instance of Meal has been created successfully.'],[2000])
+        }
+    }
+}
+catch(SecurityException) {
+    notification(['Security error'],['You do not have permission to create an instance of Meal'],[2000])
+}
+catch(ModelException) {
+    notification(['Model error'],['There was an error creating the instance'],[2000])
+}
+catch(Exception) {
+    notification(['Unknown error'],['There was an unexpected error'],[2000])
+}
+
+            if [not($newMeal$.oclIsUndefined())] {
+                reevaluate Meals_T_page.current
+reevaluate Meals_T_page.size
+reevaluate Meals_T_page.total
+reevaluate Meals_T_page.text
+reevaluate Meals_T.all
+reevaluate Meals_T.total
+reevaluate Meals_T.size
+reevaluate Meals_T.lower
+reevaluate Meals_T.upper
+reevaluate Meals_T.rows
+reevaluate Meals_T.selected
+
+
+                Meals_T.selected := [$newMeal$->asOrderedSet()]
+            }
+        }
+
+    }
+
+    Label EditMealFO_literal_L {
+    String text := ['Meal: ']
+}
+TextField EditMealFO_literal {
+    String text {
+        error := [null]
+        if [$text$.oclIsInvalid()] {
+            error := ['no permission']
+        }
+        else {
+        }
+    }
+    String error := [null]
+    event onView(text) {
+        text := [null]
+        try {
+            text := [$Meals_T.selected$->any(true).literal]
+        }
+        catch (SecurityException) {
+            text := [invalid]
+        }
+        catch (ModelException) {
+            // do nothing
+            // notification(['Model exception'],[''],[3000])
+        }
+        catch (Exception) {
+            // do nothing
+            // notification(['Unknown exception'],[''],[3000])
+        }
+    }
+}
+
+
+
+    Button EditMealBU {
+        String text := ['Change name']
+        Meal selectedMeal
+        event onClick {
+            if [$Meals_T.selected$->oclIsUndefined()]
+               { error := ['EM0: Please, select first a meal'] }
+            else {if [$Meals_T.selected$->size()=0 or $Meals_T.selected$->size() > 1]
+                     { error := ['EM1: Please, select exactly one meal'] }
+                  else {
+                     selectedMeal := [$Meals_T.selected$->any(true)]
+                     try {
+    EditMealFO_literal.error := [null]
+    error := [null]
+    
+    if [not ($EditMealFO_literal.error$.oclIsUndefined())] {
+        notification (['The form contains errors. Please, check the form.'],[''],[2000])
+    }
+    else {
+        if [not(not($EditMealFO_literal.text$.oclIsUndefined()))] {
+            error := ['EM3: Please, write the new name of the meal']
+        }
+        else {
+            if [not(not(Meal.allInstances()->exists(m|m.literal = $EditMealFO_literal.text$)))] {
+                error := ['EM4:There is already a meal with this name. Please, choose a different name']
+            }
+        }
+        if [$error$.oclIsUndefined()] {
+            [$Meals_T.selected$->any(true).literal] := [$EditMealFO_literal.text$]
+            
+            reevaluate EditMealFO_literal.text
+            reevaluate EditMealFO_literal.error
+            
+            notification (['Success'],['The Meal has been edited successfully.'],[2000])
+        }
+    }
+}
+catch(SecurityException) {
+    notification(['Security error'],['You do not have permission to edit the Meal'],[2000])
+}
+catch(ModelException) {
+    notification(['Model error'],['There was an error editing the instance'],[2000])
+}
+catch(Exception) {
+    notification(['Unknown error'],['There was an unexpected error'],[2000])
+}
+ 
+                    reevaluate Meals_T_page.current
+reevaluate Meals_T_page.size
+reevaluate Meals_T_page.total
+reevaluate Meals_T_page.text
+reevaluate Meals_T.all
+reevaluate Meals_T.total
+reevaluate Meals_T.size
+reevaluate Meals_T.lower
+reevaluate Meals_T.upper
+reevaluate Meals_T.rows
+reevaluate Meals_T.selected
+
+
+                    Meals_T.selected := [$selectedMeal$->asOrderedSet()]
+                    } } 
+            }
+    }
+
+    Label Meal_Options_T_page {
+    Integer current := [1]
+    Integer size := [10]
+    Integer total
+    String text := [$current$.toString().concat(' of ').concat($total$.toString())]
+    
+    event onView(total) {
+        total := [$Meals_T.selected$.options->size()]
+        if [$total$.oclIsInvalid() or $total$.oclIsUndefined()] {
+            total := [1]
+        }
+        if [$total$ = 0] {
+            total := [1]
+        }
+        else {
+            if [$total$.mod($size$) > 0] {
+                total := [$total$.div($size$) + 1]
+            }
+            else {
+                total := [$total$.div($size$)]
+            }
+        }
+    }
+}
+
+Table Meal_Options_T {
+    OrderedSet(MealOption) all
+    Integer total := [$all$->size()]
+    Integer size := [10]
+    Integer lower := [1]
+    Integer upper := [if $lower$+$size$-1 > $total$ then $total$ else $lower$+$size$-1 endif]
+    OrderedSet(MealOption) rows := [$all$->subOrderedSet($lower$,$upper$)]
+    
+    OrderedSet(MealOption) selected := [null]
+    columns {
+        ['Option'] : Label literal {
+            String text {
+                if [$text$.oclIsInvalid()] {
+                    error := ['no permission']
+                }
+                else {
+                    error := [null]
+                }
+            }
+            event onView (text) {
+                text := [null]
+                try {
+                    if [not $Meal_Options_T.row$.literal.oclIsUndefined()] {
+                        text := [$Meal_Options_T.row$.literal]
+                    }
+                }
+                catch(SecurityException) {
+                    text := [invalid]
+                }
+                catch(ModelException) {
+                    // do nothing
+                    // notification(['Model exception'],[''],[3000])
+                }
+                catch(Exception) {
+                    // do nothing
+                    // notification(['Unknown exception'],[''],[3000])
+                }
+            }
+        }
+    }
+    
+    event onView(all) {
+        all := [$Meals_T.selected$.options->asOrderedSet()->sortedBy(literal)]
+        if [$all$->oclIsInvalid() or $all$->oclIsUndefined()] {
+            all := [MealOption.allInstances()->select(false)->asOrderedSet()]
+        }
+    }
+}
+
+Button Meal_Options_T_prev_B {
+    String text := ['Previous']
+    
+    event onClick {
+        if [$Meal_Options_T.lower$ > 1] {
+            Meal_Options_T.lower := [if $Meal_Options_T.lower$-$Meal_Options_T.size$ < 1 then 1 else $Meal_Options_T.lower$-$Meal_Options_T.size$ endif]
+            Meal_Options_T.upper := [if $Meal_Options_T.lower$+$Meal_Options_T.size$-1 > $Meal_Options_T.total$ then $Meal_Options_T.total$ else $Meal_Options_T.lower$+$Meal_Options_T.size$-1 endif]
+            Meal_Options_T.rows := [$Meal_Options_T.all$->subOrderedSet($Meal_Options_T.lower$,$Meal_Options_T.upper$)]
+            
+            Meal_Options_T_page.current := [$Meal_Options_T_page.current$ - 1]
+            reevaluate Meal_Options_T_page.text
+        }
+    }
+}
+
+Button Meal_Options_T_next_B {
+    String text := ['Next']
+    
+    event onClick {
+        if [$Meal_Options_T.upper$ < $Meal_Options_T.total$] {
+            Meal_Options_T.lower := [$Meal_Options_T.upper$+1]
+            Meal_Options_T.upper := [if $Meal_Options_T.lower$+$Meal_Options_T.size$-1 > $Meal_Options_T.total$ then $Meal_Options_T.total$ else $Meal_Options_T.lower$+$Meal_Options_T.size$-1 endif]
+            Meal_Options_T.rows := [$Meal_Options_T.all$->subOrderedSet($Meal_Options_T.lower$,$Meal_Options_T.upper$)]
+            
+            Meal_Options_T_page.current := [$Meal_Options_T_page.current$ + 1]
+            reevaluate Meal_Options_T_page.text
+        }
+    }
+}
+
+
+
+    Label NewOptionFO_literal_L {
+    String text := ['Meal: ']
+}
+TextField NewOptionFO_literal {
+    String text := [null]    
+    String error := [null]
+}
+
+
+
+    Button NewOptionBU {
+        String text := ['New option']
+        MealOption newOption
+        event onClick {
+            try {
+    NewOptionFO_literal.error := [null]
+    error := [null]
+    
+    if [not ($NewOptionFO_literal.error$.oclIsUndefined())] {
+        notification (['The form contains errors. Please, check the form.'],[''],[2000])
+    }
+    else {
+        if [not(not($Meals_T.selected$->oclIsUndefined()))] {
+            error := ['NO0: Please, select first a meal']
+        }
+        else {
+            if [not(not($Meals_T.selected$->size() = 0))] {
+                error := ['NO1: Please, select first a meal']
+            }
+            else {
+                if [not(not($Meals_T.selected$->size() >1))] {
+                    error := ['NO2: Please, select only one meal']
+                }
+                else {
+                    if [not(not($NewOptionFO_literal.text$.oclIsUndefined()))] {
+                        error := ['NO3: Please, write the name of the new option']
+                    }
+                    else {
+                        if [not(not($Meals_T.selected$.options->exists(o|o.literal = $NewOptionFO_literal.text$)))] {
+                            error := ['NO4: There is already an option for this meal with this name. Please, choose a different name']
+                        }
+                    }
+                }
+            }
+        }
+        if [$error$.oclIsUndefined()] {
+            newInstance := new MealOption
+            [$newInstance$.literal] := [$NewOptionFO_literal.text$]
+            newOption := [$newInstance$]
+            
+            reevaluate NewOptionFO_literal.text
+            reevaluate NewOptionFO_literal.error
+            
+            notification (['Success'],['An instance of MealOption has been created successfully.'],[2000])
+        }
+    }
+}
+catch(SecurityException) {
+    notification(['Security error'],['You do not have permission to create an instance of MealOption'],[2000])
+}
+catch(ModelException) {
+    notification(['Model error'],['There was an error creating the instance'],[2000])
+}
+catch(Exception) {
+    notification(['Unknown error'],['There was an unexpected error'],[2000])
+}
+
+            if [not($newOption$.oclIsUndefined())] {
+                [$newOption$.ownedBy] := [$Meals_T.selected$->any(true)]
+                reevaluate Meals_T_page.current
+reevaluate Meals_T_page.size
+reevaluate Meals_T_page.total
+reevaluate Meals_T_page.text
+reevaluate Meals_T.all
+reevaluate Meals_T.total
+reevaluate Meals_T.size
+reevaluate Meals_T.lower
+reevaluate Meals_T.upper
+reevaluate Meals_T.rows
+reevaluate Meals_T.selected
+
+
+                Meals_T.selected := [$newOption$.ownedBy->asOrderedSet()]            
+                Meal_Options_T.selected := [$newOption$->asOrderedSet()]
+            }
+        }
+
+    }
+
+    Label EditOptionFO_literal_L {
+    String text := ['Option: ']
+}
+TextField EditOptionFO_literal {
+    String text {
+        error := [null]
+        if [$text$.oclIsInvalid()] {
+            error := ['no permission']
+        }
+        else {
+        }
+    }
+    String error := [null]
+    event onView(text) {
+        text := [null]
+        try {
+            text := [$Meal_Options_T.selected$->any(true).literal]
+        }
+        catch (SecurityException) {
+            text := [invalid]
+        }
+        catch (ModelException) {
+            // do nothing
+            // notification(['Model exception'],[''],[3000])
+        }
+        catch (Exception) {
+            // do nothing
+            // notification(['Unknown exception'],[''],[3000])
+        }
+    }
+}
+
+
+
+    Button EditOptionBU {
+        String text := ['Change name']
+        MealOption selectedOption
+        event onClick {
+            if [$Meals_T.selected$->oclIsUndefined()]
+                { error := ['Please, select first a meal'] }
+            else {if [$Meals_T.selected$->size() = 0 or $Meals_T.selected$->size() > 1]
+                      { error := ['Please, select exactly one meal'] }
+                  else {if [$Meal_Options_T.selected$->oclIsUndefined()]
+                           { error := ['Please, select an option first'] }
+                        else {if [$Meal_Options_T.selected$->size() = 0 or $Meal_Options_T.selected$->size() > 1]
+                                 { error := ['Please, select exactlty one option'] }
+                              else {
+                                selectedOption := [$Meal_Options_T.selected$->any(true)]
+                                try {
+    EditOptionFO_literal.error := [null]
+    error := [null]
+    
+    if [not ($EditOptionFO_literal.error$.oclIsUndefined())] {
+        notification (['The form contains errors. Please, check the form.'],[''],[2000])
+    }
+    else {
+        if [not(not($EditOptionFO_literal.text$.oclIsUndefined()))] {
+            error := ['Please, write the new name of the option']
+        }
+        else {
+            if [not(not($Meals_T.selected$->exists(m|m.literal = $EditOptionFO_literal.text$)))] {
+                error := ['There is already an option for this meal with this name. Please, choose a different name']
+            }
+        }
+        if [$error$.oclIsUndefined()] {
+            [$Meal_Options_T.selected$->any(true).literal] := [$EditOptionFO_literal.text$]
+            
+            reevaluate EditOptionFO_literal.text
+            reevaluate EditOptionFO_literal.error
+            
+            notification (['Success'],['The Meal has been edited successfully.'],[2000])
+        }
+    }
+}
+catch(SecurityException) {
+    notification(['Security error'],['You do not have permission to edit the Meal'],[2000])
+}
+catch(ModelException) {
+    notification(['Model error'],['There was an error editing the instance'],[2000])
+}
+catch(Exception) {
+    notification(['Unknown error'],['There was an unexpected error'],[2000])
+}
+
+                                 reevaluate Meal_Options_T_page.current
+reevaluate Meal_Options_T_page.size
+reevaluate Meal_Options_T_page.total
+reevaluate Meal_Options_T_page.text
+reevaluate Meal_Options_T.all
+reevaluate Meal_Options_T.total
+reevaluate Meal_Options_T.size
+reevaluate Meal_Options_T.lower
+reevaluate Meal_Options_T.upper
+reevaluate Meal_Options_T.rows
+reevaluate Meal_Options_T.selected
+
+
+                                Meal_Options_T.selected := [$selectedOption$->asOrderedSet()]
+                                } } } } 
+      }
+   }
+
+
+Label ThisOptionPeriodsFO_page {
+    Integer current := [1]
+    Integer size := [10]
+    Integer total
+    String text := [$current$.toString().concat(' of ').concat($total$.toString())]
+    
+    event onView(total) {
+        total := [$Meal_Options_T.selected$->any(true).periodsOption->size()]
+        if [$total$.oclIsInvalid() or $total$.oclIsUndefined()] {
+            total := [1]
+        }
+        if [$total$ = 0] {
+            total := [1]
+        }
+        else {
+            if [$total$.mod($size$) > 0] {
+                total := [$total$.div($size$) + 1]
+            }
+            else {
+                total := [$total$.div($size$)]
+            }
+        }
+    }
+}
+
+Table ThisOptionPeriodsFO {
+    OrderedSet(Residency) all
+    Integer total := [$all$->size()]
+    Integer size := [10]
+    Integer lower := [1]
+    Integer upper := [if $lower$+$size$-1 > $total$ then $total$ else $lower$+$size$-1 endif]
+    OrderedSet(Residency) rows := [$all$->subOrderedSet($lower$,$upper$)]
+    
+    OrderedSet(Residency) selected := [null]
+    columns {
+        ['start'] : Label start {
+            String text {
+                if [$text$.oclIsInvalid()] {
+                    error := ['no permission']
+                }
+                else {
+                    error := [null]
+                }
+            }
+            event onView (text) {
+                text := [null]
+                try {
+                    if [not $ThisOptionPeriodsFO.row$.start.oclIsUndefined()] {
+                        text := [$ThisOptionPeriodsFO.row$.start.toString().substring(1,10)]
+                    }
+                }
+                catch(SecurityException) {
+                    text := [invalid]
+                }
+                catch(ModelException) {
+                    // do nothing
+                    // notification(['Model exception'],[''],[3000])
+                }
+                catch(Exception) {
+                    // do nothing
+                    // notification(['Unknown exception'],[''],[3000])
+                }
+            }
+        }
+        ['end'] : Label end {
+            String text {
+                if [$text$.oclIsInvalid()] {
+                    error := ['no permission']
+                }
+                else {
+                    error := [null]
+                }
+            }
+            event onView (text) {
+                text := [null]
+                try {
+                    if [not $ThisOptionPeriodsFO.row$.end.oclIsUndefined()] {
+                        text := [$ThisOptionPeriodsFO.row$.end.toString().substring(1,10)]
+                    }
+                }
+                catch(SecurityException) {
+                    text := [invalid]
+                }
+                catch(ModelException) {
+                    // do nothing
+                    // notification(['Model exception'],[''],[3000])
+                }
+                catch(Exception) {
+                    // do nothing
+                    // notification(['Unknown exception'],[''],[3000])
+                }
+            }
+        }
+    }
+    
+    event onView(all) {
+        all := [$Meal_Options_T.selected$->any(true).periodsOption->asOrderedSet()->sortedBy(start)]
+        if [$all$->oclIsInvalid() or $all$->oclIsUndefined()] {
+            all := [Residency.allInstances()->select(false)->asOrderedSet()]
+        }
+    }
+}
+
+Button ThisOptionPeriodsFO_prev_B {
+    String text := ['Previous']
+    
+    event onClick {
+        if [$ThisOptionPeriodsFO.lower$ > 1] {
+            ThisOptionPeriodsFO.lower := [if $ThisOptionPeriodsFO.lower$-$ThisOptionPeriodsFO.size$ < 1 then 1 else $ThisOptionPeriodsFO.lower$-$ThisOptionPeriodsFO.size$ endif]
+            ThisOptionPeriodsFO.upper := [if $ThisOptionPeriodsFO.lower$+$ThisOptionPeriodsFO.size$-1 > $ThisOptionPeriodsFO.total$ then $ThisOptionPeriodsFO.total$ else $ThisOptionPeriodsFO.lower$+$ThisOptionPeriodsFO.size$-1 endif]
+            ThisOptionPeriodsFO.rows := [$ThisOptionPeriodsFO.all$->subOrderedSet($ThisOptionPeriodsFO.lower$,$ThisOptionPeriodsFO.upper$)]
+            
+            ThisOptionPeriodsFO_page.current := [$ThisOptionPeriodsFO_page.current$ - 1]
+            reevaluate ThisOptionPeriodsFO_page.text
+        }
+    }
+}
+
+Button ThisOptionPeriodsFO_next_B {
+    String text := ['Next']
+    
+    event onClick {
+        if [$ThisOptionPeriodsFO.upper$ < $ThisOptionPeriodsFO.total$] {
+            ThisOptionPeriodsFO.lower := [$ThisOptionPeriodsFO.upper$+1]
+            ThisOptionPeriodsFO.upper := [if $ThisOptionPeriodsFO.lower$+$ThisOptionPeriodsFO.size$-1 > $ThisOptionPeriodsFO.total$ then $ThisOptionPeriodsFO.total$ else $ThisOptionPeriodsFO.lower$+$ThisOptionPeriodsFO.size$-1 endif]
+            ThisOptionPeriodsFO.rows := [$ThisOptionPeriodsFO.all$->subOrderedSet($ThisOptionPeriodsFO.lower$,$ThisOptionPeriodsFO.upper$)]
+            
+            ThisOptionPeriodsFO_page.current := [$ThisOptionPeriodsFO_page.current$ + 1]
+            reevaluate ThisOptionPeriodsFO_page.text
+        }
+    }
+}
+
+ 
+
+
+Label NewPeriodOptionFO_start_L {
+    String text := ['Start: ']
+}
+DateField NewPeriodOptionFO_start {
+    LocalDateTime value := [null]    
+    String error := [null]
+}
+
+Label NewPeriodOptionFO_end_L {
+    String text := ['End: ']
+}
+DateField NewPeriodOptionFO_end {
+    LocalDateTime value := [null]    
+    String error := [null]
+}
+
+
+
+Button CreatePeriodOptionBU {
+    String text := ['New period']
+    Residency newPeriod
+    event onClick {
+     if [$Meals_T.selected$->oclIsUndefined()]
+            { error := ['Please, select first a meal'] }
+        else {if [$Meals_T.selected$->size() = 0 or $Meals_T.selected$->size() > 1]
+                  { error := ['Please, select exactly one meal'] }
+              else {if [$Meal_Options_T.selected$->oclIsUndefined()]
+                       { error := ['Please, select an option first'] }
+                    else {if [$Meal_Options_T.selected$->size() = 0 or $Meal_Options_T.selected$->size() > 1]
+                             { error := ['Please, select exactlty one option'] }
+                          else {
+        try {
+    NewPeriodOptionFO_start.error := [null]
+    NewPeriodOptionFO_end.error := [null]
+    error := [null]
+    
+    if [not ($NewPeriodOptionFO_start.error$.oclIsUndefined()) or not ($NewPeriodOptionFO_end.error$.oclIsUndefined())] {
+        notification (['The form contains errors. Please, check the form.'],[''],[2000])
+    }
+    else {
+        if [not(not($NewPeriodOptionFO_start.value$.oclIsUndefined()))] {
+            error := ['Please, select first a starting date']
+        }
+        else {
+            if [not(not($NewPeriodOptionFO_end.value$.oclIsUndefined()))] {
+                error := ['Please, select first an ending date']
+            }
+            else {
+                if [not($NewPeriodOptionFO_start.value$ <= $NewPeriodOptionFO_end.value$)] {
+                    error := ['Please, select an ending date that is later or equal than the starting date']
+                }
+                else {
+                    if [not($Meal_Options_T.selected$->any(true).periodsOption->select(p|
+                                    ($NewPeriodOptionFO_start.value$ <= p.start and $NewPeriodOptionFO_end.value$ >= p.start)
+                                    or ($NewPeriodOptionFO_start.value$ > p.start and $NewPeriodOptionFO_start.value$ <= p.end))
+                                ->isEmpty())] {
+                        error := ['The selected period overlaps with one or more existing periods. Please, change either the starting or the ending date']
+                    }
+                }
+            }
+        }
+        if [$error$.oclIsUndefined()] {
+            newInstance := new Residency
+            [$newInstance$.start] := [$NewPeriodOptionFO_start.value$]
+            [$newInstance$.end] := [$NewPeriodOptionFO_end.value$]
+            newPeriod := [$newInstance$]
+            
+            reevaluate NewPeriodOptionFO_start.value
+            reevaluate NewPeriodOptionFO_start.error
+            reevaluate NewPeriodOptionFO_end.value
+            reevaluate NewPeriodOptionFO_end.error
+            
+            notification (['Success'],['An instance of Residency has been created successfully.'],[2000])
+        }
+    }
+}
+catch(SecurityException) {
+    notification(['Security error'],['You do not have permission to create an instance of Residency'],[2000])
+}
+catch(ModelException) {
+    notification(['Model error'],['There was an error creating the instance'],[2000])
+}
+catch(Exception) {
+    notification(['Unknown error'],['There was an unexpected error'],[2000])
+}
+
+        if [not($newPeriod$.oclIsUndefined())]
+           { 
+            [$Meal_Options_T.selected$->any(true).periodsOption]+= [$newPeriod$]
+             reevaluate ThisOptionPeriodsFO_page.current
+reevaluate ThisOptionPeriodsFO_page.size
+reevaluate ThisOptionPeriodsFO_page.total
+reevaluate ThisOptionPeriodsFO_page.text
+reevaluate ThisOptionPeriodsFO.all
+reevaluate ThisOptionPeriodsFO.total
+reevaluate ThisOptionPeriodsFO.size
+reevaluate ThisOptionPeriodsFO.lower
+reevaluate ThisOptionPeriodsFO.upper
+reevaluate ThisOptionPeriodsFO.rows
+reevaluate ThisOptionPeriodsFO.selected
+
+
+             reevaluate NewPeriodOptionFO_start.value
+reevaluate NewPeriodOptionFO_start.error
+reevaluate NewPeriodOptionFO_end.value
+reevaluate NewPeriodOptionFO_end.error
+
+
+             }
+        } } } } 
+      }
+    } 
+
+Table DeadlinesTB {
+    Set(MealOptionDeadline) rows := [$ThisOptionPeriodsFO.selected$  ->any(true).deadlines]
+    columns {
+        ['First'] : BooleanField Monday { 
+                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::MONDAY)) then true else false endif] 
+                {
+                if [not($value$.oclIsUndefined())] 
+                   { if [$value$] 
+                        { if [$DeadlinesTB.rows$->excluding($DeadlinesTB.row$)->exists(d|d.days->includes(DayOfWeek::MONDAY))]
+                            { value := [false]
+                              notification(['Error'], ['There is already a deadline fixed form Mondays'], [0]) }
+                         else { [$DeadlinesTB.row$.days] := 
+                              [if $DeadlinesTB.row$.days->oclIsUndefined()
+                              then DayOfWeek::MONDAY->asSet()
+                              else $DeadlinesTB.row$.days->including(DayOfWeek::MONDAY) endif] } } 
+                      else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::MONDAY)] }
+                   }    
+                } 
+                }
+        ['Second'] : BooleanField Tuesday { 
+                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::TUESDAY)) then true else false endif] 
+                {
+                if [not($value$.oclIsUndefined())] 
+                   { if [$value$] 
+                        { if [$DeadlinesTB.rows$->excluding($DeadlinesTB.row$)->exists(d|d.days->includes(DayOfWeek::TUESDAY))]
+                            { value := [false]
+                              notification(['Error'], ['There is already a deadline fixed form Tuesdays'], [0]) }
+                         else { [$DeadlinesTB.row$.days] := 
+                              [if $DeadlinesTB.row$.days->oclIsUndefined()
+                              then DayOfWeek::TUESDAY->asSet()
+                              else $DeadlinesTB.row$.days->including(DayOfWeek::TUESDAY) endif] } } 
+                      else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::TUESDAY)] }
+                   }   
+                  
+                } 
+                  }
+        ['Third'] : BooleanField Wednesday { 
+                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::WEDNESDAY)) then true else false endif] 
+                {
+                if [not($value$.oclIsUndefined())] 
+                   { if [$value$] 
+                        { if [$DeadlinesTB.rows$->excluding($DeadlinesTB.row$)->exists(d|d.days->includes(DayOfWeek::WEDNESDAY))]
+                            { value := [false]
+                              notification(['Error'], ['There is already a deadline fixed form Wednesdays'], [0]) }
+                         else { [$DeadlinesTB.row$.days] := 
+                              [if $DeadlinesTB.row$.days->oclIsUndefined()
+                              then DayOfWeek::WEDNESDAY->asSet()
+                              else $DeadlinesTB.row$.days->including(DayOfWeek::WEDNESDAY) endif] } } 
+                      else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::WEDNESDAY)] }
+                   }   
+                  
+                } }
+        ['Fourth'] : BooleanField Thursday { 
+                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::THURSDAY)) then true else false endif] 
+                {
+                if [not($value$.oclIsUndefined())] 
+                   { if [$value$] 
+                        { if [$DeadlinesTB.rows$->excluding($DeadlinesTB.row$)->exists(d|d.days->includes(DayOfWeek::THURSDAY))]
+                            { value := [false]
+                              notification(['Error'], ['There is already a deadline fixed form Thursdays'], [0]) }
+                         else { [$DeadlinesTB.row$.days] := 
+                              [if $DeadlinesTB.row$.days->oclIsUndefined()
+                              then DayOfWeek::THURSDAY->asSet()
+                              else $DeadlinesTB.row$.days->including(DayOfWeek::THURSDAY) endif] } } 
+                      else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::THURSDAY)] }
+                   }             
+                } }
+        ['Firfth'] : BooleanField Friday { 
+                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::FRIDAY)) then true else false endif] 
+                {
+                if [not($value$.oclIsUndefined())] 
+                   { if [$value$] 
+                        { if [$DeadlinesTB.rows$->excluding($DeadlinesTB.row$)->exists(d|d.days->includes(DayOfWeek::FRIDAY))]
+                            { value := [false]
+                              notification(['Error'], ['There is already a deadline fixed form Fridays'], [0]) }
+                         else { [$DeadlinesTB.row$.days] := 
+                              [if $DeadlinesTB.row$.days->oclIsUndefined()
+                              then DayOfWeek::FRIDAY->asSet()
+                              else $DeadlinesTB.row$.days->including(DayOfWeek::FRIDAY) endif] } } 
+                      else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::FRIDAY)] }
+                   }   
+                  
+                }}
+        ['Sixth'] : BooleanField Saturday { 
+                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::SATURDAY)) then true else false endif] 
+                {
+                if [not($value$.oclIsUndefined())] 
+                   { if [$value$] 
+                        { if [$DeadlinesTB.rows$->excluding($DeadlinesTB.row$)->exists(d|d.days->includes(DayOfWeek::SATURDAY))]
+                            { value := [false]
+                              notification(['Error'], ['There is already a deadline fixed form Saturdays'], [0]) }
+                         else { [$DeadlinesTB.row$.days] := 
+                              [if $DeadlinesTB.row$.days->oclIsUndefined()
+                              then DayOfWeek::SATURDAY->asSet()
+                              else $DeadlinesTB.row$.days->including(DayOfWeek::SATURDAY) endif] } } 
+                      else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::SATURDAY)] }
+                   }   
+                  
+                } }
+        ['Seventh'] : BooleanField Sunday { 
+                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::SUNDAY)) then true else false endif] 
+                {
+                if [not($value$.oclIsUndefined())] 
+                   { if [$value$] 
+                        { if [$DeadlinesTB.rows$->excluding($DeadlinesTB.row$)->exists(d|d.days->includes(DayOfWeek::SUNDAY))]
+                            { value := [false]
+                              notification(['Error'], ['There is already a deadline fixed form Sundays'], [0]) }
+                         else { [$DeadlinesTB.row$.days] := 
+                              [if $DeadlinesTB.row$.days->oclIsUndefined()
+                              then DayOfWeek::SUNDAY->asSet()
+                              else $DeadlinesTB.row$.days->including(DayOfWeek::SUNDAY) endif] } } 
+                      else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::SUNDAY)] }
+                   }   
+                  
+                } }
+        ['DaysBefore'] : Label DaysBefore { String text := [$DeadlinesTB.row$.cday.toString()] }
+        ['UpDB'] : Button UpDB { 
+                    String text := ['+'] 
+                    event onClick {
+                        [$DeadlinesTB.row$.cday] := [$DeadlinesTB.row$.cday + 1]
+                        reevaluate DeadlinesTB.DaysBefore.text
+                        }           
+                    }
+        ['DownDB'] : Button DownDB { 
+                        String text := ['-']
+                        event onClick {
+                            if [$DeadlinesTB.row$.cday > 0 ]
+                                { [$DeadlinesTB.row$.cday] := [$DeadlinesTB.row$.cday - 1] 
+                                  reevaluate DeadlinesTB.DaysBefore.text }
+                            } 
+                        }
+        ['HourLimit'] : Label HourLimit { 
+            String text := [if $DeadlinesTB.row$.chour < 10 
+                            then '0'.concat($DeadlinesTB.row$.chour.toString())
+                            else $DeadlinesTB.row$.chour.toString() endif] 
+            }
+        ['UpHL'] : Button UpHL { 
+                    String text := ['+'] 
+                    event onClick {
+                            if [$DeadlinesTB.row$.chour < 23 ]
+                                { [$DeadlinesTB.row$.chour] := [$DeadlinesTB.row$.chour + 1] 
+                                  reevaluate DeadlinesTB.HourLimit.text }
+                            } 
+                        }
+        ['DownHL'] : Button DownHL { 
+                    String text := ['-'] 
+                    event onClick {
+                            if [$DeadlinesTB.row$.chour > 0 ]
+                                { [$DeadlinesTB.row$.chour] := [$DeadlinesTB.row$.chour - 1] 
+                                  reevaluate DeadlinesTB.HourLimit.text }
+                            } 
+                        }
+        ['MinutesLimit'] : Label MinutesLimit { 
+            String text := [if $DeadlinesTB.row$.cminute < 10 
+                            then '0'.concat($DeadlinesTB.row$.cminute.toString())
+                            else $DeadlinesTB.row$.cminute.toString() endif]
+            }
+        ['UpML'] : Button UpML { 
+                    String text := ['+'] 
+                    event onClick {
+                        if [$DeadlinesTB.row$.cminute < 59 ]
+                           { [$DeadlinesTB.row$.cminute] := [$DeadlinesTB.row$.cminute + 1] 
+                             reevaluate DeadlinesTB.MinutesLimit.text }
+                            } 
+                    }
+        ['DownML'] : Button DownML { 
+                        String text := ['-'] 
+                        event onClick {
+                            if [$DeadlinesTB.row$.cminute > 0 ]
+                                { [$DeadlinesTB.row$.cminute] := [$DeadlinesTB.row$.cminute - 1] 
+                                  reevaluate DeadlinesTB.MinutesLimit.text }
+                            } 
+
+        }
+    }
+}
+
+Button AddDeadlineBU {
+    String text := ['New deadline']
+    event onClick {
+        if [$Meals_T.selected$->oclIsUndefined()]
+            { error := ['Please, select first a meal'] }
+        else {if [$Meals_T.selected$->size() = 0 or $Meals_T.selected$->size() > 1]
+                  { error := ['Please, select exactly one meal'] }
+              else {if [$Meal_Options_T.selected$->oclIsUndefined()]
+                       { error := ['Please, select an option first'] }
+                    else {if [$Meal_Options_T.selected$->size() = 0 or $Meal_Options_T.selected$->size() > 1]
+                             { error := ['Please, select exactlty one option'] }
+                          else {if [$ThisOptionPeriodsFO.selected$->oclIsUndefined()]
+                                    { error := ['Please, select a period first'] }
+                                else {if [$ThisOptionPeriodsFO.selected$->size() = 0 or $ThisOptionPeriodsFO.selected$->size() > 1]
+                                        { error := ['Please, select exactlty one period'] }
+                                        else {
+         newDeadline := new MealOptionDeadline
+         // Default setting
+            [$newDeadline$.cday] := [0]
+            [$newDeadline$.chour] := [9]
+            [$newDeadline$.cminute] := [0]
+            [$newDeadline$.days] := [Set{DayOfWeek::MONDAY, DayOfWeek::TUESDAY, DayOfWeek::WEDNESDAY, DayOfWeek::THURSDAY, DayOfWeek::FRIDAY, DayOfWeek::SATURDAY, DayOfWeek::SUNDAY}->reject(d|$DeadlinesTB.rows$.days->includes(d))]
+          // End default setting
+         [$newDeadline$.ownedBy] := [$ThisOptionPeriodsFO.selected$->any(true)]
+         reevaluate DeadlinesTB.rows
+    } } } } } }
+}
+}
+
+
+Button DeleteDeadlinesBU {
+    String text := ['Delete deadline']
+    event onClick {
+        if [$DeadlinesTB.selected$->oclIsUndefined()]
+            {error := ['Please, select first a deadline'] }
+        else { foreach deadline in [$DeadlinesTB.selected$] {
+                    delete [$deadline$]
+                } }
+        reevaluate DeadlinesTB.rows
+   }
+}
+
+Button BackBU {
+    String text := ['Back'] 
+    event onClick {
+        back
+    }
+}
+
+
+
+    event onChange(Meals_T.selected) {
+            reevaluate EditMealFO_literal.text
+reevaluate EditMealFO_literal.error
+
+
+            reevaluate Meal_Options_T_page.current
+reevaluate Meal_Options_T_page.size
+reevaluate Meal_Options_T_page.total
+reevaluate Meal_Options_T_page.text
+reevaluate Meal_Options_T.all
+reevaluate Meal_Options_T.total
+reevaluate Meal_Options_T.size
+reevaluate Meal_Options_T.lower
+reevaluate Meal_Options_T.upper
+reevaluate Meal_Options_T.rows
+reevaluate Meal_Options_T.selected
+
+
+    }
+
+    event onChange(Meal_Options_T.selected) {
+            reevaluate EditOptionFO_literal.text
+reevaluate EditOptionFO_literal.error
+
+
+            reevaluate ThisOptionPeriodsFO_page.current
+reevaluate ThisOptionPeriodsFO_page.size
+reevaluate ThisOptionPeriodsFO_page.total
+reevaluate ThisOptionPeriodsFO_page.text
+reevaluate ThisOptionPeriodsFO.all
+reevaluate ThisOptionPeriodsFO.total
+reevaluate ThisOptionPeriodsFO.size
+reevaluate ThisOptionPeriodsFO.lower
+reevaluate ThisOptionPeriodsFO.upper
+reevaluate ThisOptionPeriodsFO.rows
+reevaluate ThisOptionPeriodsFO.selected
+
+
+            } 
+    event onChange(ThisOptionPeriodsFO.selected) {
+            reevaluate DeadlinesTB.rows
+
+    }
+}

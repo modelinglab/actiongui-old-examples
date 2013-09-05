@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!-- was: no XML declaration present -->
+<ns1:window-layout ns1:id="SelectMealsWI" 
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:ns1='http://actiongui.org/schemes/ag-layout/2.4'
+    xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://www.actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
+<ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto"> 
+    <ns1:entry>
+        <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
+            <ns1:entry>
+                <ns1:widget ns1:id="NextWeekBU" ns1:height="30px" ns1:width="60px"></ns1:widget>
+            </ns1:entry>
+            <ns1:entry>
+                <ns1:widget ns1:id="PreviousWeekBU" ns1:height="30px" ns1:width="60px"></ns1:widget>
+            </ns1:entry>
+        </ns1:line-layout>
+    </ns1:entry>
+    <!-- -->
+    <ns1:entry>
+        <ns1:line-layout orientation="horizontal">
+            <ns1:entry>
+            <ns1:widget ns1:id="firstDayThisWeekLB" ns1:height="30px"></ns1:widget>
+            </ns1:entry>
+            <ns1:entry>
+            <ns1:widget ns1:id="secondDayThisWeekLB" ns1:height="30px"></ns1:widget>
+            </ns1:entry>
+            <ns1:entry>
+            <ns1:widget ns1:id="thirdDayThisWeekLB" ns1:height="30px"></ns1:widget>
+            </ns1:entry>
+            <ns1:entry>
+            <ns1:widget ns1:id="fourthDayThisWeekLB" ns1:height="30px"></ns1:widget>
+            </ns1:entry>
+            <ns1:entry>
+            <ns1:widget ns1:id="fifthDayThisWeekLB" ns1:height="30px"></ns1:widget>
+            </ns1:entry>
+            <ns1:entry>
+            <ns1:widget ns1:id="sixthDayThisWeekLB" ns1:height="30px"></ns1:widget>
+            </ns1:entry>
+            <ns1:entry>
+            <ns1:widget ns1:id="seventhDayThisWeekLB" ns1:height="30px"></ns1:widget>
+            </ns1:entry>
+        </ns1:line-layout>             
+    </ns1:entry>
+            <!-- -->
+     <ns1:entry>
+            <ns1:table ns1:id="WeekMealsTB" ns1:height="150px" ns1:width="auto">
+                <ns1:column>
+                    <ns1:widget  ns1:id="FirstCB" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                </ns1:column>
+                <ns1:column>
+                    <ns1:widget  ns1:id="SecondCB" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                </ns1:column>
+                <ns1:column>
+                    <ns1:widget  ns1:id="ThirdCB" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                </ns1:column>
+                <ns1:column>
+                    <ns1:widget  ns1:id="FourthCB" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                </ns1:column>
+                <ns1:column>
+                    <ns1:widget  ns1:id="FifthCB" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                </ns1:column>
+                <ns1:column>
+                    <ns1:widget  ns1:id="SixthCB" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                </ns1:column>
+                <ns1:column>
+                    <ns1:widget  ns1:id="SeventhCB" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                </ns1:column>
+           </ns1:table>
+     </ns1:entry>
+   </ns1:line-layout>
+</ns1:window-layout>

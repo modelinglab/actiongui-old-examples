@@ -1,0 +1,61 @@
+Window EditUserWI {
+    User thisUser
+    #form ThisUserFO {
+    entity: User
+        instance: [$EditUserWI.thisUser$]
+        attr: name {label: ['Name: '] }
+        attr: surname {label: ['Surname: ']}
+        attr: login {label: ['Login: ']}
+        attr: password {label : ['Password: ']}
+        attr: role {label: ['Role: ']}
+        assoc: periods {
+            rows: [$EditUserWI.thisUser$.periods->sortedBy(start)]
+            selected: [null]
+            column: start 
+            column: end
+            sortedBy: [-1*(start.toInteger())]
+        }
+    }#
+
+
+#form NewPeriodFO {
+    entity: Residency
+    attr: start {label: ['Start: ']}
+    attr: end {label: ['End: ']}
+}#
+
+Button CreatePeriodBU {
+    String text := ['New period']
+    Residency newPeriod
+    event onClick {
+        #create {
+            form: NewPeriodFO 
+            result: newPeriod
+            assert: [not($NewPeriodFO_start.date$.oclIsUndefined())]
+                {message: ['Please, select first a starting date'] 
+                 assert: [not($NewPeriodFO_end.date$.oclIsUndefined())]
+                    {message: ['Please, select first an ending date']
+                        assert: [$NewPeriodFO_start.date$ <= $NewPeriodFO_end.date$]
+                        {message: ['Please, select an ending date that is later or equal than the starting date']
+                        assert: [$EditUserWI.caller$.periods->select(p|
+                                    ($NewPeriodFO_start.date$ <= p.start and $NewPeriodFO_end.date$ >= p.start)
+                                    or ($NewPeriodFO_start.date$ > p.start and $NewPeriodFO_start.date$ <= p.end))
+                                ->isEmpty()]
+                            {message: ['The selected period overlaps with one or more existing periods. Please, change either the starting or the ending date']
+                                }} } }
+        }#
+        if [not($newPeriod$.oclIsUndefined())]
+           { [$EditUserWI.thisUser$.periods]+= [$newPeriod$]
+             #refresh ThisUserFO#
+             #refresh NewPeriodFO#
+             }
+    }
+    }
+
+Button BackBU {
+    String text := ['Back']
+    event onClick {
+        back
+    }
+}
+}

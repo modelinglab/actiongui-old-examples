@@ -1,0 +1,11 @@
+Window MenuDirectorWI  {
+
+#menu MenuDirector {
+    target: UserAccountsWI { label : ['Users'] }
+    target: ConfigurationWI { label : ['Meals'] }
+    target: ChangePasswordWI { label : ['Change password'] }
+    target: CountMealsWI { label : ['Count meals'] }
+    target: ListDinersWI { label : ['List diners'] }
+}#
+
+}

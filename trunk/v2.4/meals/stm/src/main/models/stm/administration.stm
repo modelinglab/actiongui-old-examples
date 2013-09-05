@@ -1,0 +1,115 @@
+role SYSTEM {
+    User {
+        read(login), read(password), read(role)
+    }
+    MealOption {
+        fullAccess
+    }
+    Meal {
+        fullAccess
+    }
+    MealOptionDeadline {
+        fullAccess
+    }
+}
+
+role DIRECTOR {
+    User {
+        fullAccess
+    }
+    MealOption {
+        fullAccess
+    }
+    Meal {
+        fullAccess
+    }
+    MealOptionDeadline {
+        fullAccess
+    }
+    Residency {
+        fullAccess
+    }
+    DailyMealSelection {
+        fullAccess
+    }
+    MealSelection {
+        fullAccess
+    }
+}
+
+role RESIDENT {
+    MealOption {
+        fullAccess
+    }
+    Meal {
+        fullAccess
+    }
+    MealOptionDeadline {
+        fullAccess
+    }
+    User {
+        fullAccess
+        // read constrainedBy [self=caller]
+        // add(dailyMeals) constrainedBy [self=caller]
+    }
+    DailyMealSelection {
+        //fullAccess
+        create
+        read
+        update(date) // constrainedBy [self.date.oclIsUndefined()] // and value => Date.now().year()] and value  >= date.now().dayOfYear()
+        update(selectedBy) // constrainedBy [value = caller]
+        update(selections)
+        add(selections)
+        remove(selections)
+    }
+    MealSelection {
+        //fullAccess
+        create
+        delete
+        read
+        update(meal)
+        update(ownedBy) constrainedBy [value.selectedBy = caller and 
+                                       caller.periods->exists(p|p.start <= value.date and p.end >= value.date)]
+        /*
+        update(mealOption) constrainedBy [self.ownedBy.selectedBy = caller
+                                          and value.periodsOption
+                                                ->exists(p|p.start <= self.ownedBy.date and p.end >= self.ownedBy.date
+                                                       and p.deadlines->exists(q|q.days->includes(self.ownedBy.date.dayOfWeek())
+                                                                                and 
+                                                                                (Date.now().add(q.cday, TimeUnit::DAY).truncate(TimeUnit::DAY) < self.ownedBy.date
+                                                                                 or ((Date.now().add(q.cday, TimeUnit::DAY).truncate(TimeUnit::DAY) = self.ownedBy.date)
+                                                                                     and 
+                                                                                     (Date.now().hour() < q.chour 
+                                                                                      or 
+                                                                                      (Date.now().hour() = q.chour and Date.now().minute() <= q.cminute))))))]
+        */
+        update(mealOption) constrainedBy [
+                    let 
+                        mealDate    : LocalDateTime = self.ownedBy.date,
+                        now         : LocalDateTime = LocalDateTime.now()
+                    in
+                        self.ownedBy.selectedBy = caller
+                        and mealDate >= now
+                        and value.periodsOption->exists(p|
+                                p.start <= mealDate 
+                            and p.end >= mealDate
+                            and p.deadlines->exists(q|
+                                    q.days->includes(mealDate.getDayOfWeek())
+                                and 
+                                    if mealDate.toLocalDate() = now.toLocalDate() then
+                                        now.getHour() < q.chour 
+                                        or (now.getHour() = q.chour and now.getMinute() <= q.cminute)
+                                    else
+                                        mealDate <= now.plusDays(q.cday).toLocalDate().atStartOfDay()
+                                    endif
+                                )
+                            )
+                    ]
+    }
+    Residency {
+        fullAccess
+    }
+
+}
+
+

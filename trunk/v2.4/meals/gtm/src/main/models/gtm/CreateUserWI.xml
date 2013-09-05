@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!-- was: no XML declaration present -->
+<ns1:window-layout ns1:id="CreateUserWI"
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:ns1='http://actiongui.org/schemes/ag-layout/2.4'
+    xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://www.actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
+<ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto"> 
+            <!-- NAME -->     
+         <ns1:entry>
+            <ns1:widget ns1:id="CreateFO_name_L" ns1:height="30px" ns1:width="140px"></ns1:widget>
+         </ns1:entry>
+        <ns1:entry>
+            <ns1:widget ns1:id="CreateFO_name" ns1:height="30px" ns1:width="140px"></ns1:widget>
+        </ns1:entry>   
+        <!-- SURNAME -->
+          <ns1:entry>
+            <ns1:widget ns1:id="CreateFO_surname_L" ns1:height="30px" ns1:width="140px"></ns1:widget>
+         </ns1:entry>
+        <ns1:entry>
+            <ns1:widget ns1:id="CreateFO_surname" ns1:height="30px" ns1:width="140px"></ns1:widget>
+        </ns1:entry>
+          <!-- LOGIN -->
+          <ns1:entry>
+            <ns1:widget ns1:id="CreateFO_login_L" ns1:height="30px" ns1:width="140px"></ns1:widget>
+         </ns1:entry>
+        <ns1:entry>
+            <ns1:widget ns1:id="CreateFO_login" ns1:height="30px" ns1:width="140px"></ns1:widget>
+        </ns1:entry>
+          <!-- PASSWORD -->
+          <ns1:entry>
+            <ns1:widget ns1:id="CreateFO_password_L" ns1:height="30px" ns1:width="140px"></ns1:widget>
+         </ns1:entry>
+        <ns1:entry>
+            <ns1:widget ns1:id="CreateFO_password" ns1:height="30px" ns1:width="140px"></ns1:widget>
+        </ns1:entry>
+          <!-- ROLE -->
+          <ns1:entry>
+            <ns1:widget ns1:id="CreateFO_role_L" ns1:height="30px" ns1:width="140px"></ns1:widget>
+         </ns1:entry>
+        <ns1:entry>
+            <ns1:widget ns1:id="CreateFO_role" ns1:height="30px" ns1:width="140px"></ns1:widget>
+        </ns1:entry>
+        <!-- CREATE BUTTON -->
+        <ns1:entry>
+            <ns1:widget ns1:id="CreateBU" ns1:height="30px" ns1:width="70px"></ns1:widget>
+        </ns1:entry>
+        <!-- BACL BUTTON -->
+        <ns1:entry>
+            <ns1:widget ns1:id="BackBU" ns1:height="30px" ns1:width="70px"></ns1:widget>
+        </ns1:entry>
+</ns1:line-layout>
+</ns1:window-layout>

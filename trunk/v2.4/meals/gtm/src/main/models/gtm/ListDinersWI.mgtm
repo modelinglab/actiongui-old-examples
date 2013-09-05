@@ -1,0 +1,79 @@
+Window ListDinersWI {
+    Label DateLA {
+        String text := ['Choose a date:']
+    }
+
+    DateField DateDF {
+        Date date :=  [Date.now()]
+
+        event onChange(date) {
+            #refresh DinersTA#
+        }
+    }
+
+    Label MealLA {
+        String text := ['Choose a meal:']
+    }
+
+    ComboBox MealCB {
+        Set(Meal) rows := [Meal.allInstances()]
+        
+        Label Meal {
+            String text := [$MealCB.row$.literal]
+        }
+
+        event onChange(selected) {
+            reevaluate MealOptionCB.rows
+        }
+    }
+
+    Label MealOptionLA {
+        String text := ['Choose a meal option:']
+    }
+
+    ComboBox MealOptionCB {
+        Set(MealOption) rows
+
+        Label MealOption {
+            String text := [$MealOptionCB.row$.literal]
+        }
+
+        event onView(rows) {
+            if [$MealCB.selected$.oclIsUndefined()] {
+                rows := [MealOption.allInstances()->select(false)]
+            }
+            else {
+                rows := [$MealCB.selected$.options]
+            }
+        }
+
+        event onChange(selected) {
+            #refresh DinersTA#
+        }
+    }
+
+    Label DinersLA {
+        String text := ['Diners for the selected data:']
+    }
+
+    #table DinersTA {
+        entity : User
+        rows : [(if $MealOptionCB.selected$.oclIsUndefined() or $DateDF.date$.oclIsUndefined() then User.allInstances()->select(false) else User.allInstances()->select(u|u.dailyMeals->exists(dms| dms.date = $DateDF.date$.truncate(TimeUnit::DAY) and dms.selections->exists(ms| ms.mealOption = $MealOptionCB.selected$))) endif)]
+        column : name {
+            label : ['Name']
+        }
+        column : surname {
+            label : ['Surname']
+        }
+        size: [10]
+        sortedBy: [name]
+    }#
+
+    Button BackBU {
+        String text := ['Back']
+
+        event onClick {
+            back
+        }
+    }
+}

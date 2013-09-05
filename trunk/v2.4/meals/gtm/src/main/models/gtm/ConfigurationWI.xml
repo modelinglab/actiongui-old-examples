@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<ns1:window-layout ns1:id="ConfigurationWI"
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:ns1='http://actiongui.org/schemes/ag-layout/2.4'
+    xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://www.actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
+    <ns1:line-layout orientation="vertical" left-margin="20px" ns1:height="auto">
+        <!--FIRST TABLE MEALS -->
+        <ns1:entry>
+            <ns1:line-layout orientation="vertical" ns1:height="auto">
+                <ns1:entry>
+                    <ns1:widget ns1:id="Meals_T_page" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:table ns1:id="Meals_T" ns1:height="200px" ns1:width="300px">
+                        <ns1:column>
+                            <ns1:widget ns1:id="literal" ns1:height="30px"></ns1:widget>
+                        </ns1:column>
+                    </ns1:table>
+                </ns1:entry>
+                <!-- table next and prev -->
+                <ns1:entry>
+                    <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
+                        <ns1:entry>
+                            <ns1:widget ns1:id="Meals_T_prev_B" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                        </ns1:entry>
+                        <ns1:entry>
+                            <ns1:line-layout orientation="vertical" ns1:height="30px" ns1:width="30px"></ns1:line-layout>
+                        </ns1:entry>
+                        <ns1:entry>
+                            <ns1:widget ns1:id="Meals_T_next_B" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                        </ns1:entry>
+                    </ns1:line-layout>
+                </ns1:entry>    
+                <!-- New Meal -->
+                <ns1:entry>
+                    <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
+                        <ns1:entry>
+                            <ns1:widget ns1:id="NewMealFO_literal" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                        </ns1:entry>
+                        <ns1:entry>
+                            <ns1:widget ns1:id="NewMealBU" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                        </ns1:entry>  
+                    </ns1:line-layout>
+                </ns1:entry>
+                <!-- END New Meal -->  
+                <!-- Edit Meal -->
+                <ns1:entry>
+                    <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
+                        <ns1:entry>
+                            <ns1:widget ns1:id="EditMealFO_literal" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                        </ns1:entry>
+                        <ns1:entry>
+                            <ns1:widget ns1:id="EditMealBU" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                        </ns1:entry>  
+                    </ns1:line-layout>
+                </ns1:entry>
+                <!-- END Edit Meal --> 
+           </ns1:line-layout>
+         </ns1:entry>
+                <!-- 
+                <ns1:entry>
+                    <ns1:line-layout orientation="vertical" ns1:height="30px"></ns1:line-layout>
+                </ns1:entry>
+                -->
+ 
+        <!-- SECOND TABLE Options-->
+        <ns1:entry>          
+            <ns1:line-layout orientation="vertical" ns1:height="auto">
+                <ns1:entry>
+                    <ns1:widget ns1:id="Meal_Options_T_page" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:table ns1:id="Meal_Options_T" ns1:height="200px" ns1:width="300px">
+                        <ns1:column>
+                            <ns1:widget ns1:id="literal" ns1:height="30px"></ns1:widget>
+                        </ns1:column>
+                    </ns1:table>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
+                        <ns1:entry>
+                            <ns1:widget ns1:id="Meal_Options_T_prev_B" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                        </ns1:entry>
+                        <ns1:entry>
+                            <ns1:line-layout orientation="vertical" ns1:height="30px" ns1:width="30px"></ns1:line-layout>
+                        </ns1:entry>
+                        <ns1:entry>
+                            <ns1:widget ns1:id="Meal_Options_T_next_B" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                        </ns1:entry>
+                    </ns1:line-layout>
+                </ns1:entry>
+                <!-- New Option -->
+                <ns1:entry>
+                    <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
+                        <ns1:entry>
+                            <ns1:widget ns1:id="NewOptionFO_literal" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                        </ns1:entry>
+                        <ns1:entry>
+                            <ns1:widget ns1:id="NewOptionBU" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                        </ns1:entry>  
+                    </ns1:line-layout>
+                </ns1:entry>
+                <!-- END New Option -->  
+                <!-- Edit Option -->
+                <ns1:entry>
+                    <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
+                        <ns1:entry>
+                            <ns1:widget ns1:id="EditOptionFO_literal" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                        
+                        </ns1:entry>
+                        <ns1:entry>
+                            <ns1:widget ns1:id="EditOptionBU" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                        </ns1:entry>  
+                    </ns1:line-layout>
+                </ns1:entry>
+                <!-- END Edit Option --> 
+            </ns1:line-layout>
+        </ns1:entry>  
+        
+        
+        <!-- THIRD TABLE -->
+        <!-- <ns1:entry>
+            <ns1:widget ns1:id="ShowPeriodsBU"></ns1:widget>
+        </ns1:entry>
+        -->
+        <ns1:entry>          
+            <ns1:line-layout orientation="vertical" ns1:height="auto">
+                <ns1:entry>
+                    <ns1:widget ns1:id="ThisOptionPeriodsFO_page" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:table ns1:id="ThisOptionPeriodsFO" ns1:height="100px" ns1:width="300px">
+                        <ns1:column>
+                            <ns1:widget ns1:id="start" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="end" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                        </ns1:column>           
+                    </ns1:table>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
+                        <ns1:entry>
+                            <ns1:widget ns1:id="ThisOptionPeriodsFO_prev_B" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                        </ns1:entry>
+                        <ns1:entry>
+                            <ns1:line-layout orientation="vertical" ns1:height="30px" ns1:width="30px"></ns1:line-layout>
+                        </ns1:entry>
+                        <ns1:entry>
+                            <ns1:widget ns1:id="ThisOptionPeriodsFO_next_B" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                        </ns1:entry>
+                        <!-- -->
+                        <!-- -->
+                    </ns1:line-layout>
+                </ns1:entry>
+                <!-- New Option -->
+                <ns1:entry>
+                    <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
+                        <ns1:entry>
+                            <ns1:widget ns1:id="NewPeriodOptionFO_start_L" ns1:height="30px" ns1:width="60px"></ns1:widget>
+                        </ns1:entry>
+                        <ns1:entry>
+                            <ns1:widget ns1:id="NewPeriodOptionFO_start" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                        </ns1:entry>
+                    </ns1:line-layout>
+                </ns1:entry>
+                <ns1:entry>    
+                    <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
+                        <ns1:entry>
+                            <ns1:widget ns1:id="NewPeriodOptionFO_end_L" ns1:height="30px" ns1:width="60px"></ns1:widget>
+                        </ns1:entry>
+                        <ns1:entry>
+                            <ns1:widget ns1:id="NewPeriodOptionFO_end" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                        </ns1:entry>
+                    </ns1:line-layout>      
+                </ns1:entry>
+                <!-- END CALENDARS -->
+                <ns1:entry>
+                    <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
+                        <ns1:entry>
+                            <ns1:widget ns1:id="CreatePeriodOptionBU" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                        </ns1:entry> 
+                    </ns1:line-layout>
+                </ns1:entry>
+                <!-- END New Period -->  
+            </ns1:line-layout>
+        </ns1:entry>
+        
+        <!-- FOURTH TABLE -->
+
+        <ns1:entry>           
+            <ns1:line-layout orientation="vertical" bottom-margin="100px" ns1:height="auto">
+
+                <ns1:entry>
+                    <ns1:table ns1:id="DeadlinesTB" ns1:height="200px" ns1:width="600px">
+                        <ns1:column>
+                            <ns1:widget ns1:id="Monday" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="Tuesday" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="Wednesday" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="Thursday" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="Friday" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="Saturday" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="Sunday" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="DaysBefore" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                         <ns1:column>
+                            <ns1:widget ns1:id="UpDB" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="DownDB" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="HourLimit" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                         <ns1:column>
+                            <ns1:widget ns1:id="UpHL" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="DownHL" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="MinutesLimit" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                         <ns1:column>
+                            <ns1:widget ns1:id="UpML" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="DownML" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                        </ns1:column>
+                    </ns1:table>
+                </ns1:entry>
+            </ns1:line-layout>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:widget ns1:id="AddDeadlineBU" ns1:height="30px" ns1:width="120px"></ns1:widget>
+        </ns1:entry>
+        
+        <ns1:entry>
+            <ns1:widget ns1:id="DeleteDeadlinesBU" ns1:height="30px" ns1:width="120px"></ns1:widget>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:widget ns1:id="BackBU" ns1:height="30px" ns1:width="60px"></ns1:widget>
+        </ns1:entry>
+        
+
+    </ns1:line-layout>
+
+</ns1:window-layout>

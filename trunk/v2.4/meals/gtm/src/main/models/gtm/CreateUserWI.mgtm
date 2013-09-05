@@ -1,0 +1,36 @@
+Window CreateUserWI {
+    #form CreateFO {
+        entity: User
+        attr: name {label: ['Name: '] 
+                    init: ['']
+                    }
+        attr: surname {label: ['Surname: '] 
+                    init: ['']
+                    }
+        attr: login {label: ['Login: '] 
+                    init: ['']
+                    }
+        attr: password {label: ['Password: '] 
+                    init: ['']
+                    }
+        attr: role {label: ['Role: '] 
+                    }              
+    }#
+
+Button CreateBU {
+    String text := ['Create']
+    event onClick {
+        #create {
+            form: CreateFO
+            assert: [$CreateFO_role.selected$.oclIsUndefined() = false] {message: ['Please, select a role'] }
+        }#
+    }
+  }
+
+Button BackBU {
+    String text := ['Back']
+    event onClick {
+        back
+    }
+}
+}
