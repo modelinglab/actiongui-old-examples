@@ -1,0 +1,32 @@
+Window LoginWI isMain {
+
+#form LoginFO {
+    entity: User
+    attr: login { label: ['Login: '] }
+    attr: password { label: ['Password: '] }
+}#
+
+Button LoginBU {
+    String text := ['Login']
+    User loggedUser
+    event onClick {
+            #login {
+                credentials: LoginFO
+                result: loggedUser
+            }#
+            if [not($loggedUser$.oclIsUndefined())] {
+                if [$loggedUser$.role = Role::RESIDENT] {
+                    open MenuResidentWI(caller:[$loggedUser$], role:[$loggedUser$.role])
+                }
+                else {
+                    if [$loggedUser$.role = Role::DIRECTOR] {
+                        open MenuDirectorWI(caller:[$loggedUser$], role:[$loggedUser$.role])
+                    }
+                    else {
+                        notification (['Message'],['You have no role assigned.'],[-1])
+                    }
+                } 
+            }
+        }
+    }
+}

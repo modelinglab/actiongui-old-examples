@@ -1,0 +1,177 @@
+Window CreateUserWI {
+    Label CreateFO_name_L {
+    String text := ['Name: ']
+}
+TextField CreateFO_name {
+    String text    
+    String error := [null]
+    event onView(text) {
+        text := [null]
+        try {
+            text := ['']
+        }
+        catch (SecurityException) {
+            text := [invalid]
+        }
+        catch (ModelException) {
+            // do nothing
+            // notification(['Model exception'],[''],[3000])
+        }
+        catch (Exception) {
+            // do nothing
+            // notification(['Unknown exception'],[''],[3000])
+        }
+    }
+}
+
+Label CreateFO_surname_L {
+    String text := ['Surname: ']
+}
+TextField CreateFO_surname {
+    String text    
+    String error := [null]
+    event onView(text) {
+        text := [null]
+        try {
+            text := ['']
+        }
+        catch (SecurityException) {
+            text := [invalid]
+        }
+        catch (ModelException) {
+            // do nothing
+            // notification(['Model exception'],[''],[3000])
+        }
+        catch (Exception) {
+            // do nothing
+            // notification(['Unknown exception'],[''],[3000])
+        }
+    }
+}
+
+Label CreateFO_login_L {
+    String text := ['Login: ']
+}
+TextField CreateFO_login {
+    String text    
+    String error := [null]
+    event onView(text) {
+        text := [null]
+        try {
+            text := ['']
+        }
+        catch (SecurityException) {
+            text := [invalid]
+        }
+        catch (ModelException) {
+            // do nothing
+            // notification(['Model exception'],[''],[3000])
+        }
+        catch (Exception) {
+            // do nothing
+            // notification(['Unknown exception'],[''],[3000])
+        }
+    }
+}
+
+Label CreateFO_password_L {
+    String text := ['Password: ']
+}
+TextField CreateFO_password {
+    String text    
+    String error := [null]
+    event onView(text) {
+        text := [null]
+        try {
+            text := ['']
+        }
+        catch (SecurityException) {
+            text := [invalid]
+        }
+        catch (ModelException) {
+            // do nothing
+            // notification(['Model exception'],[''],[3000])
+        }
+        catch (Exception) {
+            // do nothing
+            // notification(['Unknown exception'],[''],[3000])
+        }
+    }
+}
+
+Label CreateFO_role_L {
+    String text := ['Role: ']
+}
+ComboBox CreateFO_role {
+    Set(Role) rows := [Role.allInstances()]
+    Role selected := [null]    
+    String error := [null]
+    
+    Label role {
+        String text := [$CreateFO_role.row$.name()]
+    }
+}
+
+
+
+Button CreateBU {
+    String text := ['Create']
+    event onClick {
+        try {
+    CreateFO_name.error := [null]
+    CreateFO_surname.error := [null]
+    CreateFO_login.error := [null]
+    CreateFO_password.error := [null]
+    CreateFO_role.error := [null]
+    error := [null]
+    
+    if [not ($CreateFO_name.error$.oclIsUndefined()) or not ($CreateFO_surname.error$.oclIsUndefined()) or not ($CreateFO_login.error$.oclIsUndefined()) or not ($CreateFO_password.error$.oclIsUndefined()) or not ($CreateFO_role.error$.oclIsUndefined())] {
+        notification (['The form contains errors. Please, check the form.'],[''],[2000])
+    }
+    else {
+        if [not($CreateFO_role.selected$.oclIsUndefined() = false)] {
+            error := ['Please, select a role']
+        }
+        if [$error$.oclIsUndefined()] {
+            newInstance := new User
+            [$newInstance$.name] := [$CreateFO_name.text$]
+            [$newInstance$.surname] := [$CreateFO_surname.text$]
+            [$newInstance$.login] := [$CreateFO_login.text$]
+            [$newInstance$.password] := [$CreateFO_password.text$]
+            [$newInstance$.role] := [$CreateFO_role.selected$]
+            
+            reevaluate CreateFO_name.text
+            reevaluate CreateFO_name.error
+            reevaluate CreateFO_surname.text
+            reevaluate CreateFO_surname.error
+            reevaluate CreateFO_login.text
+            reevaluate CreateFO_login.error
+            reevaluate CreateFO_password.text
+            reevaluate CreateFO_password.error
+            reevaluate CreateFO_role.selected
+            reevaluate CreateFO_role.error
+            
+            notification (['Success'],['An instance of User has been created successfully.'],[2000])
+        }
+    }
+}
+catch(SecurityException) {
+    notification(['Security error'],['You do not have permission to create an instance of User'],[2000])
+}
+catch(ModelException) {
+    notification(['Model error'],['There was an error creating the instance'],[2000])
+}
+catch(Exception) {
+    notification(['Unknown error'],['There was an unexpected error'],[2000])
+}
+
+    }
+  }
+
+Button BackBU {
+    String text := ['Back']
+    event onClick {
+        back
+    }
+}
+}

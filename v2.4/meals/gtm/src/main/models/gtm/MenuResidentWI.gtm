@@ -1,0 +1,25 @@
+Window MenuResidentWI  {
+
+Button MenuResident_SelectMealsWI_B {
+    String text := ['Select meals']
+    String error := [null]
+    event onClick {
+        error := [null]
+        if [$error$.oclIsUndefined()] {
+            open SelectMealsWI ()
+        }
+    }
+}
+Button MenuResident_ChangePasswordWI_B {
+    String text := ['Change password']
+    String error := [null]
+    event onClick {
+        error := [null]
+        if [$error$.oclIsUndefined()] {
+            open ChangePasswordWI ()
+        }
+    }
+}
+
+
+}

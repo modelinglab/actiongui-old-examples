@@ -1,0 +1,8 @@
+Window MenuResidentWI  {
+
+#menu MenuResident {
+    target: SelectMealsWI { label : ['Select meals'] }
+    target: ChangePasswordWI { label : ['Change password'] }
+}#
+
+}

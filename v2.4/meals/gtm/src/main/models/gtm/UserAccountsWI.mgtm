@@ -1,0 +1,41 @@
+Window UserAccountsWI {
+    #table UsersTB {
+        entity: User
+        rows : [User.allInstances()]
+        column : surname {label : ['Surname'] }
+        column : name {label : ['Name'] }
+        column : login {label : ['Login']}
+        column : role {label : ['Role']}
+        size : [10]
+    }#
+
+Button CreateBU {
+    String text := ['Create']
+    event onClick {
+        open CreateUserWI ()
+        }
+    }
+
+Button EditBU {
+    String text := ['Edit']
+    event onClick {
+        #forward {
+            target: EditUserWI
+            arg: thisUser {
+                    value: [$UsersTB.selected$->any(true)]
+                    }
+            assert: [not($UsersTB.selected$->oclIsUndefined())] 
+                    {message: ['Please, select first a user']
+                       assert: [not($UsersTB.selected$->size()>1)]
+                        {message: ['Please, select only one user']} } 
+                }#
+        }
+    }
+
+Button BackBU {
+    String text := ['Back']
+    event onClick {
+        back
+    }
+}
+}

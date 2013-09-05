@@ -1,0 +1,4 @@
+- No user has two overlapping periods.
+- Every period has a non-null starting and ending date.
+- Every period has an ending date that is later or equal than its starting date.
+- Every meal-selection belongs to a period.

@@ -1,0 +1,224 @@
+Window ListDinersWI {
+    Label DateLA {
+        String text := ['Choose a date:']
+    }
+
+    DateField DateDF {
+        LocalDateTime value :=  [LocalDateTime.now()]
+
+        event onChange(value) {
+            reevaluate DinersTA_page.current
+reevaluate DinersTA_page.size
+reevaluate DinersTA_page.total
+reevaluate DinersTA_page.text
+reevaluate DinersTA.all
+reevaluate DinersTA.total
+reevaluate DinersTA.size
+reevaluate DinersTA.lower
+reevaluate DinersTA.upper
+reevaluate DinersTA.rows
+reevaluate DinersTA.selected
+
+
+        }
+    }
+
+    Label MealLA {
+        String text := ['Choose a meal:']
+    }
+
+    ComboBox MealCB {
+        Set(Meal) rows := [Meal.allInstances()]
+        
+        Label Meal {
+            String text := [$MealCB.row$.literal]
+        }
+
+        event onChange(selected) {
+            reevaluate MealOptionCB.rows
+        }
+    }
+
+    Label MealOptionLA {
+        String text := ['Choose a meal option:']
+    }
+
+    ComboBox MealOptionCB {
+        Set(MealOption) rows
+
+        Label MealOption {
+            String text := [$MealOptionCB.row$.literal]
+        }
+
+        event onView(rows) {
+            if [$MealCB.selected$.oclIsUndefined()] {
+                rows := [MealOption.allInstances()->select(false)]
+            }
+            else {
+                rows := [$MealCB.selected$.options]
+            }
+        }
+
+        event onChange(selected) {
+            reevaluate DinersTA_page.current
+reevaluate DinersTA_page.size
+reevaluate DinersTA_page.total
+reevaluate DinersTA_page.text
+reevaluate DinersTA.all
+reevaluate DinersTA.total
+reevaluate DinersTA.size
+reevaluate DinersTA.lower
+reevaluate DinersTA.upper
+reevaluate DinersTA.rows
+reevaluate DinersTA.selected
+
+
+        }
+    }
+
+    Label DinersLA {
+        String text := ['Diners for the selected data:']
+    }
+
+    Label DinersTA_page {
+    Integer current := [1]
+    Integer size := [10]
+    Integer total
+    String text := [$current$.toString().concat(' of ').concat($total$.toString())]
+    
+    event onView(total) {
+        total := [(if $MealOptionCB.selected$.oclIsUndefined() or $DateDF.value$.oclIsUndefined() then User.allInstances()->select(false) else User.allInstances()->select(u|u.dailyMeals->exists(dms| dms.date = $DateDF.value$.toLocalDate().atStartOfDay() and dms.selections->exists(ms| ms.mealOption = $MealOptionCB.selected$))) endif)->size()]
+        if [$total$.oclIsInvalid() or $total$.oclIsUndefined()] {
+            total := [1]
+        }
+        if [$total$ = 0] {
+            total := [1]
+        }
+        else {
+            if [$total$.mod($size$) > 0] {
+                total := [$total$.div($size$) + 1]
+            }
+            else {
+                total := [$total$.div($size$)]
+            }
+        }
+    }
+}
+
+Table DinersTA {
+    OrderedSet(User) all
+    Integer total := [$all$->size()]
+    Integer size := [10]
+    Integer lower := [1]
+    Integer upper := [if $lower$+$size$-1 > $total$ then $total$ else $lower$+$size$-1 endif]
+    OrderedSet(User) rows := [$all$->subOrderedSet($lower$,$upper$)]
+    
+    OrderedSet(User) selected := [null]
+    columns {
+        ['Name'] : Label name {
+            String text {
+                if [$text$.oclIsInvalid()] {
+                    error := ['no permission']
+                }
+                else {
+                    error := [null]
+                }
+            }
+            event onView (text) {
+                text := [null]
+                try {
+                    if [not $DinersTA.row$.name.oclIsUndefined()] {
+                        text := [$DinersTA.row$.name]
+                    }
+                }
+                catch(SecurityException) {
+                    text := [invalid]
+                }
+                catch(ModelException) {
+                    // do nothing
+                    // notification(['Model exception'],[''],[3000])
+                }
+                catch(Exception) {
+                    // do nothing
+                    // notification(['Unknown exception'],[''],[3000])
+                }
+            }
+        }
+        ['Surname'] : Label surname {
+            String text {
+                if [$text$.oclIsInvalid()] {
+                    error := ['no permission']
+                }
+                else {
+                    error := [null]
+                }
+            }
+            event onView (text) {
+                text := [null]
+                try {
+                    if [not $DinersTA.row$.surname.oclIsUndefined()] {
+                        text := [$DinersTA.row$.surname]
+                    }
+                }
+                catch(SecurityException) {
+                    text := [invalid]
+                }
+                catch(ModelException) {
+                    // do nothing
+                    // notification(['Model exception'],[''],[3000])
+                }
+                catch(Exception) {
+                    // do nothing
+                    // notification(['Unknown exception'],[''],[3000])
+                }
+            }
+        }
+    }
+    
+    event onView(all) {
+        all := [(if $MealOptionCB.selected$.oclIsUndefined() or $DateDF.value$.oclIsUndefined() then User.allInstances()->select(false) else User.allInstances()->select(u|u.dailyMeals->exists(dms| dms.date = $DateDF.value$.toLocalDate().atStartOfDay() and dms.selections->exists(ms| ms.mealOption = $MealOptionCB.selected$))) endif)->asOrderedSet()->sortedBy(name)]
+        if [$all$->oclIsInvalid() or $all$->oclIsUndefined()] {
+            all := [User.allInstances()->select(false)->asOrderedSet()]
+        }
+    }
+}
+
+Button DinersTA_prev_B {
+    String text := ['Previous']
+    
+    event onClick {
+        if [$DinersTA.lower$ > 1] {
+            DinersTA.lower := [if $DinersTA.lower$-$DinersTA.size$ < 1 then 1 else $DinersTA.lower$-$DinersTA.size$ endif]
+            DinersTA.upper := [if $DinersTA.lower$+$DinersTA.size$-1 > $DinersTA.total$ then $DinersTA.total$ else $DinersTA.lower$+$DinersTA.size$-1 endif]
+            DinersTA.rows := [$DinersTA.all$->subOrderedSet($DinersTA.lower$,$DinersTA.upper$)]
+            
+            DinersTA_page.current := [$DinersTA_page.current$ - 1]
+            reevaluate DinersTA_page.text
+        }
+    }
+}
+
+Button DinersTA_next_B {
+    String text := ['Next']
+    
+    event onClick {
+        if [$DinersTA.upper$ < $DinersTA.total$] {
+            DinersTA.lower := [$DinersTA.upper$+1]
+            DinersTA.upper := [if $DinersTA.lower$+$DinersTA.size$-1 > $DinersTA.total$ then $DinersTA.total$ else $DinersTA.lower$+$DinersTA.size$-1 endif]
+            DinersTA.rows := [$DinersTA.all$->subOrderedSet($DinersTA.lower$,$DinersTA.upper$)]
+            
+            DinersTA_page.current := [$DinersTA_page.current$ + 1]
+            reevaluate DinersTA_page.text
+        }
+    }
+}
+
+
+    Button BackBU {
+        String text := ['Back']
+
+        event onClick {
+            back
+        }
+    }
+}

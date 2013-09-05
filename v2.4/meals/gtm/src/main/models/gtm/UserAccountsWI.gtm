@@ -1,0 +1,239 @@
+Window UserAccountsWI {
+    Label UsersTB_page {
+    Integer current := [1]
+    Integer size := [10]
+    Integer total
+    String text := [$current$.toString().concat(' of ').concat($total$.toString())]
+    
+    event onView(total) {
+        total := [User.allInstances()->size()]
+        if [$total$.oclIsInvalid() or $total$.oclIsUndefined()] {
+            total := [1]
+        }
+        if [$total$ = 0] {
+            total := [1]
+        }
+        else {
+            if [$total$.mod($size$) > 0] {
+                total := [$total$.div($size$) + 1]
+            }
+            else {
+                total := [$total$.div($size$)]
+            }
+        }
+    }
+}
+
+Table UsersTB {
+    OrderedSet(User) all
+    Integer total := [$all$->size()]
+    Integer size := [10]
+    Integer lower := [1]
+    Integer upper := [if $lower$+$size$-1 > $total$ then $total$ else $lower$+$size$-1 endif]
+    OrderedSet(User) rows := [$all$->subOrderedSet($lower$,$upper$)]
+    
+    OrderedSet(User) selected := [null]
+    columns {
+        ['Surname'] : Label surname {
+            String text {
+                if [$text$.oclIsInvalid()] {
+                    error := ['no permission']
+                }
+                else {
+                    error := [null]
+                }
+            }
+            event onView (text) {
+                text := [null]
+                try {
+                    if [not $UsersTB.row$.surname.oclIsUndefined()] {
+                        text := [$UsersTB.row$.surname]
+                    }
+                }
+                catch(SecurityException) {
+                    text := [invalid]
+                }
+                catch(ModelException) {
+                    // do nothing
+                    // notification(['Model exception'],[''],[3000])
+                }
+                catch(Exception) {
+                    // do nothing
+                    // notification(['Unknown exception'],[''],[3000])
+                }
+            }
+        }
+        ['Name'] : Label name {
+            String text {
+                if [$text$.oclIsInvalid()] {
+                    error := ['no permission']
+                }
+                else {
+                    error := [null]
+                }
+            }
+            event onView (text) {
+                text := [null]
+                try {
+                    if [not $UsersTB.row$.name.oclIsUndefined()] {
+                        text := [$UsersTB.row$.name]
+                    }
+                }
+                catch(SecurityException) {
+                    text := [invalid]
+                }
+                catch(ModelException) {
+                    // do nothing
+                    // notification(['Model exception'],[''],[3000])
+                }
+                catch(Exception) {
+                    // do nothing
+                    // notification(['Unknown exception'],[''],[3000])
+                }
+            }
+        }
+        ['Login'] : Label login {
+            String text {
+                if [$text$.oclIsInvalid()] {
+                    error := ['no permission']
+                }
+                else {
+                    error := [null]
+                }
+            }
+            event onView (text) {
+                text := [null]
+                try {
+                    if [not $UsersTB.row$.login.oclIsUndefined()] {
+                        text := [$UsersTB.row$.login]
+                    }
+                }
+                catch(SecurityException) {
+                    text := [invalid]
+                }
+                catch(ModelException) {
+                    // do nothing
+                    // notification(['Model exception'],[''],[3000])
+                }
+                catch(Exception) {
+                    // do nothing
+                    // notification(['Unknown exception'],[''],[3000])
+                }
+            }
+        }
+        ['Role'] : Label role {
+            String text {
+                if [$text$.oclIsInvalid()] {
+                    error := ['no permission']
+                }
+                else {
+                    error := [null]
+                }
+            }
+            event onView (text) {
+                text := [null]
+                try {
+                    if [not $UsersTB.row$.role.oclIsUndefined()] {
+                        text := [$UsersTB.row$.role.toString()]
+                    }
+                }
+                catch(SecurityException) {
+                    text := [invalid]
+                }
+                catch(ModelException) {
+                    // do nothing
+                    // notification(['Model exception'],[''],[3000])
+                }
+                catch(Exception) {
+                    // do nothing
+                    // notification(['Unknown exception'],[''],[3000])
+                }
+            }
+        }
+    }
+    
+    event onView(all) {
+        all := [User.allInstances()->asOrderedSet()]
+        if [$all$->oclIsInvalid() or $all$->oclIsUndefined()] {
+            all := [User.allInstances()->select(false)->asOrderedSet()]
+        }
+    }
+}
+
+Button UsersTB_prev_B {
+    String text := ['Previous']
+    
+    event onClick {
+        if [$UsersTB.lower$ > 1] {
+            UsersTB.lower := [if $UsersTB.lower$-$UsersTB.size$ < 1 then 1 else $UsersTB.lower$-$UsersTB.size$ endif]
+            UsersTB.upper := [if $UsersTB.lower$+$UsersTB.size$-1 > $UsersTB.total$ then $UsersTB.total$ else $UsersTB.lower$+$UsersTB.size$-1 endif]
+            UsersTB.rows := [$UsersTB.all$->subOrderedSet($UsersTB.lower$,$UsersTB.upper$)]
+            
+            UsersTB_page.current := [$UsersTB_page.current$ - 1]
+            reevaluate UsersTB_page.text
+        }
+    }
+}
+
+Button UsersTB_next_B {
+    String text := ['Next']
+    
+    event onClick {
+        if [$UsersTB.upper$ < $UsersTB.total$] {
+            UsersTB.lower := [$UsersTB.upper$+1]
+            UsersTB.upper := [if $UsersTB.lower$+$UsersTB.size$-1 > $UsersTB.total$ then $UsersTB.total$ else $UsersTB.lower$+$UsersTB.size$-1 endif]
+            UsersTB.rows := [$UsersTB.all$->subOrderedSet($UsersTB.lower$,$UsersTB.upper$)]
+            
+            UsersTB_page.current := [$UsersTB_page.current$ + 1]
+            reevaluate UsersTB_page.text
+        }
+    }
+}
+
+
+Button CreateBU {
+    String text := ['Create']
+    event onClick {
+        open CreateUserWI ()
+        }
+    }
+
+Button EditBU {
+    String text := ['Edit']
+    event onClick {
+        try {
+    error := [null]
+    if [not(not($UsersTB.selected$->oclIsUndefined()))] {
+        error := ['']
+        notification(['Assertion failure'],['Please, select first a user'],[2000])
+    }
+    else {
+        if [not(not($UsersTB.selected$->size()>1))] {
+            error := ['']
+            notification(['Assertion failure'],['Please, select only one user'],[2000])
+        }
+    }
+    if [$error$.oclIsUndefined()] {
+        open EditUserWI(thisUser: [$UsersTB.selected$->any(true)])
+    }
+}
+catch(SecurityException) {
+    notification(['Security error'],['There was a security error'],[2000])
+}
+catch(ModelException) {
+    notification(['Model error'],['There was an error'],[2000])
+}
+catch(Exception) {
+    notification(['Unknown error'],['There was an unexpected error'],[2000])
+}
+
+        }
+    }
+
+Button BackBU {
+    String text := ['Back']
+    event onClick {
+        back
+    }
+}
+}
