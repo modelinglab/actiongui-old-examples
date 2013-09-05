@@ -112,21 +112,21 @@ Window EditCustomer_atom_W {
     }
     DateField EditCustomer_F_birthday {
         String error := [null] 
-        Date date {
-            if [$date$.oclIsInvalid()] {
+        LocalDateTime value {
+            if [$value$.oclIsInvalid()] {
                 error := ['no permission']
             }
             else {
                 error := [null]
             }
         }
-        event onView(date) {
-            date := [null]
+        event onView(value) {
+            value := [null]
             try {
-                date := [$EditCustomer_atom_W.selectedCustomer$.birthday]
+                value := [$EditCustomer_atom_W.selectedCustomer$.birthday.atStartOfDay()]
             }
             catch (SecurityException) {
-                date := [invalid]
+                value := [invalid]
             }
         }
     }   
@@ -136,9 +136,9 @@ Window EditCustomer_atom_W {
         event onClick {
             reevaluate EditCustomer_F_birthday.error
 
-            if [not $EditCustomer_F_birthday.date$.oclIsInvalid()] {
-                if [not($EditCustomer_F_birthday.date$.oclIsUndefined())] {
-                    if [$EditCustomer_F_birthday.date$ >= Date.now()] {
+            if [not $EditCustomer_F_birthday.value$.oclIsInvalid()] {
+                if [not($EditCustomer_F_birthday.value$.oclIsUndefined())] {
+                    if [$EditCustomer_F_birthday.value$ >= LocalDateTime.now()] {
                         EditCustomer_F_birthday.error := ['The selected date must be previous to the current date']
                     }
                 }
@@ -146,15 +146,15 @@ Window EditCustomer_atom_W {
              
             if [$EditCustomer_F_birthday.error$ = null] {
                 try {
-                    if [not $EditCustomer_F_birthday.date$.oclIsInvalid()] {
-                        [$EditCustomer_atom_W.selectedCustomer$.birthday] := [$EditCustomer_F_birthday.date$] 
+                    if [not $EditCustomer_F_birthday.value$.oclIsInvalid()] {
+                        [$EditCustomer_atom_W.selectedCustomer$.birthday] := [$EditCustomer_F_birthday.value$.toLocalDate()] 
                         notification (['Success'],['The birthday of this customer has been successfully updated.'],[-1])
                     }
                 }
                 catch (SecurityException) {
                     notification (['Security error'],['You do not have permission to update the birthday of this Customer.'],[-1])
                 }
-                reevaluate EditCustomer_F_birthday.date
+                reevaluate EditCustomer_F_birthday.value
             }
             else {
                 notification(['Error'],['The field "birthday" contains errors. Please, check the field.'],[-1]) 
@@ -422,7 +422,7 @@ Window EditCustomer_atom_W {
                 }
                 reevaluate EditCustomer_F_name.text 
                 reevaluate EditCustomer_F_surname.text 
-                reevaluate EditCustomer_F_birthday.date 
+                reevaluate EditCustomer_F_birthday.value 
                 reevaluate EditCustomer_F_email.text   
                 reevaluate EditCustomer_F_phone.text 
                 reevaluate EditCustomer_F_loyalty.text 
