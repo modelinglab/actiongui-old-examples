@@ -8,7 +8,7 @@ entity Employee {
 entity Customer {
     String name
     String surname
-    Date birthday
+    LocalDate birthday
     String email
     String phone
     Integer loyalty
