@@ -1,19 +1,19 @@
 Window CreateUserWI {
     #form CreateFO {
         entity: User
-        attr: name {label: ['Name: '] 
+        prop: name {label: ['Name: '] 
                     init: ['']
                     }
-        attr: surname {label: ['Surname: '] 
+        prop: surname {label: ['Surname: '] 
                     init: ['']
                     }
-        attr: login {label: ['Login: '] 
+        prop: login {label: ['Login: '] 
                     init: ['']
                     }
-        attr: password {label: ['Password: '] 
+        prop: password {label: ['Password: '] 
                     init: ['']
                     }
-        attr: role {label: ['Role: '] 
+        prop: role {label: ['Role: '] 
                     }              
     }#
 

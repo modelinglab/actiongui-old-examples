@@ -16,7 +16,7 @@ Window ConfigurationWI {
 
     #form NewMealFO {
         entity: Meal
-        attr: literal {label : ['Meal: ']}
+        prop: literal {label : ['Meal: ']}
     }#
 
     Button NewMealBU {
@@ -43,7 +43,7 @@ Window ConfigurationWI {
     #form EditMealFO {
         entity: Meal
         instance: [$Meals_T.selected$->any(true)]
-        attr: literal {label : ['Meal: ']}
+        prop: literal {label : ['Meal: ']}
     }#
 
     Button EditMealBU {
@@ -83,7 +83,7 @@ Window ConfigurationWI {
 
     #form NewOptionFO {
         entity: MealOption
-        attr: literal {label : ['Meal: ']}
+        prop: literal {label : ['Meal: ']}
     }#
 
     Button NewOptionBU {
@@ -118,7 +118,7 @@ Window ConfigurationWI {
     #form EditOptionFO {
         entity: Meal
         instance: [$Meal_Options_T.selected$->any(true)]
-        attr: literal {label : ['Option: ']}
+        prop: literal {label : ['Option: ']}
     }#
 
     Button EditOptionBU {
@@ -163,8 +163,8 @@ Window ConfigurationWI {
 
 #form NewPeriodOptionFO {
     entity: Residency
-    attr: start {label: ['Start: ']}
-    attr: end {label: ['End: ']}
+    prop: start {label: ['Start: ']}
+    prop: end {label: ['End: ']}
 }#
 
 Button CreatePeriodOptionBU {
