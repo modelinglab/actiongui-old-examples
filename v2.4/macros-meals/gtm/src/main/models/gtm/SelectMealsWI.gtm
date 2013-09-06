@@ -501,8 +501,7 @@ Window SelectMealsWI  {
          }
 
     }
-    // QUESTION: how many times is redrawn the table when the window is created?
-    // QUESTION: can we have a "refresh" actions?
+
      event onChange (selDate) {     
         reevaluate selDateDayOfWeek
         reevaluate selDateWeekFirstDay
