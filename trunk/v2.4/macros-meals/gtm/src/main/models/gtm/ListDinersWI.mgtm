@@ -4,9 +4,9 @@ Window ListDinersWI {
     }
 
     DateField DateDF {
-        Date date :=  [Date.now()]
+        LocalDateTime value :=  [LocalDateTime.now()]
 
-        event onChange(date) {
+        event onChange(value) {
             #refresh DinersTA#
         }
     }
@@ -58,7 +58,7 @@ Window ListDinersWI {
 
     #table DinersTA {
         entity : User
-        rows : [(if $MealOptionCB.selected$.oclIsUndefined() or $DateDF.date$.oclIsUndefined() then User.allInstances()->select(false) else User.allInstances()->select(u|u.dailyMeals->exists(dms| dms.date = $DateDF.date$.truncate(TimeUnit::DAY) and dms.selections->exists(ms| ms.mealOption = $MealOptionCB.selected$))) endif)]
+        rows : [(if $MealOptionCB.selected$.oclIsUndefined() or $DateDF.value$.oclIsUndefined() then User.allInstances()->select(false) else User.allInstances()->select(u|u.dailyMeals->exists(dms| dms.date = $DateDF.value$.toLocalDate().atStartOfDay() and dms.selections->exists(ms| ms.mealOption = $MealOptionCB.selected$))) endif)]
         column : name {
             label : ['Name']
         }

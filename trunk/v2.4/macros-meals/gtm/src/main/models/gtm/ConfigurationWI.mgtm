@@ -182,15 +182,15 @@ Button CreatePeriodOptionBU {
                           else {
         #create {form: NewPeriodOptionFO 
             result: newPeriod
-            assert: [not($NewPeriodOptionFO_start.date$.oclIsUndefined())]
+            assert: [not($NewPeriodOptionFO_start.value$.oclIsUndefined())]
                 {message: ['Please, select first a starting date'] 
-                 assert: [not($NewPeriodOptionFO_end.date$.oclIsUndefined())]
+                 assert: [not($NewPeriodOptionFO_end.value$.oclIsUndefined())]
                     {message: ['Please, select first an ending date']
-                        assert: [$NewPeriodOptionFO_start.date$ <= $NewPeriodOptionFO_end.date$]
+                        assert: [$NewPeriodOptionFO_start.value$ <= $NewPeriodOptionFO_end.value$]
                         {message: ['Please, select an ending date that is later or equal than the starting date']
                         assert: [$Meal_Options_T.selected$->any(true).periodsOption->select(p|
-                                    ($NewPeriodOptionFO_start.date$ <= p.start and $NewPeriodOptionFO_end.date$ >= p.start)
-                                    or ($NewPeriodOptionFO_start.date$ > p.start and $NewPeriodOptionFO_start.date$ <= p.end))
+                                    ($NewPeriodOptionFO_start.value$ <= p.start and $NewPeriodOptionFO_end.value$ >= p.start)
+                                    or ($NewPeriodOptionFO_start.value$ > p.start and $NewPeriodOptionFO_start.value$ <= p.end))
                                 ->isEmpty()]
                             {message: ['The selected period overlaps with one or more existing periods. Please, change either the starting or the ending date']
                                 }} } }

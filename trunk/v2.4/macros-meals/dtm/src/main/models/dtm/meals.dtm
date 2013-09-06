@@ -26,15 +26,15 @@ entity Guest {
 }
 
 entity Residency {
-    Date start
-    Date end
+    LocalDateTime start
+    LocalDateTime end
     User ownedBy oppositeTo periods
     MealOption ownedByOption oppositeTo periodsOption
     Set(MealOptionDeadline) deadlines oppositeTo ownedBy
 }
 
 entity DailyMealSelection {
-    Date date
+    LocalDateTime date
     // associations
     // 0..1
     User selectedBy oppositeTo dailyMeals
@@ -49,11 +49,11 @@ entity MealSelection {
     MealOption mealOption
     // 0..1
     DailyMealSelection ownedBy oppositeTo selections
-    }
+}
 
 entity PersonalFoodRegime {
-    Date start
-    Date end
+    LocalDateTime start
+    LocalDateTime end
     // associations
     // 0..1
     User ownedBy oppositeTo regimes

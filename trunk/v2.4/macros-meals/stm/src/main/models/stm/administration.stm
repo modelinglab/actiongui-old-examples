@@ -83,15 +83,28 @@ role RESIDENT {
                                                                                       or 
                                                                                       (Date.now().hour() = q.chour and Date.now().minute() <= q.cminute))))))]
         */
-        update(mealOption) constrainedBy [self.ownedBy.selectedBy = caller
-                                            and self.ownedBy.date >= Date.now().truncate(TimeUnit::DAY)   
-                                            and value.periodsOption->exists(p|p.start <= self.ownedBy.date and p.end >= self.ownedBy.date
-                                                and p.deadlines->exists(q|q.days->includes(self.ownedBy.date.dayOfWeek())
-                                                    and (if self.ownedBy.date = Date.now().truncate(TimeUnit::DAY) then
-                                                      Date.now().hour() < q.chour or (Date.now().hour() = q.chour and Date.now().minute() <= q.cminute)  
-                                                    else
-                                                        self.ownedBy.date <= Date.now().add(q.cday, TimeUnit::DAY).truncate(TimeUnit::DAY)
-                                                    endif)))]
+        update(mealOption) constrainedBy [
+                    let 
+                        mealDate    : LocalDateTime = self.ownedBy.date,
+                        now         : LocalDateTime = LocalDateTime.now()
+                    in
+                        self.ownedBy.selectedBy = caller
+                        and mealDate >= now
+                        and value.periodsOption->exists(p|
+                                p.start <= mealDate 
+                            and p.end >= mealDate
+                            and p.deadlines->exists(q|
+                                    q.days->includes(mealDate.getDayOfWeek())
+                                and 
+                                    if mealDate.toLocalDate() = now.toLocalDate() then
+                                        now.getHour() < q.chour 
+                                        or (now.getHour() = q.chour and now.getMinute() <= q.cminute)
+                                    else
+                                        mealDate <= now.plusDays(q.cday).toLocalDate().atStartOfDay()
+                                    endif
+                                )
+                            )
+                    ]
     }
     Residency {
         fullAccess
