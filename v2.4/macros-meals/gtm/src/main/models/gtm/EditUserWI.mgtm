@@ -9,11 +9,10 @@ Window EditUserWI {
         prop: password {label : ['Password: ']}
         prop: role {label: ['Role: ']}
         prop: periods {
-            rows: [$EditUserWI.thisUser$.periods->sortedBy(start)]
+            rows: [$EditUserWI.thisUser$.periods->sortedBy(start)->reverse()]
             selected: [null]
             column: start 
             column: end
-            sortedBy: [-1*(start.toInteger())]
         }
     }#
 
@@ -31,15 +30,15 @@ Button CreatePeriodBU {
         #create {
             form: NewPeriodFO 
             result: newPeriod
-            assert: [not($NewPeriodFO_start.date$.oclIsUndefined())]
+            assert: [not($NewPeriodFO_start.value$.oclIsUndefined())]
                 {message: ['Please, select first a starting date'] 
-                 assert: [not($NewPeriodFO_end.date$.oclIsUndefined())]
+                 assert: [not($NewPeriodFO_end.value$.oclIsUndefined())]
                     {message: ['Please, select first an ending date']
-                        assert: [$NewPeriodFO_start.date$ <= $NewPeriodFO_end.date$]
+                        assert: [$NewPeriodFO_start.value$ <= $NewPeriodFO_end.value$]
                         {message: ['Please, select an ending date that is later or equal than the starting date']
-                        assert: [$EditUserWI.caller$.periods->select(p|
-                                    ($NewPeriodFO_start.date$ <= p.start and $NewPeriodFO_end.date$ >= p.start)
-                                    or ($NewPeriodFO_start.date$ > p.start and $NewPeriodFO_start.date$ <= p.end))
+                        assert: [$EditUserWI.thisUser$.periods->select(p|
+                                    ($NewPeriodFO_start.value$ <= p.start and $NewPeriodFO_end.value$ >= p.start)
+                                    or ($NewPeriodFO_start.value$ > p.start and $NewPeriodFO_start.value$ <= p.end))
                                 ->isEmpty()]
                             {message: ['The selected period overlaps with one or more existing periods. Please, change either the starting or the ending date']
                                 }} } }
