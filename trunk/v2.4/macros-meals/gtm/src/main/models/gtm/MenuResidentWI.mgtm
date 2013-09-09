@@ -1,4 +1,5 @@
 Window MenuResidentWI  {
+    String text := ['Resident menu']
 
 #menu MenuResident {
     target: SelectMealsWI { label : ['Select meals'] }

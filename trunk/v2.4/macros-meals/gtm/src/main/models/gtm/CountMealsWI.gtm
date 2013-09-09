@@ -1,4 +1,5 @@
 Window CountMealsWI {
+    String text := ['Meal count']
     Label StartLA {
         String text := ['Start:']
     }

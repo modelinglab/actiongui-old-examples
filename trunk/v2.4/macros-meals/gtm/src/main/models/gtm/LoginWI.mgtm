@@ -1,4 +1,5 @@
 Window LoginWI isMain {
+    String text := ['User authentication']
 
 #form LoginFO {
     entity: User

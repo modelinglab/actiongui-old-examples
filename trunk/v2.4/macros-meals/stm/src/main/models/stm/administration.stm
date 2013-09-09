@@ -49,7 +49,7 @@ role RESIDENT {
     }
     User {
         fullAccess
-        // read constrainedBy [self=caller]
+        //read constrainedBy [self=caller]
         // add(dailyMeals) constrainedBy [self=caller]
     }
     DailyMealSelection {
@@ -65,24 +65,34 @@ role RESIDENT {
     MealSelection {
         //fullAccess
         create
-        delete
+        delete constrainedBy [
+                    let 
+                        mealDate    : LocalDateTime = self.ownedBy.date,
+                        now         : LocalDateTime = LocalDateTime.now()
+                    in
+                        self.ownedBy.selectedBy = caller
+                        and mealDate >= now
+                        and self.mealOption.periodsOption->exists(p|
+                                p.start <= mealDate 
+                            and p.end >= mealDate
+                            and p.deadlines->exists(q|
+                                    q.days->includes(mealDate.getDayOfWeek())
+                                and 
+                                    if now.plusDays(q.cday).toLocalDate() = mealDate.toLocalDate() then
+                                        now.getHour() < q.chour 
+                                        or (now.getHour() = q.chour and now.getMinute() <= q.cminute)
+                                    else
+                                        now.plusDays(q.cday).toLocalDate().atStartOfDay() < mealDate
+                                    endif
+                                )
+                            )
+                       
+                    ]
         read
         update(meal)
         update(ownedBy) constrainedBy [value.selectedBy = caller and 
                                        caller.periods->exists(p|p.start <= value.date and p.end >= value.date)]
-        /*
-        update(mealOption) constrainedBy [self.ownedBy.selectedBy = caller
-                                          and value.periodsOption
-                                                ->exists(p|p.start <= self.ownedBy.date and p.end >= self.ownedBy.date
-                                                       and p.deadlines->exists(q|q.days->includes(self.ownedBy.date.dayOfWeek())
-                                                                                and 
-                                                                                (Date.now().add(q.cday, TimeUnit::DAY).truncate(TimeUnit::DAY) < self.ownedBy.date
-                                                                                 or ((Date.now().add(q.cday, TimeUnit::DAY).truncate(TimeUnit::DAY) = self.ownedBy.date)
-                                                                                     and 
-                                                                                     (Date.now().hour() < q.chour 
-                                                                                      or 
-                                                                                      (Date.now().hour() = q.chour and Date.now().minute() <= q.cminute))))))]
-        */
+        
         update(mealOption) constrainedBy [
                     let 
                         mealDate    : LocalDateTime = self.ownedBy.date,
@@ -90,17 +100,32 @@ role RESIDENT {
                     in
                         self.ownedBy.selectedBy = caller
                         and mealDate >= now
+                        and (if not(self.mealOption.oclIsUndefined())
+                             then self.mealOption.periodsOption->exists(p|
+                                p.start <= mealDate 
+                                and p.end >= mealDate
+                                and p.deadlines->exists(q|
+                                    q.days->includes(mealDate.getDayOfWeek())
+                                    and 
+                                    if now.plusDays(q.cday).toLocalDate() = mealDate.toLocalDate() 
+                                    then now.getHour() < q.chour 
+                                         or (now.getHour() = q.chour and now.getMinute() <= q.cminute)
+                                    else
+                                        now.plusDays(q.cday).toLocalDate().atStartOfDay() < mealDate
+                                    endif)
+                                    )
+                              else true endif)
                         and value.periodsOption->exists(p|
                                 p.start <= mealDate 
                             and p.end >= mealDate
                             and p.deadlines->exists(q|
                                     q.days->includes(mealDate.getDayOfWeek())
                                 and 
-                                    if mealDate.toLocalDate() = now.toLocalDate() then
+                                    if now.plusDays(q.cday).toLocalDate() = mealDate.toLocalDate() then
                                         now.getHour() < q.chour 
                                         or (now.getHour() = q.chour and now.getMinute() <= q.cminute)
                                     else
-                                        mealDate <= now.plusDays(q.cday).toLocalDate().atStartOfDay()
+                                        now.plusDays(q.cday).toLocalDate().atStartOfDay() < mealDate
                                     endif
                                 )
                             )

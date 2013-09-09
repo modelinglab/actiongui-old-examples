@@ -1,4 +1,5 @@
 Window ListDinersWI {
+    String text := ['Meal list']
     Label DateLA {
         String text := ['Choose a date:']
     }
