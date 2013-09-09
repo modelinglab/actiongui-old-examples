@@ -1,4 +1,5 @@
 Window MenuDirectorWI  {
+    String text := ['Headmaster menu']
 
 #menu MenuDirector {
     target: UserAccountsWI { label : ['Users'] }

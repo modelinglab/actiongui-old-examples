@@ -1,4 +1,5 @@
 Window CreateUserWI {
+    String text := ['User management']
     #form CreateFO {
         entity: User
         prop: name {label: ['Name: '] 
