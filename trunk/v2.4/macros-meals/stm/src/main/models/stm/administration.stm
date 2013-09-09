@@ -35,9 +35,15 @@ role DIRECTOR {
     MealSelection {
         fullAccess
     }
+    Residence {
+        fullAccess
+    }
 }
 
 role RESIDENT {
+    Residence {
+        read(zone)
+    }
     MealOption {
         fullAccess
     }
@@ -68,7 +74,7 @@ role RESIDENT {
         delete constrainedBy [
                     let 
                         mealDate    : LocalDateTime = self.ownedBy.date,
-                        now         : LocalDateTime = LocalDateTime.now()
+                        now         : LocalDateTime = LocalDateTime.now(Residence.allInstances()->any(true).zone)
                     in
                         self.ownedBy.selectedBy = caller
                         and mealDate >= now

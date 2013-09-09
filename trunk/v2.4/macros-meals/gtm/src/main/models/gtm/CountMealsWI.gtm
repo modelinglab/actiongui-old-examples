@@ -1,11 +1,12 @@
 Window CountMealsWI {
     String text := ['Meal count']
+    ZoneId zone := [Residence.allInstances()->any(true).zone]
     Label StartLA {
         String text := ['Start:']
     }
 
     DateField StartDF {
-        LocalDateTime value := [LocalDateTime.now()]
+        LocalDateTime value := [LocalDateTime.now($CountMealsWI.zone$)]
 
         event onChange(value) {
             error := ['']
@@ -33,7 +34,7 @@ Window CountMealsWI {
     }
 
     DateField EndDF {
-        LocalDateTime value := [LocalDateTime.now()]
+        LocalDateTime value := [LocalDateTime.now($CountMealsWI.zone$)]
 
         event onChange(value) {
             error := ['']

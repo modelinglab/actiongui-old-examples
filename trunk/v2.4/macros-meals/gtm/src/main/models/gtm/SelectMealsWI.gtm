@@ -1,5 +1,6 @@
 Window SelectMealsWI  {
-    LocalDateTime selDate := [LocalDateTime.now().toLocalDate().atStartOfDay()] 
+    ZoneId zone := [Residence.allInstances()->any(true).zone]
+    LocalDateTime selDate := [LocalDateTime.now($zone$).toLocalDate().atStartOfDay()] 
     DayOfWeek selDateDayOfWeek := [$selDate$.getDayOfWeek()] 
     LocalDateTime selDateWeekFirstDay := //gortiz: there have to be other better ways to do that (ej: using DayOfWeek#getValue())
         [ 

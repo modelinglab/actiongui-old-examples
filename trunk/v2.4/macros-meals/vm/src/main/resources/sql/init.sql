@@ -5,3 +5,5 @@ insert into mmeals.User (pk, name, surname, login, password, role) values (2, ''
 
 insert into mmeals.Meal (pk,literal) values (1,'Breakfast'), (2,'Lunch'), (3, 'Dinner');
 
+insert into mmeals.Residence (pk) values (1);
+
