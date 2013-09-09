@@ -1,0 +1,62 @@
+Window ChangeZoneWI {
+    ZoneId zone := [Residence.allInstances()->any(true).zone]
+
+    Label CurrentTimeLA {
+        event onView(text) {
+            if [$ChangeZoneWI.zone$.oclIsUndefined()] {
+                text := ['Current date & time: undefined']
+            }
+            else {
+                text := ['Current date & time: '.concat(LocalDateTime.now($ChangeZoneWI.zone$).toString())]
+            }
+        }
+    }
+
+    Label CurrentZoneLA {
+        event onView(text) {
+            if [$ChangeZoneWI.zone$.oclIsUndefined()] {
+                text := ['Current time zone: undefined']
+            }
+            else {
+                text := ['Current time zone: '.concat($ChangeZoneWI.zone$.toString())]
+            }
+        }
+    }
+    
+    Label NewZoneLA {
+        String text := ['New time zone: ']
+    }
+
+    TextField NewZoneTF {
+        String text := ['']
+    }
+
+    Button ChangeZoneBU {
+        String text := ['Change']
+
+        event onClick {
+            error := ['']
+            try {
+                // the expression ZoneId.of($NewZoneTF.text$) does not launch any exception in case an invalid zone
+                [Residence.allInstances()->any(true).zone] := [ZoneId.of($NewZoneTF.text$)]
+                reevaluate ChangeZoneWI.zone
+                reevaluate CurrentTimeLA.text
+                reevaluate CurrentZoneLA.text
+            }
+            catch (SecurityException) {
+                error := ['UNAUTHORIZED']
+            }
+            catch (Exception) {
+                error := ['UNKNOW TIME ZONE']
+            }
+        }
+    }
+
+    Button BackBU {
+        String text := ['Back']
+
+        event onClick {
+            back
+        }
+    }
+}

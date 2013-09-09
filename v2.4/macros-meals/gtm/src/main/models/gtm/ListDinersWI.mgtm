@@ -1,11 +1,12 @@
 Window ListDinersWI {
     String text := ['Meal list']
+    ZoneId zone := [Residence.allInstances()->any(true).zone]
     Label DateLA {
         String text := ['Choose a date:']
     }
 
     DateField DateDF {
-        LocalDateTime value :=  [LocalDateTime.now()]
+        LocalDateTime value :=  [LocalDateTime.now($ListDinersWI.zone$)]
 
         event onChange(value) {
             #refresh DinersTA#

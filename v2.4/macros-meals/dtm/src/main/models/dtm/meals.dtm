@@ -5,6 +5,10 @@ enum Role {
     SYSTEM
 }
 
+entity Residence {
+    ZoneId zone
+}
+
 entity User {
     // attributes
     String name

@@ -21,5 +21,8 @@
     <ns1:entry>
        <ns1:widget ns1:id="MenuDirector_ListDinersWI_B" ns1:height="30px"></ns1:widget>
     </ns1:entry> 
+    <ns1:entry>
+       <ns1:widget ns1:id="MenuDirector_ChangeZoneWI_B" ns1:height="30px"></ns1:widget>
+    </ns1:entry> 
     </ns1:line-layout>
 </ns1:window-layout>
