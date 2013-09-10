@@ -54,16 +54,17 @@ role RESIDENT {
         fullAccess
     }
     User {
-        fullAccess
-        //read constrainedBy [self=caller]
-        // add(dailyMeals) constrainedBy [self=caller]
+        read constrainedBy [self=caller]
+        update(password) constrainedBy [self=caller]
+        add(dailyMeals) constrainedBy [self=caller 
+                                       and caller.periods->exists(p|p.start <= target.date and p.end >= target.date)]
     }
     DailyMealSelection {
         //fullAccess
         create
         read
         update(date) // constrainedBy [self.date.oclIsUndefined()] // and value => Date.now().year()] and value  >= date.now().dayOfYear()
-        update(selectedBy) // constrainedBy [value = caller]
+        update(selectedBy) //constrainedBy [value = caller]
         update(selections)
         add(selections)
         remove(selections)
