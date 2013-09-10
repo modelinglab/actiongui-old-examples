@@ -1,0 +1,14 @@
+1. In the window SelectMeals, 
+- a button to change years (next/previous year)
+- a button to change months (next/previous month). Of course, changing months may 
+also imply to change a year.
+- a label that indicates which is the year of the visible week.
+- a label that indicates which is the month of the first day of the visible week.
+
+2. In the window EditUserWI
+- a button to modify user-periods:
+* a user-period can be always extended (if does not overlap with an existing period).
+* a user-period can be shortened, but:
+- never beyond now()
+- never if there is a (non-empty) dailyMealSelection for this user for the part of
+the period that is intended to cut.
