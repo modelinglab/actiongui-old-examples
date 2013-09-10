@@ -12,3 +12,7 @@ also imply to change a year.
 - never beyond now()
 - never if there is a (non-empty) dailyMealSelection for this user for the part of
 the period that is intended to cut.
+
+3. Food regime
+
+4. Half-pensions
