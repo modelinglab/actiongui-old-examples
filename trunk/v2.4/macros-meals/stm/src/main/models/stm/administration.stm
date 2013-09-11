@@ -38,6 +38,9 @@ role DIRECTOR {
     Residence {
         fullAccess
     }
+    FoodRegime {
+        fullAccess
+    }
 }
 
 role RESIDENT {

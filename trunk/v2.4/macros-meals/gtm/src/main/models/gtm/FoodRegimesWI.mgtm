@@ -1,0 +1,58 @@
+Window FoodRegimesWI {
+    #table RegimesTB {
+        entity: FoodRegime
+        rows : [FoodRegime.allInstances()]
+        column : name {label : ['Name'] }
+        column : description {label : ['Description']}
+        size : [10]
+    }#
+#form NewRegimeFO {
+        entity: FoodRegime
+        prop: name {label : ['Name: ']}
+        prop: description {label : ['Description: ']}
+    }#
+
+Button NewRegimeBU {
+        String text := ['New regime']
+        FoodRegime newRegime
+        event onClick {
+            #create {
+                form: NewRegimeFO
+                result: newRegime
+                assert: [not($NewRegimeFO_name.text$.oclIsUndefined())]
+                        {message: ['Please, write the name of the new regime']
+                         assert : [not(FoodRegime.allInstances()->exists(r|r.name = $NewRegimeFO_name.text$))]
+                         {message: ['There is already a regime with this name. Please, choose a different name']
+                            } }     
+            }#
+            if [not($newRegime$.oclIsUndefined())] {
+                #refresh RegimesTB#
+                RegimesTB.selected := [$newRegime$->asOrderedSet()]
+            }
+        }
+
+    }
+
+Button EditBU {
+    String text := ['Edit']
+    event onClick {
+        #forward {
+            target: EditFoodRegimeWI
+            arg: thisRegime {
+                    value: [$RegimesTB.selected$->any(true)]
+                    }
+            assert: [not($RegimesTB.selected$->oclIsUndefined())] 
+                    {message: ['Please, select first a regime']
+                       assert: [not($RegimesTB.selected$->size()>1)]
+                        {message: ['Please, select only one regime']} } 
+                }#
+        }
+    }
+
+Button BackBU {
+    String text := ['Back']
+    event onClick {
+        back
+    }
+}
+}

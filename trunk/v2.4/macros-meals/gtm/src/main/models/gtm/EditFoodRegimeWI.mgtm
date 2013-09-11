@@ -1,0 +1,4 @@
+Window EditFoodRegimeWI {
+    String text := ['Edit food regime']
+    FoodRegime thisRegime
+}
