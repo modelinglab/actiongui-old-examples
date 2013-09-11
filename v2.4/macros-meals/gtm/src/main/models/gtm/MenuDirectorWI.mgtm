@@ -4,6 +4,7 @@ Window MenuDirectorWI  {
 #menu MenuDirector {
     target: UserAccountsWI { label : ['Users'] }
     target: ConfigurationWI { label : ['Meals'] }
+    target: FoodRegimesWI { label : ['Food regimes'] }
     target: ChangePasswordWI { label : ['Change password'] }
     target: CountMealsWI { label : ['Count meals'] }
     target: ListDinersWI { label : ['List diners'] }

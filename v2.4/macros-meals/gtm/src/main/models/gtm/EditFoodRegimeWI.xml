@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ns1:window-layout ns1:id="EditUserWI"
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:ns1='http://actiongui.org/schemes/ag-layout/2.4'
+    xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://www.actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
+    <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="400px">   
+  </ns1:line-layout> 
+</ns1:window-layout>
