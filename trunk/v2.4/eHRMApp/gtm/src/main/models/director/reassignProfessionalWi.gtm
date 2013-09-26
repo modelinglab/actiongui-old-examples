@@ -1,0 +1,126 @@
+Window reassignProfessionalWi{
+    String text := ['Director Menu']
+    MedicalCenter medicalCenter
+    
+    Label medicalCenterLa{
+        String text := ['Medical center: '.concat($reassignProfessionalWi.medicalCenter$.name)]
+    }
+    Label selectProfessionalLa{
+        String text := ['Select the professional to be reassigned:']
+    }
+    Label selectDepartmentLa{
+        String text := ['Select the new department:']
+    }
+
+    Table professionalsTa{
+        // union is not supported
+        // Set(Professional) rows := [$reassignProfessionalWi.medicalCenter$.departments.doctors.professional->union($reassignProfessionalWi.medicalCenter$.departments.nurses.professional)->asSet()]
+        Set(Professional) rows := [Professional.allInstances()->select(p|p.worksIn->includes($reassignProfessionalWi.medicalCenter$))->select(p|p.asNurse->notEmpty() or p.asDoctor->notEmpty())]
+
+    }
+    Table departmentsTa{
+        Set(Department) rows := [$reassignProfessionalWi.medicalCenter$.departments]
+    }
+
+    Button reassignBu{
+        String text := ['Reassign the professional']
+    }
+    Button backBu{
+        String text := ['Back']
+    }   
+}
+
+Table reassignProfessionalWi.professionalsTa{
+    columns {
+        ['Name'] : Label name{
+            String text := [$professionalsTa.row$.name]
+        }
+        ['Surname'] : Label surname{
+            String text := [$professionalsTa.row$.surname]
+        }
+        ['Professional'] : Label professional{
+            event onView(text) {
+                if [$professionalsTa.row$.asDoctor->notEmpty()] {
+                    text := ['Doctor']
+                }
+                else {
+                    if [$professionalsTa.row$.asNurse->notEmpty()] {
+                        text := ['Nurse']
+                    }
+                    else {
+                        text := ['Unknown']
+                    }
+                }
+            }
+        }
+        ['Department'] : Label department{
+            event onView(text) {
+                if [$professionalsTa.row$.asDoctor->notEmpty()] {
+                    text := [$professionalsTa.row$.asDoctor.departments->any(d|d.belongsTo->any(true) = $reassignProfessionalWi.medicalCenter$).name]
+                }
+                else {
+                    if [$professionalsTa.row$.asNurse->notEmpty()] {
+                        text := [$professionalsTa.row$.asNurse.departments->any(d|d.belongsTo->any(true) = $reassignProfessionalWi.medicalCenter$).name]
+                    }
+                    else {
+                        text := ['Unknown']
+                    }
+                }
+            }
+        }
+    }
+}
+
+Table reassignProfessionalWi.departmentsTa{
+    columns {
+        ['Department'] : Label department{
+            String text := [$departmentsTa.row$.name]
+        }   
+    }
+}
+
+Button reassignProfessionalWi.reassignBu{
+    event onClick{
+        if [not $professionalsTa.selected$->oclIsUndefined()]{
+            if [$professionalsTa.selected$->size() = 1 and not $departmentsTa.selected$->oclIsUndefined()]{
+                if [$departmentsTa.selected$->size() = 1] {
+                    if [$professionalsTa.selected$->any(true).asDoctor->notEmpty()]{
+                        [$professionalsTa.selected$->any(true).asDoctor->any(true).departments] -= [$professionalsTa.selected$->any(true).asDoctor.departments->any(d|d.belongsTo->any(true) = $reassignProfessionalWi.medicalCenter$)]
+                        [$professionalsTa.selected$->any(true).asDoctor->any(true).departments] += [$departmentsTa.selected$->any(true)]
+                        professionalsTa.rows := [Professional.allInstances()->select(false)]
+                        // union not supported
+                        //reassignProfessionalWi.professionalsTa.rows := [$reassignProfessionalWi.medicalCenter$.departments.doctors.professional->union($reassignProfessionalWi.medicalCenter$.departments.nurses.professional)->asSet()]
+                        professionalsTa.rows := [Professional.allInstances()->select(p|p.worksIn->includes($reassignProfessionalWi.medicalCenter$))->select(p|p.asNurse->notEmpty() or p.asDoctor->notEmpty())]
+                        notification(['Message'],['The professional has been reassigned properly.'],[-1])
+                    }
+                    else{
+                        if [$professionalsTa.selected$->any(true).asNurse->notEmpty()]{
+                            [$professionalsTa.selected$->any(true).asNurse->any(true).departments] -= [$professionalsTa.selected$->any(true).asNurse.departments->any(d|d.belongsTo->any(true) = $reassignProfessionalWi.medicalCenter$)]
+                            [$professionalsTa.selected$->any(true).asNurse->any(true).departments] += [$departmentsTa.selected$->any(true)]
+                            professionalsTa.rows := [Professional.allInstances()->select(false)]
+                            // union not supported
+                            //reassignProfessionalWi.professionalsTa.rows := [$reassignProfessionalWi.medicalCenter$.departments.doctors.professional->union($reassignProfessionalWi.medicalCenter$.departments.nurses.professional)->asSet()]
+                            professionalsTa.rows := [Professional.allInstances()->select(p|p.worksIn->includes($reassignProfessionalWi.medicalCenter$))->select(p|p.asNurse->notEmpty() or p.asDoctor->notEmpty())]
+                            notification(['Message'],['The professional has been reassigned properly.'],[-1])
+                        }
+                    }
+                }
+                else {
+                    notification(['Message'],['You have to select exactly one department'],[-1])
+                }
+            }
+            else{
+                notification(['Message'],['You have to select exactly one professional and one department'],[-1])
+            }
+        }
+        else{
+            notification(['Message'],['You have to select a professional'],[-1])
+        }
+    }
+}
+
+Button reassignProfessionalWi.backBu{
+    event onClick{
+        back
+    }
+} 

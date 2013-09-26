@@ -1,0 +1,185 @@
+Window createProfessionalWi{
+    MedicalCenter medicalCenter
+    String text := ['Create professional']
+  
+    Label generalInfoLa{
+        String text := ['General information:']
+    }
+    Label nameLa{
+        String text := ['Name:']
+    }
+    Label loginInfoLa{
+        String text := ['Login information:']
+    }
+    Label userLa{
+        String text := ['User:']
+    }
+    Label chooseProfLa{
+        String text := ['Choose a kind of professional:']
+    }
+    Label doctorLa{
+        String text := ['Doctor:']
+    }
+    Label surnameLa{
+        String text := ['Surname:']
+    }
+    Label passwordLa{
+        String text := ['Password:']
+    }
+    Label nurseLa{
+        String text := ['Nurse:']
+    }
+    Label doctorLicenseLa{
+        String text := ['Doctor license:']
+    }
+    Label nursingLicenseLa{
+        String text := ['Nursing license:']
+    }
+    Label statusLa{
+        String text := ['Status:']
+    }
+    Label chooseDepartmentLa{
+        String text := ['Choose a department:']
+    }
+    Label administrativeLa{
+        String text := ['Administrative:']
+    }
+
+
+    TextField nameEn{
+        String text := ['']
+    }      
+    TextField surnameEn{
+        String text := ['']
+    }
+    TextField userEn{
+        String text := ['']
+    }
+    TextField passwordEn{
+        String text := ['']
+    }
+    TextField doctorLicenseEn{
+        String text := ['']
+    }
+    TextField nursingLicenseEn{
+        String text := ['']
+    }
+
+
+    BooleanField doctorBf{
+        Boolean value := [true] {
+            if [$value$] {
+                nurseBf.value := [false]
+                administrativeBf.value := [false]
+            }
+        }
+    }
+    BooleanField nurseBf{
+        Boolean value := [false] {
+            if [$value$] {
+                doctorBf.value := [false]
+                administrativeBf.value := [false]
+            }
+        }
+    }
+    BooleanField administrativeBf{
+        Boolean value := [false] {
+            if [$value$] {
+                nurseBf.value := [false]
+                doctorBf.value := [false]
+            }
+        }
+    }
+    BooleanField statusBf{
+        Boolean value := [false]
+    }
+
+    Table departmentsTa{
+        Set(Department) rows := [$createProfessionalWi.medicalCenter$.departments]
+    }
+
+    Button createProfessionalBu{
+        String text := ['Create professional']
+    }
+
+    Button cancelBu{
+        String text := ['Back']
+    }
+}
+
+Table createProfessionalWi.departmentsTa{
+    columns {
+        ['Department'] : Label departmentLa{
+            String text := [$departmentsTa.row$.name]
+        }
+    }
+}
+
+Button createProfessionalWi.createProfessionalBu{
+    event onClick {
+        if [$userEn.text$ <> ''] {
+            if [Professional.allInstances()->forAll(p|p.user <> $userEn.text$)] {
+                if [$passwordEn.text$ <> ''] {
+                    if [$doctorBf.value$ or $nurseBf.value$ or $administrativeBf.value$] {
+                        if [not $departmentsTa.selected$->oclIsUndefined()] {
+                            if [$departmentsTa.selected$->size() = 1] {
+                                newProfessional :=  new Professional
+                                [$newProfessional$.worksIn] += [$createProfessionalWi.medicalCenter$]
+                                [$newProfessional$.name] := [$nameEn.text$]
+                                [$newProfessional$.surname] := [$surnameEn.text$]
+                                [$newProfessional$.user] := [$userEn.text$]
+                                [$newProfessional$.password] := [$passwordEn.text$]
+                                if [$doctorBf.value$] {
+                                    newDoctor := new Doctor
+                                    [$newProfessional$.asDoctor] += [$newDoctor$]
+                                    [$newDoctor$.departments] += [$departmentsTa.selected$->any(true)]
+                                    [$newDoctor$.medicalLicense] := [$doctorLicenseEn.text$]
+                                    [$newDoctor$.status] := [$statusBf.value$]
+                                    [$newProfessional$.myRole] := [Role::DOCTOR]
+                                }
+                                if [$nurseBf.value$] {
+                                    newNurse := new Nurse
+                                    [$newProfessional$.asNurse] += [$newNurse$]
+                                    [$newNurse$.departments] += [$departmentsTa.selected$->any(true)]                               
+                                    [$newNurse$.nursingLicense] := [$nursingLicenseEn.text$]
+                                    [$newProfessional$.myRole] := [Role::NURSE]
+                                }
+                                if [$administrativeBf.value$] {
+                                    newAdministrative := new Administrative
+                                    [$newProfessional$.asAdministrative] += [$newAdministrative$]
+                                    [$newProfessional$.myRole] := [Role::ADMINISTRATIVE]
+                                }
+                                back
+                            }
+                            else {
+                                notification(['Message'],['You have to select exactly one department for the new professional'],[-1])
+                            }
+                        }
+                        else{
+                            notification(['Message'],['You have to select a department for the new professional'],[-1])
+                        }
+                    }
+                    else{
+                        notification(['Message'],['You have to choose the kind of professional to be created'],[-1])
+                    }
+                }
+                else{
+                    notification(['Message'],['The password cannot be empty'],[-1])
+                }
+            }
+            else{
+                notification(['Message'],['There already exists a professional with user "'.concat($userEn.text$).concat('"')],[-1])
+            }
+        }
+        else{
+            notification(['Message'],['The user cannot be empty'],[-1])
+        }
+    }
+}
+
+
+Button createProfessionalWi.cancelBu{
+    event onClick {
+        back
+    }
+}

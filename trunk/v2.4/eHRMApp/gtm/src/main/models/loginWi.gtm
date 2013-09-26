@@ -1,0 +1,38 @@
+Window loginWi isMain{
+    String text := ['Medical Application']
+    
+    Label loginLa{
+        String text := ['Please, log in.']
+    }
+    Label userLa{
+        String text := ['User:']
+    }
+    Label passLa{
+        String text := ['Password:']
+    }
+    Label messageLa{
+        String text := ['']
+    }
+    TextField userEn{
+        String text := ['']
+    }
+    PasswordField passEn{
+        String text := ['']
+    }
+    Button loginBu{
+        Professional professional
+        String text := ['Log in']
+    }
+}
+
+Button loginWi.loginBu{
+    event onClick{
+        if [Professional.allInstances()->exists(p|p.user = $userEn.text$ and p.password = $passEn.text$)]{
+            professional := [Professional.allInstances()->any(p|p.user = $userEn.text$ and p.password = $passEn.text$)]
+            open medicalCenterWi(caller:[$professional$], role:[$professional$.myRole])
+        }
+        else{
+            messageLa.text := ['Incorrect login. Please, try again.']
+        }
+    }
+}
