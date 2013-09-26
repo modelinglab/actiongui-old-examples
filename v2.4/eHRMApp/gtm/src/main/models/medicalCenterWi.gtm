@@ -1,0 +1,90 @@
+Window medicalCenterWi{
+    String text := ['Medical centers']
+  
+    Label medicalCenterLa{
+        String text := ['Choose a Medical Center']
+    }
+    Table medicalCentersTa{
+        Set(MedicalCenter) rows := [MedicalCenter.allInstances()]
+    }
+    Button registerPatientBu{
+        String text := ['Register new patient']
+    }
+    Button directorMenuBu{
+        String text := ['Director Menu']
+    }
+    Button viewPatientsBu{
+        String text := ['View patients']
+    }
+    Button exitBu{
+        String text := ['Exit']
+    }
+}
+
+Table medicalCenterWi.medicalCentersTa{
+    columns {
+        ['Name'] : Label nameLa {
+            String text := [$medicalCentersTa.row$.name]
+        }
+    }
+}
+
+Button medicalCenterWi.registerPatientBu{
+    event onClick{
+        if [$medicalCenterWi.caller$.asAdministrative->notEmpty()]{
+            if [not $medicalCentersTa.selected$->oclIsUndefined()]{
+                if [$medicalCentersTa.selected$->size() = 1]{
+                    open registerPatientWi(medicalCenter:[$medicalCentersTa.selected$->any(true)])
+                }
+                else {
+                    notification([''],['Please, select exactly one medical center.'],[-1])
+                }
+            }
+            else{
+                notification([''],['Please, select a medical center.'],[-1])
+            }
+        }  
+        else{
+            notification([''],['You are not an administrative of the selected medical center.'],[-1])
+        }
+    }
+}
+
+
+Button medicalCenterWi.directorMenuBu{
+    event onClick{
+        if [$medicalCenterWi.caller$.asDirector->notEmpty()] {
+            if [not $medicalCentersTa.selected$->oclIsUndefined()]{
+                if [$medicalCentersTa.selected$->size() = 1]{
+                    open directorMenuWi (medicalCenter:[$medicalCentersTa.selected$->any(true)])
+                }
+            }
+            else{
+                notification([''],['Please, select exactly one medical center.'],[-1])
+            }
+        }
+        else{
+            notification([''],['You are not the director of the selected medical center.'],[-1])
+        }
+    }
+}
+
+Button medicalCenterWi.viewPatientsBu{
+    event onClick{
+        if [not $medicalCentersTa.selected$->oclIsUndefined()] {
+            if [$medicalCentersTa.selected$->size() = 1] {  
+                open patientsWi (medicalCenter:[$medicalCentersTa.selected$->any(true)])
+            }
+        
+        }
+        else{
+           notification([''],['Please, select exactly one medical center.'],[-1])
+        }
+    }
+}
+
+Button medicalCenterWi.exitBu{
+    event onClick{
+        exit
+    }
+}

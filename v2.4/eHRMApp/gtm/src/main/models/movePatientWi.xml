@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<ns1:window-layout ns1:id="movePatientWi"
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:ns1='http://actiongui.org/schemes/ag-layout/2.4'
+    xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://www.actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
+    <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto">
+        <ns1:entry>
+            <ns1:widget ns1:id="patientLa" ns1:width="300px" ns1:height="30px"></ns1:widget>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:widget ns1:id="departmentLa" ns1:width="300px" ns1:height="30px"></ns1:widget>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:widget ns1:id="doctorLa" ns1:width="300px" ns1:height="30px"></ns1:widget>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:line-layout orientation="vertical" ns1:height="40px"></ns1:line-layout>
+        </ns1:entry>
+        
+        <ns1:entry>
+            <ns1:widget ns1:id="departmentsLa" ns1:width="300px" ns1:height="30px"></ns1:widget>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:table ns1:id="departmentsTa" ns1:width="200px" ns1:height="200px">
+                <ns1:column>
+                    <ns1:widget ns1:id="department" ns1:height="30px"></ns1:widget>
+                </ns1:column>
+            </ns1:table>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:line-layout orientation="vertical" ns1:height="40px"></ns1:line-layout>
+        </ns1:entry>
+        
+        <ns1:entry>
+            <ns1:widget ns1:id="doctorsLa" ns1:width="300px" ns1:height="30px"></ns1:widget>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:table ns1:id="doctorsTa" ns1:width="200px" ns1:height="200px">
+                <ns1:column>
+                    <ns1:widget ns1:id="doctor" ns1:height="30px"></ns1:widget>
+                </ns1:column>
+            </ns1:table>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:line-layout orientation="vertical" ns1:height="40px"></ns1:line-layout>
+        </ns1:entry>
+        
+        <ns1:entry>
+            <ns1:widget ns1:id="moveBu" ns1:width="200px" ns1:height="30px"></ns1:widget>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:widget ns1:id="cancelBu" ns1:width="200px" ns1:height="30px"></ns1:widget>
+        </ns1:entry>
+    </ns1:line-layout>
+
+</ns1:window-layout>
