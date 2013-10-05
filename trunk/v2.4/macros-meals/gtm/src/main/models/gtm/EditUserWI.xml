@@ -55,6 +55,15 @@
                 </ns1:entry>
             </ns1:line-layout>
         </ns1:entry>
+        <!-- Update -->
+        <ns1:entry>
+            <ns1:line-layout orientation="horizontal">
+                <ns1:entry>
+                    <ns1:widget ns1:id="thisUserUpdateBU" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                </ns1:entry> 
+            </ns1:line-layout>
+        </ns1:entry>
+        <!-- Periods -->
         <ns1:entry>
             <ns1:table ns1:id="ThisUserFO_periods" ns1:height="200px" ns1:width="auto">
                 <ns1:column>

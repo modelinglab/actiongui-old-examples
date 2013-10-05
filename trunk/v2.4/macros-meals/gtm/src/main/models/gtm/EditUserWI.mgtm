@@ -16,6 +16,18 @@ Window EditUserWI {
         }
     }#
 
+Button thisUserUpdateBU {
+    String text := ['Update']
+    event onClick {
+    #update {
+        form: ThisUserFO
+        assert: [$ThisUserFO_login.text$ <> $EditUserWI.thisUser$.login 
+             implies User.allInstances()->forAll(u|u.login <> $ThisUserFO_login.text$)]
+             { message: ['There is already a user with this login. Please, use a different login.'] } 
+              }#
+    }
+}
+
 
 #form NewPeriodFO {
     entity: Residency
