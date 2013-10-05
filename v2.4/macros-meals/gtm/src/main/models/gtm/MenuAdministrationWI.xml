@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<ns1:window-layout ns1:id="MenuAdministrationWI"
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:ns1='http://actiongui.org/schemes/ag-layout/2.4'
+    xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://www.actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
+    <ns1:line-layout orientation="vertical" ns1:width="auto" ns1:height="auto">
+        <ns1:entry>
+            <ns1:widget ns1:id="MenuAdministration_CountMealsAdminWI_B" ns1:height="30px"></ns1:widget>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:widget ns1:id="MenuAdministration_ChangePasswordWI_B" ns1:height="30px"></ns1:widget>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:widget ns1:id="backBU" ns1:height="30px"></ns1:widget>
+        </ns1:entry>
+    </ns1:line-layout>
+
+</ns1:window-layout>

@@ -30,7 +30,39 @@ Window ChangeZoneWI {
     TextField NewZoneTF {
         String text := ['']
     }
+    
 
+    /* Valid code when TimeZone.getAvailableIDs() is available in OCL
+    ComboBox NewZoneCB {
+        Set(String) rows := [TimeZone.getAvailableIDs()->asSet()]
+        
+        Label zone {
+            String text := [$NewZoneCB.row$]
+        }
+        
+        event onChange(selected) {
+            error := ['']
+            if [$selected$.oclIsUndefined()] {
+                error := ['Please, select a time zone']
+            }
+            else {
+                try {
+                    [Residence.allInstances()->any(true).zone] := [ZoneId.of($selected$)]
+                    reevaluate ChangeZoneWI.zone
+                    reevaluate CurrentTimeLA.text
+                    reevaluate CurrentZoneLA.text
+                }
+                catch (SecurityException) {
+                    error := ['UNAUTHORIZED']
+                }
+                catch (Exception) {
+                    error := ['UNKNOWN EXCEPTION']
+                }
+            }
+        }
+    }
+    */
+    
     Button ChangeZoneBU {
         String text := ['Change']
 
@@ -47,7 +79,7 @@ Window ChangeZoneWI {
                 error := ['UNAUTHORIZED']
             }
             catch (Exception) {
-                error := ['UNKNOW TIME ZONE']
+                error := ['UNKNOWN TIME ZONE']
             }
         }
     }

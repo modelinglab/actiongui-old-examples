@@ -1,0 +1,93 @@
+Window CountMealsAdminWI {
+    String text := ['Count meals']
+    ZoneId zone := [Residence.allInstances()->any(true).zone]
+    Label DateLA {
+        String text := ['Date:']
+    }
+
+    DateField DateDF {
+        LocalDateTime value := [LocalDateTime.now($CountMealsAdminWI.zone$)]
+
+        event onChange(value) {
+            error := ['']
+            if [$value$.oclIsUndefined()] {
+                error := ['Select a date']
+            }
+            else {
+                reevaluate MealsTA.selections
+                MealsTA.rows := [Meal.allInstances()->select(false)]
+                reevaluate MealsTA.rows
+            }
+        }
+    }
+    
+    Button PrevBU {
+        String text := ['Previous']
+
+        event onClick {
+            DateDF.value := [$DateDF.value$.minusDays(1)]
+        }
+    }
+
+    Button NextBU {
+        String text := ['Next']
+
+        event onClick {
+            DateDF.value := [$DateDF.value$.plusDays(1)]
+        }
+    }
+
+    // Can not be created using macro table since there is a "special" column (sub-column "Count") that can not be generated directly through the value of an attribute
+    Table MealsTA {
+        Set(MealSelection) selections := [DailyMealSelection.allInstances()->select(dms| dms.date = $DateDF.value$.toLocalDate().atStartOfDay()).selections->asSet()]
+        Set(Meal) rows := [Meal.allInstances()]
+
+        columns {
+            ['Meals'] : Label Meals {
+                String text := [$MealsTA.row$.literal]
+            }
+            ['Meal Options'] : Table MealOptions {
+                Set(MealOption) rows := [$MealsTA.row$.options]
+
+                columns {
+                    ['Option'] : Label Option {
+                        String text := [$MealOptions.row$.literal]
+                    }
+                    ['Count'] : Label Count {
+                        String text := [$MealsTA.selections$->select(ms| ms.meal = $MealsTA.row$ and ms.mealOption = $MealOptions.row$)->size().toString()]
+                    }
+                    ['Status'] : Label Status {
+                        LocalDateTime selectedDate := [if $DateDF.value$.oclIsUndefined() then LocalDateTime.now($CountMealsAdminWI.zone$) else $DateDF.value$ endif]
+                        LocalDateTime nowDate := [LocalDateTime.now($CountMealsAdminWI.zone$)]
+                        Residency period := [$MealOptions.row$.periodsOption->any(p|p.start.toLocalDate().atStartOfDay() <= $selectedDate$.toLocalDate().atStartOfDay() and p.end.toLocalDate().atStartOfDay() >= $selectedDate$.toLocalDate().atStartOfDay())]
+                        DayOfWeek dayOfWeek := [$selectedDate$.getDayOfWeek()]
+                        event  onView(text) {
+                            if [$selectedDate$.toLocalDate().atStartOfDay() < $nowDate$.toLocalDate().atStartOfDay()] {
+                                text := ['Close']
+                            }
+                            if [$period$.oclIsUndefined()] {
+                                text := ['No period']
+                            }
+                            else {
+                                if [$period$.deadlines->exists(d|d.days->includes($dayOfWeek$) and (($selectedDate$.toLocalDate().atStartOfDay().minusDays(d.cday) > $nowDate$.toLocalDate().atStartOfDay()) or ($selectedDate$.toLocalDate().atStartOfDay().minusDays(d.cday) = $nowDate$.toLocalDate().atStartOfDay() and ($nowDate$.getHour() < d.chour or ($nowDate$.getHour() = d.chour and $nowDate$.getMinute() <= d.cminute)))))] {
+                                    text := ['Open']
+                                }
+                                else {
+                                    text := ['Close']
+                                }
+                            }
+                        }
+                    }
+                }
+            }     
+        }
+    }    
+
+    Button BackBU {
+        String text := ['Back']
+
+        event onClick {
+            back
+        }
+    }
+}
