@@ -1,4 +1,31 @@
 Window EditFoodRegimeWI {
     String text := ['Edit food regime']
     FoodRegime thisRegime
+
+#form FoodRegimeFO {
+    entity : FoodRegime
+    instance : [$EditFoodRegimeWI.thisRegime$]
+    attr: name { label: ['name: '] 
+                 init : [$EditFoodRegimeWI.thisRegime$.name] }
+    attr: description { label: ['description: '] 
+                        init : [$EditFoodRegimeWI.thisRegime$.description]}
+}#
+
+Button UpdateBU {
+    String text := ['Update']
+    event onClick {
+    #update {
+    form : FoodRegimeFO
+    assert: [if $FoodRegimeFO_name.text$ <> $EditFoodRegimeWI.thisRegime$.name 
+              then FoodRegime.allInstances()->forAll(f|f.name <> $FoodRegimeFO_name.text$)
+              else true endif] 
+              { message: ['There is already a food regime with this name. Please, use a different name.'] } 
+              }#
+    }
+}
+Button BackBU {
+    String text := ['Back']
+    event onClick { back }
+}
+
 }
