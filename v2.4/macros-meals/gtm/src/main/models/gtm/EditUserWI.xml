@@ -96,6 +96,7 @@
             </ns1:line-layout>      
         </ns1:entry>
         <!-- END CALENDARS -->
+        <!-- create period -->
         <ns1:entry>
             <ns1:line-layout orientation="horizontal">
                 <ns1:entry>
@@ -103,6 +104,23 @@
                 </ns1:entry> 
             </ns1:line-layout>
         </ns1:entry>
+        <!-- delete period -->
+        <ns1:entry>
+            <ns1:line-layout orientation="horizontal">
+                <ns1:entry>
+                    <ns1:widget ns1:id="DeletePeriodBU" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                </ns1:entry> 
+            </ns1:line-layout>
+        </ns1:entry>
+        <!-- modify period -->
+        <ns1:entry>
+            <ns1:line-layout orientation="horizontal">
+                <ns1:entry>
+                    <ns1:widget ns1:id="ModifyPeriodBU" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                </ns1:entry> 
+            </ns1:line-layout>
+        </ns1:entry>
+        
         <!-- BACK -->
         <ns1:entry>
             <ns1:widget ns1:id="BackBU" ns1:height="30px" ns1:width="60px"></ns1:widget>
