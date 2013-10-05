@@ -39,15 +39,18 @@ Button EditBU {
         #forward {
             target: EditFoodRegimeWI
             arg: thisRegime {
-                    value: [$RegimesTB.selected$->any(true)]
+                value: [$RegimesTB.selected$->any(true)]
+            }
+            assert: [not($RegimesTB.selected$->oclIsUndefined())] {
+                message: ['Please, select first a regime']
+                    assert: [not($RegimesTB.selected$->size()>1)] {
+                        message: ['Please, select only one regime']
                     }
-            assert: [not($RegimesTB.selected$->oclIsUndefined())] 
-                    {message: ['Please, select first a regime']
-                       assert: [not($RegimesTB.selected$->size()>1)]
-                        {message: ['Please, select only one regime']} } 
-                }#
-        }
+            } 
+        }#
     }
+}
+
 
 Button BackBU {
     String text := ['Back']

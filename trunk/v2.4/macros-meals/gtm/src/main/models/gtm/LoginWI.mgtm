@@ -24,7 +24,12 @@ Button LoginBU {
                         open MenuDirectorWI(caller:[$loggedUser$], role:[$loggedUser$.role])
                     }
                     else {
-                        notification (['Message'],['You have no role assigned.'],[-1])
+                        if [$loggedUser$.role = Role::ADMINISTRATION] {
+                            open MenuAdministrationWI(caller:[$loggedUser$], role:[$loggedUser$.role])
+                        }
+                        else {
+                            notification (['Message'],['You have no role assigned.'],[-1])
+                        }
                     }
                 } 
             }

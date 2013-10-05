@@ -1,0 +1,20 @@
+Window MenuAdministrationWI {
+    String text := ['Administration menu']
+
+    #menu MenuAdministration {
+        target: CountMealsAdminWI {
+            label : ['Meals']
+        }
+        target: ChangePasswordWI {
+            label : ['Change password']
+        }
+    }#
+
+    Button backBU {
+        String text := ['Back']
+
+        event onClick {
+            back
+        }
+    }
+}

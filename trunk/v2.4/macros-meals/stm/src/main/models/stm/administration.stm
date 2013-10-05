@@ -170,7 +170,6 @@ role RESIDENT {
 
 }
 
-
 role ADMINISTRATION {
     User {
         fullAccess
@@ -188,6 +187,12 @@ role ADMINISTRATION {
         fullAccess
     }
     MealOption {
+        fullAccess
+    }
+    Residency {
+        fullAccess
+    }
+    MealOptionDeadline {
         fullAccess
     }
 }
