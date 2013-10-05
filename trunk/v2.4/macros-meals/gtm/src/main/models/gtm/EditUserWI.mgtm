@@ -63,6 +63,38 @@ Button CreatePeriodBU {
     }
     }
 
+Button DeletePeriodBU {
+    Residency thisPeriod
+    String text := ['Delete']
+    event onClick {
+    if [$EditUserWI.ThisUserFO_periods.selected$->oclIsUndefined()]
+        { notification(['Error'], ['Please, select first a period'], [0]) }
+    else { 
+        if [$EditUserWI.ThisUserFO_periods.selected$->size() <> 1]
+           { notification(['Error'], ['Please, select first a period'], [0]) }
+        else {
+            thisPeriod := [$EditUserWI.ThisUserFO_periods.selected$->any(true)]
+            try {
+                foreach selection in 
+    [$EditUserWI.thisUser$.dailyMeals->select(d|d.date >= $thisPeriod$.start and d.date <= $thisPeriod$.end).selections] {
+                    delete [$selection$] }
+                 delete [$thisPeriod$]
+                 #refresh ThisUserFO #
+            }
+            catch (SecurityException) { 
+                notification(['Message'], ['Sorry. This period contains selections that can not be deleted'], [-1])
+            }
+        }
+    }
+    }
+}
+
+Button ModifyPeriodBU {
+    String text := ['Update']
+    event onClick {
+
+    }
+}
 Button BackBU {
     String text := ['Back']
     event onClick {
