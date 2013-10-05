@@ -33,6 +33,9 @@ Button LoginBU {
                     }
                 } 
             }
+            else {
+              notification (['Wrong credentials'],['Please, write a valid login and password.'],[2000])  
+            }
         }
     }
 }
