@@ -33,7 +33,30 @@ role DIRECTOR {
         fullAccess
     }
     MealSelection {
-        fullAccess
+        //fullAccess
+        create
+        delete constrainedBy [
+                    let 
+                        mealDate    : LocalDateTime = self.ownedBy.date,
+                        now         : LocalDateTime = LocalDateTime.now(Residence.allInstances()->any(true).zone)
+                    in
+                        mealDate >= now
+                        and self.mealOption.periodsOption->exists(p|
+                                p.start <= mealDate 
+                            and p.end >= mealDate
+                            and p.deadlines->exists(q|
+                                    q.days->includes(mealDate.getDayOfWeek())
+                                and 
+                                    if now.plusDays(q.cday).toLocalDate() = mealDate.toLocalDate() then
+                                        now.getHour() < q.chour 
+                                        or (now.getHour() = q.chour and now.getMinute() <= q.cminute)
+                                    else
+                                        now.plusDays(q.cday).toLocalDate().atStartOfDay() < mealDate
+                                    endif
+                                )
+                            )
+                       
+                    ]
     }
     Residence {
         fullAccess
@@ -106,7 +129,7 @@ role RESIDENT {
         update(mealOption) constrainedBy [
                     let 
                         mealDate    : LocalDateTime = self.ownedBy.date,
-                        now         : LocalDateTime = LocalDateTime.now()
+                        now         : LocalDateTime = LocalDateTime.now(Residence.allInstances()->any(true).zone)
                     in
                         self.ownedBy.selectedBy = caller
                         and mealDate >= now
@@ -148,3 +171,23 @@ role RESIDENT {
 }
 
 
+role ADMINISTRATION {
+    User {
+        fullAccess
+    }
+    Residence {
+        fullAccess
+    }
+    Meal {
+        fullAccess
+    }
+    DailyMealSelection {
+        fullAccess
+    }
+    MealSelection {
+        fullAccess
+    }
+    MealOption {
+        fullAccess
+    }
+}
