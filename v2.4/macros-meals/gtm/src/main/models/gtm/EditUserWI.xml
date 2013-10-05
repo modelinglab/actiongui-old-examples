@@ -112,7 +112,29 @@
                 </ns1:entry> 
             </ns1:line-layout>
         </ns1:entry>
-        <!-- modify period -->
+        <!-- Update CALENDARS -->
+        <ns1:entry>
+            <ns1:line-layout orientation="horizontal">
+                <ns1:entry>
+                    <ns1:widget ns1:id="UpdatePeriodFO_start_L" ns1:height="30px" ns1:width="60px"></ns1:widget>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:widget ns1:id="UpdatePeriodFO_start" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                </ns1:entry>
+            </ns1:line-layout>
+        </ns1:entry>
+        <ns1:entry>    
+            <ns1:line-layout orientation="horizontal">
+                <ns1:entry>
+                    <ns1:widget ns1:id="UpdatePeriodFO_end_L" ns1:height="30px" ns1:width="60px"></ns1:widget>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:widget ns1:id="UpdatePeriodFO_end" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                </ns1:entry>
+            </ns1:line-layout>      
+        </ns1:entry>
+        <!-- END update CALENDARS -->
+        <!-- update period -->
         <ns1:entry>
             <ns1:line-layout orientation="horizontal">
                 <ns1:entry>

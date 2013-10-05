@@ -89,12 +89,48 @@ Button DeletePeriodBU {
     }
 }
 
+#form UpdatePeriodFO {
+    entity: Residency
+    prop: start {label: ['Start: ']}
+    prop: end {label: ['End: ']}
+}#
+
 Button ModifyPeriodBU {
+Residency thisPeriod
     String text := ['Update']
     event onClick {
-
+    if [$EditUserWI.ThisUserFO_periods.selected$->oclIsUndefined()]
+        { notification(['Error'], ['Please, select first a period'], [0]) }
+    else { 
+        if [$EditUserWI.ThisUserFO_periods.selected$->size() <> 1]
+           { notification(['Error'], ['Please, select first a period'], [0]) }
+        else {
+            thisPeriod := [$EditUserWI.ThisUserFO_periods.selected$->any(true)]
+            if [$UpdatePeriodFO_start.value$.oclIsUndefined()]
+                { notification(['Error'], ['Please, select first a starting date'], [0]) }
+            else {
+                if [$UpdatePeriodFO_end.value$.oclIsUndefined()]
+                    { notification(['Error'], ['Please, select first a ending date'], [0]) }
+                else {
+                    try {
+                    foreach selection in 
+    [$EditUserWI.thisUser$.dailyMeals->select(d|d.date >= $thisPeriod$.start and d.date <= $thisPeriod$.end)->select(d|d.date < $UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay()  or d.date > $UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()).selections] {
+                    delete [$selection$] }
+                 [$thisPeriod$.start] := [$UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay()]
+                 [$thisPeriod$.end] := [$UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()]
+                 ThisUserFO_periods.rows := [$ThisUserFO_periods.rows$->select(false)]
+                 ThisUserFO_periods.rows := [$EditUserWI.thisUser$.periods->sortedBy(start)->reverse()]
+            }
+            catch (SecurityException) { 
+                notification(['Message'], ['Sorry. This period contains selections that can not be deleted'], [-1])
+            }
+        }
+        }
+        }
+        }
+        }
     }
-}
+
 Button BackBU {
     String text := ['Back']
     event onClick {
