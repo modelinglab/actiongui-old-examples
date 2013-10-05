@@ -16,10 +16,9 @@ Button UpdateBU {
     event onClick {
     #update {
     form : FoodRegimeFO
-    assert: [if $FoodRegimeFO_name.text$ <> $EditFoodRegimeWI.thisRegime$.name 
-              then FoodRegime.allInstances()->forAll(f|f.name <> $FoodRegimeFO_name.text$)
-              else true endif] 
-              { message: ['There is already a food regime with this name. Please, use a different name.'] } 
+    assert: [$FoodRegimeFO_name.text$ <> $EditFoodRegimeWI.thisRegime$.name 
+             implies FoodRegime.allInstances()->forAll(f|f.name <> $FoodRegimeFO_name.text$)]
+             { message: ['There is already a food regime with this name. Please, use a different name.'] } 
               }#
     }
 }
