@@ -46,6 +46,19 @@ and open the template in the editor.
                         <ns1:column>
                             <ns1:widget ns1:id="Status" ns1:width="100px" ns1:height="30px"></ns1:widget>
                         </ns1:column>
+                        <!-- Regimes -->
+                        <ns1:column>
+                            <ns1:table ns1:id="RegimesTB" ns1:width="auto" ns1:height="100px">
+                                <ns1:column>
+                                    <ns1:widget ns1:id="Name" ns1:width="100px" ns1:height="30px"></ns1:widget>   
+                                </ns1:column>
+                                <ns1:column>
+                                    <ns1:widget ns1:id="Total" ns1:width="100px" ns1:height="30px"></ns1:widget>   
+                                </ns1:column>
+                            </ns1:table>
+                        </ns1:column>
+                        
+                        <!-- End -->
                     </ns1:table>
                 </ns1:column>
             </ns1:table>
