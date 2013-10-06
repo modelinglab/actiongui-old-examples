@@ -31,6 +31,15 @@ Button editUserPeriodsBU {
     }
 }
 
+Button editUserRegimenesBU {
+    String text := ['Regimes']
+    event onClick {
+        #forward { target: EditUserRegimenesWI
+                   arg: thisUser {value: [$EditUserWI.thisUser$] }
+                  }#
+    }
+}
+
 Button BackBU {
     String text := ['Back']
     event onClick {
