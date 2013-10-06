@@ -65,84 +65,12 @@
         </ns1:entry>
         <!-- Periods -->
         <ns1:entry>
-            <ns1:table ns1:id="ThisUserFO_periods" ns1:height="200px" ns1:width="auto">
-                <ns1:column>
-                    <ns1:widget ns1:id="start" ns1:height="20px" ns1:width="120px"></ns1:widget>
-                </ns1:column>
-                <ns1:column>
-                    <ns1:widget ns1:id="end" ns1:height="20px" ns1:width="120px"></ns1:widget>
-                </ns1:column>
-            </ns1:table>
-        </ns1:entry>
-        <!-- CALENDARS -->
-        <ns1:entry>
             <ns1:line-layout orientation="horizontal">
                 <ns1:entry>
-                    <ns1:widget ns1:id="NewPeriodFO_start_L" ns1:height="30px" ns1:width="60px"></ns1:widget>
-                </ns1:entry>
-                <ns1:entry>
-                    <ns1:widget ns1:id="NewPeriodFO_start" ns1:height="30px" ns1:width="120px"></ns1:widget>
-                </ns1:entry>
-            </ns1:line-layout>
-        </ns1:entry>
-        <ns1:entry>    
-            <ns1:line-layout orientation="horizontal">
-                <ns1:entry>
-                    <ns1:widget ns1:id="NewPeriodFO_end_L" ns1:height="30px" ns1:width="60px"></ns1:widget>
-                </ns1:entry>
-                <ns1:entry>
-                    <ns1:widget ns1:id="NewPeriodFO_end" ns1:height="30px" ns1:width="120px"></ns1:widget>
-                </ns1:entry>
-            </ns1:line-layout>      
-        </ns1:entry>
-        <!-- END CALENDARS -->
-        <!-- create period -->
-        <ns1:entry>
-            <ns1:line-layout orientation="horizontal">
-                <ns1:entry>
-                    <ns1:widget ns1:id="CreatePeriodBU" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                    <ns1:widget ns1:id="editUserPeriodsBU" ns1:height="30px" ns1:width="120px"></ns1:widget>
                 </ns1:entry> 
             </ns1:line-layout>
         </ns1:entry>
-        <!-- delete period -->
-        <ns1:entry>
-            <ns1:line-layout orientation="horizontal">
-                <ns1:entry>
-                    <ns1:widget ns1:id="DeletePeriodBU" ns1:height="30px" ns1:width="120px"></ns1:widget>
-                </ns1:entry> 
-            </ns1:line-layout>
-        </ns1:entry>
-        <!-- Update CALENDARS -->
-        <ns1:entry>
-            <ns1:line-layout orientation="horizontal">
-                <ns1:entry>
-                    <ns1:widget ns1:id="UpdatePeriodFO_start_L" ns1:height="30px" ns1:width="60px"></ns1:widget>
-                </ns1:entry>
-                <ns1:entry>
-                    <ns1:widget ns1:id="UpdatePeriodFO_start" ns1:height="30px" ns1:width="120px"></ns1:widget>
-                </ns1:entry>
-            </ns1:line-layout>
-        </ns1:entry>
-        <ns1:entry>    
-            <ns1:line-layout orientation="horizontal">
-                <ns1:entry>
-                    <ns1:widget ns1:id="UpdatePeriodFO_end_L" ns1:height="30px" ns1:width="60px"></ns1:widget>
-                </ns1:entry>
-                <ns1:entry>
-                    <ns1:widget ns1:id="UpdatePeriodFO_end" ns1:height="30px" ns1:width="120px"></ns1:widget>
-                </ns1:entry>
-            </ns1:line-layout>      
-        </ns1:entry>
-        <!-- END update CALENDARS -->
-        <!-- update period -->
-        <ns1:entry>
-            <ns1:line-layout orientation="horizontal">
-                <ns1:entry>
-                    <ns1:widget ns1:id="ModifyPeriodBU" ns1:height="30px" ns1:width="120px"></ns1:widget>
-                </ns1:entry> 
-            </ns1:line-layout>
-        </ns1:entry>
-        
         <!-- BACK -->
         <ns1:entry>
             <ns1:widget ns1:id="BackBU" ns1:height="30px" ns1:width="60px"></ns1:widget>

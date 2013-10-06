@@ -1,0 +1,134 @@
+Window EditUserPeriodsWI {
+    User thisUser
+    #form ThisUserFO {
+    entity: User
+        instance: [$EditUserPeriodsWI.thisUser$]
+        prop: periods {
+            rows: [$EditUserPeriodsWI.thisUser$.periods->sortedBy(start)->reverse()]
+            selected: [null]
+            column: start 
+            column: end
+        }
+}#
+
+
+#form NewPeriodFO {
+    entity: Residency
+    prop: start {label: ['Start: ']}
+    prop: end {label: ['End: ']}
+}#
+
+Button CreatePeriodBU {
+    String text := ['New period']
+    Residency newPeriod
+    event onClick {
+        #create {
+            form: NewPeriodFO 
+            result: newPeriod
+            assert: [not($NewPeriodFO_start.value$.oclIsUndefined())]
+                {message: ['Please, select first a starting date'] 
+                 assert: [not($NewPeriodFO_end.value$.oclIsUndefined())]
+                    {message: ['Please, select first an ending date']
+                        assert: [$NewPeriodFO_start.value$ <= $NewPeriodFO_end.value$]
+                        {message: ['Please, select an ending date that is later or equal than the starting date']
+                        assert: [$EditUserPeriodsWI.thisUser$.periods->select(p|
+                                    ($NewPeriodFO_start.value$ <= p.start and $NewPeriodFO_end.value$ >= p.start)
+                                    or ($NewPeriodFO_start.value$ > p.start and $NewPeriodFO_start.value$ <= p.end))
+                                ->isEmpty()]
+                            {message: ['The selected period overlaps with one or more existing periods. Please, change either the starting or the ending date']
+                                }} } }
+        }#
+        if [not($newPeriod$.oclIsUndefined())]
+           { [$EditUserPeriodsWI.thisUser$.periods]+= [$newPeriod$]
+             #refresh ThisUserFO#
+             #refresh NewPeriodFO#
+             }
+    }
+    }
+
+Button DeletePeriodBU {
+    Residency thisPeriod
+    String text := ['Delete']
+    event onClick {
+    if [$EditUserPeriodsWI.ThisUserFO_periods.selected$->oclIsUndefined()]
+        { notification(['Error'], ['Please, select first a period'], [0]) }
+    else { 
+        if [$EditUserPeriodsWI.ThisUserFO_periods.selected$->size() <> 1]
+           { notification(['Error'], ['Please, select first a period'], [0]) }
+        else {
+            thisPeriod := [$EditUserPeriodsWI.ThisUserFO_periods.selected$->any(true)]
+            try {
+                foreach selection in 
+    [$EditUserPeriodsWI.thisUser$.dailyMeals->select(d|d.date >= $thisPeriod$.start and d.date <= $thisPeriod$.end).selections] {
+                    delete [$selection$] }
+                 delete [$thisPeriod$]
+                 #refresh ThisUserFO #
+            }
+            catch (SecurityException) { 
+                notification(['Message'], ['Sorry. This period contains selections that can not be deleted'], [-1])
+            }
+        }
+    }
+    }
+}
+
+#form UpdatePeriodFO {
+    entity: Residency
+    instance : [$ThisUserFO_periods.selected$->any(true)]
+    prop: start {label: ['Start: ']}
+    prop: end {label: ['End: ']}
+}#
+
+Button ModifyPeriodBU {
+Residency thisPeriod
+    String text := ['Update']
+    event onClick {
+    if [$EditUserPeriodsWI.ThisUserFO_periods.selected$->oclIsUndefined()]
+        { notification(['Error'], ['Please, select first a period'], [0]) }
+    else { 
+        if [$EditUserPeriodsWI.ThisUserFO_periods.selected$->size() <> 1]
+           { notification(['Error'], ['Please, select first a period'], [0]) }
+        else {
+            thisPeriod := [$EditUserPeriodsWI.ThisUserFO_periods.selected$->any(true)]
+            if [$UpdatePeriodFO_start.value$.oclIsUndefined()]
+                { notification(['Error'], ['Please, select first a starting date'], [0]) }
+            else {
+                if [$UpdatePeriodFO_end.value$.oclIsUndefined()]
+                    { notification(['Error'], ['Please, select first a ending date'], [0]) }
+                else {
+                    try {
+                    foreach selection in 
+    [$EditUserPeriodsWI.thisUser$.dailyMeals->select(d|d.date >= $thisPeriod$.start and d.date <= $thisPeriod$.end)->select(d|d.date < $UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay()  or d.date > $UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()).selections] {
+                    delete [$selection$] }
+                 [$thisPeriod$.start] := [$UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay()]
+                 [$thisPeriod$.end] := [$UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()]
+                 ThisUserFO_periods.rows := [$ThisUserFO_periods.rows$->select(false)]
+                 ThisUserFO_periods.rows := [$EditUserPeriodsWI.thisUser$.periods->sortedBy(start)->reverse()]
+            }
+            catch (SecurityException) { 
+                notification(['Message'], ['Sorry. This period contains selections that can not be deleted'], [-1])
+            }
+        }
+        }
+        }
+        }
+        }
+    }
+
+Button BackBU {
+    String text := ['Back']
+    event onClick { back }
+}
+
+event onChange(ThisUserFO_periods.selected) {
+    if [not($ThisUserFO_periods.selected$->oclIsUndefined())]
+       { if [$ThisUserFO_periods.selected$->size() = 1]
+            { #refresh UpdatePeriodFO # }
+         else { if [$ThisUserFO_periods.selected$->size() > 1]
+               { notification(['Error'], ['Please, select at most one period.'], [0]) }}
+    }
+    else { #refresh UpdatePeriodFO # }
+}
+
+
+}
