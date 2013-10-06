@@ -19,7 +19,7 @@ entity User {
     // associations
     Set(DailyMealSelection) dailyMeals oppositeTo selectedBy
     Set(Residency) periods oppositeTo ownedBy
-    Set(PersonalFoodRegime) regimes oppositeTo ownedBy
+    Set(Residency) regimes oppositeTo ownedByRegime
 }
 
 entity Guest {
@@ -33,8 +33,9 @@ entity Residency {
     LocalDateTime start
     LocalDateTime end
     User ownedBy oppositeTo periods
+    User ownedByRegime oppositeTo regimes
+    FoodRegime regime oppositeTo ownedBy
     MealOption ownedByOption oppositeTo periodsOption
-    PersonalFoodRegime ownedByRegime oppositeTo period
     Set(MealOptionDeadline) deadlines oppositeTo ownedBy
 }
 
@@ -56,24 +57,16 @@ entity MealSelection {
     DailyMealSelection ownedBy oppositeTo selections
 }
 
-entity PersonalFoodRegime {
-    // associations
-    // 0..1
-    User ownedBy oppositeTo regimes
-    // 0..1
-    FoodRegime regime oppositeTo residents
-    // 0..1
-    Residency period oppositeTo ownedByRegime
-}
 
 entity FoodRegime {
     String name
     String description
     // associations
-    Set(PersonalFoodRegime) residents oppositeTo regime
+    Set(Residency) ownedBy oppositeTo regime
 }
 
 entity MealOption {
+    String initial
     String literal
     // associations
     // 0..1
