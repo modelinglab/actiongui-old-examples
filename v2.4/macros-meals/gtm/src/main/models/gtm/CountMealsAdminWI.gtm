@@ -78,6 +78,21 @@ Window CountMealsAdminWI {
                             }
                         }
                     }
+                    ['Regimes'] : Table RegimesTB {
+                                    Set(FoodRegime) rows :=
+[FoodRegime.allInstances()->select(f|$MealsTA.selections$->select(ms| ms.meal = $MealsTA.row$ and ms.mealOption = $MealOptions.row$).ownedBy.selectedBy.regimes
+->select(r|r.start <= $DateDF.value$.toLocalDate().atStartOfDay() and r.end >= $DateDF.value$.toLocalDate().atStartOfDay()).regime->asSet()->includes(f))]
+                                    columns {
+                                        ['Name'] : Label Name { String text := [$RegimesTB.row$.name] }
+                                        ['Total'] : Label Total 
+                                            {
+                                            String text := 
+[$MealsTA.selections$->select(ms| ms.meal = $MealsTA.row$ and ms.mealOption = $MealOptions.row$).ownedBy.selectedBy.regimes
+->select(r|r.start <= $DateDF.value$.toLocalDate().atStartOfDay() and r.end >= $DateDF.value$.toLocalDate().atStartOfDay()).regime->select(r|r = $RegimesTB.row$)->size().toString()]
+                                            }
+                                    }
+
+                    }
                 }
             }     
         }
