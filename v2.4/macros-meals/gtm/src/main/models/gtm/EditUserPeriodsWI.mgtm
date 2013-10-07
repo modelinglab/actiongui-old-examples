@@ -9,9 +9,9 @@ Window EditUserPeriodsWI {
             column: start 
             column: end
         }
-}#
-
-
+    }#
+    
+    
 #form NewPeriodFO {
     entity: Residency
     prop: start {label: ['Start: ']}
@@ -32,8 +32,8 @@ Button CreatePeriodBU {
                         assert: [$NewPeriodFO_start.value$ <= $NewPeriodFO_end.value$]
                         {message: ['Please, select an ending date that is later or equal than the starting date']
                         assert: [$EditUserPeriodsWI.thisUser$.periods->select(p|
-                                    ($NewPeriodFO_start.value$ <= p.start and $NewPeriodFO_end.value$ >= p.start)
-                                    or ($NewPeriodFO_start.value$ > p.start and $NewPeriodFO_start.value$ <= p.end))
+                                    ($NewPeriodFO_start.value$.toLocalDate().atStartOfDay() <= p.start.toLocalDate().atStartOfDay() and $NewPeriodFO_end.value$.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay())
+                                    or ($NewPeriodFO_start.value$.toLocalDate().atStartOfDay() > p.start.toLocalDate().atStartOfDay() and $NewPeriodFO_start.value$.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay()))
                                 ->isEmpty()]
                             {message: ['The selected period overlaps with one or more existing periods. Please, change either the starting or the ending date']
                                 }} } }
@@ -60,7 +60,7 @@ Button DeletePeriodBU {
             thisPeriod := [$EditUserPeriodsWI.ThisUserFO_periods.selected$->any(true)]
             try {
                 foreach selection in 
-    [$EditUserPeriodsWI.thisUser$.dailyMeals->select(d|d.date >= $thisPeriod$.start and d.date <= $thisPeriod$.end).selections] {
+    [$EditUserPeriodsWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $thisPeriod$.start.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $thisPeriod$.end.toLocalDate().atStartOfDay()).selections] {
                     delete [$selection$] }
                  delete [$thisPeriod$]
                  #refresh ThisUserFO #
@@ -94,32 +94,39 @@ Residency thisPeriod
             if [$UpdatePeriodFO_start.value$.oclIsUndefined()]
                 { notification(['Error'], ['Please, select first a starting date'], [0]) }
             else {
-                if [$UpdatePeriodFO_end.value$.oclIsUndefined()]
-                    { notification(['Error'], ['Please, select first a ending date'], [0]) }
+                if [$UpdatePeriodFO_end.value$.oclIsUndefined()] {
+                    notification(['Error'], ['Please, select first an ending date'], [0])
+                }
                 else {
-                    if [$EditUserPeriodsWI.thisUser$.periods->select(p|
-                                    p <> $thisPeriod$ and
-                                    (($UpdatePeriodFO_start.value$ <= p.start and $UpdatePeriodFO_end.value$ >= p.start)
-                                    or ($UpdatePeriodFO_start.value$ > p.start and $UpdatePeriodFO_start.value$ <= p.end)))
-                                ->notEmpty()]
-                        { notification(['Error'], ['The selected period overlaps with one or more existing periods. Please, change either the starting or the ending date'], [0]) }
-                    else {
-                    try {
-                    foreach selection in 
-    [$EditUserPeriodsWI.thisUser$.dailyMeals->select(d|d.date >= $thisPeriod$.start and d.date <= $thisPeriod$.end)->select(d|d.date < $UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay()  or d.date > $UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()).selections] {
-                    delete [$selection$] }
-                 [$thisPeriod$.start] := [$UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay()]
-                 [$thisPeriod$.end] := [$UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()]
-                 ThisUserFO_periods.rows := [$ThisUserFO_periods.rows$->select(false)]
-                 ThisUserFO_periods.rows := [$EditUserPeriodsWI.thisUser$.periods->sortedBy(start)->reverse()]
-                 thisPeriod := [null]
+                    if [$UpdatePeriodFO_start.value$ > $UpdatePeriodFO_end.value$] {
+                        notification(['Error'], ['Please, select an ending date that is later or equal than the starting date'], [0])
+                    }
+                    else {  
+                        if [$EditUserPeriodsWI.thisUser$.periods->select(p|
+                                        p <> $thisPeriod$ and
+                                        (($UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay() <= p.start.toLocalDate().atStartOfDay() and $UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay())
+                                        or ($UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay() > p.start.toLocalDate().atStartOfDay() and $UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())))
+                                    ->notEmpty()] {
+                            notification(['Error'], ['The selected period overlaps with one or more existing periods. Please, change either the starting or the ending date'], [0]) }
+                        else {  
+                            try {
+                                // foreach selection in [$EditUserPeriodsWI.thisUser$.dailyMeals->select(d|d.date >= $thisPeriod$.start and d.date <= $thisPeriod$.end)->select(d|d.date < $UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay()  or d.date > $UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()).selections] {
+                                foreach selection in [$EditUserPeriodsWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $thisPeriod$.start.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $thisPeriod$.end.toLocalDate().atStartOfDay()).selections->asSet() - $EditUserPeriodsWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()).selections->asSet()] {
+                                    delete [$selection$]
+                                }
+                                [$thisPeriod$.start] := [$UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay()]
+                                [$thisPeriod$.end] := [$UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()]
+                                ThisUserFO_periods.rows := [$ThisUserFO_periods.rows$->select(false)]
+                                ThisUserFO_periods.rows := [$EditUserPeriodsWI.thisUser$.periods->sortedBy(start)->reverse()]
+                                thisPeriod := [null]
+                            }
+                            catch (SecurityException) { 
+                                notification(['Message'], ['Sorry. This period contains selections that can not be deleted'], [-1])
+                            }
+                        }
+                    }
+                }               
             }
-            catch (SecurityException) { 
-                notification(['Message'], ['Sorry. This period contains selections that can not be deleted'], [-1])
-            }
-            }
-        }
-        }
         }
         }
         }
