@@ -53,6 +53,7 @@ entity DailyMealSelection {
 entity MealSelection {
     Meal meal
     MealOption mealOption
+    FoodRegime foodRegime
     // 0..1
     DailyMealSelection ownedBy oppositeTo selections
 }
