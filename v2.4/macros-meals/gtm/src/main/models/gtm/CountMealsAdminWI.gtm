@@ -56,7 +56,7 @@ Window CountMealsAdminWI {
                     ['Count'] : Label Count {
                         String text := [$MealsTA.selections$->select(ms| ms.meal = $MealsTA.row$ and ms.mealOption = $MealOptions.row$)->size().toString()]
                     }
-                    ['Status'] : Label Status {
+                    ['Status'] : Label Status {                       
                         LocalDateTime selectedDate := [if $DateDF.value$.oclIsUndefined() then LocalDateTime.now($CountMealsAdminWI.zone$) else $DateDF.value$ endif]
                         LocalDateTime nowDate := [LocalDateTime.now($CountMealsAdminWI.zone$)]
                         Residency period := [$MealOptions.row$.periodsOption->any(p|p.start.toLocalDate().atStartOfDay() <= $selectedDate$.toLocalDate().atStartOfDay() and p.end.toLocalDate().atStartOfDay() >= $selectedDate$.toLocalDate().atStartOfDay())]
@@ -79,17 +79,20 @@ Window CountMealsAdminWI {
                         }
                     }
                     ['Regimes'] : Table RegimesTB {
-                                    Set(FoodRegime) rows :=
-[FoodRegime.allInstances()->select(f|$MealsTA.selections$->select(ms| ms.meal = $MealsTA.row$ and ms.mealOption = $MealOptions.row$).ownedBy.selectedBy.regimes
-->select(r|r.start.toLocalDate().atStartOfDay() <= $DateDF.value$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $DateDF.value$.toLocalDate().atStartOfDay()).regime->asSet()->includes(f))]
+                                    LocalDateTime selectedDate := [if $DateDF.value$.oclIsUndefined() then LocalDateTime.now($CountMealsAdminWI.zone$) else $DateDF.value$ endif]
+                                    Bag(FoodRegime) allFoodRegimes := [MealSelection.allInstances()->select(ms|ms.mealOption = $MealOptions.row$ and ms.ownedBy.date.toLocalDate().atStartOfDay() = $selectedDate$.toLocalDate().atStartOfDay()).foodRegime->reject(fr|fr.oclIsUndefined())]
+                                    Set(FoodRegime) rows := [$allFoodRegimes$->asSet()]
+//[FoodRegime.allInstances()->select(f|$MealsTA.selections$->select(ms| ms.meal = $MealsTA.row$ and ms.mealOption = $MealOptions.row$).ownedBy.selectedBy.regimes
+//->select(r|r.start.toLocalDate().atStartOfDay() <= $DateDF.value$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $DateDF.value$.toLocalDate().atStartOfDay()).regime->asSet()->includes(f))]
                                     columns {
-                                        ['Name'] : Label Name { String text := [$RegimesTB.row$.name] }
-                                        ['Total'] : Label Total 
-                                            {
-                                            String text := 
-[$MealsTA.selections$->select(ms| ms.meal = $MealsTA.row$ and ms.mealOption = $MealOptions.row$).ownedBy.selectedBy.regimes
-->select(r|r.start.toLocalDate().atStartOfDay() <= $DateDF.value$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $DateDF.value$.toLocalDate().atStartOfDay()).regime->select(r|r = $RegimesTB.row$)->size().toString()]
-                                            }
+                                        ['Name'] : Label Name {
+                                            String text := [$RegimesTB.row$.name]
+                                        }
+                                        ['Total'] : Label Total {
+                                            String text := [$RegimesTB.allFoodRegimes$->select(fr|fr = $RegimesTB.row$)->size().toString()]
+//[$MealsTA.selections$->select(ms| ms.meal = $MealsTA.row$ and ms.mealOption = $MealOptions.row$).ownedBy.selectedBy.regimes
+//->select(r|r.start.toLocalDate().atStartOfDay() <= $DateDF.value$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $DateDF.value$.toLocalDate().atStartOfDay()).regime->select(r|r = $RegimesTB.row$)->size().toString()]
+                                        }
                                     }
 
                     }
