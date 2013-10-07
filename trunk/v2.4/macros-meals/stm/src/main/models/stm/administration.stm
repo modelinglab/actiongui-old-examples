@@ -163,6 +163,31 @@ role RESIDENT {
                                 )
                             )
                     ]
+        update(foodRegime) constrainedBy [
+                    let 
+                        mealDate    : LocalDateTime = self.ownedBy.date,
+                        now         : LocalDateTime = LocalDateTime.now(Residence.allInstances()->any(true).zone)
+                    in
+                        self.ownedBy.selectedBy = caller
+                        and mealDate >= now
+                        and (if not(self.mealOption.oclIsUndefined())
+                             then self.mealOption.periodsOption->exists(p|
+                                p.start <= mealDate 
+                                and p.end >= mealDate
+                                and p.deadlines->exists(q|
+                                    q.days->includes(mealDate.getDayOfWeek())
+                                    and 
+                                    if now.plusDays(q.cday).toLocalDate() = mealDate.toLocalDate() 
+                                    then now.getHour() < q.chour 
+                                         or (now.getHour() = q.chour and now.getMinute() <= q.cminute)
+                                    else
+                                        now.plusDays(q.cday).toLocalDate().atStartOfDay() < mealDate
+                                    endif)
+                                    )
+                              else true endif)
+
+                        and value.ownedBy->exists(p|p.ownedByRegime = self.ownedBy.selectedBy and p.start.toLocalDate().atStartOfDay() <= mealDate.toLocalDate().atStartOfDay() and p.end.toLocalDate().atStartOfDay() >= mealDate.toLocalDate().atStartOfDay())
+                    ]            
     }
     Residency {
         fullAccess
