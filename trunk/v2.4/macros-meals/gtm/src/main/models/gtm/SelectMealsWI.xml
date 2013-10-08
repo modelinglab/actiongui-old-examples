@@ -19,25 +19,25 @@
     <ns1:entry>
         <ns1:line-layout orientation="horizontal">
             <ns1:entry>
-            <ns1:widget ns1:id="firstDayThisWeekLB" ns1:height="30px"></ns1:widget>
+            <ns1:widget ns1:id="firstDayThisWeekLB" ns1:height="20px"></ns1:widget>
             </ns1:entry>
             <ns1:entry>
-            <ns1:widget ns1:id="secondDayThisWeekLB" ns1:height="30px"></ns1:widget>
+            <ns1:widget ns1:id="secondDayThisWeekLB" ns1:height="20px"></ns1:widget>
             </ns1:entry>
             <ns1:entry>
-            <ns1:widget ns1:id="thirdDayThisWeekLB" ns1:height="30px"></ns1:widget>
+            <ns1:widget ns1:id="thirdDayThisWeekLB" ns1:height="20px"></ns1:widget>
             </ns1:entry>
             <ns1:entry>
-            <ns1:widget ns1:id="fourthDayThisWeekLB" ns1:height="30px"></ns1:widget>
+            <ns1:widget ns1:id="fourthDayThisWeekLB" ns1:height="20px"></ns1:widget>
             </ns1:entry>
             <ns1:entry>
-            <ns1:widget ns1:id="fifthDayThisWeekLB" ns1:height="30px"></ns1:widget>
+            <ns1:widget ns1:id="fifthDayThisWeekLB" ns1:height="20px"></ns1:widget>
             </ns1:entry>
             <ns1:entry>
-            <ns1:widget ns1:id="sixthDayThisWeekLB" ns1:height="30px"></ns1:widget>
+            <ns1:widget ns1:id="sixthDayThisWeekLB" ns1:height="20px"></ns1:widget>
             </ns1:entry>
             <ns1:entry>
-            <ns1:widget ns1:id="seventhDayThisWeekLB" ns1:height="30px"></ns1:widget>
+            <ns1:widget ns1:id="seventhDayThisWeekLB" ns1:height="20px"></ns1:widget>
             </ns1:entry>
         </ns1:line-layout>             
     </ns1:entry>
@@ -45,25 +45,25 @@
      <ns1:entry>
             <ns1:table ns1:id="WeekMealsTB" ns1:height="150px" ns1:width="auto">
                 <ns1:column>
-                    <ns1:widget  ns1:id="FirstCB" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                    <ns1:widget  ns1:id="Sunday" ns1:height="30px" ns1:width="80px"></ns1:widget>
                 </ns1:column>
                 <ns1:column>
-                    <ns1:widget  ns1:id="SecondCB" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                    <ns1:widget  ns1:id="Monday" ns1:height="30px" ns1:width="80px"></ns1:widget>
                 </ns1:column>
                 <ns1:column>
-                    <ns1:widget  ns1:id="ThirdCB" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                    <ns1:widget  ns1:id="Tuesday" ns1:height="30px" ns1:width="80px"></ns1:widget>
                 </ns1:column>
                 <ns1:column>
-                    <ns1:widget  ns1:id="FourthCB" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                    <ns1:widget  ns1:id="Wednesday" ns1:height="30px" ns1:width="80px"></ns1:widget>
                 </ns1:column>
                 <ns1:column>
-                    <ns1:widget  ns1:id="FifthCB" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                    <ns1:widget  ns1:id="Thursday" ns1:height="30px" ns1:width="80px"></ns1:widget>
                 </ns1:column>
                 <ns1:column>
-                    <ns1:widget  ns1:id="SixthCB" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                    <ns1:widget  ns1:id="Friday" ns1:height="30px" ns1:width="80px"></ns1:widget>
                 </ns1:column>
                 <ns1:column>
-                    <ns1:widget  ns1:id="SeventhCB" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                    <ns1:widget  ns1:id="Saturday" ns1:height="30px" ns1:width="80px"></ns1:widget>
                 </ns1:column>
            </ns1:table>
      </ns1:entry>
