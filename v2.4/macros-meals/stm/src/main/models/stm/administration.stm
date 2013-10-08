@@ -186,7 +186,13 @@ role RESIDENT {
                                     )
                               else true endif)
 
-                        and value.ownedBy->exists(p|p.ownedByRegime = self.ownedBy.selectedBy and p.start.toLocalDate().atStartOfDay() <= mealDate.toLocalDate().atStartOfDay() and p.end.toLocalDate().atStartOfDay() >= mealDate.toLocalDate().atStartOfDay())
+                        and (
+                            if value.oclIsUndefined() then
+                                true
+                            else
+                                value.ownedBy->exists(p|p.ownedByRegime = self.ownedBy.selectedBy and p.start.toLocalDate().atStartOfDay() <= mealDate.toLocalDate().atStartOfDay() and p.end.toLocalDate().atStartOfDay() >= mealDate.toLocalDate().atStartOfDay())
+                            endif
+                        )
                     ]            
     }
     Residency {
