@@ -46,8 +46,8 @@ Button CreatePeriodBU {
                         assert: [$NewPeriodFO_start.value$ <= $NewPeriodFO_end.value$]
                         {message: ['Please, select an ending date that is later or equal than the starting date']
                         assert: [$EditUserRegimenesWI.thisUser$.regimes->select(p|
-                                    ($NewPeriodFO_start.value$ <= p.start and $NewPeriodFO_end.value$ >= p.start)
-                                    or ($NewPeriodFO_start.value$ > p.start and $NewPeriodFO_start.value$ <= p.end))
+                                    ($NewPeriodFO_start.value$.toLocalDate().atStartOfDay() <= p.start.toLocalDate().atStartOfDay() and $NewPeriodFO_end.value$.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay())
+                                    or ($NewPeriodFO_start.value$.toLocalDate().atStartOfDay() > p.start.toLocalDate().atStartOfDay() and $NewPeriodFO_start.value$.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay()))
                                 ->isEmpty()]
                             {message: ['The selected period overlaps with one or more existing regimes. Please, change either the starting or the ending date']
                              assert : [not($FoodRegimesCB.selected$.oclIsUndefined())]
@@ -77,11 +77,14 @@ Button DeletePeriodBU {
         else {
             thisPeriod := [$EditUserRegimenesWI.ThisUserRegimesTB.selected$->any(true)]
             try {
-                 delete [$thisPeriod$]
-                 reevaluate ThisUserRegimesTB.rows
+                foreach selection in [$EditUserRegimenesWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $thisPeriod$.start.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $thisPeriod$.end.toLocalDate().atStartOfDay()).selections] {
+                  delete [$selection$]  
+                }
+                delete [$thisPeriod$]
+                reevaluate ThisUserRegimesTB.rows
             }
             catch (SecurityException) { 
-                notification(['Message'], ['Sorry. You are not authorized to perform this action'], [-1])
+                notification(['Message'], ['Sorry. This period contains selections that can not be deleted'], [-1])
             }
         }
     }
@@ -99,43 +102,52 @@ Button ModifyPeriodBU {
 Residency thisPeriod
     String text := ['Update']
     event onClick {
-    if [$EditUserRegimenesWI.ThisUserRegimesTB.selected$->oclIsUndefined()]
-        { notification(['Error'], ['Please, select first a period'], [0]) }
-    else { 
-        if [$EditUserRegimenesWI.ThisUserRegimesTB.selected$->size() <> 1]
-           { notification(['Error'], ['Please, select first a period'], [0]) }
-        else {
-            thisPeriod := [$EditUserRegimenesWI.ThisUserRegimesTB.selected$->any(true)]
-            if [$UpdatePeriodFO_start.value$.oclIsUndefined()]
-                { notification(['Error'], ['Please, select first a starting date'], [0]) }
+        if [$EditUserRegimenesWI.ThisUserRegimesTB.selected$->oclIsUndefined()]
+            { notification(['Error'], ['Please, select first a period'], [0]) }
+        else { 
+            if [$EditUserRegimenesWI.ThisUserRegimesTB.selected$->size() <> 1]
+               { notification(['Error'], ['Please, select first a period'], [0]) }
             else {
-                if [$UpdatePeriodFO_end.value$.oclIsUndefined()]
-                    { notification(['Error'], ['Please, select first a ending date'], [0]) }
-                else { 
-                    if [$EditUserRegimenesWI.thisUser$.regimes->select(p|
-                                    p <> $thisPeriod$ and
-                                    (($UpdatePeriodFO_start.value$ <= p.start and $UpdatePeriodFO_end.value$ >= p.start)
-                                    or ($UpdatePeriodFO_start.value$ > p.start and $UpdatePeriodFO_start.value$ <= p.end)))
-                                ->notEmpty()]
-                        { notification(['Error'], ['The selected period overlaps with one or more existing regimes. Please, change either the starting or the ending date'], [0]) }
-                    else {
-                    try {
-                 [$thisPeriod$.start] := [$UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay()]
-                 [$thisPeriod$.end] := [$UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()]
-                 ThisUserRegimesTB.rows := [$ThisUserRegimesTB.rows$->select(false)]
-                 ThisUserRegimesTB.rows := [$EditUserRegimenesWI.thisUser$.regimes->sortedBy(start)->reverse()]
-                 thisPeriod := [null]
+                thisPeriod := [$EditUserRegimenesWI.ThisUserRegimesTB.selected$->any(true)]
+                if [$UpdatePeriodFO_start.value$.oclIsUndefined()]
+                    { notification(['Error'], ['Please, select first a starting date'], [0]) }
+                else {
+                    if [$UpdatePeriodFO_end.value$.oclIsUndefined()]
+                        { notification(['Error'], ['Please, select first a ending date'], [0]) }
+                    else { 
+                        if [$UpdatePeriodFO_start.value$ > $UpdatePeriodFO_end.value$] {
+                            notification(['Error'], ['Please, select an ending date that is later or equal than the starting date'], [0])
+                        }
+                        else {
+                            if [$EditUserRegimenesWI.thisUser$.regimes->select(p|
+                                            p <> $thisPeriod$ and
+                                            (($UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay() <= p.start.toLocalDate().atStartOfDay() and $UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay())
+                                            or ($UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay() > p.start.toLocalDate().atStartOfDay() and $UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())))
+                                        ->notEmpty()] {
+                                notification(['Error'], ['The selected period overlaps with one or more existing regimes. Please, change either the starting or the ending date'], [0])
+                            }
+                            else {
+                                try {
+                                    foreach selection in [$EditUserRegimenesWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $thisPeriod$.start.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $thisPeriod$.end.toLocalDate().atStartOfDay()).selections->asSet() - $EditUserRegimenesWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()).selections->asSet()] {
+                                        delete [$selection$]
+                                    }
+                                    [$thisPeriod$.start] := [$UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay()]
+                                    [$thisPeriod$.end] := [$UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()]
+                                    ThisUserRegimesTB.rows := [$ThisUserRegimesTB.rows$->select(false)]
+                                    ThisUserRegimesTB.rows := [$EditUserRegimenesWI.thisUser$.regimes->sortedBy(start)->reverse()]
+                                    thisPeriod := [null]
+                                }
+                                catch (SecurityException) { 
+                                    notification(['Message'], ['Sorry. This period contains selections that can not be deleted'], [-1])
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            catch (SecurityException) { 
-                notification(['Message'], ['Sorry. You are not authorized to perform this action'], [-1])
-            }
-        }
-        }
-        }
-        }
-        }
         }
     }
+}
 
 Button BackBU {
     String text := ['Back']
