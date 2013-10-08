@@ -7,6 +7,7 @@ Window ConfigurationWI {
 
     #table Meals_T {
         entity : Meal
+
         column : literal {
                     label : ['Meal']
                 }
@@ -73,6 +74,9 @@ Window ConfigurationWI {
     #table Meal_Options_T {
         entity : MealOption
         rows : [$Meals_T.selected$.options]
+        column : initial {
+                   label : ['Initial']
+                }
         column : literal {
                     label : ['Option']
                     }
@@ -83,7 +87,8 @@ Window ConfigurationWI {
 
     #form NewOptionFO {
         entity: MealOption
-        prop: literal {label : ['Meal: ']}
+        prop: initial {label : ['Initial: ']}
+        prop: literal {label : ['Option: ']}
     }#
 
     Button NewOptionBU {
@@ -103,7 +108,9 @@ Window ConfigurationWI {
                         {message: ['NO3: Please, write the name of the new option']
                           assert : [not($Meals_T.selected$.options->exists(o|o.literal = $NewOptionFO_literal.text$))]
                           {message: ['NO4: There is already an option for this meal with this name. Please, choose a different name']
-                            } } } } }
+                          assert : [not($Meals_T.selected$.options->exists(o|o.initial = $NewOptionFO_initial.text$))]
+                          {message: ['NO4: There is already an option for this meal with theseintials. Please, choose different initials']
+                            } } } } } }
             }#
             if [not($newOption$.oclIsUndefined())] {
                 [$newOption$.ownedBy] := [$Meals_T.selected$->any(true)]
@@ -115,11 +122,19 @@ Window ConfigurationWI {
 
     }
 
+    #form EditInitialFO {
+        entity: MealOption
+        instance: [$Meal_Options_T.selected$->any(true)]
+        prop: initial {label : ['Initial: ']}
+    }#
+
     #form EditOptionFO {
-        entity: Meal
+        entity: MealOption
         instance: [$Meal_Options_T.selected$->any(true)]
         prop: literal {label : ['Option: ']}
     }#
+
+
 
     Button EditOptionBU {
         String text := ['Change name']

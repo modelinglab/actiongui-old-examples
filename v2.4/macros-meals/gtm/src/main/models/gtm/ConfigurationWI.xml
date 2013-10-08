@@ -78,6 +78,9 @@ and open the template in the editor.
                 <ns1:entry>
                     <ns1:table ns1:id="Meal_Options_T" ns1:height="200px" ns1:width="300px">
                         <ns1:column>
+                            <ns1:widget ns1:id="initial" ns1:height="30px"></ns1:widget>
+                        </ns1:column>
+                        <ns1:column>
                             <ns1:widget ns1:id="literal" ns1:height="30px"></ns1:widget>
                         </ns1:column>
                     </ns1:table>
@@ -97,29 +100,34 @@ and open the template in the editor.
                 </ns1:entry>
                 <!-- New Option -->
                 <ns1:entry>
+                    <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto">
+                    <ns1:entry>
                     <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
+                         <ns1:entry>
+                            <ns1:widget ns1:id="NewOptionFO_initial_L" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                        </ns1:entry>
+                        <ns1:entry>
+                            <ns1:widget ns1:id="NewOptionFO_initial" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                        </ns1:entry>
+                    </ns1:line-layout>
+                    </ns1:entry>
+                    <ns1:entry>
+                    <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
+                         <ns1:entry>
+                            <ns1:widget ns1:id="NewOptionFO_literal_L" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                        </ns1:entry>
                         <ns1:entry>
                             <ns1:widget ns1:id="NewOptionFO_literal" ns1:height="30px" ns1:width="120px"></ns1:widget>
                         </ns1:entry>
-                        <ns1:entry>
+                    </ns1:line-layout>
+                    </ns1:entry>
+                    <ns1:entry>
                             <ns1:widget ns1:id="NewOptionBU" ns1:height="30px" ns1:width="100px"></ns1:widget>
-                        </ns1:entry>  
+                    </ns1:entry>  
                     </ns1:line-layout>
                 </ns1:entry>
                 <!-- END New Option -->  
-                <!-- Edit Option -->
-                <ns1:entry>
-                    <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
-                        <ns1:entry>
-                            <ns1:widget ns1:id="EditOptionFO_literal" ns1:height="30px" ns1:width="120px"></ns1:widget>
-                        
-                        </ns1:entry>
-                        <ns1:entry>
-                            <ns1:widget ns1:id="EditOptionBU" ns1:height="30px" ns1:width="100px"></ns1:widget>
-                        </ns1:entry>  
-                    </ns1:line-layout>
-                </ns1:entry>
-                <!-- END Edit Option --> 
+               
             </ns1:line-layout>
         </ns1:entry>  
         
