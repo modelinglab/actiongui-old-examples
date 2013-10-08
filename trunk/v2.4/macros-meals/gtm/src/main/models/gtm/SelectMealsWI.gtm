@@ -98,10 +98,7 @@ Window SelectMealsWI  {
                                         else {
                                             if [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).mealOption <> $selected$]
                                              { [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).mealOption] := [$selected$]
-                                                // if the user has a food regime for this day, add the food regime to the meal selection
-                                                if [$SelectMealsWI.caller$.regimes->exists(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay())] {
-                                                    [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).foodRegime] := [$currentFoodRegime$]
-                                                }
+                                                [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).foodRegime] := [$currentFoodRegime$]
                                              }
                                         }
                                     }
@@ -123,13 +120,16 @@ Window SelectMealsWI  {
                                             }
                                  }
                            } 
-                          catch (SecurityException) { 
-                                    reevaluate selected
-                                    notification(['MESSAGE'], ['UNAUTHORIZED'], [-1]) 
-                                    }
+                            catch (SecurityException) { 
+                                reevaluate selected
+                                notification(['MESSAGE'], ['UNAUTHORIZED'], [-1]) 
+                            }
+                            /*
                            catch (Exception) { 
                                     reevaluate selected
-                                    notification(['MESSAGE'], ['EXCEPTION'], [-1]) }                        
+                                    notification(['MESSAGE'], ['EXCEPTION'], [-1])
+                            }        
+                            */
                            }
                     }
         ['Second'] : ComboBox Monday {
@@ -166,10 +166,8 @@ Window SelectMealsWI  {
                                         else {
                                             if [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).mealOption <> $selected$]
                                              { [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).mealOption] := [$selected$]
-                                                // if the user has a food regime for this day, add the food regime to the meal selection
-                                                if [$SelectMealsWI.caller$.regimes->exists(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay())] {
-                                                    [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).foodRegime] := [$currentFoodRegime$]
-                                                }
+                                                [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).foodRegime] := [$currentFoodRegime$]
+
                                              }
                                         }
                                     }
@@ -237,10 +235,8 @@ Window SelectMealsWI  {
                                         else {
                                             if [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).mealOption <> $selected$]
                                              { [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).mealOption] := [$selected$]
-                                                // if the user has a food regime for this day, add the food regime to the meal selection
-                                                if [$SelectMealsWI.caller$.regimes->exists(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay())] {
-                                                    [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).foodRegime] := [$currentFoodRegime$]
-                                                }
+                                                [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).foodRegime] := [$currentFoodRegime$]
+
                                             }
                                         }
                                     }
@@ -306,10 +302,8 @@ Window SelectMealsWI  {
                                         else {
                                             if [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).mealOption <> $selected$]
                                              { [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).mealOption] := [$selected$]
-                                                // if the user has a food regime for this day, add the food regime to the meal selection
-                                                if [$SelectMealsWI.caller$.regimes->exists(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay())] {
-                                                    [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).foodRegime] := [$currentFoodRegime$]
-                                                }
+                                                [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).foodRegime] := [$currentFoodRegime$]
+
                                             }
                                         }
                                     }
@@ -375,10 +369,8 @@ Window SelectMealsWI  {
                                         else {
                                             if [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).mealOption <> $selected$]
                                              { [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).mealOption] := [$selected$]
-                                                // if the user has a food regime for this day, add the food regime to the meal selection
-                                                if [$SelectMealsWI.caller$.regimes->exists(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay())] {
-                                                    [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).foodRegime] := [$currentFoodRegime$]
-                                                }
+                                                [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).foodRegime] := [$currentFoodRegime$]
+
                                             }
                                         }
                                     }
@@ -444,10 +436,8 @@ Window SelectMealsWI  {
                                         else {
                                             if [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).mealOption <> $selected$]
                                              { [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).mealOption] := [$selected$]
-                                                // if the user has a food regime for this day, add the food regime to the meal selection
-                                                if [$SelectMealsWI.caller$.regimes->exists(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay())] {
-                                                    [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).foodRegime] := [$currentFoodRegime$]
-                                                }
+                                                [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).foodRegime] := [$currentFoodRegime$]
+
                                             }
                                         }
                                     }
@@ -513,10 +503,8 @@ Window SelectMealsWI  {
                                         else {
                                             if [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).mealOption <> $selected$]
                                              { [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).mealOption] := [$selected$]
-                                                // if the user has a food regime for this day, add the food regime to the meal selection
-                                                if [$SelectMealsWI.caller$.regimes->exists(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay())] {
-                                                    [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).foodRegime] := [$currentFoodRegime$]
-                                                }
+                                                [$SelectMealsWI.caller$.dailyMeals->any(d|d.date.toLocalDate().atStartOfDay()=$thisDate$.toLocalDate().atStartOfDay()).selections->any(s|s.meal = $WeekMealsTB.row$).foodRegime] := [$currentFoodRegime$]
+
                                             }
                                         }
                                     }
