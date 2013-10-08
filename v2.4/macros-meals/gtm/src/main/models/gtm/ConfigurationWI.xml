@@ -10,11 +10,18 @@ and open the template in the editor.
     xmlns:ns1='http://actiongui.org/schemes/ag-layout/2.4'
     xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://www.actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
     <ns1:line-layout orientation="vertical" left-margin="20px" ns1:height="auto">
-        <!--FIRST TABLE MEALS -->
+        <!--FIRST TABLE: Meal -->        
         <ns1:entry>
             <ns1:line-layout orientation="vertical" ns1:height="auto">
                 <ns1:entry>
-                    <ns1:widget ns1:id="Meals_T_page" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                    <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
+                        <ns1:entry>
+                            <ns1:widget ns1:id="Meals_T_page" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                        </ns1:entry>
+                        <ns1:entry>
+                            <ns1:widget ns1:id="mealsLA" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                        </ns1:entry>
+                    </ns1:line-layout>
                 </ns1:entry>
                 <ns1:entry>
                     <ns1:table ns1:id="Meals_T" ns1:height="200px" ns1:width="300px">
@@ -36,44 +43,60 @@ and open the template in the editor.
                             <ns1:widget ns1:id="Meals_T_next_B" ns1:height="30px" ns1:width="100px"></ns1:widget>
                         </ns1:entry>
                     </ns1:line-layout>
-                </ns1:entry>    
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:line-layout orientation="horizontal" ns1:height="10px"></ns1:line-layout>
+                </ns1:entry> 
                 <!-- New Meal -->
                 <ns1:entry>
                     <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
                         <ns1:entry>
-                            <ns1:widget ns1:id="NewMealFO_literal" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                            <ns1:widget ns1:id="NewMealFO_literal_L" ns1:height="30px" ns1:width="100px"></ns1:widget>
                         </ns1:entry>
                         <ns1:entry>
-                            <ns1:widget ns1:id="NewMealBU" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                            <ns1:widget ns1:id="NewMealFO_literal" ns1:height="30px" ns1:width="120px"></ns1:widget>
                         </ns1:entry>  
                     </ns1:line-layout>
                 </ns1:entry>
+                <ns1:entry>
+                    <ns1:widget ns1:id="NewMealBU" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                </ns1:entry>  
                 <!-- END New Meal -->  
+                <ns1:entry>
+                    <ns1:line-layout orientation="horizontal" ns1:height="30px"></ns1:line-layout>
+                </ns1:entry>
                 <!-- Edit Meal -->
                 <ns1:entry>
                     <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
                         <ns1:entry>
+                            <ns1:widget ns1:id="EditMealFO_literal_L" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                        </ns1:entry>
+                         <ns1:entry>
                             <ns1:widget ns1:id="EditMealFO_literal" ns1:height="30px" ns1:width="120px"></ns1:widget>
                         </ns1:entry>
-                        <ns1:entry>
-                            <ns1:widget ns1:id="EditMealBU" ns1:height="30px" ns1:width="100px"></ns1:widget>
-                        </ns1:entry>  
                     </ns1:line-layout>
                 </ns1:entry>
+                <ns1:entry>
+                    <ns1:widget ns1:id="EditMealBU" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                </ns1:entry> 
                 <!-- END Edit Meal --> 
            </ns1:line-layout>
-         </ns1:entry>
-                <!-- 
-                <ns1:entry>
-                    <ns1:line-layout orientation="vertical" ns1:height="30px"></ns1:line-layout>
-                </ns1:entry>
-                -->
- 
-        <!-- SECOND TABLE Options-->
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:line-layout orientation="horizontal" ns1:height="60px"></ns1:line-layout>
+        </ns1:entry> 
+        <!-- SECOND TABLE: Meal Option-->
         <ns1:entry>          
             <ns1:line-layout orientation="vertical" ns1:height="auto">
                 <ns1:entry>
-                    <ns1:widget ns1:id="Meal_Options_T_page" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                    <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
+                        <ns1:entry>
+                            <ns1:widget ns1:id="Meal_Options_T_page" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                        </ns1:entry>
+                        <ns1:entry>
+                            <ns1:widget ns1:id="mealOptionsLA" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                        </ns1:entry>
+                    </ns1:line-layout>
                 </ns1:entry>
                 <ns1:entry>
                     <ns1:table ns1:id="Meal_Options_T" ns1:height="200px" ns1:width="300px">
@@ -98,49 +121,88 @@ and open the template in the editor.
                         </ns1:entry>
                     </ns1:line-layout>
                 </ns1:entry>
-                <!-- New Option -->
+                <ns1:entry>
+                    <ns1:line-layout orientation="horizontal" ns1:height="10px"></ns1:line-layout>
+                </ns1:entry> 
+                <!-- New meal option -->
                 <ns1:entry>
                     <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto">
-                    <ns1:entry>
-                    <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
-                         <ns1:entry>
-                            <ns1:widget ns1:id="NewOptionFO_initial_L" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                        <ns1:entry>
+                            <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
+                                 <ns1:entry>
+                                    <ns1:widget ns1:id="NewOptionFO_initial_L" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="NewOptionFO_initial" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                                </ns1:entry>
+                            </ns1:line-layout>
                         </ns1:entry>
                         <ns1:entry>
-                            <ns1:widget ns1:id="NewOptionFO_initial" ns1:height="30px" ns1:width="120px"></ns1:widget>
-                        </ns1:entry>
-                    </ns1:line-layout>
-                    </ns1:entry>
-                    <ns1:entry>
-                    <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
-                         <ns1:entry>
-                            <ns1:widget ns1:id="NewOptionFO_literal_L" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                            <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
+                                 <ns1:entry>
+                                    <ns1:widget ns1:id="NewOptionFO_literal_L" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="NewOptionFO_literal" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                                </ns1:entry>
+                            </ns1:line-layout>
                         </ns1:entry>
                         <ns1:entry>
-                            <ns1:widget ns1:id="NewOptionFO_literal" ns1:height="30px" ns1:width="120px"></ns1:widget>
-                        </ns1:entry>
-                    </ns1:line-layout>
-                    </ns1:entry>
-                    <ns1:entry>
-                            <ns1:widget ns1:id="NewOptionBU" ns1:height="30px" ns1:width="100px"></ns1:widget>
-                    </ns1:entry>  
+                            <ns1:widget ns1:id="NewOptionBU" ns1:height="30px" ns1:width="150px"></ns1:widget>
+                        </ns1:entry>  
                     </ns1:line-layout>
                 </ns1:entry>
                 <!-- END New Option -->  
-               
+                <ns1:entry>
+                    <ns1:line-layout orientation="horizontal" ns1:height="30px"></ns1:line-layout>
+                </ns1:entry>
+                <!-- Edit meal option -->
+                <ns1:entry>
+                    <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto">
+                        <ns1:entry>
+                            <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
+                                 <ns1:entry>
+                                    <ns1:widget ns1:id="EditOptionFO_initial_L" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="EditOptionFO_initial" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                                </ns1:entry>
+                            </ns1:line-layout>
+                        </ns1:entry>
+                        <ns1:entry>
+                            <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
+                                 <ns1:entry>
+                                    <ns1:widget ns1:id="EditOptionFO_literal_L" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="EditOptionFO_literal" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                                </ns1:entry>
+                            </ns1:line-layout>
+                        </ns1:entry>
+                        <ns1:entry>
+                            <ns1:widget ns1:id="EditOptionBU" ns1:height="30px" ns1:width="150px"></ns1:widget>
+                        </ns1:entry>  
+                    </ns1:line-layout>
+                </ns1:entry>
+                <!-- END Edit meal Option -->
             </ns1:line-layout>
         </ns1:entry>  
-        
-        
-        <!-- THIRD TABLE -->
-        <!-- <ns1:entry>
-            <ns1:widget ns1:id="ShowPeriodsBU"></ns1:widget>
+        <ns1:entry>
+            <ns1:line-layout orientation="horizontal" ns1:height="60px"></ns1:line-layout>
         </ns1:entry>
-        -->
+        
+        <!-- THIRD TABLE: Meal option period -->
         <ns1:entry>          
             <ns1:line-layout orientation="vertical" ns1:height="auto">
                 <ns1:entry>
-                    <ns1:widget ns1:id="ThisOptionPeriodsFO_page" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                    <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
+                        <ns1:entry>
+                            <ns1:widget ns1:id="ThisOptionPeriodsFO_page" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                        </ns1:entry>
+                        <ns1:entry>
+                            <ns1:widget ns1:id="mealOptionPeriodsLA" ns1:width="150px" ns1:height="30px"></ns1:widget>
+                        </ns1:entry>
+                    </ns1:line-layout>
                 </ns1:entry>
                 <ns1:entry>
                     <ns1:table ns1:id="ThisOptionPeriodsFO" ns1:height="100px" ns1:width="300px">
@@ -163,9 +225,10 @@ and open the template in the editor.
                         <ns1:entry>
                             <ns1:widget ns1:id="ThisOptionPeriodsFO_next_B" ns1:height="30px" ns1:width="100px"></ns1:widget>
                         </ns1:entry>
-                        <!-- -->
-                        <!-- -->
                     </ns1:line-layout>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:line-layout orientation="horizontal" ns1:height="10px"></ns1:line-layout>
                 </ns1:entry>
                 <!-- New Option -->
                 <ns1:entry>
@@ -199,8 +262,10 @@ and open the template in the editor.
                 <!-- END New Period -->  
             </ns1:line-layout>
         </ns1:entry>
-        
-        <!-- FOURTH TABLE -->
+        <ns1:entry>
+            <ns1:line-layout orientation="horizontal" ns1:height="60px"></ns1:line-layout>
+        </ns1:entry>
+        <!-- FOURTH TABLE: deadline -->
 
         <ns1:entry>           
             <ns1:line-layout orientation="vertical" bottom-margin="100px" ns1:height="auto">

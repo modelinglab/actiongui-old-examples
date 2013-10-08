@@ -36,25 +36,25 @@ Window SelectMealsWI  {
     }
 
     Label firstDayThisWeekLB {
-        String text := [$SelectMealsWI.selDateWeekFirstDay$.getDayOfWeek().name().concat(' ').concat(($SelectMealsWI.selDateWeekFirstDay$.getDayOfMonth()).toString())]
+        String text := ['DAY '.concat(($SelectMealsWI.selDateWeekFirstDay$.getDayOfMonth()).toString())]
     } 
     Label secondDayThisWeekLB {
-        String text := [$SelectMealsWI.selDateWeekFirstDay$.plusDays(1).getDayOfWeek().name().concat(' ').concat(($SelectMealsWI.selDateWeekFirstDay$.plusDays(1).getDayOfMonth()).toString())]
+        String text := ['DAY '.concat(($SelectMealsWI.selDateWeekFirstDay$.plusDays(1).getDayOfMonth()).toString())]
     } 
     Label thirdDayThisWeekLB {
-        String text := [$SelectMealsWI.selDateWeekFirstDay$.plusDays(2).getDayOfWeek().name().concat(' ').concat(($SelectMealsWI.selDateWeekFirstDay$.plusDays(2).getDayOfMonth()).toString())]
+        String text := ['DAY '.concat(($SelectMealsWI.selDateWeekFirstDay$.plusDays(2).getDayOfMonth()).toString())]
     } 
     Label fourthDayThisWeekLB {
-        String text := [$SelectMealsWI.selDateWeekFirstDay$.plusDays(3).getDayOfWeek().name().concat(' ').concat(($SelectMealsWI.selDateWeekFirstDay$.plusDays(3).getDayOfMonth()).toString())]
+        String text := ['DAY '.concat(($SelectMealsWI.selDateWeekFirstDay$.plusDays(3).getDayOfMonth()).toString())]
     } 
     Label fifthDayThisWeekLB {
-        String text := [$SelectMealsWI.selDateWeekFirstDay$.plusDays(4).getDayOfWeek().name().concat(' ').concat(($SelectMealsWI.selDateWeekFirstDay$.plusDays(4).getDayOfMonth()).toString())]
+        String text := ['DAY '.concat(($SelectMealsWI.selDateWeekFirstDay$.plusDays(4).getDayOfMonth()).toString())]
     } 
     Label sixthDayThisWeekLB {
-        String text := [$SelectMealsWI.selDateWeekFirstDay$.plusDays(5).getDayOfWeek().name().concat(' ').concat(($SelectMealsWI.selDateWeekFirstDay$.plusDays(5).getDayOfMonth()).toString())]
+        String text := ['DAY '.concat(($SelectMealsWI.selDateWeekFirstDay$.plusDays(5).getDayOfMonth()).toString())]
     } 
     Label seventhDayThisWeekLB {
-        String text := [$SelectMealsWI.selDateWeekFirstDay$.plusDays(6).getDayOfWeek().name().concat(' ').concat(($SelectMealsWI.selDateWeekFirstDay$.plusDays(6).getDayOfMonth()).toString())]
+        String text := ['DAY '.concat(($SelectMealsWI.selDateWeekFirstDay$.plusDays(6).getDayOfMonth()).toString())]
     } 
     
 
@@ -64,14 +64,14 @@ Window SelectMealsWI  {
         Set(Meal) rows := [Meal.allInstances()]
         Set(Meal) selected := [null]
         columns {
-        ['First'] : ComboBox FirstCB {
+        ['First'] : ComboBox Sunday {
                             LocalDateTime thisDate := [$SelectMealsWI.selDateWeekFirstDay$]
                             FoodRegime currentFoodRegime := [$SelectMealsWI.caller$.regimes->any(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay()).regime]
                             Set(MealOption) rows := [$WeekMealsTB.row$.options]
                             MealOption selected
 
-                            Label Literal {
-                                String text := [$FirstCB.row$.literal]
+                            Label initial {
+                                String text := [$Sunday.row$.initial]
                                 }
                             
                             event onView (selected) {
@@ -132,14 +132,14 @@ Window SelectMealsWI  {
                                     notification(['MESSAGE'], ['EXCEPTION'], [-1]) }                        
                            }
                     }
-        ['Second'] : ComboBox SecondCB {
+        ['Second'] : ComboBox Monday {
                             LocalDateTime thisDate := [$SelectMealsWI.selDateWeekFirstDay$.plusDays(1)]
                             FoodRegime currentFoodRegime := [$SelectMealsWI.caller$.regimes->any(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay()).regime]
                             Set(MealOption) rows := [$WeekMealsTB.row$.options]
                             MealOption selected
 
-                            Label Literal {
-                                String text := [$SecondCB.row$.literal]
+                            Label initial {
+                                String text := [$Monday.row$.initial]
                                 }
                             
                             event onView (selected) {
@@ -203,14 +203,14 @@ Window SelectMealsWI  {
                     }
                      
                     
-         ['Third'] : ComboBox ThirdCB {
+         ['Third'] : ComboBox Tuesday {
                             LocalDateTime thisDate := [$SelectMealsWI.selDateWeekFirstDay$.plusDays(2)]
                             FoodRegime currentFoodRegime := [$SelectMealsWI.caller$.regimes->any(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay()).regime]
                             Set(MealOption) rows := [$WeekMealsTB.row$.options]
                             MealOption selected
 
-                            Label Literal {
-                                String text := [$ThirdCB.row$.literal]
+                            Label initial {
+                                String text := [$Tuesday.row$.initial]
                                 }
                             
                             event onView (selected) {
@@ -272,14 +272,14 @@ Window SelectMealsWI  {
                            }
                     }
                         
-         ['Fourth'] : ComboBox FourthCB {
+         ['Fourth'] : ComboBox Wednesday {
                             LocalDateTime thisDate := [$SelectMealsWI.selDateWeekFirstDay$.plusDays(3)]
                             FoodRegime currentFoodRegime := [$SelectMealsWI.caller$.regimes->any(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay()).regime]
                             Set(MealOption) rows := [$WeekMealsTB.row$.options]
                             MealOption selected
 
-                            Label Literal {
-                                String text := [$FourthCB.row$.literal]
+                            Label initial {
+                                String text := [$Wednesday.row$.initial]
                                 }
                             
                             event onView (selected) {
@@ -341,14 +341,14 @@ Window SelectMealsWI  {
                            }
                     }
                     
-         ['Fifth'] : ComboBox FifthCB {
+         ['Fifth'] : ComboBox Thursday {
                         LocalDateTime thisDate := [$SelectMealsWI.selDateWeekFirstDay$.plusDays(4)]
                         FoodRegime currentFoodRegime := [$SelectMealsWI.caller$.regimes->any(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay()).regime]
                         Set(MealOption) rows := [$WeekMealsTB.row$.options]
                             MealOption selected
 
-                            Label Literal {
-                                String text := [$FifthCB.row$.literal]
+                            Label initial {
+                                String text := [$Thursday.row$.initial]
                                 }
                             
                             event onView (selected) {
@@ -410,14 +410,14 @@ Window SelectMealsWI  {
                            }
                     }
                     
-          ['Sixth'] : ComboBox SixthCB {
+          ['Sixth'] : ComboBox Friday {
                             LocalDateTime thisDate := [$SelectMealsWI.selDateWeekFirstDay$.plusDays(5)]
                             FoodRegime currentFoodRegime := [$SelectMealsWI.caller$.regimes->any(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay()).regime]
                             Set(MealOption) rows := [$WeekMealsTB.row$.options]
                             MealOption selected
 
-                            Label Literal {
-                                String text := [$SixthCB.row$.literal]
+                            Label initial {
+                                String text := [$Friday.row$.initial]
                                 }
                             
                             event onView (selected) {
@@ -479,14 +479,14 @@ Window SelectMealsWI  {
                            }
                     }
                  
-          ['Seventh'] : ComboBox SeventhCB {
+          ['Seventh'] : ComboBox Saturday {
                             LocalDateTime thisDate := [$SelectMealsWI.selDateWeekFirstDay$.plusDays(6)]
                             FoodRegime currentFoodRegime := [$SelectMealsWI.caller$.regimes->any(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay()).regime]
                             Set(MealOption) rows := [$WeekMealsTB.row$.options]
                             MealOption selected
 
-                            Label Literal {
-                                String text := [$SeventhCB.row$.literal]
+                            Label initial {
+                                String text := [$Saturday.row$.initial]
                                 }
                             
                             event onView (selected) {

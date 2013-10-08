@@ -3,7 +3,11 @@
 - With update-macro, we may need to have a way of knowing whether the update was or not successful
 */
 Window ConfigurationWI {
-    String text := ['Log In']
+    String text := ['Configuration']
+
+    Label mealsLA {
+        String text := ['Meals']
+    }
 
     #table Meals_T {
         entity : Meal
@@ -17,7 +21,9 @@ Window ConfigurationWI {
 
     #form NewMealFO {
         entity: Meal
-        prop: literal {label : ['Meal: ']}
+        prop: literal {
+            label : ['Meal: ']
+        }
     }#
 
     Button NewMealBU {
@@ -44,11 +50,13 @@ Window ConfigurationWI {
     #form EditMealFO {
         entity: Meal
         instance: [$Meals_T.selected$->any(true)]
-        prop: literal {label : ['Meal: ']}
+        prop: literal {
+            label : ['Meal: ']
+        }
     }#
 
     Button EditMealBU {
-        String text := ['Change name']
+        String text := ['Modify meal']
         Meal selectedMeal
         event onClick {
             if [$Meals_T.selected$->oclIsUndefined()]
@@ -71,15 +79,19 @@ Window ConfigurationWI {
             }
     }
 
+    Label mealOptionsLA {
+        String text := ['Meal options']
+    }
+
     #table Meal_Options_T {
         entity : MealOption
         rows : [$Meals_T.selected$.options]
         column : initial {
-                   label : ['Initial']
-                }
+            label : ['Initial']
+         }
         column : literal {
-                    label : ['Option']
-                    }
+            label : ['Literal']
+        }
         size: [10]
         sortedBy: [literal]
     }#
@@ -87,12 +99,16 @@ Window ConfigurationWI {
 
     #form NewOptionFO {
         entity: MealOption
-        prop: initial {label : ['Initial: ']}
-        prop: literal {label : ['Option: ']}
+        prop: initial {
+            label : ['Initial: ']
+        }
+        prop: literal {
+            label : ['Literal: ']
+        }
     }#
 
     Button NewOptionBU {
-        String text := ['New option']
+        String text := ['New meal option']
         MealOption newOption
         event onClick {
             #create {
@@ -105,12 +121,14 @@ Window ConfigurationWI {
                       assert: [not($Meals_T.selected$->size() >1)] 
                       {message: ['NO2: Please, select only one meal']
                         assert: [not($NewOptionFO_literal.text$.oclIsUndefined())]
-                        {message: ['NO3: Please, write the name of the new option']
+                        {message: ['NO3: Please, write the literal of the new option']
+                            assert: [not($NewOptionFO_initial.text$.oclIsUndefined())] {
+                                message: ['NO4: Please, write the initials of the new option']
                           assert : [not($Meals_T.selected$.options->exists(o|o.literal = $NewOptionFO_literal.text$))]
-                          {message: ['NO4: There is already an option for this meal with this name. Please, choose a different name']
+                          {message: ['NO5: There is already an option for this meal with this name. Please, choose a different name']
                           assert : [not($Meals_T.selected$.options->exists(o|o.initial = $NewOptionFO_initial.text$))]
-                          {message: ['NO4: There is already an option for this meal with theseintials. Please, choose different initials']
-                            } } } } } }
+                          {message: ['NO6: There is already an option for this meal with these intials. Please, choose different initials']
+                            } } } } } } }
             }#
             if [not($newOption$.oclIsUndefined())] {
                 [$newOption$.ownedBy] := [$Meals_T.selected$->any(true)]
@@ -122,22 +140,19 @@ Window ConfigurationWI {
 
     }
 
-    #form EditInitialFO {
-        entity: MealOption
-        instance: [$Meal_Options_T.selected$->any(true)]
-        prop: initial {label : ['Initial: ']}
-    }#
-
     #form EditOptionFO {
         entity: MealOption
         instance: [$Meal_Options_T.selected$->any(true)]
-        prop: literal {label : ['Option: ']}
+        prop: initial {
+            label : ['Initial: ']
+        }
+        prop: literal {
+            label : ['Literal: ']
+        }
     }#
 
-
-
     Button EditOptionBU {
-        String text := ['Change name']
+        String text := ['Change meal option']
         MealOption selectedOption
         event onClick {
             if [$Meals_T.selected$->oclIsUndefined()]
@@ -147,23 +162,34 @@ Window ConfigurationWI {
                   else {if [$Meal_Options_T.selected$->oclIsUndefined()]
                            { error := ['Please, select an option first'] }
                         else {if [$Meal_Options_T.selected$->size() = 0 or $Meal_Options_T.selected$->size() > 1]
-                                 { error := ['Please, select exactlty one option'] }
+                                 { error := ['Please, select exactly one option'] }
                               else {
                                 selectedOption := [$Meal_Options_T.selected$->any(true)]
                                 #update {
                                     form: EditOptionFO
-                                    assert: [not($EditOptionFO_literal.text$.oclIsUndefined())]
-                                    {message: ['Please, write the new name of the option']
-                                       assert : [not($Meals_T.selected$->exists(m|m.literal = $EditOptionFO_literal.text$))]
-                                       {message: ['There is already an option for this meal with this name. Please, choose a different name']
-                                       }  }  
+                                    assert: [not($EditOptionFO_literal.text$.oclIsUndefined())] {
+                                        message: ['Please, write the new literal of the option']
+                                        assert : [not($Meals_T.selected$.options->exists(mo|mo.literal = $EditOptionFO_literal.text$))] {
+                                            message: ['There is already an option for this meal with this name. Please, choose a different name']
+                                            assert: [not($EditOptionFO_initial.text$.oclIsUndefined())] {
+                                                message: ['Please, write the new initials of the option']
+                                                assert: [not($Meals_T.selected$.options->exists(mo|mo.initial = $EditOptionFO_initial.text$))] {
+                                                    message: ['There is already an option for this meal with these intials. Please, choose different initials']
+                                                }
+                                            }
+                                        }  
+                                    }  
                                  }#
                                  #refresh Meal_Options_T#
-                                Meal_Options_T.selected := [$selectedOption$->asOrderedSet()]
+                                 Meal_Options_T.selected := [$selectedOption$->asOrderedSet()]
                                 } } } } 
       }
    }
 
+
+Label mealOptionPeriodsLA {
+    String text := ['Meal option periods']
+}
 
 #table ThisOptionPeriodsFO {
     entity: Residency
