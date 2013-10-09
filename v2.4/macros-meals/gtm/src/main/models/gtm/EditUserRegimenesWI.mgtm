@@ -55,15 +55,18 @@ Button CreatePeriodBU {
                             notification(['Message'], ['Please, select first a food regime.'], [-1])
                         }
                         else {
-                            try {
-                                foreach selection in [$EditUserRegimenesWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $NewPeriodFO_start.value$.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $NewPeriodFO_start.value$.toLocalDate().atStartOfDay()).selections] {
-                                    [$selection$.foodRegime] := [$FoodRegimesCB.selected$]
-                                }
+                            try {                                
                                 newPeriod := new Residency
                                 [$newPeriod$.start] := [$NewPeriodFO_start.value$]
                                 [$newPeriod$.end] := [$NewPeriodFO_end.value$]
                                 [$newPeriod$.regime] := [$FoodRegimesCB.selected$]
                                 [$EditUserRegimenesWI.thisUser$.regimes]+= [$newPeriod$]
+
+                                // Check the security after creating the period regim, because of the authorization constraint
+                                foreach selection in [$EditUserRegimenesWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $NewPeriodFO_start.value$.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $NewPeriodFO_end.value$.toLocalDate().atStartOfDay()).selections] {
+                                    [$selection$.foodRegime] := [$FoodRegimesCB.selected$]
+                                }
+
                                 reevaluate ThisUserRegimesTB.rows
                                 #refresh NewPeriodFO#
                                 FoodRegimesCB.selected := [null]
