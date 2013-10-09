@@ -96,7 +96,7 @@ Button DeletePeriodBU {
             thisPeriod := [$EditUserRegimenesWI.ThisUserRegimesTB.selected$->any(true)]
             try {
                 foreach selection in [$EditUserRegimenesWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $thisPeriod$.start.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $thisPeriod$.end.toLocalDate().atStartOfDay()).selections] {
-                  delete [$selection$]  
+                    [$selection$.foodRegime] := [null] 
                 }
                 delete [$thisPeriod$]
                 reevaluate ThisUserRegimesTB.rows
@@ -147,7 +147,7 @@ Residency thisPeriod
                             else {
                                 try {
                                     foreach selection in [$EditUserRegimenesWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $thisPeriod$.start.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $thisPeriod$.end.toLocalDate().atStartOfDay()).selections->asSet() - $EditUserRegimenesWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()).selections->asSet()] {
-                                        delete [$selection$]
+                                        [$selection$.foodRegime] := [null] 
                                     }
                                     [$thisPeriod$.start] := [$UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay()]
                                     [$thisPeriod$.end] := [$UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()]
