@@ -186,8 +186,6 @@ Button registerPatientWi.registerBu{
                         [$newPatient$.administrative] += [$newAdministrativeInfo$]
                         [$newPatient$.social] += [$newSocialInfo$]
 
-                        notification(['6'],[''],[-1])
-
                         [$newPatient$.vip] := [$vipBf.value$]
 
                         [$newContactInfo$.id] := [$idEn.text$]

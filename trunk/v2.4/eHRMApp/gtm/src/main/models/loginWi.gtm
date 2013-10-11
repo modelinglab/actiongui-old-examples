@@ -10,9 +10,6 @@ Window loginWi isMain{
     Label passLa{
         String text := ['Password:']
     }
-    Label messageLa{
-        String text := ['']
-    }
     TextField userEn{
         String text := ['']
     }
@@ -32,7 +29,7 @@ Button loginWi.loginBu{
             open medicalCenterWi(caller:[$professional$], role:[$professional$.myRole])
         }
         else{
-            messageLa.text := ['Incorrect login. Please, try again.']
+            notification(['Wrong credentials'], ['Incorrect login. Please, try again.'], [2000])
         }
     }
 }

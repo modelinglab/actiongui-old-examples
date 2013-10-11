@@ -22,6 +22,8 @@
                 <extensions>true</extensions>
                 <configuration>
                     <cssFolder>src/main/resources/css</cssFolder>
+                    <!-- jetty syntax for datasource: jdbc/eHRMApp -->
+                     <!-- jboss syntax for datasource: java:jboss/datasources/eHRMApp -->   
                     <datasource>jdbc/eHRMApp</datasource> <!--TODO: write here your datasource JNDI name -->
                     <databaseName>eHRMApp</databaseName> <!--TODO: write here your database name -->
                 </configuration>

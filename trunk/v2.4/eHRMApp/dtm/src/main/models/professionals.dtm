@@ -4,6 +4,7 @@ enum Role {
     ADMINISTRATIVE
     DOCTOR
     NURSE
+    SYSTEM
 }
 
 entity Professional{
