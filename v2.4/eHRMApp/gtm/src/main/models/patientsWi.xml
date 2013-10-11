@@ -38,7 +38,7 @@ and open the template in the editor.
                     <ns1:widget ns1:id="room" ns1:height="30px"></ns1:widget>
                 </ns1:column>
                 <ns1:column>
-                    <ns1:widget ns1:id="socialInfo" ns1:height="30px"></ns1:widget>
+                    <ns1:widget ns1:id="socialInfo" ns1:height="30px" ns1:width="200px"></ns1:widget>
                 </ns1:column>
             </ns1:table>
         </ns1:entry>
