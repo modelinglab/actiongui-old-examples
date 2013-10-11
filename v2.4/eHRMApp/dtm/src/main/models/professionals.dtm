@@ -46,7 +46,7 @@ entity Doctor{
     Set(Professional) professional oppositeTo asDoctor
     Set(Department) departments oppositeTo doctors
     Set(Patient) patients oppositeTo doctor
-    Set(Referal) referedPatients oppositeTo refered
+    Set(Referal) referredPatients oppositeTo referred
     Set(Referal) referingPatients oppositeTo refering
     Set(Doctor) coveringDoctor oppositeTo substitutions
     Set(Doctor) substitutions oppositeTo coveringDoctor
@@ -60,7 +60,7 @@ entity Nurse{
 }
 
 entity Referal{
-    Set(Doctor) refered oppositeTo referedPatients
+    Set(Doctor) referred oppositeTo referredPatients
     Set(Doctor) refering oppositeTo referingPatients
-    Set(Patient) patient oppositeTo referedDoctors
+    Set(Patient) patient oppositeTo referredDoctors
 }

@@ -3,7 +3,7 @@ entity Patient{
 
     Set(Doctor) doctor oppositeTo patients
     Set(Department) department oppositeTo patients
-    Set(Referal) referedDoctors oppositeTo patient
+    Set(Referal) referredDoctors oppositeTo patient
 
     Set(AllocationInfo) allocation oppositeTo patient
     Set(ContactInfo) contact oppositeTo patient

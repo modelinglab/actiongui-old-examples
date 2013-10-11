@@ -29,7 +29,7 @@ Button loginWi.loginBu{
             open medicalCenterWi(caller:[$professional$], role:[$professional$.myRole])
         }
         else{
-            notification(['Wrong credentials'], ['Incorrect login. Please, try again.'], [2000])
+            notification(['Message'], ['Incorrect login. Please, try again.'], [2000])
         }
     }
 }

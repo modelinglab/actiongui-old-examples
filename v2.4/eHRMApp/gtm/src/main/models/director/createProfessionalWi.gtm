@@ -152,27 +152,27 @@ Button createProfessionalWi.createProfessionalBu{
                                 back
                             }
                             else {
-                                notification(['Message'],['You have to select exactly one department for the new professional'],[-1])
+                                notification(['Message'],['You have to select exactly one department for the new professional'],[2000])
                             }
                         }
                         else{
-                            notification(['Message'],['You have to select a department for the new professional'],[-1])
+                            notification(['Message'],['You have to select a department for the new professional'],[2000])
                         }
                     }
                     else{
-                        notification(['Message'],['You have to choose the kind of professional to be created'],[-1])
+                        notification(['Message'],['You have to choose the kind of professional to be created'],[2000])
                     }
                 }
                 else{
-                    notification(['Message'],['The password cannot be empty'],[-1])
+                    notification(['Message'],['The password cannot be empty'],[2000])
                 }
             }
             else{
-                notification(['Message'],['There already exists a professional with user "'.concat($userEn.text$).concat('"')],[-1])
+                notification(['Message'],['There already exists a professional with user "'.concat($userEn.text$).concat('"')],[2000])
             }
         }
         else{
-            notification(['Message'],['The user cannot be empty'],[-1])
+            notification(['Message'],['The user cannot be empty'],[2000])
         }
     }
 }

@@ -91,7 +91,7 @@ Button reassignProfessionalWi.reassignBu{
                         // union not supported
                         //reassignProfessionalWi.professionalsTa.rows := [$reassignProfessionalWi.medicalCenter$.departments.doctors.professional->union($reassignProfessionalWi.medicalCenter$.departments.nurses.professional)->asSet()]
                         professionalsTa.rows := [Professional.allInstances()->select(p|p.worksIn->includes($reassignProfessionalWi.medicalCenter$))->select(p|p.asNurse->notEmpty() or p.asDoctor->notEmpty())]
-                        notification(['Message'],['The professional has been reassigned properly.'],[-1])
+                        notification(['Message'],['The professional has been reassigned properly.'],[2000])
                     }
                     else{
                         if [$professionalsTa.selected$->any(true).asNurse->notEmpty()]{
@@ -101,20 +101,20 @@ Button reassignProfessionalWi.reassignBu{
                             // union not supported
                             //reassignProfessionalWi.professionalsTa.rows := [$reassignProfessionalWi.medicalCenter$.departments.doctors.professional->union($reassignProfessionalWi.medicalCenter$.departments.nurses.professional)->asSet()]
                             professionalsTa.rows := [Professional.allInstances()->select(p|p.worksIn->includes($reassignProfessionalWi.medicalCenter$))->select(p|p.asNurse->notEmpty() or p.asDoctor->notEmpty())]
-                            notification(['Message'],['The professional has been reassigned properly.'],[-1])
+                            notification(['Message'],['The professional has been reassigned properly.'],[2000])
                         }
                     }
                 }
                 else {
-                    notification(['Message'],['You have to select exactly one department'],[-1])
+                    notification(['Message'],['You have to select exactly one department'],[2000])
                 }
             }
             else{
-                notification(['Message'],['You have to select exactly one professional and one department'],[-1])
+                notification(['Message'],['You have to select exactly one professional and one department'],[2000])
             }
         }
         else{
-            notification(['Message'],['You have to select a professional'],[-1])
+            notification(['Message'],['You have to select a professional'],[2000])
         }
     }
 }
