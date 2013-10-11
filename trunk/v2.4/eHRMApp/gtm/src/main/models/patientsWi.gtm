@@ -100,15 +100,15 @@ Button patientsWi.movePatientBu{
                     open movePatientWi(medicalCenter:[$patientsWi.medicalCenter$], patient: [$patientsTa.selected$->any(true)])
                 }
                 else {
-                    notification(['Message'],['You have to select exactly one patient.'],[-1])
+                    notification(['Message'],['You have to select exactly one patient.'],[2000])
                 }
             }
             else{
-                notification(['Message'],['You have to select a patient.'],[-1])
+                notification(['Message'],['You have to select a patient.'],[2000])
             }
         }
         else{
-            notification(['Message'],['You are not administrative of this medical center.'],[-1])
+            notification(['Message'],['You are not administrative of this medical center.'],[2000])
         }
     }
 }

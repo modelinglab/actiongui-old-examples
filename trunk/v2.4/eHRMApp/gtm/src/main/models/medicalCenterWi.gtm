@@ -40,15 +40,15 @@ Button medicalCenterWi.registerPatientBu{
                     open registerPatientWi(medicalCenter:[$medicalCentersTa.selected$->any(true)])
                 }
                 else {
-                    notification([''],['Please, select exactly one medical center.'],[-1])
+                    notification(['Message'],['Please, select exactly one medical center.'],[2000])
                 }
             }
             else{
-                notification([''],['Please, select a medical center.'],[-1])
+                notification(['Message'],['Please, select a medical center.'],[2000])
             }
         }  
         else{
-            notification([''],['You are not an administrative of the selected medical center.'],[-1])
+            notification(['Message'],['You are not an administrative of the selected medical center.'],[2000])
         }
     }
 }
@@ -63,11 +63,11 @@ Button medicalCenterWi.directorMenuBu{
                 }
             }
             else{
-                notification([''],['Please, select exactly one medical center.'],[-1])
+                notification(['Message'],['Please, select exactly one medical center.'],[2000])
             }
         }
         else{
-            notification([''],['You are not the director of the selected medical center.'],[-1])
+            notification(['Message'],['You are not the director of the selected medical center.'],[2000])
         }
     }
 }
@@ -81,7 +81,7 @@ Button medicalCenterWi.viewPatientsBu{
         
         }
         else{
-           notification([''],['Please, select exactly one medical center.'],[-1])
+           notification(['Message'],['Please, select exactly one medical center.'],[2000])
         }
     }
 }
@@ -340,10 +340,10 @@ Button medicalCenterWi.resetBu{
             reevaluate medicalCentersTa.rows
 
             //Fourth, show a successful message
-            notification(['Success'],['The initial scenario has been loaded successfully'],[2000])
+            notification(['Message'],['The initial scenario has been loaded successfully'],[2000])
         }
         else{
-            notification([''],['Only SYSTEM users can reset the application data.'],[-1])
+            notification(['Message'],['Only system users can reset the application data.'],[2000])
         }
     }
 }

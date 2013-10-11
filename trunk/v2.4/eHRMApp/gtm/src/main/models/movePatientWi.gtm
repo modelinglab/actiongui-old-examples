@@ -69,18 +69,18 @@ Button movePatientWi.moveBu{
                     movePatientWi.departmentLa.text := ['Department: '.concat($movePatientWi.patient$.department->any(true).name)]
                     movePatientWi.doctorLa.text := ['Doctor: '.concat($movePatientWi.patient$.doctor.professional->any(true).name).concat(' ').concat($movePatientWi.patient$.doctor.professional->any(true).surname)]
 
-                    notification(['Message'],['The patient has been moved properly.'],[-1])
+                    notification(['Message'],['The patient has been moved properly.'],[2000])
                 }
                 else {
-                    notification(['Message'],['You have to select exactly one doctor.'],[-1])
+                    notification(['Message'],['You have to select exactly one doctor.'],[2000])
                 }
             }
             else{
-                notification(['Message'],['You have to select exactly one doctor and one department.'],[-1])
+                notification(['Message'],['You have to select exactly one doctor and one department.'],[2000])
             }
         }
         else{
-            notification(['Message'],['You have to select a department.'],[-1])
+            notification(['Message'],['You have to select a department.'],[2000])
         }
     }
 }
