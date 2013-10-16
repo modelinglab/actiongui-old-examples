@@ -12,7 +12,7 @@ role REGISTERED extends ANONYMOUS {
     Message {
         //every registered user can read the body, date and owner of any message that is posted 
         //in a chatroom in which he/she participates or in a public chatroom
-        read(body), read(date), read(owner) constrainedBy [self.chatroom->any(true).public or self.chatroom.participants->includes(caller)]        
+        read(body), read(date), read(owner) constrainedBy [self.chatroom.participants->includes(caller)]        
 
         //every registered user can create a new message
         create
