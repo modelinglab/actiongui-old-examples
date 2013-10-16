@@ -1,0 +1,71 @@
+Window editParticipantsWI{
+    Chatroom chatroom
+
+    Table usersTA{
+        Set(User) rows := [User.allInstances()->reject(u|$editParticipantsWI.chatroom$.participants->includes(u))]
+        User selected
+    }
+    Table participantsTA{
+        Set(User) rows := [$editParticipantsWI.chatroom$.participants]
+        User selected
+    }
+    Button addBU{
+        String text := ['>>']
+    }
+    Button removeBU{
+        String text := ['<<']
+    }
+    Button backBU{
+        String text := ['Back']
+    }
+}
+
+Table editParticipantsWI.usersTA{
+    columns{
+        ['Users'] : Label users{
+            String text := [$usersTA.row$.nickname]
+        }
+    }
+}
+
+Table editParticipantsWI.participantsTA{
+    columns{
+        ['Users'] : Label participants{
+            String text := [$participantsTA.row$.nickname]
+        }
+    }
+}
+
+Button editParticipantsWI.addBU{
+    event onClick{
+        error := ['']
+        if [$usersTA.selected$.oclIsUndefined()]{
+            notification(['Please, select a user'],[''],[2000])
+        }
+        else{
+            [$editParticipantsWI.chatroom$.participants] += [$usersTA.selected$]
+            usersTA.rows := [User.allInstances()->reject(u|$editParticipantsWI.chatroom$.participants->includes(u))]
+            participantsTA.rows := [$editParticipantsWI.chatroom$.participants]           
+        }
+    }
+}
+
+Button editParticipantsWI.removeBU{
+    event onClick{
+        error := ['']
+        if [$participantsTA.selected$.oclIsUndefined()]{
+            notification(['Please, select a participant'],[''],[2000])
+        }
+        else{
+            [$editParticipantsWI.chatroom$.participants] -= [$participantsTA.selected$]
+            usersTA.rows := [User.allInstances()->reject(u|$editParticipantsWI.chatroom$.participants->includes(u))]
+            participantsTA.rows := [$editParticipantsWI.chatroom$.participants]          
+        }
+    }
+}
+
+Button editParticipantsWI.backBU{
+    event onClick{
+        back
+    }
+}

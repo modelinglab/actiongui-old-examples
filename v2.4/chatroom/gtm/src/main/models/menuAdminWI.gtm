@@ -1,0 +1,49 @@
+Window menuAdminWI {
+    Button viewChatsBU{
+        String text := ['View Chatrooms']
+    }
+    Button createChatBU {
+        String text := ['Create Chatroom']
+    }
+
+    Button createUserBU {
+        String text := ['Create User']
+    }
+
+    Button editUsersBU {
+        String text := ['Edit Users']
+    }
+    Button exitBU {
+        String text := ['Back']
+        event onClick {
+            back
+        }
+    }
+}
+
+Button menuAdminWI.createChatBU {
+    event onClick {
+        open createChatWI()
+    }
+
+}
+
+Button menuAdminWI.viewChatsBU{
+    event onClick{
+        open selectChatAdminWI()
+    }
+}
+
+Button menuAdminWI.createUserBU{
+    event onClick{
+        open createUserWI()
+    }
+}
+
+/*
+Button menuAdminWI.editUsersBU{
+    event onClick{
+        open editUsersWI()
+    }
+}
+*/

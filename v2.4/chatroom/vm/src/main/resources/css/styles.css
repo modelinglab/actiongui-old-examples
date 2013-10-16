@@ -1,0 +1,21 @@
+@import "../reindeer/legacy-styles.css";
+
+@import "mainWI.css";
+@import "loginWI.css";
+@import "chatWI.css";
+@import "createUserWI.css";
+@import "editParticipantsWI.css";
+@import "selectChatWI.css";
+@import "selectChatAdminWI.css";
+@import "menuAdminWI.css";
+@import "createChatWI.css";
+
+/* The following rule is to avoid resizeable text fields */
+.v-textarea {
+    resize: none
+}
+
+/* The following rule is to avoid problems when a text field is higher than their standard value*/
+.v-textfield {
+    background-image: none;
+}

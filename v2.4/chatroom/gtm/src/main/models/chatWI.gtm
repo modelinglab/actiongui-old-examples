@@ -1,0 +1,98 @@
+Window chatWI {
+
+    //this variable stores the previously selected chatroom
+    Chatroom chatroomSel
+
+
+
+    //this table visualizes the messages posted in the selected chatroom
+    // ->sortedBy(m|m.date.toInteger())
+    Table chatsTB {
+        OrderedSet(Message) rows
+        
+        columns {
+            ['Date'] :  Label date {
+                            event onView(text) {
+                                try {
+                                    text := [$chatsTB.row$.date.toString()]
+                                }
+                                catch(SecurityException) {
+                                    // do nothing
+                                }
+                            }
+                        }
+            ['Body'] :  Label message {
+                            event onView(text) {
+                                try {
+                                    text := [$chatsTB.row$.body] 
+                                }
+                                catch(SecurityException) {
+                                    // do nothing
+                                }
+                            }
+                        }
+            ['By'] :    Label by {
+                            event onView(text) {
+                                try {
+                                    if [$chatsTB.row$.owner->any(true).oclIsUndefined()] {
+                                        text := ['Anonymous']  
+                                    }
+                                    else {
+                                      text := [$chatsTB.row$.owner->any(true).nickname]  
+                                    }
+                                }
+                                catch (SecurityException) {
+                                    // do nothing
+                                }
+                            }
+                        }
+        } 
+
+        event onView(rows) {
+            try{
+                rows := [$chatWI.chatroomSel$.messages->sortedBy(m|m.date)] 
+            }
+            catch(SecurityException) {
+                // do nothing
+            }
+        }
+    }
+    
+    Label writePostLA {
+        String text := ['New post: ']
+    }
+
+    //in this text field the user writes its new message
+    TextField writePostTX { 
+        String text := ['']
+    }
+
+    //by clicking on this button the user posts its new message 
+    //in the selected chatroom
+    Button postBU {
+        String text := ['Post'] 
+        event onClick {
+            try {
+                newPost := new Message
+                [$newPost$.owner] += [$chatWI.caller$]
+                [$newPost$.body] := [$writePostTX.text$] 
+                [$newPost$.date] := [LocalDateTime.now()]
+                [$newPost$.chatroom] += [$chatWI.chatroomSel$]
+            }
+            catch(SecurityException) {
+                notification (['You do not have permission to create a post'],[''],[2000])
+            }
+            reevaluate writePostTX.text
+            reevaluate chatsTB.rows
+        }
+    }
+
+    //by clicking on this button the user moves back to 
+    //the previous window
+    Button BackBU {
+        String text := ['Back']
+        event onClick { 
+            back
+        }
+    }
+}

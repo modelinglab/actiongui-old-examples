@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<ns1:window-layout ns1:id="chatWI"
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:ns1='http://actiongui.org/schemes/ag-layout/2.4'
+    xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://www.actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
+    <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto">
+        <ns1:entry>
+            <ns1:table ns1:id="chatsTB" ns1:width="auto" ns1:height="300px">
+                <ns1:column>
+                    <ns1:widget ns1:id="date" ns1:height="30px" ns1:width="150px"></ns1:widget>
+                </ns1:column>
+                <ns1:column>
+                    <ns1:widget ns1:id="by" ns1:height="30px" ns1:width="150px"></ns1:widget>
+                </ns1:column>
+                <ns1:column>
+                    <ns1:widget ns1:id="message" ns1:height="30px" ns1:width="300px"></ns1:widget>
+                </ns1:column>
+            </ns1:table>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
+                <ns1:entry>
+                    <ns1:widget ns1:id="writePostLA" ns1:width="100px" ns1:height="30px"></ns1:widget>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:widget ns1:id="writePostTX" ns1:height="30px" ns1:width="200px"></ns1:widget>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:widget ns1:id="postBU" ns1:width="100px" ns1:height="30px"></ns1:widget>
+                </ns1:entry>
+            </ns1:line-layout>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:widget ns1:id="BackBU" ns1:width="100px" ns1:height="30px"></ns1:widget>
+        </ns1:entry>
+    </ns1:line-layout>
+</ns1:window-layout>

@@ -1,0 +1,34 @@
+entity Chatroom {
+    String topic
+    Boolean public
+    //users participating in this chatroom
+    Set(User) participants oppositeTo chatrooms
+    //messages posted in this chatroom
+    Set(Message) messages oppositeTo chatroom
+}
+ 
+entity User {
+    String nickname
+    String login
+    String password
+    Role role
+    //chatrooms in which this user participates
+    Set(Chatroom) chatrooms oppositeTo participants
+    //messages written by this user
+    Set(Message) messages oppositeTo owner
+}
+ 
+entity Message {
+    LocalDateTime date
+    String body
+    //chatroom where this message is posted
+    Set(Chatroom) chatroom oppositeTo messages
+    //user that wrote this message
+    Set(User) owner oppositeTo messages
+}
+
+enum Role {
+    ANONYMOUS
+    REGISTERED
+    ADMIN
+}
