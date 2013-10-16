@@ -6,10 +6,12 @@
         read(messages) constrainedBy [self.public]
     }
     Message {
-        //everybody can read the body of any message posted in a public chatroom
-        read(body), read(date) constrainedBy [self.chatroom->any(true).public]
+        //everybody can read the body, the date, and the owner of any message posted in a public chatroom
+        read(body), read(date), read(owner) constrainedBy [self.chatroom->any(true).public]
     }
     User {
+        // everybody can read the nickname of a user, if that user has written a message in any public chatroom
+        read(nickname) constrainedBy [self.messages.chatroom->exists(cr|cr.public)]
         read(login)
         read(password)
         read(role)
