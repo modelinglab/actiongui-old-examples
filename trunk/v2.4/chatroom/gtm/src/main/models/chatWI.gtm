@@ -21,16 +21,6 @@ Window chatWI {
                                 }
                             }
                         }
-            ['Body'] :  Label message {
-                            event onView(text) {
-                                try {
-                                    text := [$chatsTB.row$.body] 
-                                }
-                                catch(SecurityException) {
-                                    // do nothing
-                                }
-                            }
-                        }
             ['By'] :    Label by {
                             event onView(text) {
                                 try {
@@ -45,7 +35,17 @@ Window chatWI {
                                     // do nothing
                                 }
                             }
-                        }
+                        } 
+            ['Body'] :  Label message {
+                            event onView(text) {
+                                try {
+                                    text := [$chatsTB.row$.body] 
+                                }
+                                catch(SecurityException) {
+                                    // do nothing
+                                }
+                            }
+                        }           
         } 
 
         event onView(rows) {
