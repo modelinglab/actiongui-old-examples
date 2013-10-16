@@ -1,0 +1,17 @@
+role ADMIN extends ANONYMOUS {
+    User {
+        fullAccess
+    }
+
+    Chatroom {
+        create
+        read(topic)
+        read(public)
+        update(topic)  constrainedBy [self.participants->isEmpty()]
+        update(public) constrainedBy [self.participants->isEmpty()]
+        read(participants)
+        add(participants)
+        remove(participants)
+    }
+
+}

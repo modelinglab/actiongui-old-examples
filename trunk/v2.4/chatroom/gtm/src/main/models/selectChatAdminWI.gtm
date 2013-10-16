@@ -1,0 +1,41 @@
+Window selectChatAdminWI{
+    Table chatsTA{
+        Set(Chatroom) rows := [Chatroom.allInstances()]
+        Chatroom selected
+    }
+    Button editParticipantsBU{
+        String text := ['Edit']
+    }
+    Button backBU{
+        String text := ['Back']
+    }
+}
+
+Table selectChatAdminWI.chatsTA{
+    columns{
+        ['Topic'] : Label topic{
+            String text := [$chatsTA.row$.topic]
+        }
+        ['Public'] : Label public{
+            String text := [if $chatsTA.row$.public then 'Yes' else 'No' endif]
+        }
+    }
+}
+
+Button selectChatAdminWI.editParticipantsBU{
+    event onClick{
+        if [$chatsTA.selected$.oclIsUndefined()] {
+           notification(['Message'], ['Please, select a chatroom'], [2000])
+        }
+        else{
+            open editParticipantsWI(chatroom : [$chatsTA.selected$])
+        }       
+    }
+}
+    
+
+Button selectChatAdminWI.backBU{
+    event onClick{
+        back
+    }
+}

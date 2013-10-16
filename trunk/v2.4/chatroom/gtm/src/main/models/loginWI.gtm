@@ -1,0 +1,46 @@
+Window loginWI {
+    Label loginLB {
+        String text := ['Login: ']
+        }
+    Label passwordLB {
+        String text := ['Password: ']
+        }
+    TextField loginTX {
+        String text := ['']
+        }
+    PasswordField passwordTX {
+        String text := ['']
+        } 
+    Button enterBU {
+        String text := ['Enter']
+        event onClick {
+            if [User.allInstances()->exists(u|u.login=$loginTX.text$ and u.password=$passwordTX.text$)] {
+                loginWI.caller := [User.allInstances()->any(u|u.login=$loginTX.text$ and u.password=$passwordTX.text$)]
+                loginWI.role := [$loginWI.caller$.role]                    
+                if [$loginWI.role$ = Role::ADMIN] {
+                    open menuAdminWI()
+                }
+                else {
+                    if [$loginWI.role$ = Role::REGISTERED] {
+                        open selectChatWI()
+                    }
+                    else {
+                        notification(['Message'], ['Empty role. Talk with Admin'], [2000])
+                    }
+                }              
+            }
+            else {
+                notification(['Message'], ['Wrong credentials. Try again'], [2000])
+                reevaluate loginTX.text
+                reevaluate passwordTX.text
+            }
+        }
+    }
+    Button backBU {
+        String text := ['Back']
+        event onClick {
+            back
+        }
+    }
+
+}

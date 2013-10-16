@@ -1,0 +1,56 @@
+Window selectChatWI{
+    Table chatsTA{
+        Set(Chatroom) rows := [Chatroom.allInstances()]
+        Chatroom selected
+    }
+    Button enterChatBU{
+        String text := ['Enter']
+    }
+    Button backBU{
+        String text := ['Back']
+    }
+}
+
+Table selectChatWI.chatsTA{
+    columns{
+        ['Topic'] : Label topic{
+            event onView(text) {
+                try {
+                    text := [$chatsTA.row$.topic]
+                }
+                catch(SecurityException) {
+                    // do nothing
+                }
+            }
+        }
+        ['Public'] : Label public{
+            event onView(text) {
+                try {
+                    text := [if $chatsTA.row$.public then 'Yes' else 'No' endif]
+                }
+                catch(SecurityException) {
+                    // do nothing
+                }
+            }
+        }
+    }
+}
+
+Button selectChatWI.enterChatBU{
+    event onClick{
+        if [$chatsTA.selected$.oclIsUndefined()] {
+           notification(['Message'], ['Please, select a chatroom'], [2000])
+        }
+        else{
+            open chatWI(chatroomSel : [$chatsTA.selected$])
+        }       
+    }
+}
+    
+
+Button selectChatWI.backBU{
+    event onClick{
+        back
+    }
+}
+

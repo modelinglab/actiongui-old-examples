@@ -1,0 +1,42 @@
+role REGISTERED extends ANONYMOUS {
+    Chatroom {
+        //every registered user can read the topic and wheter is public or not, of 
+        //any chatroom
+        read(topic)
+        read(public)
+        //every registered user can access the messages
+        //that are posted in a chatroom in which he/she participates
+        read(messages) constrainedBy [self.participants->includes(caller)] 
+    }
+
+    Message {
+        //every registered user can read the body, date and owner of any message that is posted 
+        //in a chatroom in which he/she participates or in a public chatroom
+        read(body), read(date), read(owner) constrainedBy [self.chatroom->any(true).public or self.chatroom.participants->includes(caller)]        
+
+        //every registered user can create a new message
+        create
+        //every registered user can claim ownership of any unowned message
+        add(owner) constrainedBy 
+            [self.owner->any(true).oclIsUndefined() and target=caller]
+        //every registered user can change the body of its own messages, 
+        //provided it is not yet posted anywhere
+        update(body), update(date)  constrainedBy [self.owner->any(true)=caller and self.chatroom->any(true).oclIsUndefined()]
+
+        //every registered user can post its own messages in a public chatroom, 
+        //provided it is not yet posted anywhere.
+        //Also
+        //every registered user can post its own messages in a chatroom
+        //in which he/she participates, provided it is not yet posted anywhere 
+        add(chatroom) constrainedBy 
+            [self.owner->any(true)=caller and target.public 
+                and self.chatroom->any(true).oclIsUndefined()
+             or 
+             self.owner->any(true)=caller and target.participants->includes(caller)
+             and self.chatroom->any(true).oclIsUndefined()]
+    }
+
+    User {
+        read(nickname)
+    }
+}

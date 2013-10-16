@@ -1,0 +1,47 @@
+Window createChatWI {
+    Label topicLB {
+        String text := ['Topic: ']
+    }
+    Label publicLB {
+        String text := ['Public: ']
+    }
+    TextField topicTX {
+        String text := ['']
+    }
+
+    BooleanField publicBF {
+        Boolean value := [true]
+    }
+    Button createBU {
+
+    }
+    Button backBU {
+        String text := ['Back']
+        event onClick {
+            back 
+        }
+    }
+}
+
+Button createChatWI.createBU {
+    String text := ['Create']
+    event onClick {
+        if [$topicTX.text$ = ''] {
+            notification (['Message'], ['You need to provide a non-empty name for the chatroom'], [2000])
+        } 
+        else {
+            if [Chatroom.allInstances()->exists(c|c.topic=$topicTX.text$)] {
+                notification (['Message'], ['There is already a chatroom with this topic.'], [2000])
+                reevaluate topicTX.text
+            } 
+            else {
+                newChat := new Chatroom
+                [$newChat$.topic] := [$topicTX.text$]
+                [$newChat$.public] := [$publicBF.value$]
+                notification (['Message'], ['The chatroom'.concat(' ').concat($topicTX.text$).concat(' has been created.')], [2000])
+                reevaluate topicTX.text
+                reevaluate publicBF.value
+            }
+        }
+    }
+}

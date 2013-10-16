@@ -1,0 +1,29 @@
+Window mainWI isMain {
+    Button publicBU{
+        String text := ['Public']
+    }
+    Button privateBU{
+        String text := ['Private']
+    }
+    Button adminBU{
+        String text := ['Admin']
+    }
+}
+
+Button mainWI.publicBU{
+    event onClick{
+        open selectChatWI(role : [Role::ANONYMOUS])
+    }
+}
+
+Button mainWI.privateBU{
+    event onClick{
+        open loginWI()
+    }
+}
+
+Button mainWI.adminBU{
+    event onClick{
+        open loginWI()
+    }
+}

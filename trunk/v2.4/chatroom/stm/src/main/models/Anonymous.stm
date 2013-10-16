@@ -1,0 +1,19 @@
+ role ANONYMOUS {
+    Chatroom {
+        //everybody can read the topic of a public chat
+        read(topic) constrainedBy [self.public]
+        //everybody can access the messages posted in a public chatroom
+        read(messages) constrainedBy [self.public]
+    }
+    Message {
+        //everybody can read the body of any message posted in a public chatroom
+        read(body), read(date) constrainedBy [self.chatroom->any(true).public]
+    }
+    User {
+        read(login)
+        read(password)
+        read(role)
+    }
+}
+
+
