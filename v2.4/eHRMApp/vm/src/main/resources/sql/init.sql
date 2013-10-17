@@ -12,7 +12,7 @@ enum Role {
 */
 
 -- Insert the professionals
-insert into Professional (pk,user,password,name,surname,myRole) values (1,'jorge','1111','Jorge','Cuellar',3), (2,'miguel','1111','Miguel','Garcia',3), (3,'karen','1111','Karen','Sraderr',4), (4,'alice','1111','Alice','Gonzalez',2), (5,'narciso','1111','Marti','Narciso',1), (6,'system','1111','System','System',5);
+insert into Professional (pk,user,password,name,surname,myRole) values (1,'jorge','1111','Jorge','Cuellar',3), (2,'miguel','1111','Miguel','Garcia',3), (3,'karen','1111','Karen','Sraderr',4), (4,'alice','1111','Alice','Gonzalez',2), (5,'narciso','1111','Marti','Narciso',1);
 -- Insert director
 insert into Director (pk) values (1);
 -- Insert administrative

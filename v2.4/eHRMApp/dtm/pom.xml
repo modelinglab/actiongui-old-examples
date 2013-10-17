@@ -23,7 +23,7 @@
                 <configuration>
                     <role-enum>Role</role-enum>
                     <user-entity>Professional</user-entity>
-                    <initial-role>DEFAULT</initial-role>
+                    <initial-role>SYSTEM</initial-role>
                 </configuration>
             </plugin>
         </plugins>
