@@ -31,4 +31,5 @@ enum Role {
     ANONYMOUS
     REGISTERED
     ADMIN
+    SYSTEM
 }

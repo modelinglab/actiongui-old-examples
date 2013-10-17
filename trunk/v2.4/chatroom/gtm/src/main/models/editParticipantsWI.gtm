@@ -1,4 +1,6 @@
 Window editParticipantsWI{
+    String text := ['Edit participants']
+
     Chatroom chatroom
 
     Table usersTA{

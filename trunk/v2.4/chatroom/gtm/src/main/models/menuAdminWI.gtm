@@ -1,4 +1,6 @@
 Window menuAdminWI {
+    String text := ['Admin menu']
+
     Button viewChatsBU{
         String text := ['View Chatrooms']
     }

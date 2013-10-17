@@ -1,4 +1,6 @@
 Window mainWI isMain {
+    String text := ['Chat room app']
+
     Button publicBU{
         String text := ['Public']
     }
@@ -7,6 +9,9 @@ Window mainWI isMain {
     }
     Button adminBU{
         String text := ['Admin']
+    }
+    Button systemBU {
+        String text := ['System']
     }
 }
 
@@ -23,6 +28,12 @@ Button mainWI.privateBU{
 }
 
 Button mainWI.adminBU{
+    event onClick{
+        open loginWI()
+    }
+}
+
+Button mainWI.systemBU{
     event onClick{
         open loginWI()
     }

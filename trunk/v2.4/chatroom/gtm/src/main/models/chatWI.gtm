@@ -1,9 +1,6 @@
-Window chatWI {
-
+Window chatWI {   
     //this variable stores the previously selected chatroom
     Chatroom chatroomSel
-
-
 
     //this table visualizes the messages posted in the selected chatroom
     // ->sortedBy(m|m.date.toInteger())
@@ -93,6 +90,15 @@ Window chatWI {
         String text := ['Back']
         event onClick { 
             back
+        }
+    }
+
+    event onView(text) {
+        try {
+            text := ['Chat room: '.concat($chatroomSel$.topic)]
+        }
+        catch (SecurityException) {
+            text := ['Private chat room']
         }
     }
 }

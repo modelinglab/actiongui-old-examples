@@ -1,4 +1,6 @@
 Window selectChatAdminWI{
+    String text := ['Chat rooms']
+
     Table chatsTA{
         Set(Chatroom) rows := [Chatroom.allInstances()]
         Chatroom selected

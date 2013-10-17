@@ -1,0 +1,57 @@
+Window menuSystemWI {
+    String text := ['System menu']
+
+    Button resetBU {
+        String text := ['Reset']
+
+        event onClick {
+            // delete all database
+            foreach message in [Message.allInstances()] {
+                delete [$message$]
+            }
+            foreach chatroom in [Chatroom.allInstances()] {
+                delete [$chatroom$]
+            }
+            foreach user in [User.allInstances()] {
+                delete [$user$]
+            }
+
+            // init the database
+            alice := new User
+            [$alice$.nickname] := ['Alice']
+            [$alice$.login] := ['ali']
+            [$alice$.password] := ['ali']
+            [$alice$.role] := [Role::ADMIN]
+            
+            bob := new User
+            [$bob$.nickname] := ['Bob']
+            [$bob$.login] := ['bob']
+            [$bob$.password] := ['bob']
+            [$bob$.role] := [Role::REGISTERED]
+
+            charlie := new User
+            [$charlie$.nickname] := ['Charlie']
+            [$charlie$.login] := ['cha']
+            [$charlie$.password] := ['cha']
+            [$charlie$.role] := [Role::REGISTERED]
+
+            system := new User
+            [$system$.nickname] := ['System']
+            [$system$.login] := ['sys']
+            [$system$.password] := ['sys']
+            [$system$.role] := [Role::SYSTEM]
+
+            // restore the variable caller
+            menuSystemWI.caller := [$system$]
+            notification(['The application data has been reset to the initial scenario'],[''],[2000])
+        }
+    }
+
+    Button backBU {
+        String text := ['Back']
+        
+        event onClick {
+            back
+        }
+    }
+}

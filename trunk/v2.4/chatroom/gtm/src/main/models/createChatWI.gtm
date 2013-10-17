@@ -1,4 +1,6 @@
 Window createChatWI {
+    String text := ['Create chat room']
+
     Label topicLB {
         String text := ['Topic: ']
     }
