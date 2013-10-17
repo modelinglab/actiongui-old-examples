@@ -20,7 +20,7 @@ and open the template in the editor.
             <ns1:widget ns1:id="adminBU" ns1:width="100px" ns1:height="30px"></ns1:widget>
         </ns1:entry>
         <ns1:entry>
-            <ns1:widget ns1:id="systemBU" ns1:width="100px" ns1:height="30px"></ns1:widget>
+            <ns1:widget ns1:id="resetBU" ns1:width="100px" ns1:height="30px"></ns1:widget>
         </ns1:entry>
     </ns1:line-layout>
 </ns1:window-layout>

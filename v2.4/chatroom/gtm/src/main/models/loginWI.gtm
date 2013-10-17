@@ -27,12 +27,7 @@ Window loginWI {
                         open selectChatWI()
                     }
                     else {
-                        if [$loginWI.role$ = Role::SYSTEM] {
-                            open menuSystemWI()
-                        }
-                        else {
-                            notification(['Message'], ['Empty role. Talk with Admin'], [2000])
-                        }
+                        notification(['Message'], ['Empty role. Talk with Admin'], [2000])
                     }
                 }              
             }

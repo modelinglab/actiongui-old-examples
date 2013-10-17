@@ -1,5 +1,5 @@
 Window mainWI isMain {
-    String text := ['Chat room app']
+    String text := ['ChatApp']
 
     Button publicBU{
         String text := ['Public']
@@ -10,8 +10,8 @@ Window mainWI isMain {
     Button adminBU{
         String text := ['Admin']
     }
-    Button systemBU {
-        String text := ['System']
+    Button resetBU {
+        String text := ['Reset']
     }
 }
 
@@ -33,8 +33,38 @@ Button mainWI.adminBU{
     }
 }
 
-Button mainWI.systemBU{
+Button mainWI.resetBU{
     event onClick{
-        open loginWI()
+        // delete all database
+            foreach message in [Message.allInstances()] {
+                delete [$message$]
+            }
+            foreach chatroom in [Chatroom.allInstances()] {
+                delete [$chatroom$]
+            }
+            foreach user in [User.allInstances()] {
+                delete [$user$]
+            }
+
+            // init the database
+            alice := new User
+            [$alice$.nickname] := ['Alice']
+            [$alice$.login] := ['ali']
+            [$alice$.password] := ['ali']
+            [$alice$.role] := [Role::ADMIN]
+            
+            bob := new User
+            [$bob$.nickname] := ['Bob']
+            [$bob$.login] := ['bob']
+            [$bob$.password] := ['bob']
+            [$bob$.role] := [Role::REGISTERED]
+
+            charlie := new User
+            [$charlie$.nickname] := ['Charlie']
+            [$charlie$.login] := ['cha']
+            [$charlie$.password] := ['cha']
+            [$charlie$.role] := [Role::REGISTERED]
+
+            notification(['The application data has been reset to the initial scenario'],[''],[2000])
     }
 }
