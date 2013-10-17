@@ -1,4 +1,6 @@
 Window createUserWI{
+    String text := ['Create user']
+
     Label nicknameLA{
         String text := ['Nickname:']
     }
@@ -22,46 +24,64 @@ Window createUserWI{
     }
     ComboBox rolesCB{
         Set(Role) rows := [Role.allInstances()->select(r|r <> Role::ANONYMOUS)]
-        
+        Role selected := [null]
+
         Label role{
             String text := [$rolesCB.row$.name()]
         }
     }
     Button createUserBU{
         String text := ['Create']
+        String message
+        Boolean errorFound
     }
     Button backBU{
         String text := ['Back']
     }
 }
 
-Button createUserWI.createUserBU{
+Button createUserWI.createUserBU{    
     event onClick{
+        errorFound := [false]
         if [$rolesCB.selected$.oclIsUndefined()]{
-            notification(['Message'], ['Please, select a role'],[2000])
+            message := ['Please, select a role']
+            errorFound := [true]
+        }
+        if [User.allInstances()->exists(u|u.login=$loginTF.text$)] {
+            message := ['There exists a registered user with this login. Please, choose a different login.']
+            errorFound := [true]
+        }
+        if [User.allInstances()->exists(u|u.nickname=$nicknameTF.text$)] {
+            message := ['There exists a registered user with this nickname. Please, choose a different nickname.']
+            errorFound := [true]
+        }
+        if [$passwordTF.text$.oclIsUndefined() or $passwordTF.text$ = ''] {
+            message := ['Please, write a password']
+            errorFound := [true]
+        }
+        if [$loginTF.text$.oclIsUndefined() or $loginTF.text$ = ''] {
+            message := ['Please, write a login']
+            errorFound := [true]
+        }
+        if [$nicknameTF.text$.oclIsUndefined() or $nicknameTF.text$ = ''] {
+            message := ['Please, write a nickname']
+            errorFound := [true]
+        }
+
+        if [$errorFound$] {
+            notification(['Error'], [$message$],[2000])
         }
         else{
-            if [User.allInstances()->exists(u|u.login=$loginTF.text$)] {
-                notification(['Message'], ['There exists a registered user with this login. Please, choose a different login.'], [2000])
-                reevaluate loginTF.text
-            }
-            else {
-                if [User.allInstances()->exists(u|u.nickname=$nicknameTF.text$)] {
-                    notification(['Message'], ['There exists a registered user with this nickname. Please, choose a different nickname.'], [2000])
-                    reevaluate nicknameTF.text
-                }
-                else {
-                    newUser := new User
-                    [$newUser$.nickname] := [$nicknameTF.text$]
-                    [$newUser$.login] := [$loginTF.text$]
-                    [$newUser$.password] := [$passwordTF.text$]
-                    [$newUser$.role] := [$rolesCB.selected$]
-                    notification(['The user has been created'],[''],[2000])
-                    reevaluate nicknameTF.text
-                    reevaluate  passwordTF.text
-                    reevaluate loginTF.text
-                }
-            }
+            newUser := new User
+            [$newUser$.nickname] := [$nicknameTF.text$]
+            [$newUser$.login] := [$loginTF.text$]
+            [$newUser$.password] := [$passwordTF.text$]
+            [$newUser$.role] := [$rolesCB.selected$]
+            notification(['The user has been created'],[''],[2000])
+            reevaluate nicknameTF.text
+            reevaluate  passwordTF.text
+            reevaluate loginTF.text
+            reevaluate rolesCB.selected
         }
     }
 }

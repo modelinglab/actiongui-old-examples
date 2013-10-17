@@ -1,4 +1,6 @@
 Window loginWI {
+    String text := ['Log in']
+
     Label loginLB {
         String text := ['Login: ']
         }
@@ -25,7 +27,12 @@ Window loginWI {
                         open selectChatWI()
                     }
                     else {
-                        notification(['Message'], ['Empty role. Talk with Admin'], [2000])
+                        if [$loginWI.role$ = Role::SYSTEM] {
+                            open menuSystemWI()
+                        }
+                        else {
+                            notification(['Message'], ['Empty role. Talk with Admin'], [2000])
+                        }
                     }
                 }              
             }

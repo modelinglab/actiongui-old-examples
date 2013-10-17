@@ -1,0 +1,11 @@
+role SYSTEM {
+    Chatroom {
+        fullAccess
+    }
+    Message {
+        fullAccess
+    }
+    User {
+        fullAccess
+    }
+}
