@@ -16,10 +16,11 @@ Window reassignProfessionalWi{
         // union is not supported
         // Set(Professional) rows := [$reassignProfessionalWi.medicalCenter$.departments.doctors.professional->union($reassignProfessionalWi.medicalCenter$.departments.nurses.professional)->asSet()]
         Set(Professional) rows := [Professional.allInstances()->select(p|p.worksIn->includes($reassignProfessionalWi.medicalCenter$))->select(p|p.asNurse->notEmpty() or p.asDoctor->notEmpty())]
-
+        Professional selected
     }
     Table departmentsTa{
         Set(Department) rows := [$reassignProfessionalWi.medicalCenter$.departments]
+        Department selected
     }
 
     Button reassignBu{
@@ -81,36 +82,31 @@ Table reassignProfessionalWi.departmentsTa{
 
 Button reassignProfessionalWi.reassignBu{
     event onClick{
-        if [not $professionalsTa.selected$->oclIsUndefined()]{
-            if [$professionalsTa.selected$->size() = 1 and not $departmentsTa.selected$->oclIsUndefined()]{
-                if [$departmentsTa.selected$->size() = 1] {
-                    if [$professionalsTa.selected$->any(true).asDoctor->notEmpty()]{
-                        [$professionalsTa.selected$->any(true).asDoctor->any(true).departments] -= [$professionalsTa.selected$->any(true).asDoctor.departments->any(d|d.belongsTo->any(true) = $reassignProfessionalWi.medicalCenter$)]
-                        [$professionalsTa.selected$->any(true).asDoctor->any(true).departments] += [$departmentsTa.selected$->any(true)]
+        if [not $professionalsTa.selected$.oclIsUndefined()] {
+            if [not $departmentsTa.selected$.oclIsUndefined()] {
+                if [$professionalsTa.selected$->any(true).asDoctor->notEmpty()]{
+                    [$professionalsTa.selected$->any(true).asDoctor->any(true).departments] -= [$professionalsTa.selected$.asDoctor.departments->any(d|d.belongsTo->any(true) = $reassignProfessionalWi.medicalCenter$)]
+                    [$professionalsTa.selected$->any(true).asDoctor->any(true).departments] += [$departmentsTa.selected$]
+                    professionalsTa.rows := [Professional.allInstances()->select(false)]
+                    // union not supported
+                    //reassignProfessionalWi.professionalsTa.rows := [$reassignProfessionalWi.medicalCenter$.departments.doctors.professional->union($reassignProfessionalWi.medicalCenter$.departments.nurses.professional)->asSet()]
+                    professionalsTa.rows := [Professional.allInstances()->select(p|p.worksIn->includes($reassignProfessionalWi.medicalCenter$))->select(p|p.asNurse->notEmpty() or p.asDoctor->notEmpty())]
+                    notification(['Message'],['The professional has been reassigned properly.'],[2000])
+                }
+                else{
+                    if [$professionalsTa.selected$->any(true).asNurse->notEmpty()]{
+                        [$professionalsTa.selected$->any(true).asNurse->any(true).departments] -= [$professionalsTa.selected$.asNurse.departments->any(d|d.belongsTo->any(true) = $reassignProfessionalWi.medicalCenter$)]
+                        [$professionalsTa.selected$->any(true).asNurse->any(true).departments] += [$departmentsTa.selected$]
                         professionalsTa.rows := [Professional.allInstances()->select(false)]
                         // union not supported
                         //reassignProfessionalWi.professionalsTa.rows := [$reassignProfessionalWi.medicalCenter$.departments.doctors.professional->union($reassignProfessionalWi.medicalCenter$.departments.nurses.professional)->asSet()]
                         professionalsTa.rows := [Professional.allInstances()->select(p|p.worksIn->includes($reassignProfessionalWi.medicalCenter$))->select(p|p.asNurse->notEmpty() or p.asDoctor->notEmpty())]
                         notification(['Message'],['The professional has been reassigned properly.'],[2000])
                     }
-                    else{
-                        if [$professionalsTa.selected$->any(true).asNurse->notEmpty()]{
-                            [$professionalsTa.selected$->any(true).asNurse->any(true).departments] -= [$professionalsTa.selected$->any(true).asNurse.departments->any(d|d.belongsTo->any(true) = $reassignProfessionalWi.medicalCenter$)]
-                            [$professionalsTa.selected$->any(true).asNurse->any(true).departments] += [$departmentsTa.selected$->any(true)]
-                            professionalsTa.rows := [Professional.allInstances()->select(false)]
-                            // union not supported
-                            //reassignProfessionalWi.professionalsTa.rows := [$reassignProfessionalWi.medicalCenter$.departments.doctors.professional->union($reassignProfessionalWi.medicalCenter$.departments.nurses.professional)->asSet()]
-                            professionalsTa.rows := [Professional.allInstances()->select(p|p.worksIn->includes($reassignProfessionalWi.medicalCenter$))->select(p|p.asNurse->notEmpty() or p.asDoctor->notEmpty())]
-                            notification(['Message'],['The professional has been reassigned properly.'],[2000])
-                        }
-                    }
-                }
-                else {
-                    notification(['Message'],['You have to select exactly one department'],[2000])
                 }
             }
             else{
-                notification(['Message'],['You have to select exactly one professional and one department'],[2000])
+                notification(['Message'],['You have to select a department'],[2000])
             }
         }
         else{

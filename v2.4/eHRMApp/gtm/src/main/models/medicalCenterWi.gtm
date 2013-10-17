@@ -6,6 +6,7 @@ Window medicalCenterWi{
     }
     Table medicalCentersTa{
         Set(MedicalCenter) rows := [MedicalCenter.allInstances()]
+        MedicalCenter selected
     }
     Button registerPatientBu{
         String text := ['Register new patient']
@@ -32,13 +33,8 @@ Table medicalCenterWi.medicalCentersTa{
 Button medicalCenterWi.registerPatientBu{
     event onClick{
         if [$medicalCenterWi.caller$.asAdministrative->notEmpty()]{
-            if [not $medicalCentersTa.selected$->oclIsUndefined()]{
-                if [$medicalCentersTa.selected$->size() = 1]{
-                    open registerPatientWi(medicalCenter:[$medicalCentersTa.selected$->any(true)])
-                }
-                else {
-                    notification(['Message'],['Please, select exactly one medical center.'],[2000])
-                }
+            if [not $medicalCentersTa.selected$.oclIsUndefined()]{
+                open registerPatientWi(medicalCenter: [$medicalCentersTa.selected$])
             }
             else{
                 notification(['Message'],['Please, select a medical center.'],[2000])
@@ -54,13 +50,11 @@ Button medicalCenterWi.registerPatientBu{
 Button medicalCenterWi.directorMenuBu{
     event onClick{
         if [$medicalCenterWi.caller$.asDirector->notEmpty()] {
-            if [not $medicalCentersTa.selected$->oclIsUndefined()]{
-                if [$medicalCentersTa.selected$->size() = 1]{
-                    open directorMenuWi (medicalCenter:[$medicalCentersTa.selected$->any(true)])
-                }
+            if [not $medicalCentersTa.selected$.oclIsUndefined()]{
+                open directorMenuWi (medicalCenter:[$medicalCentersTa.selected$])
             }
             else{
-                notification(['Message'],['Please, select exactly one medical center.'],[2000])
+                notification(['Message'],['Please, select a medical center.'],[2000])
             }
         }
         else{
@@ -71,14 +65,11 @@ Button medicalCenterWi.directorMenuBu{
 
 Button medicalCenterWi.viewPatientsBu{
     event onClick{
-        if [not $medicalCentersTa.selected$->oclIsUndefined()] {
-            if [$medicalCentersTa.selected$->size() = 1] {  
-                open patientsWi (medicalCenter:[$medicalCentersTa.selected$->any(true)])
-            }
-        
+        if [not $medicalCentersTa.selected$.oclIsUndefined()] {
+            open patientsWi (medicalCenter:[$medicalCentersTa.selected$])       
         }
         else{
-           notification(['Message'],['Please, select exactly one medical center.'],[2000])
+           notification(['Message'],['Please, select one medical center.'],[2000])
         }
     }
 }

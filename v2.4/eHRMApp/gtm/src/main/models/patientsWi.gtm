@@ -10,8 +10,8 @@ Window patientsWi{
         String text := ['List of patients:']
     }
     Table patientsTa{
-        Set(Patient) rows := 
-            [$patientsWi.medicalCenter$.departments.patients->asSet()]
+        Set(Patient) rows := [$patientsWi.medicalCenter$.departments.patients->asSet()]
+        Patient selected
     }
     Button movePatientBu{
         String text := ['Move the selected patient']
@@ -95,13 +95,8 @@ Table patientsWi.patientsTa{
 Button patientsWi.movePatientBu{
     event onClick{
         if [$patientsWi.caller$.asAdministrative->notEmpty()] {
-            if [not $patientsTa.selected$->oclIsUndefined()] {
-                if [$patientsTa.selected$->size() = 1] {
-                    open movePatientWi(medicalCenter:[$patientsWi.medicalCenter$], patient: [$patientsTa.selected$->any(true)])
-                }
-                else {
-                    notification(['Message'],['You have to select exactly one patient.'],[2000])
-                }
+            if [not $patientsTa.selected$.oclIsUndefined()] {
+                open movePatientWi(medicalCenter:[$patientsWi.medicalCenter$], patient: [$patientsTa.selected$])
             }
             else{
                 notification(['Message'],['You have to select a patient.'],[2000])
