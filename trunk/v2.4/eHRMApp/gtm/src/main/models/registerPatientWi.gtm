@@ -102,17 +102,16 @@ Window registerPatientWi{
         Set(String) rows := [Set{'Male', 'Female'}]
     }
     Table departmentsTa{
-        Set(Department) selected {
-            if [not $selected$->oclIsUndefined()] {
-                if [$selected$->size() = 1] {
-                    registerPatientWi.doctorsTa.rows := [$selected$->any(true).doctors]
-                }
+        Department selected {
+            if [not $selected$.oclIsUndefined()] {
+                registerPatientWi.doctorsTa.rows := [$selected$.doctors]
             }
         }
         Set(Department) rows := [$registerPatientWi.medicalCenter$.departments]
     }
     Table doctorsTa{
         Set(Doctor) rows := [Doctor.allInstances()->select(false)]
+        Doctor selected
     }
     Button cancelBu{
         String text := ['Cancel']
@@ -152,70 +151,61 @@ Button registerPatientWi.cancelBu{
 
 Button registerPatientWi.registerBu{
     event onClick{
-        if [$departmentsTa.selected$->oclIsUndefined()] {
+        error := ['']
+        if [$departmentsTa.selected$.oclIsUndefined()] {
             error := ['You have to choose a department']
         }
         else {
-            if [$departmentsTa.selected$->size() <> 1] {
-                error := ['You have to choose exactly one department']
+            if [$doctorsTa.selected$.oclIsUndefined()] {
+                error := ['You have to choose a doctor']
             }
             else {
-                if [$doctorsTa.selected$->oclIsUndefined()] {
-                    error := ['You have to choose a doctor']
+                newPatient := new Patient
+                [$newPatient$.department] += [$departmentsTa.selected$]
+                [$newPatient$.doctor] += [$doctorsTa.selected$]
+
+                newMedicalInfo := new MedicalInfo
+                newAllocationInfo := new AllocationInfo
+                newContactInfo := new ContactInfo
+                newPublicInfo := new PublicInfo
+                newAdministrativeInfo := new AdministrativeInfo
+                newSocialInfo := new SocialInfo
+
+                [$newPatient$.medical] += [$newMedicalInfo$]
+                [$newPatient$.allocation] += [$newAllocationInfo$]
+                [$newPatient$.contact] += [$newContactInfo$]
+                [$newPatient$.public] += [$newPublicInfo$]
+                [$newPatient$.administrative] += [$newAdministrativeInfo$]
+                [$newPatient$.social] += [$newSocialInfo$]
+
+                [$newPatient$.vip] := [$vipBf.value$]
+
+                [$newContactInfo$.id] := [$idEn.text$]
+                [$newContactInfo$.name] := [$nameEn.text$]
+                [$newContactInfo$.surname] := [$surnameEn.text$]
+                if [$genderCb.selected$.oclIsUndefined()]{
+                    [$newContactInfo$.gender] := ['']
                 }
-                else {
-                    if [$doctorsTa.selected$->size() <> 1] {
-                        error := ['You have to choose exactly one doctor']
-                    }
-                    else {
-                        newPatient := new Patient
-                        [$newPatient$.department] += [$departmentsTa.selected$->any(true)]
-                        [$newPatient$.doctor] += [$doctorsTa.selected$->any(true)]
-
-                        newMedicalInfo := new MedicalInfo
-                        newAllocationInfo := new AllocationInfo
-                        newContactInfo := new ContactInfo
-                        newPublicInfo := new PublicInfo
-                        newAdministrativeInfo := new AdministrativeInfo
-                        newSocialInfo := new SocialInfo
-
-                        [$newPatient$.medical] += [$newMedicalInfo$]
-                        [$newPatient$.allocation] += [$newAllocationInfo$]
-                        [$newPatient$.contact] += [$newContactInfo$]
-                        [$newPatient$.public] += [$newPublicInfo$]
-                        [$newPatient$.administrative] += [$newAdministrativeInfo$]
-                        [$newPatient$.social] += [$newSocialInfo$]
-
-                        [$newPatient$.vip] := [$vipBf.value$]
-
-                        [$newContactInfo$.id] := [$idEn.text$]
-                        [$newContactInfo$.name] := [$nameEn.text$]
-                        [$newContactInfo$.surname] := [$surnameEn.text$]
-                        if [$genderCb.selected$.oclIsUndefined()]{
-                            [$newContactInfo$.gender] := ['']
-                        }
-                        else{
-                            [$newContactInfo$.gender] := [$genderCb.selected$]
-                        }
-                        [$newContactInfo$.birthDate] := [$birthCa.date$]
-                        [$newContactInfo$.address] := [$addressEn.text$]
-
-                        [$newPublicInfo$.bloodType] := [$bloodEn.text$]
-                        [$newPublicInfo$.allergies] := [$allergiesEn.text$]
-                        [$newPublicInfo$.diabetes] := [$diabetesEn.text$]
-                        [$newPublicInfo$.foodRestrictions] := [$foodRestrictEn.text$]
-                        [$newPublicInfo$.medicineRestrictions] := [$medicineRestrictEn.text$]
-
-                        [$newAdministrativeInfo$.insurance] := [$insuranceEn.text$]
-                        [$newAdministrativeInfo$.accountNumber] := [$accountEn.text$]
-
-                        [$newSocialInfo$.description] := ['None']
-
-                        [$newAllocationInfo$.floor] := ['None']
-                        [$newAllocationInfo$.room] := ['None']
-                        back
-                    }
+                else{
+                    [$newContactInfo$.gender] := [$genderCb.selected$]
                 }
+                [$newContactInfo$.birthDate] := [$birthCa.date$]
+                [$newContactInfo$.address] := [$addressEn.text$]
+
+                [$newPublicInfo$.bloodType] := [$bloodEn.text$]
+                [$newPublicInfo$.allergies] := [$allergiesEn.text$]
+                [$newPublicInfo$.diabetes] := [$diabetesEn.text$]
+                [$newPublicInfo$.foodRestrictions] := [$foodRestrictEn.text$]
+                [$newPublicInfo$.medicineRestrictions] := [$medicineRestrictEn.text$]
+
+                [$newAdministrativeInfo$.insurance] := [$insuranceEn.text$]
+                [$newAdministrativeInfo$.accountNumber] := [$accountEn.text$]
+
+                [$newSocialInfo$.description] := ['None']
+
+                [$newAllocationInfo$.floor] := ['None']
+                [$newAllocationInfo$.room] := ['None']
+                back
             }
         }
     }

@@ -96,6 +96,7 @@ Window createProfessionalWi{
 
     Table departmentsTa{
         Set(Department) rows := [$createProfessionalWi.medicalCenter$.departments]
+        Department selected
     }
 
     Button createProfessionalBu{
@@ -121,39 +122,34 @@ Button createProfessionalWi.createProfessionalBu{
             if [Professional.allInstances()->forAll(p|p.user <> $userEn.text$)] {
                 if [$passwordEn.text$ <> ''] {
                     if [$doctorBf.value$ or $nurseBf.value$ or $administrativeBf.value$] {
-                        if [not $departmentsTa.selected$->oclIsUndefined()] {
-                            if [$departmentsTa.selected$->size() = 1] {
-                                newProfessional :=  new Professional
-                                [$newProfessional$.worksIn] += [$createProfessionalWi.medicalCenter$]
-                                [$newProfessional$.name] := [$nameEn.text$]
-                                [$newProfessional$.surname] := [$surnameEn.text$]
-                                [$newProfessional$.user] := [$userEn.text$]
-                                [$newProfessional$.password] := [$passwordEn.text$]
-                                if [$doctorBf.value$] {
-                                    newDoctor := new Doctor
-                                    [$newProfessional$.asDoctor] += [$newDoctor$]
-                                    [$newDoctor$.departments] += [$departmentsTa.selected$->any(true)]
-                                    [$newDoctor$.medicalLicense] := [$doctorLicenseEn.text$]
-                                    [$newDoctor$.status] := [$statusBf.value$]
-                                    [$newProfessional$.myRole] := [Role::DOCTOR]
-                                }
-                                if [$nurseBf.value$] {
-                                    newNurse := new Nurse
-                                    [$newProfessional$.asNurse] += [$newNurse$]
-                                    [$newNurse$.departments] += [$departmentsTa.selected$->any(true)]                               
-                                    [$newNurse$.nursingLicense] := [$nursingLicenseEn.text$]
-                                    [$newProfessional$.myRole] := [Role::NURSE]
-                                }
-                                if [$administrativeBf.value$] {
-                                    newAdministrative := new Administrative
-                                    [$newProfessional$.asAdministrative] += [$newAdministrative$]
-                                    [$newProfessional$.myRole] := [Role::ADMINISTRATIVE]
-                                }
-                                back
+                        if [not $departmentsTa.selected$.oclIsUndefined()] {
+                            newProfessional :=  new Professional
+                            [$newProfessional$.worksIn] += [$createProfessionalWi.medicalCenter$]
+                            [$newProfessional$.name] := [$nameEn.text$]
+                            [$newProfessional$.surname] := [$surnameEn.text$]
+                            [$newProfessional$.user] := [$userEn.text$]
+                            [$newProfessional$.password] := [$passwordEn.text$]
+                            if [$doctorBf.value$] {
+                                newDoctor := new Doctor
+                                [$newProfessional$.asDoctor] += [$newDoctor$]
+                                [$newDoctor$.departments] += [$departmentsTa.selected$]
+                                [$newDoctor$.medicalLicense] := [$doctorLicenseEn.text$]
+                                [$newDoctor$.status] := [$statusBf.value$]
+                                [$newProfessional$.myRole] := [Role::DOCTOR]
                             }
-                            else {
-                                notification(['Message'],['You have to select exactly one department for the new professional'],[2000])
+                            if [$nurseBf.value$] {
+                                newNurse := new Nurse
+                                [$newProfessional$.asNurse] += [$newNurse$]
+                                [$newNurse$.departments] += [$departmentsTa.selected$]                               
+                                [$newNurse$.nursingLicense] := [$nursingLicenseEn.text$]
+                                [$newProfessional$.myRole] := [Role::NURSE]
                             }
+                            if [$administrativeBf.value$] {
+                                newAdministrative := new Administrative
+                                [$newProfessional$.asAdministrative] += [$newAdministrative$]
+                                [$newProfessional$.myRole] := [Role::ADMINISTRATIVE]
+                            }
+                            back
                         }
                         else{
                             notification(['Message'],['You have to select a department for the new professional'],[2000])

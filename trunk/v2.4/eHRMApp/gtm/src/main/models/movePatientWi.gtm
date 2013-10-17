@@ -19,17 +19,16 @@ Window movePatientWi{
         String text := ['Select the new doctor:']
     }
     Table departmentsTa{
-        Set(Department) selected {
-            if [not $selected$->oclIsUndefined()] {
-                if [$selected$->size() = 1] {
-                    movePatientWi.doctorsTa.rows := [$selected$->any(true).doctors]
-                }
+        Department selected {
+            if [not $selected$.oclIsUndefined()] {
+                movePatientWi.doctorsTa.rows := [$selected$.doctors]
             }
         }
         Set(Department) rows := [$movePatientWi.medicalCenter$.departments]
     }
     Table doctorsTa{ 
         Set(Doctor) rows := [Doctor.allInstances()->select(false)]
+        Doctor selected
     }
     Button moveBu{
         String text := ['Move the patient']
@@ -57,26 +56,21 @@ Table movePatientWi.doctorsTa{
 
 Button movePatientWi.moveBu{
     event onClick{
-        if [not $departmentsTa.selected$->oclIsUndefined()]{
-            if [ $departmentsTa.selected$->size() = 1 and not $doctorsTa.selected$->oclIsUndefined()]{
-                if [$doctorsTa.selected$->size() = 1] {
-                    [$movePatientWi.patient$.department] -= [$movePatientWi.patient$.department->any(true)]
-                    [$movePatientWi.patient$.doctor] -= [$movePatientWi.patient$.doctor->any(true)]
-                    [$movePatientWi.patient$.department] += [$departmentsTa.selected$->any(true)]
-                    [$movePatientWi.patient$.doctor] += [$doctorsTa.selected$->any(true)]
+        if [not $departmentsTa.selected$.oclIsUndefined()]{
+            if [not $doctorsTa.selected$.oclIsUndefined()]{
+                [$movePatientWi.patient$.department] -= [$movePatientWi.patient$.department->any(true)]
+                [$movePatientWi.patient$.doctor] -= [$movePatientWi.patient$.doctor->any(true)]
+                [$movePatientWi.patient$.department] += [$departmentsTa.selected$]
+                [$movePatientWi.patient$.doctor] += [$doctorsTa.selected$]
 
-                    // full path in target var because otherwise there are conflicts with other vars
-                    movePatientWi.departmentLa.text := ['Department: '.concat($movePatientWi.patient$.department->any(true).name)]
-                    movePatientWi.doctorLa.text := ['Doctor: '.concat($movePatientWi.patient$.doctor.professional->any(true).name).concat(' ').concat($movePatientWi.patient$.doctor.professional->any(true).surname)]
+                // full path in target var because otherwise there are conflicts with other vars
+                movePatientWi.departmentLa.text := ['Department: '.concat($movePatientWi.patient$.department->any(true).name)]
+                movePatientWi.doctorLa.text := ['Doctor: '.concat($movePatientWi.patient$.doctor.professional->any(true).name).concat(' ').concat($movePatientWi.patient$.doctor.professional->any(true).surname)]
 
-                    notification(['Message'],['The patient has been moved properly.'],[2000])
-                }
-                else {
-                    notification(['Message'],['You have to select exactly one doctor.'],[2000])
-                }
+                notification(['Message'],['The patient has been moved properly.'],[2000])
             }
             else{
-                notification(['Message'],['You have to select exactly one doctor and one department.'],[2000])
+                notification(['Message'],['You have to select a doctor.'],[2000])
             }
         }
         else{
