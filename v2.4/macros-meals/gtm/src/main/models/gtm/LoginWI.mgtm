@@ -17,7 +17,7 @@ Button LoginBU {
             }#
             if [not($loggedUser$.oclIsUndefined())] {
                 if [$loggedUser$.role = Role::RESIDENT] {
-                    open MenuResidentWI(caller:[$loggedUser$], role:[$loggedUser$.role])
+                    open SelectMealsWI(caller:[$loggedUser$], role:[$loggedUser$.role])
                 }
                 else {
                     if [$loggedUser$.role = Role::DIRECTOR] {
@@ -25,7 +25,7 @@ Button LoginBU {
                     }
                     else {
                         if [$loggedUser$.role = Role::ADMINISTRATION] {
-                            open MenuAdministrationWI(caller:[$loggedUser$], role:[$loggedUser$.role])
+                            open CountMealsAdminWI(caller:[$loggedUser$], role:[$loggedUser$.role])
                         }
                         else {
                             notification (['Message'],['You have no role assigned.'],[-1])
