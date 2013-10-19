@@ -546,7 +546,23 @@ Window SelectMealsWI  {
 
     }
 
-     event onChange (selDate) {     
+    Button changePasswordBU {
+        String text := ['Change password']
+
+        event onClick {
+            open ChangePasswordWI()
+        }
+    }
+
+    Button logoutBU {
+        String text := ['Log out']
+
+        event onClick {
+            exit
+        }
+    }
+
+    event onChange (selDate) {     
         reevaluate selDateDayOfWeek
         reevaluate selDateWeekFirstDay
         reevaluate firstDayThisWeekLB.text

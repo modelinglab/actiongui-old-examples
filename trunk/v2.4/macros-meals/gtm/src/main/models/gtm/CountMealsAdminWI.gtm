@@ -97,8 +97,16 @@ Window CountMealsAdminWI {
         }
     }    
 
-    Button BackBU {
-        String text := ['Back']
+    Button changePasswordBU {
+        String text := ['Change password']
+
+        event onClick {
+            open ChangePasswordWI()
+        }
+    }
+
+    Button logoutBU {
+        String text := ['Log out']
 
         event onClick {
             back

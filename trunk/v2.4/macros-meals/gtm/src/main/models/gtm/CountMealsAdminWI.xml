@@ -11,6 +11,15 @@ and open the template in the editor.
     xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
     <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto">
         <ns1:entry>
+            <ns1:widget ns1:id="changePasswordBU" ns1:width="150px" ns1:height="30px"></ns1:widget>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:widget ns1:id="logoutBU" ns1:width="150px" ns1:height="30px"></ns1:widget>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:line-layout orientation="vertical" ns1:height="50px"></ns1:line-layout>
+        </ns1:entry>
+        <ns1:entry>
             <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
                 <ns1:entry>
                     <ns1:widget ns1:id="DateLA" ns1:height="30px" ns1:width="90px"></ns1:widget>
@@ -52,9 +61,6 @@ and open the template in the editor.
                     </ns1:table>
                 </ns1:column>
             </ns1:table>
-        </ns1:entry>
-        <ns1:entry>
-            <ns1:widget ns1:id="BackBU" ns1:height="30px" ns1:width="80px"></ns1:widget>
         </ns1:entry>
     </ns1:line-layout>
 
