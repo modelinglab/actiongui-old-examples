@@ -40,12 +40,12 @@ and open the template in the editor.
             </ns1:line-layout>
         </ns1:entry>
         <ns1:entry>
-            <ns1:table ns1:id="MealsTA" ns1:height="600px" ns1:width="auto">
+            <ns1:table ns1:id="MealsTA" ns1:height="800px" ns1:width="auto">
                 <ns1:column>
                     <ns1:widget ns1:id="Meals" ns1:width="150px" ns1:height="30px"></ns1:widget>
                 </ns1:column>
                 <ns1:column>
-                    <ns1:table ns1:id="MealOptions" ns1:width="auto" ns1:height="150px">
+                    <ns1:table ns1:id="MealOptions" ns1:width="auto" ns1:height="250px">
                         <ns1:column>
                             <ns1:widget ns1:id="Option" ns1:width="250px" ns1:height="30px"></ns1:widget>
                         </ns1:column>
