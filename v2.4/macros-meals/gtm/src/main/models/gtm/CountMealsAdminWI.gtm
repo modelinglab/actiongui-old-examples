@@ -66,7 +66,7 @@ Window CountMealsAdminWI {
                                 text := ['Close']
                             }
                             if [$period$.oclIsUndefined()] {
-                                text := ['No period']
+                                text := ['----']
                             }
                             else {
                                 if [$period$.deadlines->exists(d|d.days->includes($dayOfWeek$) and (($selectedDate$.toLocalDate().atStartOfDay().minusDays(d.cday) > $nowDate$.toLocalDate().atStartOfDay()) or ($selectedDate$.toLocalDate().atStartOfDay().minusDays(d.cday) = $nowDate$.toLocalDate().atStartOfDay() and ($nowDate$.getHour() < d.chour or ($nowDate$.getHour() = d.chour and $nowDate$.getMinute() <= d.cminute)))))] {
