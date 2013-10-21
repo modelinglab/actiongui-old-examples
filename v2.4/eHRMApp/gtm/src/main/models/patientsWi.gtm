@@ -94,15 +94,20 @@ Table patientsWi.patientsTa{
 
 Button patientsWi.movePatientBu{
     event onClick{
-        if [$patientsWi.caller$.asAdministrative->notEmpty()] {
-            if [not $patientsTa.selected$.oclIsUndefined()] {
-                open movePatientWi(medicalCenter:[$patientsWi.medicalCenter$], patient: [$patientsTa.selected$])
+        try {
+            if [$patientsWi.caller$.asAdministrative->notEmpty()] {
+                if [not $patientsTa.selected$.oclIsUndefined()] {
+                    open movePatientWi(medicalCenter:[$patientsWi.medicalCenter$], patient: [$patientsTa.selected$])
+                }
+                else{
+                    notification(['Message'],['You have to select a patient.'],[2000])
+                }
             }
             else{
-                notification(['Message'],['You have to select a patient.'],[2000])
+                notification(['Message'],['You are not administrative of this medical center.'],[2000])
             }
         }
-        else{
+        catch(SecurityException) {
             notification(['Message'],['You are not administrative of this medical center.'],[2000])
         }
     }

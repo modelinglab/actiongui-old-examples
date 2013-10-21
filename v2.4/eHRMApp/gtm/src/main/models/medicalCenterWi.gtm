@@ -32,15 +32,20 @@ Table medicalCenterWi.medicalCentersTa{
 
 Button medicalCenterWi.registerPatientBu{
     event onClick{
-        if [$medicalCenterWi.caller$.asAdministrative->notEmpty()]{
-            if [not $medicalCentersTa.selected$.oclIsUndefined()]{
-                open registerPatientWi(medicalCenter: [$medicalCentersTa.selected$])
-            }
+        try {
+            if [$medicalCenterWi.caller$.asAdministrative->notEmpty()]{
+                if [not $medicalCentersTa.selected$.oclIsUndefined()]{
+                    open registerPatientWi(medicalCenter: [$medicalCentersTa.selected$])
+                }
+                else{
+                    notification(['Message'],['Please, select a medical center.'],[2000])
+                }
+            }  
             else{
-                notification(['Message'],['Please, select a medical center.'],[2000])
+                notification(['Message'],['You are not an administrative of the selected medical center.'],[2000])
             }
-        }  
-        else{
+        }
+        catch(SecurityException) {
             notification(['Message'],['You are not an administrative of the selected medical center.'],[2000])
         }
     }
@@ -49,15 +54,20 @@ Button medicalCenterWi.registerPatientBu{
 
 Button medicalCenterWi.directorMenuBu{
     event onClick{
-        if [$medicalCenterWi.caller$.asDirector->notEmpty()] {
-            if [not $medicalCentersTa.selected$.oclIsUndefined()]{
-                open directorMenuWi (medicalCenter:[$medicalCentersTa.selected$])
+        try {
+            if [$medicalCenterWi.caller$.asDirector->notEmpty()] {
+                if [not $medicalCentersTa.selected$.oclIsUndefined()]{
+                    open directorMenuWi (medicalCenter:[$medicalCentersTa.selected$])
+                }
+                else{
+                    notification(['Message'],['Please, select a medical center.'],[2000])
+                }
             }
             else{
-                notification(['Message'],['Please, select a medical center.'],[2000])
+                notification(['Message'],['You are not the director of the selected medical center.'],[2000])
             }
         }
-        else{
+        catch(SecurityException) {
             notification(['Message'],['You are not the director of the selected medical center.'],[2000])
         }
     }

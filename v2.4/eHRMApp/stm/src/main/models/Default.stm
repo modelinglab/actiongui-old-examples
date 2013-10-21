@@ -7,7 +7,4 @@ role DEFAULT {
     MedicalCenter{
         read constrainedBy [caller.worksIn->includes(self)]
     }
-    Professional {
-        read
-    }
 }
