@@ -273,52 +273,52 @@ and open the template in the editor.
                 <ns1:entry>
                     <ns1:table ns1:id="DeadlinesTB" ns1:height="200px" ns1:width="600px">
                         <ns1:column>
-                            <ns1:widget ns1:id="Monday" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                            <ns1:widget ns1:id="Monday" ns1:height="30px" ns1:width="30px"></ns1:widget>
                         </ns1:column>
                         <ns1:column>
-                            <ns1:widget ns1:id="Tuesday" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                            <ns1:widget ns1:id="Tuesday" ns1:height="30px" ns1:width="30px"></ns1:widget>
                         </ns1:column>
                         <ns1:column>
-                            <ns1:widget ns1:id="Wednesday" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                            <ns1:widget ns1:id="Wednesday" ns1:height="30px" ns1:width="30px"></ns1:widget>
                         </ns1:column>
                         <ns1:column>
-                            <ns1:widget ns1:id="Thursday" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                            <ns1:widget ns1:id="Thursday" ns1:height="30px" ns1:width="30px"></ns1:widget>
                         </ns1:column>
                         <ns1:column>
-                            <ns1:widget ns1:id="Friday" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                            <ns1:widget ns1:id="Friday" ns1:height="30px" ns1:width="30px"></ns1:widget>
                         </ns1:column>
                         <ns1:column>
-                            <ns1:widget ns1:id="Saturday" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                            <ns1:widget ns1:id="Saturday" ns1:height="30px" ns1:width="30px"></ns1:widget>
                         </ns1:column>
                         <ns1:column>
-                            <ns1:widget ns1:id="Sunday" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                            <ns1:widget ns1:id="Sunday" ns1:height="30px" ns1:width="30px"></ns1:widget>
                         </ns1:column>
                         <ns1:column>
-                            <ns1:widget ns1:id="DaysBefore" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                            <ns1:widget ns1:id="DaysBefore" ns1:height="30px" ns1:width="30px"></ns1:widget>
                         </ns1:column>
                          <ns1:column>
-                            <ns1:widget ns1:id="UpDB" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                            <ns1:widget ns1:id="UpDB" ns1:height="30px" ns1:width="30px"></ns1:widget>
                         </ns1:column>
                         <ns1:column>
-                            <ns1:widget ns1:id="DownDB" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                            <ns1:widget ns1:id="DownDB" ns1:height="30px" ns1:width="30px"></ns1:widget>
                         </ns1:column>
                         <ns1:column>
-                            <ns1:widget ns1:id="HourLimit" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                            <ns1:widget ns1:id="HourLimit" ns1:height="30px" ns1:width="30px"></ns1:widget>
                         </ns1:column>
                          <ns1:column>
-                            <ns1:widget ns1:id="UpHL" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                            <ns1:widget ns1:id="UpHL" ns1:height="30px" ns1:width="30px"></ns1:widget>
                         </ns1:column>
                         <ns1:column>
-                            <ns1:widget ns1:id="DownHL" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                            <ns1:widget ns1:id="DownHL" ns1:height="30px" ns1:width="30px"></ns1:widget>
                         </ns1:column>
                         <ns1:column>
-                            <ns1:widget ns1:id="MinutesLimit" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                            <ns1:widget ns1:id="MinutesLimit" ns1:height="30px" ns1:width="30px"></ns1:widget>
                         </ns1:column>
                          <ns1:column>
-                            <ns1:widget ns1:id="UpML" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                            <ns1:widget ns1:id="UpML" ns1:height="30px" ns1:width="30px"></ns1:widget>
                         </ns1:column>
                         <ns1:column>
-                            <ns1:widget ns1:id="DownML" ns1:height="20px" ns1:width="20px"></ns1:widget>
+                            <ns1:widget ns1:id="DownML" ns1:height="30px" ns1:width="30px"></ns1:widget>
                         </ns1:column>
                     </ns1:table>
                 </ns1:entry>
