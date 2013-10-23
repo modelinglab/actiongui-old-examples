@@ -95,6 +95,12 @@ role DIRECTOR {
     FoodRegime {
         fullAccess
     }
+    Contract {
+        fullAccess
+    }
+    ContractOption {
+        fullAccess
+    }
 }
 
 role RESIDENT {
