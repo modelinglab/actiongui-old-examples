@@ -35,8 +35,21 @@ entity Residency {
     User ownedBy oppositeTo periods
     User ownedByRegime oppositeTo regimes
     FoodRegime regime oppositeTo ownedBy
+    Contract contract oppositeTo ownedBy
     MealOption ownedByOption oppositeTo periodsOption
     Set(MealOptionDeadline) deadlines oppositeTo ownedBy
+}
+
+entity Contract {
+    String name
+    Set(Residency) ownedBy  oppositeTo contract
+    Set(ContractOption) options oppositeTo includedIn
+}
+
+entity ContractOption {
+    MealOption mealOption
+    Set(DayOfWeek) days
+    Contract includedIn oppositeTo options
 }
 
 entity DailyMealSelection {
