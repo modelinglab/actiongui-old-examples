@@ -1,0 +1,85 @@
+* style
+- add logo
+- add borders
+- enforce error message uniformity [no red messages: hard to see]
+- use single selection
+
+* assing periods to users
+- periods
+- regimes
+
+* TODO
+- improve the table
+
+* TODO
+- cloud-based: the resource may not be available 
+if it has not been used for a while. CHECK
+- review de meals configuration. CHECK [e.g., Sunday breakfast]
+- meal counts, also with regimes information.
+- special days, special deadlines
+- full, half-pensions
+- allow non-ending periods
+
+* DONE
+- easy row selection
+- change user's roles
+- role admin, with new tables with regime information
+- associate regime with users for specific periods (may not
+coincide with residency periods)
+- cloud-based: 
+
+* KEY
+- residency periods: residents can select an option for 
+each meal, 
+i) among the option available (availability period),
+ii) before the deadline (if exists: by default, an
+option is *not* available)
+
+- regime periods: *every* option selected by
+the residents will be served  
+according to this regime.
+
+- residency periods and regime periods can not be changed
+if they modify/delete a selected option and for
+which the deadline has already passed.
+
+* Feature (in Spanish)
+Resumen de las funcionalidades:
+
+** a los usuarios-directores:
+a) definir las comidas que
+se ofertan en la residencia, y las opciones para cada comida;
+y para cada opción, definir los periodos
+en que se ofertan (fecha inicial-fecha final);
+y para cada periodo y cada día de la semana,
+definir los "deadlines": o sea la fecha tope en
+la que se puede pedir
+esa opción (días de antelación,
+y a qué hora).
+
+b) definir los regímenes de comida.
+
+c) definir los usuarios (y asignarles un role:
+director, residente, administración);
+y para cada usuario-residente, definir
+los periodos (fecha inicial-fecha final)
+en los que puede comer en la residencia,
+y también los periodos (fecha inicial-fecha final)
+en los que puede comer un regimen especial de comida.
+
+** a los usuarios-residentes:
+a) seleccionar opciones de comidas, entre las
+disponibles, para los días en los que tiene
+definido un periodo-residencia, supuesto que
+el deadline no se haya pasado ya.
+
+** a los usuarios-administración:
+a) ver el número total de residentes que han
+seleccionado cada opción de comida, y para
+cada regimen, el número total de residentes con
+ese regimen que han seleccionado esa opción
+de comida; además, para cada opción de comida,
+se les muestra si el número puedo o no variar
+(dependiendo de si el correspondiente deadline
+se ha pasado o no).
+
