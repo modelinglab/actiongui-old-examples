@@ -1,0 +1,62 @@
+Window ContractsWI {
+    String text := ['Contracts']
+
+     #table ContractsTB {
+        entity: Contract
+        rows : [Contract.allInstances()]
+        column : name {label : ['Name'] }
+        size : [10]
+    }#
+#form NewContractFO {
+        entity: Contract
+        prop: name {label : ['Contract: ']}
+    }#
+
+Button NewContractBU {
+        String text := ['New contract']
+        Contract newContract
+        event onClick {
+            #create {
+                form: NewContractFO
+                result: newContract
+                assert: [not($NewContractFO_name.text$.oclIsUndefined())]
+                        {message: ['Please, write the name of the new contract']
+                         assert : [not(Contract.allInstances()->exists(r|r.name = $NewContractFO_name.text$))]
+                         {message: ['There is already a contract with this name. Please, choose a different name']
+                            } }     
+            }#
+            if [not($newContract$.oclIsUndefined())] {
+                #refresh  ContractsTB#
+                ContractsTB.selected := [$newContract$->asOrderedSet()]
+            }
+        }
+
+    }
+
+Button EditBU {
+    String text := ['Edit']
+    event onClick {
+        #forward {
+            target: EditContractWI
+            arg: thisContract {
+                value: [$ContractsTB.selected$->any(true)]
+            }
+            assert: [not($ContractsTB.selected$->oclIsUndefined())] {
+                message: ['Please, select first a contract']
+                    assert: [not($ContractsTB.selected$->size()>1)] {
+                        message: ['Please, select only one contract']
+                    }
+            } 
+        }#
+    }
+}
+
+
+Button BackBU {
+    String text := ['Back']
+    event onClick {
+        back
+    }
+}
+
+}

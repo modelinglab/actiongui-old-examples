@@ -1,0 +1,94 @@
+Window EditContractWI {
+    String text := ['Edit contract']
+    Contract thisContract
+
+Table ContractItemsTB {
+    Set(ContractOption) rows := [$EditContractWI.thisContract$.options]
+    ContractOption selected
+    columns {
+        ['Meal'] : Label Literal { String text := [$ContractItemsTB.row$.mealOption.ownedBy.literal] }
+        ['Options'] : Label Option { String text := [$ContractItemsTB.row$.mealOption.literal] }
+        ['First'] : BooleanField Monday { 
+            Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::MONDAY)) then true else false endif] 
+                {
+                if [not($value$.oclIsUndefined())] 
+                   { if [$value$] 
+                        {
+                        if [$ContractItemsTB.row$.days->excludes(DayOfWeek::MONDAY)]
+                            { [$ContractItemsTB.row$.days] := 
+                              [if $ContractItemsTB.row$.days->oclIsUndefined()
+                              then DayOfWeek::MONDAY->asSet()
+                              else $ContractItemsTB.row$.days->including(DayOfWeek::MONDAY) endif]
+                              }
+                         }                   
+                      else { [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::MONDAY)] }
+
+        } } } } 
+    }
+
+Table MealsTB {
+    Set(Meal) rows := [Meal.allInstances()]
+    Meal selected 
+    columns {
+        ['Meals'] : Label Meals { String text := [$MealsTB.row$.literal] }
+    }
+}
+
+Table MealOptionsTB {
+    Set(MealOption) rows := [if ($MealsTB.selected$.oclIsUndefined()) then MealOption.allInstances()->select(false) else $MealsTB.selected$.options endif]
+    MealOption selected 
+    columns {
+        ['Options'] : Label Options { String text := [$MealOptionsTB.row$.literal] }
+    }
+}
+
+
+
+Button NewContractOptionBU {
+    String text := ['New option']
+    event onClick {
+    if [$MealsTB.selected$.oclIsUndefined()] {
+        notification(['Error'], ['Please, select first a meal'], [0])
+       }
+    else { if [$MealOptionsTB.selected$.oclIsUndefined()] {
+              notification(['Error'], ['Please, select first a meal option.'], [0])
+            }
+           else {
+              newOption := new ContractOption
+              [$newOption$.mealOption] := [$MealOptionsTB.selected$]
+              [$newOption$.includedIn] := [$EditContractWI.thisContract$]
+              [$newOption$.days] := [DayOfWeek.allInstances()]
+              reevaluate ContractItemsTB.rows
+
+           }
+           }
+
+    }
+}
+
+
+Button DeleteContractOptionBU {
+    String text := ['Delete option']
+    event onClick {
+        if [$ContractItemsTB.selected$.oclIsUndefined()] {
+            notification(['Error'], ['Please, selected first a contract option.'], [0] )
+        }
+        else {
+            delete [$ContractItemsTB.selected$]
+            reevaluate ContractItemsTB.rows
+        }
+
+    }
+}
+
+Button BackBU {
+    String text := ['Back']
+    event onClick {
+        back
+    }
+}
+
+event onChange (MealsTB.selected) {
+    reevaluate MealOptionsTB.rows
+}
+}
