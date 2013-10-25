@@ -5,6 +5,7 @@ Window FoodRegimesWI {
         column : name {label : ['Name'] }
         column : description {label : ['Description']}
         size : [10]
+        selection: SINGLE
     }#
 #form NewRegimeFO {
         entity: FoodRegime
@@ -27,7 +28,7 @@ Button NewRegimeBU {
             }#
             if [not($newRegime$.oclIsUndefined())] {
                 #refresh RegimesTB#
-                RegimesTB.selected := [$newRegime$->asOrderedSet()]
+                RegimesTB.selected := [$newRegime$]
             }
         }
 
@@ -39,13 +40,10 @@ Button EditBU {
         #forward {
             target: EditFoodRegimeWI
             arg: thisRegime {
-                value: [$RegimesTB.selected$->any(true)]
+                value: [$RegimesTB.selected$]
             }
-            assert: [not($RegimesTB.selected$->oclIsUndefined())] {
+            assert: [not($RegimesTB.selected$.oclIsUndefined())] {
                 message: ['Please, select first a regime']
-                    assert: [not($RegimesTB.selected$->size()>1)] {
-                        message: ['Please, select only one regime']
-                    }
             } 
         }#
     }

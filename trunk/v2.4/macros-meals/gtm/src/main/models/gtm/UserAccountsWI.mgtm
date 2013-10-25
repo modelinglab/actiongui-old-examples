@@ -7,6 +7,7 @@ Window UserAccountsWI {
         column : login {label : ['Login']}
         column : role {label : ['Role']}
         size : [10]
+        selection: SINGLE
     }#
 
 Button CreateBU {
@@ -22,15 +23,14 @@ Button EditBU {
         #forward {
             target: EditUserWI
             arg: thisUser {
-                    value: [$UsersTB.selected$->any(true)]
-                    }
-            assert: [not($UsersTB.selected$->oclIsUndefined())] 
-                    {message: ['Please, select first a user']
-                       assert: [not($UsersTB.selected$->size()>1)]
-                        {message: ['Please, select only one user']} } 
-                }#
-        }
+                value: [$UsersTB.selected$]
+            }
+            assert: [not($UsersTB.selected$->oclIsUndefined())] {
+                message: ['Please, select first a user']
+            } 
+        }#
     }
+}
 
 Button BackBU {
     String text := ['Back']
