@@ -17,6 +17,7 @@ Window ConfigurationWI {
                 }
         size: [10]
         sortedBy : [literal]
+        selection : SINGLE
     }#
 
     #form NewMealFO {
@@ -41,7 +42,7 @@ Window ConfigurationWI {
             }#
             if [not($newMeal$.oclIsUndefined())] {
                 #refresh Meals_T#
-                Meals_T.selected := [$newMeal$->asOrderedSet()]
+                Meals_T.selected := [$newMeal$]
             }
         }
 
@@ -49,7 +50,7 @@ Window ConfigurationWI {
 
     #form EditMealFO {
         entity: Meal
-        instance: [$Meals_T.selected$->any(true)]
+        instance: [$Meals_T.selected$]
         prop: literal {
             label : ['Meal: ']
         }
@@ -59,24 +60,24 @@ Window ConfigurationWI {
         String text := ['Modify meal']
         Meal selectedMeal
         event onClick {
-            if [$Meals_T.selected$->oclIsUndefined()]
-               { error := ['EM0: Please, select first a meal'] }
-            else {if [$Meals_T.selected$->size()=0 or $Meals_T.selected$->size() > 1]
-                     { error := ['EM1: Please, select exactly one meal'] }
-                  else {
-                     selectedMeal := [$Meals_T.selected$->any(true)]
-                     #update {
-                        form: EditMealFO
-                        assert: [not($EditMealFO_literal.text$.oclIsUndefined())]
-                        {message: ['EM3: Please, write the new name of the meal']
-                          assert : [not(Meal.allInstances()->exists(m|m.literal = $EditMealFO_literal.text$))]
-                          {message: ['EM4:There is already a meal with this name. Please, choose a different name']
-                            } } 
-                        }# 
-                    #refresh Meals_T#
-                    Meals_T.selected := [$selectedMeal$->asOrderedSet()]
-                    } } 
+            if [$Meals_T.selected$.oclIsUndefined()] {
+                error := ['EM0: Please, select first a meal']
             }
+            else {
+                selectedMeal := [$Meals_T.selected$]
+                #update {
+                    form: EditMealFO
+                    assert: [not($EditMealFO_literal.text$.oclIsUndefined())] {
+                        message: ['EM3: Please, write the new name of the meal']
+                        assert : [not(Meal.allInstances()->exists(m|m.literal = $EditMealFO_literal.text$))] {
+                            message: ['EM4:There is already a meal with this name. Please, choose a different name']
+                        }
+                    } 
+                }# 
+                #refresh Meals_T#
+                Meals_T.selected := [$selectedMeal$]
+            }
+        }
     }
 
     Label mealOptionsLA {
@@ -94,6 +95,7 @@ Window ConfigurationWI {
         }
         size: [10]
         sortedBy: [literal]
+        selection: SINGLE
     }#
 
 
@@ -114,27 +116,27 @@ Window ConfigurationWI {
             #create {
                 form: NewOptionFO
                 result: newOption
-                assert: [not($Meals_T.selected$->oclIsUndefined())]
-                  {message: ['NO0: Please, select first a meal']
-                    assert: [not($Meals_T.selected$->size() = 0)]
-                    {message: ['NO1: Please, select first a meal']
-                      assert: [not($Meals_T.selected$->size() >1)] 
-                      {message: ['NO2: Please, select only one meal']
-                        assert: [not($NewOptionFO_literal.text$.oclIsUndefined())]
-                        {message: ['NO3: Please, write the literal of the new option']
-                            assert: [not($NewOptionFO_initial.text$.oclIsUndefined())] {
-                                message: ['NO4: Please, write the initials of the new option']
-                          assert : [not($Meals_T.selected$.options->exists(o|o.literal = $NewOptionFO_literal.text$))]
-                          {message: ['NO5: There is already an option for this meal with this name. Please, choose a different name']
-                          assert : [not($Meals_T.selected$.options->exists(o|o.initial = $NewOptionFO_initial.text$))]
-                          {message: ['NO6: There is already an option for this meal with these intials. Please, choose different initials']
-                            } } } } } } }
+                assert: [not($Meals_T.selected$.oclIsUndefined())] {
+                    message: ['NO0: Please, select first a meal']
+                    assert: [not($NewOptionFO_literal.text$.oclIsUndefined())] {
+                        message: ['NO3: Please, write the literal of the new option']
+                        assert: [not($NewOptionFO_initial.text$.oclIsUndefined())] {
+                            message: ['NO4: Please, write the initials of the new option']
+                            assert : [not($Meals_T.selected$.options->exists(o|o.literal = $NewOptionFO_literal.text$))] {
+                                message: ['NO5: There is already an option for this meal with this name. Please, choose a different name']
+                                assert : [not($Meals_T.selected$.options->exists(o|o.initial = $NewOptionFO_initial.text$))] { 
+                                    message: ['NO6: There is already an option for this meal with these intials. Please, choose different initials']
+                                }
+                            }
+                        }
+                    }
+                }
             }#
             if [not($newOption$.oclIsUndefined())] {
-                [$newOption$.ownedBy] := [$Meals_T.selected$->any(true)]
+                [$newOption$.ownedBy] := [$Meals_T.selected$]
                 #refresh Meals_T#
-                Meals_T.selected := [$newOption$.ownedBy->asOrderedSet()]            
-                Meal_Options_T.selected := [$newOption$->asOrderedSet()]
+                Meals_T.selected := [$newOption$.ownedBy]            
+                Meal_Options_T.selected := [$newOption$]
             }
         }
 
@@ -142,7 +144,7 @@ Window ConfigurationWI {
 
     #form EditOptionFO {
         entity: MealOption
-        instance: [$Meal_Options_T.selected$->any(true)]
+        instance: [$Meal_Options_T.selected$]
         prop: initial {
             label : ['Initial: ']
         }
@@ -155,36 +157,36 @@ Window ConfigurationWI {
         String text := ['Change meal option']
         MealOption selectedOption
         event onClick {
-            if [$Meals_T.selected$->oclIsUndefined()]
-                { error := ['Please, select first a meal'] }
-            else {if [$Meals_T.selected$->size() = 0 or $Meals_T.selected$->size() > 1]
-                      { error := ['Please, select exactly one meal'] }
-                  else {if [$Meal_Options_T.selected$->oclIsUndefined()]
-                           { error := ['Please, select an option first'] }
-                        else {if [$Meal_Options_T.selected$->size() = 0 or $Meal_Options_T.selected$->size() > 1]
-                                 { error := ['Please, select exactly one option'] }
-                              else {
-                                selectedOption := [$Meal_Options_T.selected$->any(true)]
-                                #update {
-                                    form: EditOptionFO
-                                    assert: [not($EditOptionFO_literal.text$.oclIsUndefined())] {
-                                        message: ['Please, write the new literal of the option']
-                                        assert : [not($Meals_T.selected$.options->exists(mo|mo.literal = $EditOptionFO_literal.text$))] {
-                                            message: ['There is already an option for this meal with this name. Please, choose a different name']
-                                            assert: [not($EditOptionFO_initial.text$.oclIsUndefined())] {
-                                                message: ['Please, write the new initials of the option']
-                                                assert: [not($Meals_T.selected$.options->exists(mo|mo.initial = $EditOptionFO_initial.text$))] {
-                                                    message: ['There is already an option for this meal with these intials. Please, choose different initials']
-                                                }
-                                            }
-                                        }  
-                                    }  
-                                 }#
-                                 #refresh Meal_Options_T#
-                                 Meal_Options_T.selected := [$selectedOption$->asOrderedSet()]
-                                } } } } 
-      }
-   }
+            if [$Meals_T.selected$.oclIsUndefined()] {
+                error := ['Please, select first a meal']
+            }
+            else {
+                if [$Meal_Options_T.selected$.oclIsUndefined()] {
+                    error := ['Please, select an option first']
+                }
+                else {
+                    selectedOption := [$Meal_Options_T.selected$]
+                    #update {
+                        form: EditOptionFO
+                        assert: [not($EditOptionFO_literal.text$.oclIsUndefined())] {
+                            message: ['Please, write the new literal of the option']
+                            assert : [not($Meals_T.selected$.options->exists(mo|mo.literal = $EditOptionFO_literal.text$))] {
+                                message: ['There is already an option for this meal with this name. Please, choose a different name']
+                                assert: [not($EditOptionFO_initial.text$.oclIsUndefined())] {
+                                    message: ['Please, write the new initials of the option']
+                                    assert: [not($Meals_T.selected$.options->exists(mo|mo.initial = $EditOptionFO_initial.text$))] {
+                                        message: ['There is already an option for this meal with these intials. Please, choose different initials']
+                                    }
+                                }
+                            }  
+                        }  
+                     }#
+                     #refresh Meal_Options_T#
+                     Meal_Options_T.selected := [$selectedOption$]
+                }
+            }
+        }
+    }
 
 
 Label mealOptionPeriodsLA {
@@ -193,11 +195,12 @@ Label mealOptionPeriodsLA {
 
 #table ThisOptionPeriodsFO {
     entity: Residency
-    rows: [$Meal_Options_T.selected$->any(true).periodsOption]
+    rows: [$Meal_Options_T.selected$.periodsOption]
     column: start {label: ['start'] }
     column: end {label: ['end'] }
     size: [10]
     sortedBy: [start]
+    selection: SINGLE
 }#
  
 
@@ -212,42 +215,53 @@ Button CreatePeriodOptionBU {
     String text := ['New period']
     Residency newPeriod
     event onClick {
-     if [$Meals_T.selected$->oclIsUndefined()]
-            { error := ['Please, select first a meal'] }
-        else {if [$Meals_T.selected$->size() = 0 or $Meals_T.selected$->size() > 1]
-                  { error := ['Please, select exactly one meal'] }
-              else {if [$Meal_Options_T.selected$->oclIsUndefined()]
-                       { error := ['Please, select an option first'] }
-                    else {if [$Meal_Options_T.selected$->size() = 0 or $Meal_Options_T.selected$->size() > 1]
-                             { error := ['Please, select exactlty one option'] }
-                          else {
-        #create {form: NewPeriodOptionFO 
-            result: newPeriod
-            assert: [not($NewPeriodOptionFO_start.value$.oclIsUndefined())]
-                {message: ['Please, select first a starting date'] 
-                 assert: [not($NewPeriodOptionFO_end.value$.oclIsUndefined())]
-                    {message: ['Please, select first an ending date']
-                        assert: [$NewPeriodOptionFO_start.value$ <= $NewPeriodOptionFO_end.value$]
-                        {message: ['Please, select an ending date that is later or equal than the starting date']
-                        assert: [$Meal_Options_T.selected$->any(true).periodsOption->select(p|
-                                    ($NewPeriodOptionFO_start.value$ <= p.start and $NewPeriodOptionFO_end.value$ >= p.start)
-                                    or ($NewPeriodOptionFO_start.value$ > p.start and $NewPeriodOptionFO_start.value$ <= p.end))
-                                ->isEmpty()]
-                            {message: ['The selected period overlaps with one or more existing periods. Please, change either the starting or the ending date']
-                                }} } }
-        }#
-        if [not($newPeriod$.oclIsUndefined())]
-           { 
-            [$Meal_Options_T.selected$->any(true).periodsOption]+= [$newPeriod$]
-             #refresh ThisOptionPeriodsFO#
-             #refresh NewPeriodOptionFO#
-             }
-        } } } } 
-      }
-    } 
+        if [$Meals_T.selected$.oclIsUndefined()] {
+            error := ['Please, select first a meal']
+        }
+        else {
+            if [$Meals_T.selected$->size() = 0 or $Meals_T.selected$->size() > 1] {
+                error := ['Please, select exactly one meal']
+            }
+            else {
+                if [$Meal_Options_T.selected$->oclIsUndefined()] {
+                    error := ['Please, select an option first']
+                }
+                else {
+                    if [$Meal_Options_T.selected$->size() = 0 or $Meal_Options_T.selected$->size() > 1] {
+                        error := ['Please, select exactlty one option']
+                    }
+                    else {
+                        #create {
+                            form: NewPeriodOptionFO 
+                            result: newPeriod
+                            assert: [not($NewPeriodOptionFO_start.value$.oclIsUndefined())] {
+                                message: ['Please, select first a starting date'] 
+                                assert: [not($NewPeriodOptionFO_end.value$.oclIsUndefined())] {
+                                    message: ['Please, select first an ending date']
+                                    assert: [$NewPeriodOptionFO_start.value$ <= $NewPeriodOptionFO_end.value$] {
+                                        message: ['Please, select an ending date that is later or equal than the starting date']
+                                        assert: [$Meal_Options_T.selected$->any(true).periodsOption->select(p|($NewPeriodOptionFO_start.value$ <= p.start and $NewPeriodOptionFO_end.value$ >= p.start) or ($NewPeriodOptionFO_start.value$ > p.start and $NewPeriodOptionFO_start.value$ <= p.end))->isEmpty()] {
+                                            message: ['The selected period overlaps with one or more existing periods. Please, change either the starting or the ending date']
+                                        }
+                                    }
+                                }
+                            }
+                        }#
+                        if [not($newPeriod$.oclIsUndefined())] { 
+                            [$Meal_Options_T.selected$.periodsOption]+= [$newPeriod$]
+                            #refresh ThisOptionPeriodsFO#
+                            #refresh NewPeriodOptionFO#
+                        }
+                    }
+                }
+            }
+        } 
+    }
+} 
 
 Table DeadlinesTB {
-    Set(MealOptionDeadline) rows := [$ThisOptionPeriodsFO.selected$  ->any(true).deadlines]
+    Set(MealOptionDeadline) rows := [$ThisOptionPeriodsFO.selected$.deadlines]
+    MealOptionDeadline selected
     columns {
         ['First'] : BooleanField Monday { 
                 Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::MONDAY)) then true else false endif] 
@@ -426,41 +440,43 @@ Table DeadlinesTB {
 Button AddDeadlineBU {
     String text := ['New deadline']
     event onClick {
-        if [$Meals_T.selected$->oclIsUndefined()]
-            { error := ['Please, select first a meal'] }
-        else {if [$Meals_T.selected$->size() = 0 or $Meals_T.selected$->size() > 1]
-                  { error := ['Please, select exactly one meal'] }
-              else {if [$Meal_Options_T.selected$->oclIsUndefined()]
-                       { error := ['Please, select an option first'] }
-                    else {if [$Meal_Options_T.selected$->size() = 0 or $Meal_Options_T.selected$->size() > 1]
-                             { error := ['Please, select exactlty one option'] }
-                          else {if [$ThisOptionPeriodsFO.selected$->oclIsUndefined()]
-                                    { error := ['Please, select a period first'] }
-                                else {if [$ThisOptionPeriodsFO.selected$->size() = 0 or $ThisOptionPeriodsFO.selected$->size() > 1]
-                                        { error := ['Please, select exactlty one period'] }
-                                        else {
-         newDeadline := new MealOptionDeadline
-         // Default setting
-            [$newDeadline$.cday] := [0]
-            [$newDeadline$.chour] := [9]
-            [$newDeadline$.cminute] := [0]
-            [$newDeadline$.days] := [Set{DayOfWeek::MONDAY, DayOfWeek::TUESDAY, DayOfWeek::WEDNESDAY, DayOfWeek::THURSDAY, DayOfWeek::FRIDAY, DayOfWeek::SATURDAY, DayOfWeek::SUNDAY}->reject(d|$DeadlinesTB.rows$.days->includes(d))]
-          // End default setting
-         [$newDeadline$.ownedBy] := [$ThisOptionPeriodsFO.selected$->any(true)]
-         reevaluate DeadlinesTB.rows
-    } } } } } }
-}
+        if [$Meals_T.selected$.oclIsUndefined()] {
+            error := ['Please, select first a meal']
+        }
+        else {
+            if [$Meal_Options_T.selected$.oclIsUndefined()]{
+                error := ['Please, select an option first']
+            }
+            else {
+                if [$ThisOptionPeriodsFO.selected$->oclIsUndefined()] {
+                    error := ['Please, select a period first']
+                }
+                else {
+                    newDeadline := new MealOptionDeadline
+                    // Default setting
+                    [$newDeadline$.cday] := [0]
+                    [$newDeadline$.chour] := [9]
+                    [$newDeadline$.cminute] := [0]
+                    [$newDeadline$.days] := [Set{DayOfWeek::MONDAY, DayOfWeek::TUESDAY, DayOfWeek::WEDNESDAY, DayOfWeek::THURSDAY, DayOfWeek::FRIDAY, DayOfWeek::SATURDAY, DayOfWeek::SUNDAY}->reject(d|$DeadlinesTB.rows$.days->includes(d))]
+                    // End default setting
+                    [$newDeadline$.ownedBy] := [$ThisOptionPeriodsFO.selected$]
+                    reevaluate DeadlinesTB.rows
+                }
+            }
+        }
+    }
 }
 
 
 Button DeleteDeadlinesBU {
     String text := ['Delete deadline']
     event onClick {
-        if [$DeadlinesTB.selected$->oclIsUndefined()]
-            {error := ['Please, select first a deadline'] }
-        else { foreach deadline in [$DeadlinesTB.selected$] {
-                    delete [$deadline$]
-                } }
+        if [$DeadlinesTB.selected$.oclIsUndefined()] {
+            error := ['Please, select first a deadline']
+        }
+        else {
+            delete [$DeadlinesTB.selected$]
+        }
         reevaluate DeadlinesTB.rows
    }
 }
@@ -473,18 +489,17 @@ Button BackBU {
 }
 
 
+event onChange(Meals_T.selected) {
+    #refresh EditMealFO #
+    #refresh Meal_Options_T #
+}
 
-    event onChange(Meals_T.selected) {
-            #refresh EditMealFO #
-            #refresh Meal_Options_T #
-    }
+event onChange(Meal_Options_T.selected) {
+    #refresh EditOptionFO #
+    #refresh ThisOptionPeriodsFO #
+} 
+event onChange(ThisOptionPeriodsFO.selected) {
+    reevaluate DeadlinesTB.rows
+}
 
-    event onChange(Meal_Options_T.selected) {
-            #refresh EditOptionFO #
-            #refresh ThisOptionPeriodsFO #
-            } 
-    event onChange(ThisOptionPeriodsFO.selected) {
-            reevaluate DeadlinesTB.rows
-
-    }
 }
