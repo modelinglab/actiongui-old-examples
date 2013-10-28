@@ -1,0 +1,177 @@
+Residence:
+    // There is exactly one instance of entity Residence
+    Residence.allInstances->size() = 1
+
+    // The zone id of the residence can not be undefined 
+    not Residence.allinstances()->any(true).zone.oclIsUndefined()
+
+
+User:
+    // The login of a user can not be undefined
+    User.allInstances()->forAll(u|not u.login.oclIsUndefined())
+
+    // The password of a user can not be undefined
+    User.allInstances()->forAll(u|not u.password.oclIsUndefined())
+
+    // The role of a user can not be undefined
+    User.allInstances()->forAll(u|not u.role.oclIsUndefined())
+
+    // The login of users must be unique between them
+    User.allInstances()->forAll(u1,u2|u1 <> u2 implies u1.login <> u2.login)
+
+    // For each user, there must be at most a daily meal selection per day.
+    User.allInstances()->forAll(u|u.dailyMeals->forAll(dm1, dm2|dm1 <> dm2 implies dm1.date <> dm2.date))
+
+    // The periods of residency of each user, can not be overlapped
+    User.allInstances()->forAll(u|u.periods->forAll(r1,r2| r1 <> r2 implies (r2.end <= r1.start or r2.start >= r1.end)))
+
+    // The periods of food regimes of each user, can not be overlapped
+    User.allInstances()->forAll(u|u.regimes->forAll(r1,r2| r1 <> r2 implies (r2.end <= r1.start or r2.start >= r1.end)))
+
+
+Gest:
+    // The name of a guest can not be undefined
+    Guest.allInstances()->forAll(g|not g.name.oclIsUndefined())
+    
+    // The surname of a guest can not be undefined
+    Guest.allInstances()->forAll(g|not g.surname.oclIsUndefined())
+
+    // For each guest, there must be at most a daily meal selection per day.
+    Guest.allInstances()->forAll(u|u.dailyMeals->forAll(dm1, dm2|dm1 <> dm2 implies dm1.date <> dm2.date))
+
+
+Residency:
+    // The start date of a residency can not be undefined
+    Residency.allInstances()->forAll(r|not r.start.oclIsUndefined())
+
+    // If the end date of a residency is not undefined, then it must equal or later than the start date
+    Residency.allInstances()->forAll(r|(not r.end.oclIsUndefined()) implies r.end >= r.start)
+
+    // Each residency must be associated through exactly one of the following association ends: 'ownedBy', 'ownedByRegime', 'contract' and 'ownedByOption'.
+    Residency.allInstances()->forAll(r|r.ownedBy->size() + r.ownedByRegime->size() + r.contract->size() + r.ownedByOption->size() = 1)
+
+    // If a residency is related to meal option deadlines, then it must be also related to a meal option through the 'ownedByOption' association end.
+    Residency.allInstances()->forAll(r|r.deadlines->notEmpty() implies r.ownedByOption->notEmpty())
+
+
+Contract:
+    // The name of a contract can not be undefined
+    Contract.allInstances()->forAll(c|not c.name.oclIsUndefined())
+
+    // There must exist at least a residency associated to each contract
+    Contract.allInstances()->forAll(c|c.ownedBy->notEmpty())
+
+    // There must exist at least a contract option associated to each contract
+    Contract.allInstances()->forAll(c|c.options->notEmpty())
+
+
+ContractOption:
+    // The meal option can not be undefined
+    ContractOption.allInstances()->forAll(co|not co.meal.oclIsUndefined())
+
+    // The days of the contract option can not be empty
+    ContractOption.allInstances()->forAll(co|co.days->notEmpty())
+
+    // Contract options must belong to a contract
+    ContractOption.allInstances()->forAll(co|not co.includedIn.oclIsUndefined())
+
+
+DailyMealSelection:
+    // The date can not be undefined
+    DailyMealSelection.allInstances()->forAll(dms|not dms.date.oclIsUndefined())
+
+    // Each daily meal selection must be associated through exactly one of the following association ends: 'selectedBy' and 'offeredTo'
+    DailyMealSelection.allInstances()->forAll(dms| dms.selectedBy->size() + dms.offeredTo->size() = 1)
+
+    // There must exist at least a meal selection associated to each daily meal selection
+    DailyMealSelection.allInstances()->forAll(dms|dms.selections->notEmpty())
+
+
+MealSelection:
+    // The meal can not be undefined
+    MealSelection.allInstances()->forAll(ms|not ms.meal.oclIsUndefined())
+
+    // The meal option can not be undefined
+    MealSelection.allInstances()->forAll(ms|not ms.mealOption.oclIsUndefined())
+
+    // The meal option must be owned by the meal
+    MealSelection.allInstances()->forAll(ms|ms.mealOption.ownedBy = ms.meal)
+
+    // Each meal selection must belong to a daily meal selection
+    MealSelection.allInstances()->forAll(ms|not ms.ownedBy.oclIsUndefined())
+
+    // If the food regime is defined, then the food regime must have a residency such that its date period includes the date of the daily meal selection that owns the current meal selection
+    MealSelection.allInstances()->forAll(ms|(not ms.foodRegime.oclIsUndefined()) implies ms.foodRegime.ownedBy->exists(r|r.start <= ms.ownedBy.date and r.end >= ms.ownedBy.date))
+
+
+FoodRegime:
+    // The name can not be undefined
+    FoodRegime.allInstances()->forAll(fr|not fr.name.oclIsUndefined())
+
+    // The name of the food regimes, must be unique between them
+    FoodRegime.allInstances()->forAll(fr1, fr2|fr1 <> fr2 implies fr1.name <> fr2.name)
+    
+MealOption
+    // The literal can not be undefined
+    MealOption.allInstances()->forAll(mo|not mo.literal.oclIsUndefined())
+
+    // The initial can not be undefined
+    MealOption.allInstances()->forAll(mo|not mo.initial.oclIsUndefined())
+
+    // Each meal option must belong to a meal
+    MealOption.allInstances()->forAll(mo|not mo.ownedBy.oclIsUndefined())
+
+    // The periods each meal option, can not be overlapped
+    MealOption.allInstances()->forAll(mo|mo.periodsOption->forAll(r1,r2| r1 <> r2 implies (r2.end <= r1.start or r2.start >= r1.end)))
+
+
+Meal:
+    // The literal can not be undefined
+    Meal.allInstances->forAll(m|not m.literal.oclIsUndefined())
+
+    // The meal options of each meal, must have different literals
+    Meal.allInstances->forAll(m|m.options->forAll(mo1, mo2|mo1 <> mo2 implies mo1.literal <> mo2.literal))
+
+    // The meal options of each meal, must have different initials
+    Meal.allInstances->forAll(m|m.options->forAll(mo1, mo2|mo1 <> mo2 implies mo1.initial <> mo2.initial))
+
+
+
+entity MealOptionDeadline {
+    String literal
+    Set(DayOfWeek) days
+    Integer cday // dias de antelacion
+    Integer chour
+    Integer cminute
+    // associations
+    // 0..1
+    Residency  ownedBy oppositeTo deadlines
+}
+
+MealOptionDeadline:
+    // There must be at least one day of the week in which meal selections could be selected
+    MealOptionDeadline.allInstances()->forAll(mod|mod.days->notEmpty())
+
+    // The attribute cday can not be undefined
+    MealOptionDeadline.allInstances()->forAll(mod|not mod.cday.oclIsUndefined())
+
+    // The attribute chour can not be undefined
+    MealOptionDeadline.allInstances()->forAll(mod|not mod.chour.oclIsUndefined())
+
+    // The attribute cminute can not be undefined
+    MealOptionDeadline.allInstances()->forAll(mod|not mod.cminute.oclIsUndefined())
+
+    // The attribute cday must be greater than zero
+    MealOptionDeadline.allInstances()->forAll(mod|mod.cday > 0)
+
+    // The attribute chour must be within the range [0..23]
+    MealOptionDeadline.allInstances()->forAll(mod|mod.chour >= 0 and mod.chour <= 23)
+
+    // The attribute cminute must be within the range [0..59]
+    MealOptionDeadline.allInstances()->forAll(mod|mod.cminute >= 0 and mod.cminute <= 59)
+
+    // The residency of each deadline must be defined
+    MealOptionDeadline.allInstances()->forAll(mod|not mod.ownedBy.oclIsUndefined())
+
+    // The deadline must be associated to a residency that belongs to a meal option
+    MealOptionDeadline.allInstances()->forAll(mod|not mod.ownedBy.ownedByOption.oclIsUndefined())
