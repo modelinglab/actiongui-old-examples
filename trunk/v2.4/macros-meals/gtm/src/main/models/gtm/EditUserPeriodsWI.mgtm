@@ -18,6 +18,19 @@ Window EditUserPeriodsWI {
     prop: end {label: ['End: ']}
 }#
 
+Label ContractsLB {
+    String text := ['Contract']
+}
+
+ComboBox ContractsCB {
+        Set(Contract) rows := [Contract.allInstances()]
+        
+        Label Contract {
+            String text := [$ContractsCB.row$.name]
+        }
+
+    }
+
 Button CreatePeriodBU {
     String text := ['New period']
     Residency newPeriod
@@ -36,13 +49,18 @@ Button CreatePeriodBU {
                                     or ($NewPeriodFO_start.value$.toLocalDate().atStartOfDay() > p.start.toLocalDate().atStartOfDay() and $NewPeriodFO_start.value$.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay()))
                                 ->isEmpty()]
                             {message: ['The selected period overlaps with one or more existing periods. Please, change either the starting or the ending date']
-                                }} } }
+                             assert: [not($ContractsCB.selected$.oclIsUndefined())] 
+                               {message: ['Please, select first a contract.' ] 
+                            
+} }} } }
         }#
         if [not($newPeriod$.oclIsUndefined())]
            { [$EditUserPeriodsWI.thisUser$.periods]+= [$newPeriod$]
+             [$newPeriod$.contract]:= [$ContractsCB.selected$]
              newPeriod := [null]
              #refresh ThisUserFO#
              #refresh NewPeriodFO#
+             ContractsCB.selected := [null]
              }
     }
     }
@@ -80,6 +98,21 @@ Button DeletePeriodBU {
     prop: end {label: ['End: ']}
 }#
 
+Label ContractsUpdateLB {
+    String text := ['Contract']
+}
+
+ComboBox ContractsUpdateCB {
+        Set(Contract) rows := [Contract.allInstances()]
+        Contract selected := [$ThisUserFO_periods.selected$->any(true).contract]
+        
+        Label ContractUpdate {
+            String text := [$ContractsUpdateCB.row$.name]
+            
+        }
+
+    }
+
 Button ModifyPeriodBU {
 Residency thisPeriod
     String text := ['Update']
@@ -108,7 +141,11 @@ Residency thisPeriod
                                         or ($UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay() > p.start.toLocalDate().atStartOfDay() and $UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())))
                                     ->notEmpty()] {
                             notification(['Error'], ['The selected period overlaps with one or more existing periods. Please, change either the starting or the ending date'], [0]) }
-                        else {  
+                        else {
+                           if [$ContractsUpdateCB.selected$.oclIsUndefined() ] {
+                               notification(['Error'], ['Please, select first a contract.'], [0])
+                            }
+                            else {
                             try {
                                 // foreach selection in [$EditUserPeriodsWI.thisUser$.dailyMeals->select(d|d.date >= $thisPeriod$.start and d.date <= $thisPeriod$.end)->select(d|d.date < $UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay()  or d.date > $UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()).selections] {
                                 foreach selection in [$EditUserPeriodsWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $thisPeriod$.start.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $thisPeriod$.end.toLocalDate().atStartOfDay()).selections->asSet() - $EditUserPeriodsWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()).selections->asSet()] {
@@ -116,6 +153,7 @@ Residency thisPeriod
                                 }
                                 [$thisPeriod$.start] := [$UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay()]
                                 [$thisPeriod$.end] := [$UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()]
+                                [$thisPeriod$.contract] := [$ContractsUpdateCB.selected$]
                                 ThisUserFO_periods.rows := [$ThisUserFO_periods.rows$->select(false)]
                                 ThisUserFO_periods.rows := [$EditUserPeriodsWI.thisUser$.periods->sortedBy(start)->reverse()]
                                 thisPeriod := [null]
@@ -131,6 +169,7 @@ Residency thisPeriod
         }
         }
     }
+}
 
 Button BackBU {
     String text := ['Back']
@@ -140,11 +179,13 @@ Button BackBU {
 event onChange(ThisUserFO_periods.selected) {
     if [not($ThisUserFO_periods.selected$->oclIsUndefined())]
        { if [$ThisUserFO_periods.selected$->size() = 1]
-            { #refresh UpdatePeriodFO # }
+            { #refresh UpdatePeriodFO # 
+              reevaluate ContractsUpdateCB.selected }
          else { if [$ThisUserFO_periods.selected$->size() > 1]
                { notification(['Error'], ['Please, select at most one period.'], [0]) }}
     }
-    else { #refresh UpdatePeriodFO # }
+    else { #refresh UpdatePeriodFO #
+           reevaluate ContractsUpdateCB.selected }
 }
 
 

@@ -36,7 +36,17 @@
                 <ns1:entry>
                     <ns1:widget ns1:id="NewPeriodFO_end" ns1:height="30px" ns1:width="120px"></ns1:widget>
                 </ns1:entry>
-            </ns1:line-layout>      
+           </ns1:line-layout>  
+       </ns1:entry>  
+        <ns1:entry>
+            <ns1:line-layout orientation="horizontal">
+                <ns1:entry>
+                    <ns1:widget ns1:id="ContractsLB" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:widget ns1:id="ContractsCB" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                </ns1:entry>
+            </ns1:line-layout>   
         </ns1:entry>
         <!-- END CALENDARS -->
         <!-- create period -->
@@ -75,6 +85,16 @@
                     <ns1:widget ns1:id="UpdatePeriodFO_end" ns1:height="30px" ns1:width="120px"></ns1:widget>
                 </ns1:entry>
             </ns1:line-layout>      
+        </ns1:entry>
+                <ns1:entry>
+            <ns1:line-layout orientation="horizontal">
+                <ns1:entry>
+                    <ns1:widget ns1:id="ContractsUpdateLB" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:widget ns1:id="ContractsUpdateCB" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                </ns1:entry>
+            </ns1:line-layout>   
         </ns1:entry>
         <!-- END update CALENDARS -->
         <!-- update period -->
