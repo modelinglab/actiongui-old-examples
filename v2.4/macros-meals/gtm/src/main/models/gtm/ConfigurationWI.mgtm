@@ -1,8 +1,8 @@
 /*
-- With (multiple) selected, two case to consider: null and empty
 - With update-macro, we may need to have a way of knowing whether the update was or not successful
 */
 Window ConfigurationWI {
+    Residence residence
     String text := ['Configuration']
 
     Label mealsLA {
@@ -11,7 +11,7 @@ Window ConfigurationWI {
 
     #table Meals_T {
         entity : Meal
-
+        rows : [$ConfigurationWI.residence$.meals]
         column : literal {
                     label : ['Meal']
                 }
@@ -34,14 +34,16 @@ Window ConfigurationWI {
             #create {
                 form: NewMealFO
                 result: newMeal
-                assert: [not($NewMealFO_literal.text$.oclIsUndefined())]
-                        {message: ['NM0: Please, write the name of the new meal']
-                         assert : [not(Meal.allInstances()->exists(m|m.literal = $NewMealFO_literal.text$))]
-                         {message: ['NM1: There is already a meal with this name. Please, choose a different name']
-                            } }     
+                assert: [not($NewMealFO_literal.text$.oclIsUndefined()) and $NewMealFO_literal.text$ <> '' ] {
+                    message: ['NM0: Please, write the name of the new meal']
+                    assert : [not($ConfigurationWI.residence$.meals->exists(m|m.literal = $NewMealFO_literal.text$))] {
+                        message: ['NM1: There is already a meal with this name. Please, choose a different name']
+                    } 
+                }     
             }#
             if [not($newMeal$.oclIsUndefined())] {
-                #refresh Meals_T#
+                [$newMeal$.residence] := [$ConfigurationWI.residence$]
+                #refresh Meals_T#                
                 Meals_T.selected := [$newMeal$]
             }
         }
@@ -67,9 +69,9 @@ Window ConfigurationWI {
                 selectedMeal := [$Meals_T.selected$]
                 #update {
                     form: EditMealFO
-                    assert: [not($EditMealFO_literal.text$.oclIsUndefined())] {
+                    assert: [not($EditMealFO_literal.text$.oclIsUndefined()) and $EditMealFO_literal.text$ <> ''] {
                         message: ['EM3: Please, write the new name of the meal']
-                        assert : [not(Meal.allInstances()->exists(m|m.literal = $EditMealFO_literal.text$))] {
+                        assert : [not($ConfigurationWI.residence$.meals->exists(m|m <> $Meals_T.selected$ and m.literal = $EditMealFO_literal.text$))] {
                             message: ['EM4:There is already a meal with this name. Please, choose a different name']
                         }
                     } 

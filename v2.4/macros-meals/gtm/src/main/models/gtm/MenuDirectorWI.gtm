@@ -1,0 +1,87 @@
+Window MenuDirectorWI  {
+    String text := ['Headmaster menu']
+    Residence residence
+
+Button MenuDirector_UserAccountsWI_B {
+    String text := ['Users']
+    String error := [null]
+    event onClick {
+        error := [null]
+        if [$error$.oclIsUndefined()] {
+            open UserAccountsWI (residence: [$MenuDirectorWI.residence$])
+        }
+    }
+}
+Button MenuDirector_ConfigurationWI_B {
+    String text := ['Meals']
+    String error := [null]
+    event onClick {
+        error := [null]
+        if [$error$.oclIsUndefined()] {
+            open ConfigurationWI (residence: [$MenuDirectorWI.residence$])
+        }
+    }
+}
+Button MenuDirector_FoodRegimesWI_B {
+    String text := ['Food regimes']
+    String error := [null]
+    event onClick {
+        error := [null]
+        if [$error$.oclIsUndefined()] {
+            open FoodRegimesWI (residence: [$MenuDirectorWI.residence$])
+        }
+    }
+}
+Button MenuDirector_ContractsWI_B {
+    String text := ['Contracts']
+    String error := [null]
+    event onClick {
+        error := [null]
+        if [$error$.oclIsUndefined()] {
+            open ContractsWI (residence: [$MenuDirectorWI.residence$])
+        }
+    }
+}
+Button MenuDirector_ChangePasswordWI_B {
+    String text := ['Change password']
+    String error := [null]
+    event onClick {
+        error := [null]
+        if [$error$.oclIsUndefined()] {
+            open ChangePasswordWI ()
+        }
+    }
+}
+Button MenuDirector_CountMealsWI_B {
+    String text := ['Count meals']
+    String error := [null]
+    event onClick {
+        error := [null]
+        if [$error$.oclIsUndefined()] {
+            open CountMealsWI (residence: [$MenuDirectorWI.residence$])
+        }
+    }
+}
+Button MenuDirector_ListDinersWI_B {
+    String text := ['List diners']
+    String error := [null]
+    event onClick {
+        error := [null]
+        if [$error$.oclIsUndefined()] {
+            open ListDinersWI (residence: [$MenuDirectorWI.residence$])
+        }
+    }
+}
+Button MenuDirector_ChangeZoneWI_B {
+    String text := ['Change time zone']
+    String error := [null]
+    event onClick {
+        error := [null]
+        if [$error$.oclIsUndefined()] {
+            open ChangeZoneWI (residence: [$MenuDirectorWI.residence$])
+        }
+    }
+}
+
+
+}

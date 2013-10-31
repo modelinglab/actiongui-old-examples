@@ -1,5 +1,6 @@
 Window EditFoodRegimeWI {
     String text := ['Edit food regime']
+    Residence residence
     FoodRegime thisRegime
 
 #form FoodRegimeFO {
@@ -14,12 +15,15 @@ Window EditFoodRegimeWI {
 Button UpdateBU {
     String text := ['Update']
     event onClick {
-    #update {
-    form : FoodRegimeFO
-    assert: [$FoodRegimeFO_name.text$ <> $EditFoodRegimeWI.thisRegime$.name 
-             implies FoodRegime.allInstances()->forAll(f|f.name <> $FoodRegimeFO_name.text$)]
-             { message: ['There is already a food regime with this name. Please, use a different name.'] } 
-              }#
+        #update {
+            form : FoodRegimeFO
+            assert: [not($FoodRegimeFO_name.text$.oclIsUndefined()) and $FoodRegimeFO_name.text$ <> ''] {
+                message: ['Please, write the new name of the regime']
+                assert: [$FoodRegimeFO_name.text$ <> $EditFoodRegimeWI.thisRegime$.name implies $EditFoodRegimeWI.residence$.foodRegimes->forAll(f|f.name <> $FoodRegimeFO_name.text$)] {
+                    message: ['There is already a food regime with this name. Please, use a different name.']
+                } 
+            }
+        }#
     }
 }
 Button BackBU {

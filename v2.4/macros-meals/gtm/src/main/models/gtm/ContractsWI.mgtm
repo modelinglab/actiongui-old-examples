@@ -1,13 +1,16 @@
 Window ContractsWI {
     String text := ['Contracts']
+    Residence residence
 
      #table ContractsTB {
         entity: Contract
-        rows : [Contract.allInstances()]
+        rows : [$ContractsWI.residence$.contracts]
         column : name {label : ['Name'] }
         size : [10]
+        selection: SINGLE
     }#
-#form NewContractFO {
+
+    #form NewContractFO {
         entity: Contract
         prop: name {label : ['Contract: ']}
     }#
@@ -19,15 +22,17 @@ Button NewContractBU {
             #create {
                 form: NewContractFO
                 result: newContract
-                assert: [not($NewContractFO_name.text$.oclIsUndefined())]
-                        {message: ['Please, write the name of the new contract']
-                         assert : [not(Contract.allInstances()->exists(r|r.name = $NewContractFO_name.text$))]
-                         {message: ['There is already a contract with this name. Please, choose a different name']
-                            } }     
+                assert: [not($NewContractFO_name.text$.oclIsUndefined()) and $NewContractFO_name.text$ <> ''] {
+                    message: ['Please, write the name of the new contract']
+                    assert : [not($ContractsWI.residence$.contracts->exists(r|r.name = $NewContractFO_name.text$))] {
+                        message: ['There is already a contract with this name. Please, choose a different name']
+                    }
+                }     
             }#
             if [not($newContract$.oclIsUndefined())] {
-                #refresh  ContractsTB#
-                ContractsTB.selected := [$newContract$->asOrderedSet()]
+                [$newContract$.residence] := [$ContractsWI.residence$]
+                #refresh  ContractsTB#              
+                ContractsTB.selected := [$newContract$]
             }
         }
 
@@ -39,13 +44,13 @@ Button EditBU {
         #forward {
             target: EditContractWI
             arg: thisContract {
-                value: [$ContractsTB.selected$->any(true)]
+                value: [$ContractsTB.selected$]
             }
-            assert: [not($ContractsTB.selected$->oclIsUndefined())] {
+            arg: residence {
+                value: [$ContractsWI.residence$]
+            }
+            assert: [not($ContractsTB.selected$.oclIsUndefined())] {
                 message: ['Please, select first a contract']
-                    assert: [not($ContractsTB.selected$->size()>1)] {
-                        message: ['Please, select only one contract']
-                    }
             } 
         }#
     }

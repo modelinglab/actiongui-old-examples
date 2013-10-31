@@ -1,5 +1,6 @@
 Window ChangeZoneWI {
-    ZoneId zone := [Residence.allInstances()->any(true).zone]
+    Residence residence
+    ZoneId zone := [$residence$.zone]
 
     Label CurrentTimeLA {
         event onView(text) {
@@ -70,7 +71,7 @@ Window ChangeZoneWI {
             error := ['']
             try {
                 // the expression ZoneId.of($NewZoneTF.text$) does not launch any exception in case an invalid zone
-                [Residence.allInstances()->any(true).zone] := [ZoneId.of($NewZoneTF.text$)]
+                [$ChangeZoneWI.residence$.zone] := [ZoneId.of($NewZoneTF.text$)]
                 reevaluate ChangeZoneWI.zone
                 reevaluate CurrentTimeLA.text
                 reevaluate CurrentZoneLA.text

@@ -1,6 +1,7 @@
 Window ListDinersWI {
     String text := ['Meal list']
-    ZoneId zone := [Residence.allInstances()->any(true).zone]
+    Residence residence
+    ZoneId zone := [$residence$.zone]
     Label DateLA {
         String text := ['Choose a date:']
     }
@@ -18,7 +19,7 @@ Window ListDinersWI {
     }
 
     ComboBox MealCB {
-        Set(Meal) rows := [Meal.allInstances()]
+        Set(Meal) rows := [$ListDinersWI.residence$.meals]
         
         Label Meal {
             String text := [$MealCB.row$.literal]
@@ -60,7 +61,7 @@ Window ListDinersWI {
 
     #table DinersTA {
         entity : User
-        rows : [(if $MealOptionCB.selected$.oclIsUndefined() or $DateDF.value$.oclIsUndefined() then User.allInstances()->select(false) else User.allInstances()->select(u|u.dailyMeals->exists(dms| dms.date = $DateDF.value$.toLocalDate().atStartOfDay() and dms.selections->exists(ms| ms.mealOption = $MealOptionCB.selected$))) endif)]
+        rows : [(if $MealOptionCB.selected$.oclIsUndefined() or $DateDF.value$.oclIsUndefined() then User.allInstances()->select(false) else $ListDinersWI.residence$.users->select(u|u.dailyMeals->exists(dms| dms.date = $DateDF.value$.toLocalDate().atStartOfDay() and dms.selections->exists(ms| ms.mealOption = $MealOptionCB.selected$))) endif)]
         column : name {
             label : ['Name']
         }
