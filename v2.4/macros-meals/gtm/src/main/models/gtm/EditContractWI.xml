@@ -11,7 +11,7 @@
             <ns1:line-layout orientation="horizontal"/>
         </ns1:entry>
         <ns1:entry>
-            <ns1:line-layout orientation="vertical" ns1:height="100%" ns1:width="500px">
+            <ns1:line-layout orientation="vertical" ns1:height="100%" ns1:width="1200px">
                 <ns1:entry expand-ratio="1">
                     <ns1:line-layout orientation="horizontal"/>
                 </ns1:entry>
@@ -23,25 +23,33 @@
                         <ns1:entry>
                             <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="100%">
                                 <ns1:entry>
-                                    <ns1:table ns1:id="ContractItemsTB" ns1:width="100%" ns1:height="100px">
+                                    <ns1:table ns1:id="ContractItemsTB" ns1:width="100%" ns1:height="300px">
                                         <ns1:column>
-                                            <ns1:widget ns1:id="Literal" ns1:width="100%" ns1:height="23px"/>
+                                            <ns1:widget ns1:id="Literal" ns1:width="100%" ns1:height="30px"/>
                                         </ns1:column>
                                         <ns1:column>
-                                            <ns1:widget ns1:id="Option" ns1:width="100%" ns1:height="23px"/>
+                                            <ns1:widget ns1:id="Option" ns1:width="100%" ns1:height="30px"/>
                                         </ns1:column>
                                         <ns1:column>
                                             <ns1:widget ns1:id="Monday" ns1:width="100%" ns1:height="auto"/>
                                         </ns1:column>
-                                    </ns1:table>
-                                </ns1:entry>
-                                <ns1:entry>
-                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
-                                </ns1:entry>
-                                <ns1:entry>
-                                    <ns1:table ns1:id="MealsTB" ns1:width="100%" ns1:height="100px">
                                         <ns1:column>
-                                            <ns1:widget ns1:id="Meals" ns1:width="100%" ns1:height="23px"/>
+                                            <ns1:widget ns1:id="Tuesday" ns1:width="100%" ns1:height="auto"/>
+                                        </ns1:column>
+                                        <ns1:column>
+                                            <ns1:widget ns1:id="Wednesday" ns1:width="100%" ns1:height="auto"/>
+                                        </ns1:column>
+                                        <ns1:column>
+                                            <ns1:widget ns1:id="Thursday" ns1:width="100%" ns1:height="auto"/>
+                                        </ns1:column>
+                                        <ns1:column>
+                                            <ns1:widget ns1:id="Friday" ns1:width="100%" ns1:height="auto"/>
+                                        </ns1:column>
+                                        <ns1:column>
+                                            <ns1:widget ns1:id="Saturday" ns1:width="100%" ns1:height="auto"/>
+                                        </ns1:column>
+                                        <ns1:column>
+                                            <ns1:widget ns1:id="Sunday" ns1:width="100%" ns1:height="auto"/>
                                         </ns1:column>
                                     </ns1:table>
                                 </ns1:entry>
@@ -49,9 +57,9 @@
                                     <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
                                 </ns1:entry>
                                 <ns1:entry>
-                                    <ns1:table ns1:id="MealOptionsTB" ns1:width="100%" ns1:height="100px">
+                                    <ns1:table ns1:id="MealsTB" ns1:width="100%" ns1:height="200px">
                                         <ns1:column>
-                                            <ns1:widget ns1:id="Options" ns1:width="100%" ns1:height="23px"/>
+                                            <ns1:widget ns1:id="Meals" ns1:width="100%" ns1:height="30px"/>
                                         </ns1:column>
                                     </ns1:table>
                                 </ns1:entry>
@@ -59,19 +67,29 @@
                                     <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
                                 </ns1:entry>
                                 <ns1:entry>
-                                    <ns1:widget ns1:id="NewContractOptionBU" ns1:width="100%" ns1:height="auto"/>
+                                    <ns1:table ns1:id="MealOptionsTB" ns1:width="100%" ns1:height="200px">
+                                        <ns1:column>
+                                            <ns1:widget ns1:id="Options" ns1:width="100%" ns1:height="30px"/>
+                                        </ns1:column>
+                                    </ns1:table>
                                 </ns1:entry>
                                 <ns1:entry>
                                     <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
                                 </ns1:entry>
                                 <ns1:entry>
-                                    <ns1:widget ns1:id="DeleteContractOptionBU" ns1:width="100%" ns1:height="auto"/>
+                                    <ns1:widget ns1:id="NewContractOptionBU" ns1:width="100%" ns1:height="30px"/>
                                 </ns1:entry>
                                 <ns1:entry>
                                     <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
                                 </ns1:entry>
                                 <ns1:entry>
-                                    <ns1:widget ns1:id="BackBU" ns1:width="100%" ns1:height="auto"/>
+                                    <ns1:widget ns1:id="DeleteContractOptionBU" ns1:width="100%" ns1:height="30px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="BackBU" ns1:width="100%" ns1:height="30px"/>
                                 </ns1:entry>
                                 <ns1:entry>
                                     <ns1:line-layout orientation="horizontal" ns1:height="10px"/>

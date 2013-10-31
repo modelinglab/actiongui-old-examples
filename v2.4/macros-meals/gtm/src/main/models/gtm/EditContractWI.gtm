@@ -23,7 +23,108 @@ Table ContractItemsTB {
                          }                   
                       else { [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::MONDAY)] }
 
-        } } } } 
+        } } } 
+ ['Second'] : BooleanField Tuesday { 
+            Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::TUESDAY)) then true else false endif] 
+                {
+                if [not($value$.oclIsUndefined())] 
+                   { if [$value$] 
+                        {
+                        if [$ContractItemsTB.row$.days->excludes(DayOfWeek::TUESDAY)]
+                            { [$ContractItemsTB.row$.days] := 
+                              [if $ContractItemsTB.row$.days->oclIsUndefined()
+                              then DayOfWeek::TUESDAY->asSet()
+                              else $ContractItemsTB.row$.days->including(DayOfWeek::TUESDAY) endif]
+                              }
+                         }                   
+                      else { [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::TUESDAY)] }
+
+        } } } 
+ ['Third'] : BooleanField Wednesday { 
+            Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::WEDNESDAY)) then true else false endif] 
+                {
+                if [not($value$.oclIsUndefined())] 
+                   { if [$value$] 
+                        {
+                        if [$ContractItemsTB.row$.days->excludes(DayOfWeek::WEDNESDAY)]
+                            { [$ContractItemsTB.row$.days] := 
+                              [if $ContractItemsTB.row$.days->oclIsUndefined()
+                              then DayOfWeek::WEDNESDAY->asSet()
+                              else $ContractItemsTB.row$.days->including(DayOfWeek::WEDNESDAY) endif]
+                              }
+                         }                   
+                      else { [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::WEDNESDAY)] }
+
+        } } } 
+ ['Fourth'] : BooleanField Thursday { 
+            Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::THURSDAY)) then true else false endif] 
+                {
+                if [not($value$.oclIsUndefined())] 
+                   { if [$value$] 
+                        {
+                        if [$ContractItemsTB.row$.days->excludes(DayOfWeek::THURSDAY)]
+                            { [$ContractItemsTB.row$.days] := 
+                              [if $ContractItemsTB.row$.days->oclIsUndefined()
+                              then DayOfWeek::THURSDAY->asSet()
+                              else $ContractItemsTB.row$.days->including(DayOfWeek::THURSDAY) endif]
+                              }
+                         }                   
+                      else { [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::THURSDAY)] }
+
+        } } } 
+ ['Fifth'] : BooleanField Friday { 
+            Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::FRIDAY)) then true else false endif] 
+                {
+                if [not($value$.oclIsUndefined())] 
+                   { if [$value$] 
+                        {
+                        if [$ContractItemsTB.row$.days->excludes(DayOfWeek::FRIDAY)]
+                            { [$ContractItemsTB.row$.days] := 
+                              [if $ContractItemsTB.row$.days->oclIsUndefined()
+                              then DayOfWeek::FRIDAY->asSet()
+                              else $ContractItemsTB.row$.days->including(DayOfWeek::FRIDAY) endif]
+                              }
+                         }                   
+                      else { [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::FRIDAY)] }
+
+        } } } 
+ ['Saturday'] : BooleanField Saturday { 
+            Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::SATURDAY)) then true else false endif] 
+                {
+                if [not($value$.oclIsUndefined())] 
+                   { if [$value$] 
+                        {
+                        if [$ContractItemsTB.row$.days->excludes(DayOfWeek::SATURDAY)]
+                            { [$ContractItemsTB.row$.days] := 
+                              [if $ContractItemsTB.row$.days->oclIsUndefined()
+                              then DayOfWeek::SATURDAY->asSet()
+                              else $ContractItemsTB.row$.days->including(DayOfWeek::SATURDAY) endif]
+                              }
+                         }                   
+                      else { [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::SATURDAY)] }
+
+        } } } 
+ ['Sunday'] : BooleanField Sunday { 
+            Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::SUNDAY)) then true else false endif] 
+                {
+                if [not($value$.oclIsUndefined())] 
+                   { if [$value$] 
+                        {
+                        if [$ContractItemsTB.row$.days->excludes(DayOfWeek::SUNDAY)]
+                            { [$ContractItemsTB.row$.days] := 
+                              [if $ContractItemsTB.row$.days->oclIsUndefined()
+                              then DayOfWeek::SUNDAY->asSet()
+                              else $ContractItemsTB.row$.days->including(DayOfWeek::SUNDAY) endif]
+                              }
+                         }                   
+                      else { [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::SUNDAY)] }
+
+        } } } 
+
+
+
+
+} 
     }
 
 Table MealsTB {
