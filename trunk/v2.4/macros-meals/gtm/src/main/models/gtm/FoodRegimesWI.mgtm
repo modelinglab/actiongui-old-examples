@@ -1,32 +1,37 @@
 Window FoodRegimesWI {
+    String text := ['Food regimes']
+    Residence residence
+
     #table RegimesTB {
         entity: FoodRegime
-        rows : [FoodRegime.allInstances()]
+        rows : [$FoodRegimesWI.residence$.foodRegimes]
         column : name {label : ['Name'] }
         column : description {label : ['Description']}
         size : [10]
         selection: SINGLE
     }#
-#form NewRegimeFO {
+
+    #form NewRegimeFO {
         entity: FoodRegime
         prop: name {label : ['Name: ']}
         prop: description {label : ['Description: ']}
     }#
 
-Button NewRegimeBU {
+    Button NewRegimeBU {
         String text := ['New regime']
         FoodRegime newRegime
         event onClick {
             #create {
                 form: NewRegimeFO
                 result: newRegime
-                assert: [not($NewRegimeFO_name.text$.oclIsUndefined())]
+                assert: [not($NewRegimeFO_name.text$.oclIsUndefined()) and $NewRegimeFO_name.text$ <> '']
                         {message: ['Please, write the name of the new regime']
-                         assert : [not(FoodRegime.allInstances()->exists(r|r.name = $NewRegimeFO_name.text$))]
+                         assert : [not($FoodRegimesWI.residence$.foodRegimes->exists(r|r.name = $NewRegimeFO_name.text$))]
                          {message: ['There is already a regime with this name. Please, choose a different name']
                             } }     
             }#
             if [not($newRegime$.oclIsUndefined())] {
+                [$newRegime$.residence] := [$FoodRegimesWI.residence$]
                 #refresh RegimesTB#
                 RegimesTB.selected := [$newRegime$]
             }
@@ -41,6 +46,9 @@ Button EditBU {
             target: EditFoodRegimeWI
             arg: thisRegime {
                 value: [$RegimesTB.selected$]
+            }
+            arg: residence {
+                value: [$FoodRegimesWI.residence$]
             }
             assert: [not($RegimesTB.selected$.oclIsUndefined())] {
                 message: ['Please, select first a regime']

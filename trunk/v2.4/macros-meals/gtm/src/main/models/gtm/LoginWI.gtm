@@ -1,6 +1,17 @@
 Window LoginWI isMain {
     String text := ['User authentication']
 
+Label residenceLA {
+    String text := ['Choose a residence']
+}
+ComboBox residenceCB {
+    Set(Residence) rows := [Residence.allInstances()]
+
+    Label residence {
+        String text := [$residenceCB.row$.name]
+    }
+}
+
 Label LoginFO_login_L {
     String text := ['Login: ']
 }
@@ -23,6 +34,10 @@ Button LoginBU {
     String text := ['Login']
     User loggedUser
     event onClick {
+        if [$residenceCB.selected$.oclIsUndefined()] {
+            notification (['Message'],['Please, select a residence.'],[2000])  
+        }
+        else {
             try {
                 loggedUser := [User.allInstances()->any(e|e.login = $LoginFO_login.text$ and e.password = $LoginFO_password.text$)]
             }
@@ -38,25 +53,27 @@ Button LoginBU {
 
             if [not($loggedUser$.oclIsUndefined())] {
                 if [$loggedUser$.role = Role::RESIDENT] {
-                    open SelectMealsWI(caller:[$loggedUser$], role:[$loggedUser$.role])
+                    open SelectMealsWI(caller:[$loggedUser$], role:[$loggedUser$.role], residence:[$residenceCB.selected$])
                 }
                 else {
                     if [$loggedUser$.role = Role::DIRECTOR] {
-                        open MenuDirectorWI(caller:[$loggedUser$], role:[$loggedUser$.role])
+                        open MenuDirectorWI(caller:[$loggedUser$], role:[$loggedUser$.role], residence:[$residenceCB.selected$])
                     }
                     else {
                         if [$loggedUser$.role = Role::ADMINISTRATION] {
-                            open CountMealsAdminWI(caller:[$loggedUser$], role:[$loggedUser$.role])
+                            open CountMealsAdminWI(caller:[$loggedUser$], role:[$loggedUser$.role], residence:[$residenceCB.selected$])
                         }
                         else {
-                            notification (['Message'],['You have no role assigned.'],[-1])
+                            notification (['Message'],['You have no role assigned.'],[2000])
                         }
                     }
                 } 
             }
             else {
-              notification (['Wrong credentials'],['Please, write a valid login and password.'],[2000])  
+                notification (['Wrong credentials'],['Please, write a valid login and password.'],[2000])  
             }
         }
     }
+}
+
 }

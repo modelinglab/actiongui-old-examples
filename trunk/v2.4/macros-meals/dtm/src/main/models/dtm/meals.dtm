@@ -6,7 +6,14 @@ enum Role {
 }
 
 entity Residence {
+    String name
     ZoneId zone
+    
+    Set(User) users oppositeTo residence
+    Set(Guest) guests oppositeTo residence
+    Set(Contract) contracts oppositeTo residence
+    Set(Meal) meals oppositeTo residence
+    Set(FoodRegime) foodRegimes oppositeTo residence
 }
 
 entity User {
@@ -20,6 +27,7 @@ entity User {
     Set(DailyMealSelection) dailyMeals oppositeTo selectedBy
     Set(Residency) periods oppositeTo ownedBy
     Set(Residency) regimes oppositeTo ownedByRegime
+    Residence residence oppositeTo users
 }
 
 entity Guest {
@@ -27,6 +35,7 @@ entity Guest {
     String surname
     // associations
     Set(DailyMealSelection) dailyMeals oppositeTo offeredTo
+    Residence residence oppositeTo guests
 }
 
 entity Residency {
@@ -44,6 +53,7 @@ entity Contract {
     String name
     Set(Residency) ownedBy  oppositeTo contract
     Set(ContractOption) options oppositeTo includedIn
+    Residence residence oppositeTo contracts
 }
 
 entity ContractOption {
@@ -77,6 +87,7 @@ entity FoodRegime {
     String description
     // associations
     Set(Residency) ownedBy oppositeTo regime
+    Residence residence oppositeTo foodRegimes
 }
 
 entity MealOption {
@@ -92,6 +103,7 @@ entity Meal {
     String literal
     // associations
     Set(MealOption) options oppositeTo ownedBy
+    Residence residence oppositeTo meals
 }
 
 entity MealOptionDeadline {

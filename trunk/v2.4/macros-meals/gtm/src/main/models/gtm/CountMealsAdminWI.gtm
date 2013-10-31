@@ -1,6 +1,7 @@
 Window CountMealsAdminWI {
+    Residence residence
     String text := ['Count meals']
-    ZoneId zone := [Residence.allInstances()->any(true).zone]
+    ZoneId zone := [$residence$.zone]
     Label DateLA {
         String text := ['Date:']
     }
@@ -39,8 +40,8 @@ Window CountMealsAdminWI {
 
     // Can not be created using macro table since there is a "special" column (sub-column "Count") that can not be generated directly through the value of an attribute
     Table MealsTA {
-        Set(MealSelection) selections := [DailyMealSelection.allInstances()->select(dms| dms.date = $DateDF.value$.toLocalDate().atStartOfDay()).selections->asSet()]
-        Set(Meal) rows := [Meal.allInstances()]
+        Set(MealSelection) selections := [$CountMealsAdminWI.residence$.users.dailyMeals->union($CountMealsAdminWI.residence$.guests.dailyMeals)->select(dms| dms.date = $DateDF.value$.toLocalDate().atStartOfDay()).selections->asSet()]
+        Set(Meal) rows := [$CountMealsAdminWI.residence$.meals]
 
         columns {
             ['Meals'] : Label Meals {
@@ -80,7 +81,7 @@ Window CountMealsAdminWI {
                     }
                     ['Regimes'] : Label Regimes {
                         LocalDateTime selectedDate := [if $DateDF.value$.oclIsUndefined() then LocalDateTime.now($CountMealsAdminWI.zone$) else $DateDF.value$ endif]
-                        Bag(FoodRegime) allFoodRegimes := [MealSelection.allInstances()->select(ms|ms.mealOption = $MealOptions.row$ and ms.ownedBy.date.toLocalDate().atStartOfDay() = $selectedDate$.toLocalDate().atStartOfDay()).foodRegime->reject(fr|fr.oclIsUndefined())]
+                        Bag(FoodRegime) allFoodRegimes := [$CountMealsAdminWI.residence$.users.dailyMeals->union($CountMealsAdminWI.residence$.guests.dailyMeals).selections->select(ms|ms.mealOption = $MealOptions.row$ and ms.ownedBy.date.toLocalDate().atStartOfDay() = $selectedDate$.toLocalDate().atStartOfDay()).foodRegime->reject(fr|fr.oclIsUndefined())]
                         Set(FoodRegime) foodRegimes := [$allFoodRegimes$->asSet()]
                         event onView(text) {
                             text := ['']

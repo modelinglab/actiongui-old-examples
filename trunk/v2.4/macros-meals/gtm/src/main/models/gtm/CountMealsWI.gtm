@@ -1,6 +1,7 @@
 Window CountMealsWI {
     String text := ['Meal count']
-    ZoneId zone := [Residence.allInstances()->any(true).zone]
+    Residence residence
+    ZoneId zone := [$residence$.zone]
     Label StartLA {
         String text := ['Start:']
     }
@@ -59,8 +60,8 @@ Window CountMealsWI {
     
     // Can not be created using macro table since there is a "special" column (sub-column "Count") that can not be generated directly through an attribute
     Table MealsTA {
-        Set(MealSelection) selections := [DailyMealSelection.allInstances()->select(dms| dms.date >= $StartDF.value$.toLocalDate().atStartOfDay() and dms.date <= $EndDF.value$.toLocalDate().atStartOfDay()).selections->asSet()]
-        Set(Meal) rows := [Meal.allInstances()]
+        Set(MealSelection) selections := [$CountMealsWI.residence$.users.dailyMeals->union($CountMealsWI.residence$.guests.dailyMeals)->select(dms| dms.date >= $StartDF.value$.toLocalDate().atStartOfDay() and dms.date <= $EndDF.value$.toLocalDate().atStartOfDay()).selections->asSet()]
+        Set(Meal) rows := [$CountMealsWI.residence$.meals]
 
         columns {
             ['Meals'] : Label Meals {

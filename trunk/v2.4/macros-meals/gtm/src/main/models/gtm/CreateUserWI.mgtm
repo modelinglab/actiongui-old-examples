@@ -1,5 +1,7 @@
 Window CreateUserWI {
+    Residence residence
     String text := ['User management']
+
     #form CreateFO {
         entity: User
         prop: name {label: ['Name: '] 
@@ -20,13 +22,26 @@ Window CreateUserWI {
 
 Button CreateBU {
     String text := ['Create']
+    User newUser
     event onClick {
         #create {
             form: CreateFO
-            assert: [$CreateFO_role.selected$.oclIsUndefined() = false] {message: ['Please, select a role'] }
+            result: newUser
+            assert: [not $CreateFO_role.selected$.oclIsUndefined()] {
+                message: ['Please, select a role']
+                assert: [$CreateFO_login.text$ <> '' ] {
+                    message: ['The login can not be empty']
+                    assert: [$CreateUserWI.residence$.users->forAll(u| u.login <> $CreateFO_login.text$)] {
+                        message: ['The selected login is already in use']
+                    }
+                }
+            }
         }#
+        if [not $newUser$.oclIsUndefined()] {
+            [$newUser$.residence] := [$CreateUserWI.residence$]
+        }   
     }
-  }
+}
 
 Button BackBU {
     String text := ['Back']

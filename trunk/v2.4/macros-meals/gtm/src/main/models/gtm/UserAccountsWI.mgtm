@@ -1,7 +1,9 @@
 Window UserAccountsWI {
+    Residence residence
+
     #table UsersTB {
         entity: User
-        rows : [User.allInstances()]
+        rows : [$UserAccountsWI.residence$.users]
         column : surname {label : ['Surname'] }
         column : name {label : ['Name'] }
         column : login {label : ['Login']}
@@ -13,7 +15,7 @@ Window UserAccountsWI {
 Button CreateBU {
     String text := ['Create']
     event onClick {
-        open CreateUserWI ()
+        open CreateUserWI (residence: [$UserAccountsWI.residence$])
         }
     }
 
@@ -24,6 +26,9 @@ Button EditBU {
             target: EditUserWI
             arg: thisUser {
                 value: [$UsersTB.selected$]
+            }
+            arg: residence {
+                value: [$UserAccountsWI.residence$]
             }
             assert: [not($UsersTB.selected$->oclIsUndefined())] {
                 message: ['Please, select first a user']

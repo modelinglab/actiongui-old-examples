@@ -1,5 +1,6 @@
 Window EditContractWI {
     String text := ['Edit contract']
+    Residence residence
     Contract thisContract
 
 Table ContractItemsTB {
@@ -128,7 +129,7 @@ Table ContractItemsTB {
     }
 
 Table MealsTB {
-    Set(Meal) rows := [Meal.allInstances()]
+    Set(Meal) rows := [$EditContractWI.residence$.meals]
     Meal selected 
     columns {
         ['Meals'] : Label Meals { String text := [$MealsTB.row$.literal] }
