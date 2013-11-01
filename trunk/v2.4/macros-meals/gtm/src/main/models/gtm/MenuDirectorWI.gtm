@@ -23,7 +23,7 @@ Button MenuDirector_ConfigurationWI_B {
     }
 }
 Button MenuDirector_FoodRegimesWI_B {
-    String text := ['Food regimes']
+    String text := ['Regimes']
     String error := [null]
     event onClick {
         error := [null]
@@ -43,7 +43,7 @@ Button MenuDirector_ContractsWI_B {
     }
 }
 Button MenuDirector_ChangePasswordWI_B {
-    String text := ['Change password']
+    String text := ['Password']
     String error := [null]
     event onClick {
         error := [null]
@@ -53,7 +53,7 @@ Button MenuDirector_ChangePasswordWI_B {
     }
 }
 Button MenuDirector_CountMealsWI_B {
-    String text := ['Count meals']
+    String text := ['Counts']
     String error := [null]
     event onClick {
         error := [null]
@@ -63,7 +63,7 @@ Button MenuDirector_CountMealsWI_B {
     }
 }
 Button MenuDirector_ListDinersWI_B {
-    String text := ['List diners']
+    String text := ['Lists']
     String error := [null]
     event onClick {
         error := [null]
@@ -73,7 +73,7 @@ Button MenuDirector_ListDinersWI_B {
     }
 }
 Button MenuDirector_ChangeZoneWI_B {
-    String text := ['Change time zone']
+    String text := ['Time zone']
     String error := [null]
     event onClick {
         error := [null]
@@ -83,5 +83,11 @@ Button MenuDirector_ChangeZoneWI_B {
     }
 }
 
+Button Menu_Director_Back_B {
+    String text := ['Logout']
+    event onClick {
+        exit
+    }
+}
 
 }
