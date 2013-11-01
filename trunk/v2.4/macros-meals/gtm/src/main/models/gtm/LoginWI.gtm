@@ -2,7 +2,7 @@ Window LoginWI isMain {
     String text := ['User authentication']
 
 Label residenceLA {
-    String text := ['Choose a residence']
+    String text := ['Residence']
 }
 ComboBox residenceCB {
     Set(Residence) rows := [Residence.allInstances()]

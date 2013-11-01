@@ -4,7 +4,7 @@
     xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
     xmlns:ns1='http://actiongui.org/schemes/ag-layout/2.4'
     xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://www.actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
-    <ns1:line-layout orientation="vertical" left-margin="20px" ns1:height="auto">
+    <ns1:line-layout orientation="vertical" left-margin="30px" ns1:height="auto">
     <!--FIRST TABLE -->
         <ns1:entry>
             <ns1:line-layout orientation="vertical" ns1:height="auto">
@@ -14,10 +14,10 @@
                 <ns1:entry>
                     <ns1:table ns1:id="RegimesTB" ns1:height="200px" ns1:width="600px">
                         <ns1:column>
-                            <ns1:widget ns1:id="name" ns1:height="20px"></ns1:widget>
+                            <ns1:widget ns1:id="name" ns1:height="30px"></ns1:widget>
                         </ns1:column>
                         <ns1:column>
-                            <ns1:widget ns1:id="description" ns1:height="20px"></ns1:widget>
+                            <ns1:widget ns1:id="description" ns1:height="30px"></ns1:widget>
                         </ns1:column>
                         
                     </ns1:table>

@@ -116,6 +116,21 @@ Button DeletePeriodBU {
     prop: end {label: ['End: ']}
 }#
 
+Label PeriodsUpdateLB {
+    String text := ['Regime']
+}
+
+ComboBox PeriodsUpdateCB {
+        Set(FoodRegime) rows := [FoodRegime.allInstances()]
+        FoodRegime selected := [$ThisUserRegimesTB.selected$->any(true).regime]
+        
+        Label PeriodsUpdate {
+            String text := [$PeriodsUpdateCB.row$.name]
+            
+        }
+
+    }
+
 
 Button ModifyPeriodBU {
 Residency thisPeriod
@@ -144,12 +159,17 @@ Residency thisPeriod
                             notification(['Error'], ['The selected period overlaps with one or more existing regimes. Please, change either the starting or the ending date'], [0])
                         }
                         else {
+                         if [$PeriodsUpdateCB.selected$.oclIsUndefined()] {
+                            notification(['Error'], ['Please, select first a food regime.'], [0])
+                            }
+                         else {
                             try {
                                 foreach selection in [$EditUserRegimenesWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $thisPeriod$.start.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $thisPeriod$.end.toLocalDate().atStartOfDay()).selections->asSet() - $EditUserRegimenesWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()).selections->asSet()] {
                                     [$selection$.foodRegime] := [null] 
                                 }
                                 [$thisPeriod$.start] := [$UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay()]
                                 [$thisPeriod$.end] := [$UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()]
+                                [$thisPeriod$.regime] := [$PeriodsUpdateCB.selected$]
                                 ThisUserRegimesTB.rows := [$ThisUserRegimesTB.rows$->select(false)]
                                 ThisUserRegimesTB.rows := [$EditUserRegimenesWI.thisUser$.regimes->sortedBy(start)->reverse()]
                                 thisPeriod := [null]
@@ -162,7 +182,7 @@ Residency thisPeriod
                 }
             }
         }
-    }
+    } }
 }
 
 Button BackBU {
@@ -172,6 +192,7 @@ Button BackBU {
 
 event onChange(ThisUserRegimesTB.selected) {
     #refresh UpdatePeriodFO #
+    reevaluate PeriodsUpdateCB.selected
 }
 
 
