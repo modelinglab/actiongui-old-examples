@@ -11,9 +11,11 @@
     <ns1:entry>
     <!-- -->
     <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="1200px"> 
+    <!-- -->    
     <ns1:entry>
         <ns1:line-layout orientation="vertical" ns1:height="70px"/>
-    </ns1:entry>    
+    </ns1:entry> 
+    <!-- -->   
     <ns1:entry>
         <ns1:widget ns1:id="LoginFO_login_L" ns1:height="30px" ns1:width="130px"></ns1:widget>
     </ns1:entry>

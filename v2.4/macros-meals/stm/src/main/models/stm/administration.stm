@@ -125,6 +125,9 @@ role RESIDENT {
         add(dailyMeals) constrainedBy [self=caller 
                                        and caller.periods->exists(p|p.start <= target.date and p.end >= target.date)]
     }
+    Contract {
+        fullAccess
+    }
     DailyMealSelection {
         //fullAccess
         create
@@ -173,6 +176,9 @@ role RESIDENT {
                     in
                         self.ownedBy.selectedBy = caller
                         and mealDate >= now
+                        and caller.periods->exists(p|p.start <= mealDate and p.end >= mealDate
+                            and p.contract.options->exists(o|
+                            o.mealOption = value and o.days->includes(mealDate.getDayOfWeek())))
                         and (if not(self.mealOption.oclIsUndefined())
                              then self.mealOption.periodsOption->exists(p|
                                 p.start <= mealDate 
