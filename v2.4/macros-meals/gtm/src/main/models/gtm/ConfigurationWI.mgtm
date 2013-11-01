@@ -450,7 +450,7 @@ Button AddDeadlineBU {
                 error := ['Please, select an option first']
             }
             else {
-                if [$ThisOptionPeriodsFO.selected$->oclIsUndefined()] {
+                if [$ThisOptionPeriodsFO.selected$.oclIsUndefined()] {
                     error := ['Please, select a period first']
                 }
                 else {

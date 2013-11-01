@@ -1,19 +1,30 @@
-@import "../reindeer/styles.css";
+@import "../reindeer/legacy-styles.css";
 
-@import "EditUserWI.css";
-@import "ChangePasswordWI.css";
-@import "LoginWI.css";
+@import "ContractsWI.css";
 @import "ListDinersWI.css";
 @import "ChangeZoneWI.css";
-@import "SelectMealsWI.css";
-@import "CreateUserWI.css";
 @import "ConfigurationWI.css";
-@import "CountMealsWI.css";
+@import "CreateUserWI.css";
+@import "EditFoodRegimeWI.css";
+@import "FoodRegimesWI.css";
 @import "UserAccountsWI.css";
+@import "SelectMealsWI.css";
+@import "EditUserPeriodsWI.css";
+@import "CountMealsWI.css";
+@import "ChangePasswordWI.css";
+@import "CountMealsAdminWI.css";
+@import "EditUserWI.css";
+@import "EditContractWI.css";
+@import "EditUserRegimenesWI.css";
+@import "LoginWI.css";
 @import "MenuDirectorWI.css";
-@import "MenuResidentWI.css";
 
 /* The following rule is to avoid resizeable text fields */
 .v-textarea {
     resize: none
+}
+
+/* The following rule is to avoid problems when a text field is higher than their standard value*/
+.v-textfield {
+    background-image: none;
 }
