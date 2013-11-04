@@ -59,8 +59,8 @@
         <ns1:widget ns1:id="LoginBU" ns1:height="30px" ns1:width="100px"></ns1:widget>
     </ns1:entry>
 </ns1:line-layout>
-<!-- -->
     </ns1:entry>
+    <!-- END CENTER -->
     <ns1:entry expand-ratio="1">
         <ns1:line-layout orientation="horizontal"/>
     </ns1:entry>
