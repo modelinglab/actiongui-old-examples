@@ -1,2 +1,85 @@
+.v-panel {
+    background-color: #fffffe
+}
 
+.v-label {
+    background-color: #fffffe
+}
 
+.v-textfield {
+    font-family: Helvetica ;
+    font-style: normal ;
+    border-color: black ;
+    border-width: thin ;
+    background-color : #FEFFEF
+}
+
+.v-captiontext {
+    font-family: Helvetica ;
+    font-style:  normal ;
+    font-weight: bold 
+}
+
+.v-nativebutton {
+    font-family: Helvetica ;
+    font-style: normal ;
+    font-weight: bold ;
+    background-color: #FEF0C9 ;
+    border-color: black;
+    border-width:  thin ;
+     
+}
+
+.v-select {
+    background-color: #FEFFEF
+}
+.v-select-select {
+    font-family: Helvetica ;
+    font-style: normal ;
+    font-weight: bold ;
+    background-color: #FEFFEF;
+    border-color : black ;
+    border-width: thin       
+}
+
+.v-table {
+    font-family: Helvetica ;
+    font-style: normal ;
+    border-color: black ;
+    border-width: thin ;
+    background-color : #fffffe
+}
+
+.v-table-body-wrapper {
+        border-color: black ;
+    border-width: thin ;
+    background-color : #fffffe
+}
+
+.v-table-cell-wrapper {
+        border-color: black ;
+    border-width: thin ;
+    background-color : #fffffe
+    
+}
+
+.v-table-cell-content {
+        border-color: black ;
+    border-width: thin ;
+    background-color : #fffffe
+    
+}
+.v-table-header-cell {
+    border-color: black ;
+    border-width: thin ;
+    background-color : #fffffe  
+}
+
+.v-table-caption-container {
+    font-family: Helvetica ;
+    font-style:  italic ;
+    border-color: black ;
+    border-width: thin ;
+    background-color : #fffffe    
+    
+}
