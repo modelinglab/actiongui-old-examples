@@ -2,7 +2,7 @@ Window LoginWI isMain {
     String text := ['User authentication']
 
 Label residenceLA {
-    String text := ['Residence']
+    String text := ['Residence:']
 }
 ComboBox residenceCB {
     Set(Residence) rows := [Residence.allInstances()]
@@ -13,7 +13,7 @@ ComboBox residenceCB {
 }
 
 Label LoginFO_login_L {
-    String text := ['Login: ']
+    String text := ['Login:']
 }
 TextField LoginFO_login {
     String text := [null]    
@@ -21,7 +21,7 @@ TextField LoginFO_login {
 }
 
 Label LoginFO_password_L {
-    String text := ['Password: ']
+    String text := ['Password:']
 }
 PasswordField LoginFO_password {
     String text := [null]    
