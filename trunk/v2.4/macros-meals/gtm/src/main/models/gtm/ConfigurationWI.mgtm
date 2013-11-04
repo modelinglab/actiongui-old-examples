@@ -15,7 +15,6 @@ Window ConfigurationWI {
         column : literal {
                     label : ['Meal']
                 }
-        size: [10]
         sortedBy : [literal]
         selection : SINGLE
     }#
@@ -23,12 +22,12 @@ Window ConfigurationWI {
     #form NewMealFO {
         entity: Meal
         prop: literal {
-            label : ['Meal: ']
+            label : ['Literal:']
         }
     }#
 
     Button NewMealBU {
-        String text := ['New meal']
+        String text := ['Add']
         Meal newMeal
         event onClick {
             #create {
@@ -54,12 +53,12 @@ Window ConfigurationWI {
         entity: Meal
         instance: [$Meals_T.selected$]
         prop: literal {
-            label : ['Meal: ']
+            label : ['Literal:']
         }
     }#
 
     Button EditMealBU {
-        String text := ['Modify meal']
+        String text := ['Modify']
         Meal selectedMeal
         event onClick {
             if [$Meals_T.selected$.oclIsUndefined()] {
@@ -83,19 +82,18 @@ Window ConfigurationWI {
     }
 
     Label mealOptionsLA {
-        String text := ['Meal options']
+        String text := ['Options']
     }
 
     #table Meal_Options_T {
         entity : MealOption
         rows : [$Meals_T.selected$.options]
         column : initial {
-            label : ['Initial']
+            label : ['Initials:']
          }
         column : literal {
-            label : ['Literal']
+            label : ['Literal:']
         }
-        size: [10]
         sortedBy: [literal]
         selection: SINGLE
     }#
@@ -104,15 +102,15 @@ Window ConfigurationWI {
     #form NewOptionFO {
         entity: MealOption
         prop: initial {
-            label : ['Initial: ']
+            label : ['Initials:']
         }
         prop: literal {
-            label : ['Literal: ']
+            label : ['Literal:']
         }
     }#
 
     Button NewOptionBU {
-        String text := ['New meal option']
+        String text := ['Add']
         MealOption newOption
         event onClick {
             #create {
@@ -148,15 +146,15 @@ Window ConfigurationWI {
         entity: MealOption
         instance: [$Meal_Options_T.selected$]
         prop: initial {
-            label : ['Initial: ']
+            label : ['Initials:']
         }
         prop: literal {
-            label : ['Literal: ']
+            label : ['Literal:']
         }
     }#
 
     Button EditOptionBU {
-        String text := ['Change meal option']
+        String text := ['Modiy']
         MealOption selectedOption
         event onClick {
             if [$Meals_T.selected$.oclIsUndefined()] {
@@ -192,7 +190,7 @@ Window ConfigurationWI {
 
 
 Label mealOptionPeriodsLA {
-    String text := ['Meal option periods']
+    String text := ['Periods']
 }
 
 #table ThisOptionPeriodsFO {
@@ -200,7 +198,6 @@ Label mealOptionPeriodsLA {
     rows: [$Meal_Options_T.selected$.periodsOption]
     column: start {label: ['start'] }
     column: end {label: ['end'] }
-    size: [10]
     sortedBy: [start]
     selection: SINGLE
 }#
@@ -209,12 +206,12 @@ Label mealOptionPeriodsLA {
 
 #form NewPeriodOptionFO {
     entity: Residency
-    prop: start {label: ['Start: ']}
-    prop: end {label: ['End: ']}
+    prop: start {label: ['Start:']}
+    prop: end {label: ['End:']}
 }#
 
 Button CreatePeriodOptionBU {
-    String text := ['New period']
+    String text := ['Add']
     Residency newPeriod
     event onClick {
         if [$Meals_T.selected$.oclIsUndefined()] {
@@ -261,6 +258,9 @@ Button CreatePeriodOptionBU {
     }
 } 
 
+Label deadlinesLA {
+    String text := ['Deadlines']
+}
 Table DeadlinesTB {
     Set(MealOptionDeadline) rows := [$ThisOptionPeriodsFO.selected$.deadlines]
     MealOptionDeadline selected
@@ -440,7 +440,7 @@ Table DeadlinesTB {
 }
 
 Button AddDeadlineBU {
-    String text := ['New deadline']
+    String text := ['Add']
     event onClick {
         if [$Meals_T.selected$.oclIsUndefined()] {
             error := ['Please, select first a meal']
@@ -471,7 +471,7 @@ Button AddDeadlineBU {
 
 
 Button DeleteDeadlinesBU {
-    String text := ['Delete deadline']
+    String text := ['Delete']
     event onClick {
         if [$DeadlinesTB.selected$.oclIsUndefined()] {
             error := ['Please, select first a deadline']
