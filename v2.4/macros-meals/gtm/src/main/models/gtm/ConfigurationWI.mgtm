@@ -218,43 +218,80 @@ Button CreatePeriodOptionBU {
             error := ['Please, select first a meal']
         }
         else {
-            if [$Meals_T.selected$->size() = 0 or $Meals_T.selected$->size() > 1] {
-                error := ['Please, select exactly one meal']
+            if [$Meal_Options_T.selected$.oclIsUndefined()] {
+                error := ['Please, select an option first']
             }
             else {
-                if [$Meal_Options_T.selected$->oclIsUndefined()] {
-                    error := ['Please, select an option first']
-                }
-                else {
-                    if [$Meal_Options_T.selected$->size() = 0 or $Meal_Options_T.selected$->size() > 1] {
-                        error := ['Please, select exactlty one option']
-                    }
-                    else {
-                        #create {
-                            form: NewPeriodOptionFO 
-                            result: newPeriod
-                            assert: [not($NewPeriodOptionFO_start.value$.oclIsUndefined())] {
-                                message: ['Please, select first a starting date'] 
-                                assert: [not($NewPeriodOptionFO_end.value$.oclIsUndefined())] {
-                                    message: ['Please, select first an ending date']
-                                    assert: [$NewPeriodOptionFO_start.value$ <= $NewPeriodOptionFO_end.value$] {
-                                        message: ['Please, select an ending date that is later or equal than the starting date']
-                                        assert: [$Meal_Options_T.selected$->any(true).periodsOption->select(p|($NewPeriodOptionFO_start.value$ <= p.start and $NewPeriodOptionFO_end.value$ >= p.start) or ($NewPeriodOptionFO_start.value$ > p.start and $NewPeriodOptionFO_start.value$ <= p.end))->isEmpty()] {
-                                            message: ['The selected period overlaps with one or more existing periods. Please, change either the starting or the ending date']
-                                        }
-                                    }
+                #create {
+                    form: NewPeriodOptionFO 
+                    result: newPeriod
+                    assert: [not($NewPeriodOptionFO_start.value$.oclIsUndefined())] {
+                        message: ['Please, select first a starting date'] 
+                        assert: [not($NewPeriodOptionFO_end.value$.oclIsUndefined())] {
+                            message: ['Please, select first an ending date']
+                            assert: [$NewPeriodOptionFO_start.value$ <= $NewPeriodOptionFO_end.value$] {
+                                message: ['Please, select an ending date that is later or equal than the starting date']
+                                assert: [$Meal_Options_T.selected$.periodsOption->select(p|($NewPeriodOptionFO_start.value$ <= p.start and $NewPeriodOptionFO_end.value$ >= p.start) or ($NewPeriodOptionFO_start.value$ > p.start and $NewPeriodOptionFO_start.value$ <= p.end))->isEmpty()] {
+                                    message: ['The selected period overlaps with one or more existing periods. Please, change either the starting or the ending date']
                                 }
                             }
-                        }#
-                        if [not($newPeriod$.oclIsUndefined())] { 
-                            [$Meal_Options_T.selected$.periodsOption]+= [$newPeriod$]
-                            #refresh ThisOptionPeriodsFO#
-                            #refresh NewPeriodOptionFO#
                         }
                     }
+                }#
+                if [not($newPeriod$.oclIsUndefined())] { 
+                    [$Meal_Options_T.selected$.periodsOption]+= [$newPeriod$]
+                    #refresh ThisOptionPeriodsFO#
+                    #refresh NewPeriodOptionFO#
                 }
             }
         } 
+    }
+} 
+
+#form EditPeriodOptionFO {
+    entity: Residency
+    instance: [$ThisOptionPeriodsFO.selected$]
+    prop: start {label: ['Start:']}
+    prop: end {label: ['End:']}
+}#
+
+Button EditPeriodOptionBU {
+    String text := ['Modify']
+    Residency newPeriod
+    event onClick {
+        if [$Meals_T.selected$.oclIsUndefined()] {
+            error := ['Please, select first a meal']
+        }
+        else {
+            if [$Meal_Options_T.selected$.oclIsUndefined()] {
+                error := ['Please, select an option first']
+            }
+            else {
+                if [$ThisOptionPeriodsFO.selected$.oclIsUndefined()] {
+                    error := ['Please, select a period first']
+                }
+                else {
+                    #update {
+                        form: EditPeriodOptionFO 
+                        result: newPeriod
+                        assert: [not($EditPeriodOptionFO_start.value$.oclIsUndefined())] {
+                            message: ['Please, select first a starting date'] 
+                            assert: [not($EditPeriodOptionFO_end.value$.oclIsUndefined())] {
+                                message: ['Please, select first an ending date']
+                                assert: [$EditPeriodOptionFO_start.value$ <= $EditPeriodOptionFO_end.value$] {
+                                    message: ['Please, select an ending date that is later or equal than the starting date']
+                                    assert: [$Meal_Options_T.selected$.periodsOption->excluding($ThisOptionPeriodsFO.selected$)->select(p|($EditPeriodOptionFO_start.value$ <= p.start and $EditPeriodOptionFO_end.value$ >= p.start) or ($EditPeriodOptionFO_start.value$ > p.start and $EditPeriodOptionFO_start.value$ <= p.end))->isEmpty()] {
+                                        message: ['The selected period overlaps with one or more existing periods. Please, change either the starting or the ending date']
+                                    }
+                                }
+                            }
+                        }
+                    }#
+                    #refresh ThisOptionPeriodsFO#
+                    #refresh EditPeriodOptionFO#
+                }
+            }
+        }
     }
 } 
 
@@ -501,6 +538,7 @@ event onChange(Meal_Options_T.selected) {
     #refresh ThisOptionPeriodsFO #
 } 
 event onChange(ThisOptionPeriodsFO.selected) {
+    #refresh EditPeriodOptionFO #
     reevaluate DeadlinesTB.rows
 }
 

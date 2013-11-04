@@ -234,9 +234,44 @@ and open the template in the editor.
                         </ns1:entry>
                     </ns1:line-layout>
                 </ns1:entry> 
+                <!-- END New Period -->  
+                <ns1:entry>
+                    <ns1:line-layout orientation="vertical" ns1:height="15px"></ns1:line-layout>
+                </ns1:entry>
+                <!-- Edit Period -->
+                <ns1:entry>
+                    <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto">
+                        <ns1:entry>
+                            <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="EditPeriodOptionBU" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:width="15px"></ns1:line-layout>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="EditPeriodOptionFO_start_L" ns1:height="30px" ns1:width="40px"></ns1:widget>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="EditPeriodOptionFO_start" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:width="15px"></ns1:line-layout>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="EditPeriodOptionFO_end_L" ns1:height="30px" ns1:width="40px"></ns1:widget>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="EditPeriodOptionFO_end" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                                </ns1:entry>
+                            </ns1:line-layout>      
+                        </ns1:entry>
+                    </ns1:line-layout>
+                </ns1:entry> 
+                <!-- END Edit Period -->  
             </ns1:line-layout>     
         </ns1:entry>     
-                <!-- END New Period -->  
+                
         <ns1:entry>
             <ns1:line-layout orientation="vertical" ns1:height="30px"></ns1:line-layout>
         </ns1:entry>

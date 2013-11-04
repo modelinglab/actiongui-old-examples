@@ -1,5 +1,7 @@
 Window EditUserPeriodsWI {
     User thisUser
+    
+    /*
     #form ThisUserFO {
     entity: User
         instance: [$EditUserPeriodsWI.thisUser$]
@@ -10,7 +12,25 @@ Window EditUserPeriodsWI {
             column: end
         }
     }#
-    
+    */
+
+    Table ThisUserFO {
+        OrderedSet(Residency) rows := [$EditUserPeriodsWI.thisUser$.periods->sortedBy(start)->reverse()]
+        Residency selected := [null]
+        String error := [null]
+
+        columns {
+            ['Start'] : Label start {
+                String text := [$ThisUserFO.row$.start.toString().substring(1,10)]
+            }
+            ['End'] : Label end {
+                String text := [$ThisUserFO.row$.end.toString().substring(1,10)]
+            }
+            ['Contract'] : Label contract {
+                String text := [$ThisUserFO.row$.contract.name]
+            }
+        }
+    }
     
 #form NewPeriodFO {
     entity: Residency
@@ -58,7 +78,9 @@ Button CreatePeriodBU {
            { [$EditUserPeriodsWI.thisUser$.periods]+= [$newPeriod$]
              [$newPeriod$.contract]:= [$ContractsCB.selected$]
              newPeriod := [null]
-             #refresh ThisUserFO#
+             reevaluate ThisUserFO.rows
+             reevaluate ThisUserFO.selected
+             reevaluate ThisUserFO.error
              #refresh NewPeriodFO#
              ContractsCB.selected := [null]
              }
@@ -69,23 +91,21 @@ Button DeletePeriodBU {
     Residency thisPeriod
     String text := ['Delete']
     event onClick {
-    if [$EditUserPeriodsWI.ThisUserFO_periods.selected$->oclIsUndefined()]
-        { notification(['Error'], ['Please, select first a period'], [0]) }
+    if [$EditUserPeriodsWI.ThisUserFO.selected$.oclIsUndefined()] {
+        notification(['Error'], ['Please, select first a period'], [0]) }
     else { 
-        if [$EditUserPeriodsWI.ThisUserFO_periods.selected$->size() <> 1]
-           { notification(['Error'], ['Please, select first a period'], [0]) }
-        else {
-            thisPeriod := [$EditUserPeriodsWI.ThisUserFO_periods.selected$->any(true)]
-            try {
-                foreach selection in 
-    [$EditUserPeriodsWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $thisPeriod$.start.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $thisPeriod$.end.toLocalDate().atStartOfDay()).selections] {
-                    delete [$selection$] }
-                 delete [$thisPeriod$]
-                 #refresh ThisUserFO #
+        thisPeriod := [$EditUserPeriodsWI.ThisUserFO.selected$]
+        try {
+            foreach selection in [$EditUserPeriodsWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $thisPeriod$.start.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $thisPeriod$.end.toLocalDate().atStartOfDay()).selections] {
+                delete [$selection$]
             }
-            catch (SecurityException) { 
-                notification(['Message'], ['Sorry. This period contains selections that can not be deleted'], [-1])
-            }
+            delete [$thisPeriod$]
+            reevaluate ThisUserFO.rows
+            reevaluate ThisUserFO.selected
+            reevaluate ThisUserFO.error
+        }
+        catch (SecurityException) { 
+            notification(['Message'], ['Sorry. This period contains selections that can not be deleted'], [-1])
         }
     }
     }
@@ -93,7 +113,7 @@ Button DeletePeriodBU {
 
 #form UpdatePeriodFO {
     entity: Residency
-    instance : [$ThisUserFO_periods.selected$->any(true)]
+    instance : [$ThisUserFO.selected$]
     prop: start {label: ['Start: ']}
     prop: end {label: ['End: ']}
 }#
@@ -104,7 +124,7 @@ Label ContractsUpdateLB {
 
 ComboBox ContractsUpdateCB {
         Set(Contract) rows := [Contract.allInstances()]
-        Contract selected := [$ThisUserFO_periods.selected$->any(true).contract]
+        Contract selected := [$ThisUserFO.selected$.contract]
         
         Label ContractUpdate {
             String text := [$ContractsUpdateCB.row$.name]
@@ -114,18 +134,16 @@ ComboBox ContractsUpdateCB {
     }
 
 Button ModifyPeriodBU {
-Residency thisPeriod
+    Residency thisPeriod
     String text := ['Update']
     event onClick {
-    if [$EditUserPeriodsWI.ThisUserFO_periods.selected$->oclIsUndefined()]
-        { notification(['Error'], ['Please, select first a period'], [0]) }
-    else { 
-        if [$EditUserPeriodsWI.ThisUserFO_periods.selected$->size() <> 1]
-           { notification(['Error'], ['Please, select first a period'], [0]) }
-        else {
-            thisPeriod := [$EditUserPeriodsWI.ThisUserFO_periods.selected$->any(true)]
-            if [$UpdatePeriodFO_start.value$.oclIsUndefined()]
-                { notification(['Error'], ['Please, select first a starting date'], [0]) }
+        if [$EditUserPeriodsWI.ThisUserFO.selected$.oclIsUndefined()] {
+            notification(['Error'], ['Please, select first a period'], [0])
+        }
+        else { 
+            thisPeriod := [$EditUserPeriodsWI.ThisUserFO.selected$]
+            if [$UpdatePeriodFO_start.value$.oclIsUndefined()] {
+                notification(['Error'], ['Please, select first a starting date'], [0]) }
             else {
                 if [$UpdatePeriodFO_end.value$.oclIsUndefined()] {
                     notification(['Error'], ['Please, select first an ending date'], [0])
@@ -142,31 +160,30 @@ Residency thisPeriod
                                     ->notEmpty()] {
                             notification(['Error'], ['The selected period overlaps with one or more existing periods. Please, change either the starting or the ending date'], [0]) }
                         else {
-                           if [$ContractsUpdateCB.selected$.oclIsUndefined() ] {
+                            if [$ContractsUpdateCB.selected$.oclIsUndefined() ] {
                                notification(['Error'], ['Please, select first a contract.'], [0])
                             }
                             else {
-                            try {
-                                // foreach selection in [$EditUserPeriodsWI.thisUser$.dailyMeals->select(d|d.date >= $thisPeriod$.start and d.date <= $thisPeriod$.end)->select(d|d.date < $UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay()  or d.date > $UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()).selections] {
-                                foreach selection in [$EditUserPeriodsWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $thisPeriod$.start.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $thisPeriod$.end.toLocalDate().atStartOfDay()).selections->asSet() - $EditUserPeriodsWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()).selections->asSet()] {
-                                    delete [$selection$]
+                                try {
+                                    // foreach selection in [$EditUserPeriodsWI.thisUser$.dailyMeals->select(d|d.date >= $thisPeriod$.start and d.date <= $thisPeriod$.end)->select(d|d.date < $UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay()  or d.date > $UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()).selections]
+                                    foreach selection in [$EditUserPeriodsWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $thisPeriod$.start.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $thisPeriod$.end.toLocalDate().atStartOfDay()).selections->asSet() - $EditUserPeriodsWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()).selections->asSet()] {
+                                        delete [$selection$]
+                                    }
+                                    [$thisPeriod$.start] := [$UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay()]
+                                    [$thisPeriod$.end] := [$UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()]
+                                    [$thisPeriod$.contract] := [$ContractsUpdateCB.selected$]
+                                    ThisUserFO.rows := [$ThisUserFO.rows$->select(false)]
+                                    ThisUserFO.rows := [$EditUserPeriodsWI.thisUser$.periods->sortedBy(start)->reverse()]
+                                    thisPeriod := [null]
                                 }
-                                [$thisPeriod$.start] := [$UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay()]
-                                [$thisPeriod$.end] := [$UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()]
-                                [$thisPeriod$.contract] := [$ContractsUpdateCB.selected$]
-                                ThisUserFO_periods.rows := [$ThisUserFO_periods.rows$->select(false)]
-                                ThisUserFO_periods.rows := [$EditUserPeriodsWI.thisUser$.periods->sortedBy(start)->reverse()]
-                                thisPeriod := [null]
-                            }
-                            catch (SecurityException) { 
-                                notification(['Message'], ['Sorry. This period contains selections that can not be deleted'], [-1])
+                                catch (SecurityException) { 
+                                    notification(['Message'], ['Sorry. This period contains selections that can not be deleted'], [-1])
+                                }
                             }
                         }
-                    }
-                }               
+                    }               
+                }
             }
-        }
-        }
         }
     }
 }
@@ -176,16 +193,9 @@ Button BackBU {
     event onClick { back }
 }
 
-event onChange(ThisUserFO_periods.selected) {
-    if [not($ThisUserFO_periods.selected$->oclIsUndefined())]
-       { if [$ThisUserFO_periods.selected$->size() = 1]
-            { #refresh UpdatePeriodFO # 
-              reevaluate ContractsUpdateCB.selected }
-         else { if [$ThisUserFO_periods.selected$->size() > 1]
-               { notification(['Error'], ['Please, select at most one period.'], [0]) }}
-    }
-    else { #refresh UpdatePeriodFO #
-           reevaluate ContractsUpdateCB.selected }
+event onChange(ThisUserFO.selected) {
+    #refresh UpdatePeriodFO #
+    reevaluate ContractsUpdateCB.selected
 }
 
 
