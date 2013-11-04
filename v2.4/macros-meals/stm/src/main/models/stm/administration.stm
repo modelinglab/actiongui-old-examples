@@ -44,18 +44,18 @@ role DIRECTOR {
                         mealDate    : LocalDateTime = self.ownedBy.date,
                         now         : LocalDateTime = LocalDateTime.now(Residence.allInstances()->any(true).zone)
                     in
-                        mealDate >= now
+                        mealDate.toLocalDate().atStartOfDay() >= now.toLocalDate().atStartOfDay()
                         and self.mealOption.periodsOption->exists(p|
                                 p.start <= mealDate 
                             and p.end >= mealDate
                             and p.deadlines->exists(q|
                                     q.days->includes(mealDate.getDayOfWeek())
                                 and 
-                                    if now.plusDays(q.cday).toLocalDate() = mealDate.toLocalDate() then
+                                    if now.plusDays(q.cday).toLocalDate().atStartOfDay() = mealDate.toLocalDate().atStartOfDay() then
                                         now.getHour() < q.chour 
                                         or (now.getHour() = q.chour and now.getMinute() <= q.cminute)
                                     else
-                                        now.plusDays(q.cday).toLocalDate().atStartOfDay() < mealDate
+                                        now.plusDays(q.cday).toLocalDate().atStartOfDay() < mealDate.toLocalDate().atStartOfDay()
                                     endif
                                 )
                             )
@@ -66,7 +66,7 @@ role DIRECTOR {
                         mealDate    : LocalDateTime = self.ownedBy.date,
                         now         : LocalDateTime = LocalDateTime.now(Residence.allInstances()->any(true).zone)
                     in
-                        mealDate >= now
+                        mealDate.toLocalDate().atStartOfDay() >= now.toLocalDate().atStartOfDay()
                         and (if not(self.mealOption.oclIsUndefined())
                              then self.mealOption.periodsOption->exists(p|
                                 p.start <= mealDate 
@@ -74,11 +74,11 @@ role DIRECTOR {
                                 and p.deadlines->exists(q|
                                     q.days->includes(mealDate.getDayOfWeek())
                                     and 
-                                    if now.plusDays(q.cday).toLocalDate() = mealDate.toLocalDate() 
+                                    if now.plusDays(q.cday).toLocalDate().atStartOfDay() = mealDate.toLocalDate().atStartOfDay()
                                     then now.getHour() < q.chour 
                                          or (now.getHour() = q.chour and now.getMinute() <= q.cminute)
                                     else
-                                        now.plusDays(q.cday).toLocalDate().atStartOfDay() < mealDate
+                                        now.plusDays(q.cday).toLocalDate().atStartOfDay() < mealDate.toLocalDate().atStartOfDay()
                                     endif)
                                     )
                               else true endif)
@@ -147,18 +147,18 @@ role RESIDENT {
                         now         : LocalDateTime = LocalDateTime.now(Residence.allInstances()->any(true).zone)
                     in
                         self.ownedBy.selectedBy = caller
-                        and mealDate >= now
+                        and mealDate.toLocalDate().atStartOfDay() >= now.toLocalDate().atStartOfDay()
                         and self.mealOption.periodsOption->exists(p|
                                 p.start <= mealDate 
                             and p.end >= mealDate
                             and p.deadlines->exists(q|
                                     q.days->includes(mealDate.getDayOfWeek())
                                 and 
-                                    if now.plusDays(q.cday).toLocalDate() = mealDate.toLocalDate() then
+                                    if now.plusDays(q.cday).toLocalDate().atStartOfDay() = mealDate.toLocalDate().atStartOfDay() then
                                         now.getHour() < q.chour 
                                         or (now.getHour() = q.chour and now.getMinute() <= q.cminute)
                                     else
-                                        now.plusDays(q.cday).toLocalDate().atStartOfDay() < mealDate
+                                        now.plusDays(q.cday).toLocalDate().atStartOfDay() < mealDate.toLocalDate().atStartOfDay()
                                     endif
                                 )
                             )
@@ -175,7 +175,7 @@ role RESIDENT {
                         now         : LocalDateTime = LocalDateTime.now(Residence.allInstances()->any(true).zone)
                     in
                         self.ownedBy.selectedBy = caller
-                        and mealDate >= now
+                        and mealDate.toLocalDate().atStartOfDay() >= now.toLocalDate().atStartOfDay()
                         and caller.periods->exists(p|p.start <= mealDate and p.end >= mealDate
                             and p.contract.options->exists(o|
                             o.mealOption = value and o.days->includes(mealDate.getDayOfWeek())))
@@ -186,11 +186,11 @@ role RESIDENT {
                                 and p.deadlines->exists(q|
                                     q.days->includes(mealDate.getDayOfWeek())
                                     and 
-                                    if now.plusDays(q.cday).toLocalDate() = mealDate.toLocalDate() 
+                                    if now.plusDays(q.cday).toLocalDate().atStartOfDay() = mealDate.toLocalDate().atStartOfDay() 
                                     then now.getHour() < q.chour 
                                          or (now.getHour() = q.chour and now.getMinute() <= q.cminute)
                                     else
-                                        now.plusDays(q.cday).toLocalDate().atStartOfDay() < mealDate
+                                        now.plusDays(q.cday).toLocalDate().atStartOfDay() < mealDate.toLocalDate().atStartOfDay()
                                     endif)
                                     )
                               else true endif)
@@ -200,11 +200,11 @@ role RESIDENT {
                             and p.deadlines->exists(q|
                                     q.days->includes(mealDate.getDayOfWeek())
                                 and 
-                                    if now.plusDays(q.cday).toLocalDate() = mealDate.toLocalDate() then
-                                        now.getHour() < q.chour 
+                                    if now.plusDays(q.cday).toLocalDate().atStartOfDay() = mealDate.toLocalDate().atStartOfDay() 
+                                    then now.getHour() < q.chour 
                                         or (now.getHour() = q.chour and now.getMinute() <= q.cminute)
                                     else
-                                        now.plusDays(q.cday).toLocalDate().atStartOfDay() < mealDate
+                                        now.plusDays(q.cday).toLocalDate().atStartOfDay() < mealDate.toLocalDate().atStartOfDay()
                                     endif
                                 )
                             )
@@ -215,7 +215,7 @@ role RESIDENT {
                         now         : LocalDateTime = LocalDateTime.now(Residence.allInstances()->any(true).zone)
                     in
                         self.ownedBy.selectedBy = caller
-                        and mealDate >= now
+                        and mealDate.toLocalDate().atStartOfDay() >= now.toLocalDate().atStartOfDay()
                         and (if not(self.mealOption.oclIsUndefined())
                              then self.mealOption.periodsOption->exists(p|
                                 p.start <= mealDate 
@@ -223,11 +223,11 @@ role RESIDENT {
                                 and p.deadlines->exists(q|
                                     q.days->includes(mealDate.getDayOfWeek())
                                     and 
-                                    if now.plusDays(q.cday).toLocalDate() = mealDate.toLocalDate() 
+                                    if now.plusDays(q.cday).toLocalDate().atStartOfDay() = mealDate.toLocalDate().atStartOfDay() 
                                     then now.getHour() < q.chour 
                                          or (now.getHour() = q.chour and now.getMinute() <= q.cminute)
                                     else
-                                        now.plusDays(q.cday).toLocalDate().atStartOfDay() < mealDate
+                                        now.plusDays(q.cday).toLocalDate().atStartOfDay() < mealDate.toLocalDate().atStartOfDay()
                                     endif)
                                     )
                               else true endif)
