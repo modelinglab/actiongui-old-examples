@@ -99,10 +99,10 @@ and open the template in the editor.
                 <ns1:entry>
                     <ns1:table ns1:id="Meal_Options_T" ns1:height="200px" ns1:width="auto">
                         <ns1:column>
-                            <ns1:widget ns1:id="initial" ns1:height="30px" ns1:width="50px"></ns1:widget>
+                            <ns1:widget ns1:id="initial" ns1:height="30px" ns1:width="100px"></ns1:widget>
                         </ns1:column>
                         <ns1:column>
-                            <ns1:widget ns1:id="literal" ns1:height="30px" ns1:width="250px"></ns1:widget>
+                            <ns1:widget ns1:id="literal" ns1:height="30px" ns1:width="150px"></ns1:widget>
                         </ns1:column>
                     </ns1:table>
                 </ns1:entry>
@@ -183,7 +183,7 @@ and open the template in the editor.
         
         <!-- THIRD TABLE: Meal option period -->
         <ns1:entry>          
-            <ns1:line-layout orientation="vertical" ns1:height="auto">
+            <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto">
                 <ns1:entry>
                     <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
                         <ns1:entry>
@@ -287,7 +287,7 @@ and open the template in the editor.
                     </ns1:line-layout>
                 </ns1:entry>
                 <ns1:entry>
-                    <ns1:table ns1:id="DeadlinesTB" ns1:height="150px" ns1:width="auto">
+                    <ns1:table ns1:id="DeadlinesTB" ns1:height="150px" ns1:width="700px">
                         <ns1:column>
                             <ns1:widget ns1:id="Monday" ns1:height="30px" ns1:width="30px"></ns1:widget>
                         </ns1:column>
