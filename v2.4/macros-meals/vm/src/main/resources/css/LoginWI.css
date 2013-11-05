@@ -1,85 +1,102 @@
 .v-panel {
-    background-color: #fffffe
+    color: #000000;
 }
-
-.v-label {
-    background-color: #fffffe
+.v-app slot {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
 }
-
+.logoIMG {
+    background-image: url("vectorlogo.png");
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+}
 .v-textfield {
-    font-family: Helvetica ;
-    font-style: normal ;
-    border-color: black ;
-    border-width: thin ;
-    background-color : #FEFFEF
+    background-color: #F5CCCC;
+    border-color: #000000;
+    border-width: thin;
+    font-family: Helvetica;
+    font-size: 12px;
 }
-
 .v-captiontext {
-    font-family: Helvetica ;
-    font-style:  normal ;
-    font-weight: bold 
+    font-family: Helvetica;
+    font-size: 12px;
 }
-
-.v-nativebutton {
-    font-family: Helvetica ;
-    font-style: normal ;
-    font-weight: bold ;
-    background-color: #FEF0C9 ;
-    border-color: black;
-    border-width:  thin ;
-     
-}
-
-.v-select {
-    background-color: #FEFFEF
-}
-.v-select-select {
-    font-family: Helvetica ;
-    font-style: normal ;
-    font-weight: bold ;
-    background-color: #FEFFEF;
-    border-color : black ;
-    border-width: thin       
-}
-
 .v-table {
-    font-family: Helvetica ;
-    font-style: normal ;
-    border-color: black ;
-    border-width: thin ;
-    background-color : #fffffe
+    border-color: #000000 !important;
+    border-width: thick !important;
+    font-family: Helvetica;
 }
-
-.v-table-body-wrapper {
-        border-color: black ;
-    border-width: thin ;
-    background-color : #fffffe
-}
-
-.v-table-cell-wrapper {
-        border-color: black ;
-    border-width: thin ;
-    background-color : #fffffe
-    
-}
-
 .v-table-cell-content {
-        border-color: black ;
-    border-width: thin ;
-    background-color : #fffffe
-    
+   /* background-color: #F5CCCC; 
+    border-color: #000000;
+    border-width: thin; */
+    color: #000000;
+    font-family: Helvetica;
+    font-size: 12px;
+    border-style: solid;
+    border-width: thin;
 }
 .v-table-header-cell {
-    border-color: black ;
-    border-width: thin ;
-    background-color : #fffffe  
+    border-color: #000000 !important;
+    border-width: thick;
+}
+.v-table-caption-container {
+    border-color: #000000;
+    border-width: thin;
+    font-family: Helvetica;
+}
+.v-nativebutton {
+    background-color: #CC0000;
+    border-color: #000000;
+    border-width: thin !important;
+    color: #FFFFFF !important;
+    font-family: Helvetica;
+    font-size: 16px !important;
+    font-weight: bolder !important;
+}
+.v-select-select {
+    background-color: #F5CCCC !important;
+    border-color: #000000;
+    border-width: thin;
+    font-family: Helvetica;
+    font-weight: bold;
+    border-style : solid ;
+    font-size: 12px !important;
+    font-style: italic;        
+}
+.v-table-body {
+    /* background: none repeat scroll 0 0 #F5CCCC; */
+    border-color: #000000;
+    border-width: thin;
+}
+.v-table-row {
+   /* border-style: solid !important; */
+}
+.v-table-header {
+    background: darkred;
+    color: white;
+    font-size: 14px;
+    font-weight: bold !important;
+    font-family: Helvetica;
+}
+.v-table-resizer {
+   /* background: #000000; */
+}
+.v-table-header-wrap {
+    border-color: #000000;
+    border-width: thin;
+}
+.v-table-row-spacer {
+   /* border-color: #000000; */
+}
+.v-table-header-cell {
+   /* border-color: black; */
+}
+.v-table-table {
+   /* background: black !important; */
 }
 
-.v-table-caption-container {
-    font-family: Helvetica ;
-    font-style:  italic ;
-    border-color: black ;
-    border-width: thin ;
-    background-color : #fffffe    
+
+
     
-}
+ 
