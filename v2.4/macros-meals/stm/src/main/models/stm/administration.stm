@@ -42,7 +42,7 @@ role DIRECTOR {
         delete constrainedBy [
                     let 
                         mealDate    : LocalDateTime = self.ownedBy.date,
-                        now         : LocalDateTime = LocalDateTime.now(Residence.allInstances()->any(true).zone)
+                        now         : LocalDateTime = LocalDateTime.now(caller.residence.zone)
                     in
                         mealDate.toLocalDate().atStartOfDay() >= now.toLocalDate().atStartOfDay()
                         and self.mealOption.periodsOption->exists(p|
@@ -64,7 +64,7 @@ role DIRECTOR {
         update(foodRegime) constrainedBy [
                     let 
                         mealDate    : LocalDateTime = self.ownedBy.date,
-                        now         : LocalDateTime = LocalDateTime.now(Residence.allInstances()->any(true).zone)
+                        now         : LocalDateTime = LocalDateTime.now(caller.residence.zone)
                     in
                         mealDate.toLocalDate().atStartOfDay() >= now.toLocalDate().atStartOfDay()
                         and (if not(self.mealOption.oclIsUndefined())
@@ -144,7 +144,7 @@ role RESIDENT {
         delete constrainedBy [
                     let 
                         mealDate    : LocalDateTime = self.ownedBy.date,
-                        now         : LocalDateTime = LocalDateTime.now(Residence.allInstances()->any(true).zone)
+                        now         : LocalDateTime = LocalDateTime.now(caller.residence.zone)
                     in
                         self.ownedBy.selectedBy = caller
                         and mealDate.toLocalDate().atStartOfDay() >= now.toLocalDate().atStartOfDay()
@@ -172,7 +172,7 @@ role RESIDENT {
         update(mealOption) constrainedBy [
                     let 
                         mealDate    : LocalDateTime = self.ownedBy.date,
-                        now         : LocalDateTime = LocalDateTime.now(Residence.allInstances()->any(true).zone)
+                        now         : LocalDateTime = LocalDateTime.now(caller.residence.zone)
                     in
                         self.ownedBy.selectedBy = caller
                         and mealDate.toLocalDate().atStartOfDay() >= now.toLocalDate().atStartOfDay()
@@ -212,7 +212,7 @@ role RESIDENT {
         update(foodRegime) constrainedBy [
                     let 
                         mealDate    : LocalDateTime = self.ownedBy.date,
-                        now         : LocalDateTime = LocalDateTime.now(Residence.allInstances()->any(true).zone)
+                        now         : LocalDateTime = LocalDateTime.now(caller.residence.zone)
                     in
                         self.ownedBy.selectedBy = caller
                         and mealDate.toLocalDate().atStartOfDay() >= now.toLocalDate().atStartOfDay()

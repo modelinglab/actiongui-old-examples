@@ -9,7 +9,7 @@ Table ContractItemsTB {
     columns {
         ['Meal'] : Label Literal { String text := [$ContractItemsTB.row$.mealOption.ownedBy.literal] }
         ['Options'] : Label Option { String text := [$ContractItemsTB.row$.mealOption.literal] }
-        ['First'] : BooleanField Monday { 
+        ['Monday'] : BooleanField Monday { 
             Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::MONDAY)) then true else false endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
@@ -25,7 +25,7 @@ Table ContractItemsTB {
                       else { [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::MONDAY)] }
 
         } } } 
- ['Second'] : BooleanField Tuesday { 
+ ['Tuesday'] : BooleanField Tuesday { 
             Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::TUESDAY)) then true else false endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
@@ -41,7 +41,7 @@ Table ContractItemsTB {
                       else { [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::TUESDAY)] }
 
         } } } 
- ['Third'] : BooleanField Wednesday { 
+ ['Wednesday'] : BooleanField Wednesday { 
             Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::WEDNESDAY)) then true else false endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
@@ -57,7 +57,7 @@ Table ContractItemsTB {
                       else { [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::WEDNESDAY)] }
 
         } } } 
- ['Fourth'] : BooleanField Thursday { 
+ ['Thursday'] : BooleanField Thursday { 
             Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::THURSDAY)) then true else false endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
@@ -73,7 +73,7 @@ Table ContractItemsTB {
                       else { [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::THURSDAY)] }
 
         } } } 
- ['Fifth'] : BooleanField Friday { 
+ ['Friday'] : BooleanField Friday { 
             Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::FRIDAY)) then true else false endif] 
                 {
                 if [not($value$.oclIsUndefined())] 

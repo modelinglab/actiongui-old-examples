@@ -56,6 +56,8 @@ Residency:
     // A residency is related to a food regime if and only if, it is also related to a user through the 'ownedByRegime' association end
     Residency.allInstances()->forAll(r|((not r.regime.oclIsUndefined()) and (not r.ownedByRegime.oclIsUndefined())) or (r.regime.oclIsUndefined() and r.ownedByRegime.oclIsUndefined()))
 
+    // The meal option deadlines associated to a residence, must have different day of weeks assigned between them
+     Residency.allInstances()->forAll(r|r.deadlines->forAll(dl1|dl1.days->forAll(d|r.deadlines->excluding(dl1)->forAll(dl2|dl2.days->excludes(d)))))
 
 
 Contract:
@@ -105,11 +107,11 @@ MealSelection:
     MealSelection.allInstances()->forAll(ms|not ms.ownedBy.oclIsUndefined())
 
     // A food regime is defined if and only if the food regime have a residency such that it belongs to the user that makes the meal selection, and its date period includes the date of the associated daily meal selection
-MealSelection.allInstances()->forAll(ms|
-    ((not ms.foodRegime.oclIsUndefined()) and ms.foodRegime.ownedBy->exists(r|r.ownedByRegime = ms.ownedBy.selectedBy and r.start <= ms.ownedBy.date and r.end >= ms.ownedBy.date))
-    or
-    (ms.foodRegime.oclIsUndefined() and (not ms.foodRegime.ownedBy->exists(r|r.ownedByRegime = ms.ownedBy.selectedBy and r.start <= ms.ownedBy.date and r.end >= ms.ownedBy.date)))
-    )
+    MealSelection.allInstances()->forAll(ms|
+        ((not ms.foodRegime.oclIsUndefined()) and ms.foodRegime.ownedBy->exists(r|r.ownedByRegime = ms.ownedBy.selectedBy and r.start <= ms.ownedBy.date and r.end >= ms.ownedBy.date))
+        or
+        (ms.foodRegime.oclIsUndefined() and (not ms.foodRegime.ownedBy->exists(r|r.ownedByRegime = ms.ownedBy.selectedBy and r.start <= ms.ownedBy.date and r.end >= ms.ownedBy.date)))
+        )
 
 
 FoodRegime:
