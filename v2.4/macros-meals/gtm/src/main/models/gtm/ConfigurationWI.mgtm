@@ -13,7 +13,7 @@ Window ConfigurationWI {
         entity : Meal
         rows : [$ConfigurationWI.residence$.meals]
         column : literal {
-                    label : ['Meal']
+                    label : ['Name']
                 }
         sortedBy : [literal]
         selection : SINGLE
@@ -89,10 +89,10 @@ Window ConfigurationWI {
         entity : MealOption
         rows : [$Meals_T.selected$.options]
         column : initial {
-            label : ['Initials:']
+            label : ['Initial']
          }
         column : literal {
-            label : ['Literal:']
+            label : ['Name']
         }
         sortedBy: [literal]
         selection: SINGLE
@@ -302,7 +302,7 @@ Table DeadlinesTB {
     Set(MealOptionDeadline) rows := [$ThisOptionPeriodsFO.selected$.deadlines]
     MealOptionDeadline selected
     columns {
-        ['First'] : BooleanField Monday { 
+        ['Mo'] : BooleanField Monday { 
                 Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::MONDAY)) then true else false endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
@@ -318,7 +318,7 @@ Table DeadlinesTB {
                    }    
                 } 
                 }
-        ['Second'] : BooleanField Tuesday { 
+        ['Tu'] : BooleanField Tuesday { 
                 Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::TUESDAY)) then true else false endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
@@ -335,7 +335,7 @@ Table DeadlinesTB {
                   
                 } 
                   }
-        ['Third'] : BooleanField Wednesday { 
+        ['We'] : BooleanField Wednesday { 
                 Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::WEDNESDAY)) then true else false endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
@@ -351,7 +351,7 @@ Table DeadlinesTB {
                    }   
                   
                 } }
-        ['Fourth'] : BooleanField Thursday { 
+        ['Th'] : BooleanField Thursday { 
                 Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::THURSDAY)) then true else false endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
@@ -366,7 +366,7 @@ Table DeadlinesTB {
                       else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::THURSDAY)] }
                    }             
                 } }
-        ['Firfth'] : BooleanField Friday { 
+        ['Fr'] : BooleanField Friday { 
                 Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::FRIDAY)) then true else false endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
@@ -382,7 +382,7 @@ Table DeadlinesTB {
                    }   
                   
                 }}
-        ['Sixth'] : BooleanField Saturday { 
+        ['Sa'] : BooleanField Saturday { 
                 Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::SATURDAY)) then true else false endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
@@ -398,7 +398,7 @@ Table DeadlinesTB {
                    }   
                   
                 } }
-        ['Seventh'] : BooleanField Sunday { 
+        ['Su'] : BooleanField Sunday { 
                 Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::SUNDAY)) then true else false endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
@@ -414,15 +414,15 @@ Table DeadlinesTB {
                    }   
                   
                 } }
-        ['DaysBefore'] : Label DaysBefore { String text := [$DeadlinesTB.row$.cday.toString()] }
-        ['UpDB'] : Button UpDB { 
+        ['DB'] : Label DaysBefore { String text := [$DeadlinesTB.row$.cday.toString()] }
+        ['DU'] : Button UpDB { 
                     String text := ['+'] 
                     event onClick {
                         [$DeadlinesTB.row$.cday] := [$DeadlinesTB.row$.cday + 1]
                         reevaluate DeadlinesTB.DaysBefore.text
                         }           
                     }
-        ['DownDB'] : Button DownDB { 
+        ['DD'] : Button DownDB { 
                         String text := ['-']
                         event onClick {
                             if [$DeadlinesTB.row$.cday > 0 ]
@@ -430,12 +430,12 @@ Table DeadlinesTB {
                                   reevaluate DeadlinesTB.DaysBefore.text }
                             } 
                         }
-        ['HourLimit'] : Label HourLimit { 
+        ['HL'] : Label HourLimit { 
             String text := [if $DeadlinesTB.row$.chour < 10 
                             then '0'.concat($DeadlinesTB.row$.chour.toString())
                             else $DeadlinesTB.row$.chour.toString() endif] 
             }
-        ['UpHL'] : Button UpHL { 
+        ['HU'] : Button UpHL { 
                     String text := ['+'] 
                     event onClick {
                             if [$DeadlinesTB.row$.chour < 23 ]
@@ -443,7 +443,7 @@ Table DeadlinesTB {
                                   reevaluate DeadlinesTB.HourLimit.text }
                             } 
                         }
-        ['DownHL'] : Button DownHL { 
+        ['HD'] : Button DownHL { 
                     String text := ['-'] 
                     event onClick {
                             if [$DeadlinesTB.row$.chour > 0 ]
@@ -451,12 +451,12 @@ Table DeadlinesTB {
                                   reevaluate DeadlinesTB.HourLimit.text }
                             } 
                         }
-        ['MinutesLimit'] : Label MinutesLimit { 
+        ['ML'] : Label MinutesLimit { 
             String text := [if $DeadlinesTB.row$.cminute < 10 
                             then '0'.concat($DeadlinesTB.row$.cminute.toString())
                             else $DeadlinesTB.row$.cminute.toString() endif]
             }
-        ['UpML'] : Button UpML { 
+        ['MU'] : Button UpML { 
                     String text := ['+'] 
                     event onClick {
                         if [$DeadlinesTB.row$.cminute < 59 ]
@@ -464,7 +464,7 @@ Table DeadlinesTB {
                              reevaluate DeadlinesTB.MinutesLimit.text }
                             } 
                     }
-        ['DownML'] : Button DownML { 
+        ['MD'] : Button DownML { 
                         String text := ['-'] 
                         event onClick {
                             if [$DeadlinesTB.row$.cminute > 0 ]
