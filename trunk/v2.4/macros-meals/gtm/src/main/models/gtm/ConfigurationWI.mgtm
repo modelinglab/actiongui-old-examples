@@ -196,8 +196,8 @@ Label mealOptionPeriodsLA {
 #table ThisOptionPeriodsFO {
     entity: Residency
     rows: [$Meal_Options_T.selected$.periodsOption]
-    column: start {label: ['start'] }
-    column: end {label: ['end'] }
+    column: start {label: ['Start'] }
+    column: end {label: ['End'] }
     sortedBy: [start]
     selection: SINGLE
 }#
@@ -299,118 +299,227 @@ Label deadlinesLA {
     String text := ['Deadlines']
 }
 Table DeadlinesTB {
+    Set(MealSelection) mealSelectionsInvolved
+    Set(MealSelection) mealSelectionsAffected := [null]
+    LocalDateTime now := [null]
+    DailyMealSelection dmsToDelete := [null]
     Set(MealOptionDeadline) rows := [$ThisOptionPeriodsFO.selected$.deadlines]
     MealOptionDeadline selected
     columns {
         ['Mo'] : BooleanField Monday { 
-                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::MONDAY)) then true else false endif] 
+                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::MONDAY)) then true else null endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
                    { if [$value$] 
                         { if [$DeadlinesTB.rows$->excluding($DeadlinesTB.row$)->exists(d|d.days->includes(DayOfWeek::MONDAY))]
-                            { value := [false]
+                            { value := [null]
                               notification(['Error'], ['There is already a deadline fixed form Mondays'], [0]) }
                          else { [$DeadlinesTB.row$.days] := 
                               [if $DeadlinesTB.row$.days->oclIsUndefined()
                               then DayOfWeek::MONDAY->asSet()
                               else $DeadlinesTB.row$.days->including(DayOfWeek::MONDAY) endif] } } 
-                      else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::MONDAY)] }
+                    else {
+                        DeadlinesTB.now := [LocalDateTime.now($ConfigurationWI.residence$.zone)]
+                        DeadlinesTB.mealSelectionsInvolved := [$ConfigurationWI.residence$.users.dailyMeals->union($ConfigurationWI.residence$.guests.dailyMeals)->select(dms|dms.date.toLocalDate().atStartOfDay() >= $ThisOptionPeriodsFO.selected$.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= $ThisOptionPeriodsFO.selected$.end.toLocalDate().atStartOfDay()).selections->select(ms|ms.mealOption = $Meal_Options_T.selected$)->asSet()] 
+                        DeadlinesTB.mealSelectionsAffected := [$DeadlinesTB.mealSelectionsInvolved$->select(ms|ms.ownedBy.date.getDayOfWeek() = DayOfWeek::MONDAY)->select(ms|ms.ownedBy.date.toLocalDate().atStartOfDay() > $DeadlinesTB.now$.plusDays($DeadlinesTB.row$.cday).toLocalDate().atStartOfDay() or (ms.ownedBy.date.toLocalDate().atStartOfDay() > $DeadlinesTB.now$.plusDays($DeadlinesTB.row$.cday).toLocalDate().atStartOfDay() and ($DeadlinesTB.now$.getHour() < $DeadlinesTB.row$.chour or ($DeadlinesTB.now$.getHour() = $DeadlinesTB.row$.chour and $DeadlinesTB.now$.getMinute() <= $DeadlinesTB.row$.cminute))))]
+                        foreach mealSelection in [$DeadlinesTB.mealSelectionsAffected$] {
+                            if [$mealSelection$.ownedBy.selections->size() = 1] {
+                                DeadlinesTB.dmsToDelete := [$mealSelection$.ownedBy]
+                                delete [$mealSelection$]
+                                delete [$DeadlinesTB.dmsToDelete$]
+                            }
+                            else {
+                                delete [$mealSelection$]
+                            }   
+                        }
+                        [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::MONDAY)]
+                    }
                    }    
                 } 
                 }
         ['Tu'] : BooleanField Tuesday { 
-                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::TUESDAY)) then true else false endif] 
+                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::TUESDAY)) then true else null endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
                    { if [$value$] 
                         { if [$DeadlinesTB.rows$->excluding($DeadlinesTB.row$)->exists(d|d.days->includes(DayOfWeek::TUESDAY))]
-                            { value := [false]
+                            { value := [null]
                               notification(['Error'], ['There is already a deadline fixed form Tuesdays'], [0]) }
                          else { [$DeadlinesTB.row$.days] := 
                               [if $DeadlinesTB.row$.days->oclIsUndefined()
                               then DayOfWeek::TUESDAY->asSet()
                               else $DeadlinesTB.row$.days->including(DayOfWeek::TUESDAY) endif] } } 
-                      else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::TUESDAY)] }
+                    else {
+                        DeadlinesTB.now := [LocalDateTime.now($ConfigurationWI.residence$.zone)]
+                        DeadlinesTB.mealSelectionsInvolved := [$ConfigurationWI.residence$.users.dailyMeals->union($ConfigurationWI.residence$.guests.dailyMeals)->select(dms|dms.date.toLocalDate().atStartOfDay() >= $ThisOptionPeriodsFO.selected$.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= $ThisOptionPeriodsFO.selected$.end.toLocalDate().atStartOfDay()).selections->select(ms|ms.mealOption = $Meal_Options_T.selected$)->asSet()] 
+                        DeadlinesTB.mealSelectionsAffected := [$DeadlinesTB.mealSelectionsInvolved$->select(ms|ms.ownedBy.date.getDayOfWeek() = DayOfWeek::TUESDAY)->select(ms|ms.ownedBy.date.toLocalDate().atStartOfDay() > $DeadlinesTB.now$.plusDays($DeadlinesTB.row$.cday).toLocalDate().atStartOfDay() or (ms.ownedBy.date.toLocalDate().atStartOfDay() > $DeadlinesTB.now$.plusDays($DeadlinesTB.row$.cday).toLocalDate().atStartOfDay() and ($DeadlinesTB.now$.getHour() < $DeadlinesTB.row$.chour or ($DeadlinesTB.now$.getHour() = $DeadlinesTB.row$.chour and $DeadlinesTB.now$.getMinute() <= $DeadlinesTB.row$.cminute))))]
+                        foreach mealSelection in [$DeadlinesTB.mealSelectionsAffected$] {
+                            if [$mealSelection$.ownedBy.selections->size() = 1] {
+                                DeadlinesTB.dmsToDelete := [$mealSelection$.ownedBy]
+                                delete [$mealSelection$]
+                                delete [$DeadlinesTB.dmsToDelete$]
+                            }
+                            else {
+                                delete [$mealSelection$]
+                            }   
+                        }   
+                        [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::TUESDAY)]
+                    }
                    }   
                   
                 } 
                   }
         ['We'] : BooleanField Wednesday { 
-                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::WEDNESDAY)) then true else false endif] 
+                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::WEDNESDAY)) then true else null endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
                    { if [$value$] 
                         { if [$DeadlinesTB.rows$->excluding($DeadlinesTB.row$)->exists(d|d.days->includes(DayOfWeek::WEDNESDAY))]
-                            { value := [false]
+                            { value := [null]
                               notification(['Error'], ['There is already a deadline fixed form Wednesdays'], [0]) }
                          else { [$DeadlinesTB.row$.days] := 
                               [if $DeadlinesTB.row$.days->oclIsUndefined()
                               then DayOfWeek::WEDNESDAY->asSet()
                               else $DeadlinesTB.row$.days->including(DayOfWeek::WEDNESDAY) endif] } } 
-                      else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::WEDNESDAY)] }
+                    else {
+                        DeadlinesTB.now := [LocalDateTime.now($ConfigurationWI.residence$.zone)]
+                        DeadlinesTB.mealSelectionsInvolved := [$ConfigurationWI.residence$.users.dailyMeals->union($ConfigurationWI.residence$.guests.dailyMeals)->select(dms|dms.date.toLocalDate().atStartOfDay() >= $ThisOptionPeriodsFO.selected$.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= $ThisOptionPeriodsFO.selected$.end.toLocalDate().atStartOfDay()).selections->select(ms|ms.mealOption = $Meal_Options_T.selected$)->asSet()] 
+                        DeadlinesTB.mealSelectionsAffected := [$DeadlinesTB.mealSelectionsInvolved$->select(ms|ms.ownedBy.date.getDayOfWeek() = DayOfWeek::WEDNESDAY)->select(ms|ms.ownedBy.date.toLocalDate().atStartOfDay() > $DeadlinesTB.now$.plusDays($DeadlinesTB.row$.cday).toLocalDate().atStartOfDay() or (ms.ownedBy.date.toLocalDate().atStartOfDay() > $DeadlinesTB.now$.plusDays($DeadlinesTB.row$.cday).toLocalDate().atStartOfDay() and ($DeadlinesTB.now$.getHour() < $DeadlinesTB.row$.chour or ($DeadlinesTB.now$.getHour() = $DeadlinesTB.row$.chour and $DeadlinesTB.now$.getMinute() <= $DeadlinesTB.row$.cminute))))]
+                        foreach mealSelection in [$DeadlinesTB.mealSelectionsAffected$] {
+                            if [$mealSelection$.ownedBy.selections->size() = 1] {
+                                DeadlinesTB.dmsToDelete := [$mealSelection$.ownedBy]
+                                delete [$mealSelection$]
+                                delete [$DeadlinesTB.dmsToDelete$]
+                            }
+                            else {
+                                delete [$mealSelection$]
+                            }   
+                        }   
+                        [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::WEDNESDAY)]
+                    }
                    }   
                   
                 } }
         ['Th'] : BooleanField Thursday { 
-                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::THURSDAY)) then true else false endif] 
+                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::THURSDAY)) then true else null endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
                    { if [$value$] 
                         { if [$DeadlinesTB.rows$->excluding($DeadlinesTB.row$)->exists(d|d.days->includes(DayOfWeek::THURSDAY))]
-                            { value := [false]
+                            { value := [null]
                               notification(['Error'], ['There is already a deadline fixed form Thursdays'], [0]) }
                          else { [$DeadlinesTB.row$.days] := 
                               [if $DeadlinesTB.row$.days->oclIsUndefined()
                               then DayOfWeek::THURSDAY->asSet()
                               else $DeadlinesTB.row$.days->including(DayOfWeek::THURSDAY) endif] } } 
-                      else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::THURSDAY)] }
+                    else {
+                        DeadlinesTB.now := [LocalDateTime.now($ConfigurationWI.residence$.zone)]
+                        DeadlinesTB.mealSelectionsInvolved := [$ConfigurationWI.residence$.users.dailyMeals->union($ConfigurationWI.residence$.guests.dailyMeals)->select(dms|dms.date.toLocalDate().atStartOfDay() >= $ThisOptionPeriodsFO.selected$.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= $ThisOptionPeriodsFO.selected$.end.toLocalDate().atStartOfDay()).selections->select(ms|ms.mealOption = $Meal_Options_T.selected$)->asSet()] 
+                        DeadlinesTB.mealSelectionsAffected := [$DeadlinesTB.mealSelectionsInvolved$->select(ms|ms.ownedBy.date.getDayOfWeek() = DayOfWeek::THURSDAY)->select(ms|ms.ownedBy.date.toLocalDate().atStartOfDay() > $DeadlinesTB.now$.plusDays($DeadlinesTB.row$.cday).toLocalDate().atStartOfDay() or (ms.ownedBy.date.toLocalDate().atStartOfDay() > $DeadlinesTB.now$.plusDays($DeadlinesTB.row$.cday).toLocalDate().atStartOfDay() and ($DeadlinesTB.now$.getHour() < $DeadlinesTB.row$.chour or ($DeadlinesTB.now$.getHour() = $DeadlinesTB.row$.chour and $DeadlinesTB.now$.getMinute() <= $DeadlinesTB.row$.cminute))))]
+                        foreach mealSelection in [$DeadlinesTB.mealSelectionsAffected$] {
+                            if [$mealSelection$.ownedBy.selections->size() = 1] {
+                                DeadlinesTB.dmsToDelete := [$mealSelection$.ownedBy]
+                                delete [$mealSelection$]
+                                delete [$DeadlinesTB.dmsToDelete$]
+                            }
+                            else {
+                                delete [$mealSelection$]
+                            }   
+                        }   
+                        [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::THURSDAY)]
+                    }
                    }             
                 } }
         ['Fr'] : BooleanField Friday { 
-                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::FRIDAY)) then true else false endif] 
+                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::FRIDAY)) then true else null endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
                    { if [$value$] 
                         { if [$DeadlinesTB.rows$->excluding($DeadlinesTB.row$)->exists(d|d.days->includes(DayOfWeek::FRIDAY))]
-                            { value := [false]
+                            { value := [null]
                               notification(['Error'], ['There is already a deadline fixed form Fridays'], [0]) }
                          else { [$DeadlinesTB.row$.days] := 
                               [if $DeadlinesTB.row$.days->oclIsUndefined()
                               then DayOfWeek::FRIDAY->asSet()
                               else $DeadlinesTB.row$.days->including(DayOfWeek::FRIDAY) endif] } } 
-                      else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::FRIDAY)] }
+                    else {
+                        DeadlinesTB.now := [LocalDateTime.now($ConfigurationWI.residence$.zone)]
+                        DeadlinesTB.mealSelectionsInvolved := [$ConfigurationWI.residence$.users.dailyMeals->union($ConfigurationWI.residence$.guests.dailyMeals)->select(dms|dms.date.toLocalDate().atStartOfDay() >= $ThisOptionPeriodsFO.selected$.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= $ThisOptionPeriodsFO.selected$.end.toLocalDate().atStartOfDay()).selections->select(ms|ms.mealOption = $Meal_Options_T.selected$)->asSet()] 
+                        DeadlinesTB.mealSelectionsAffected := [$DeadlinesTB.mealSelectionsInvolved$->select(ms|ms.ownedBy.date.getDayOfWeek() = DayOfWeek::FRIDAY)->select(ms|ms.ownedBy.date.toLocalDate().atStartOfDay() > $DeadlinesTB.now$.plusDays($DeadlinesTB.row$.cday).toLocalDate().atStartOfDay() or (ms.ownedBy.date.toLocalDate().atStartOfDay() > $DeadlinesTB.now$.plusDays($DeadlinesTB.row$.cday).toLocalDate().atStartOfDay() and ($DeadlinesTB.now$.getHour() < $DeadlinesTB.row$.chour or ($DeadlinesTB.now$.getHour() = $DeadlinesTB.row$.chour and $DeadlinesTB.now$.getMinute() <= $DeadlinesTB.row$.cminute))))]
+                        foreach mealSelection in [$DeadlinesTB.mealSelectionsAffected$] {
+                            if [$mealSelection$.ownedBy.selections->size() = 1] {
+                                DeadlinesTB.dmsToDelete := [$mealSelection$.ownedBy]
+                                delete [$mealSelection$]
+                                delete [$DeadlinesTB.dmsToDelete$]
+                            }
+                            else {
+                                delete [$mealSelection$]
+                            }   
+                        }   
+                        [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::FRIDAY)]
+                    }
                    }   
                   
                 }}
         ['Sa'] : BooleanField Saturday { 
-                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::SATURDAY)) then true else false endif] 
+                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::SATURDAY)) then true else null endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
                    { if [$value$] 
                         { if [$DeadlinesTB.rows$->excluding($DeadlinesTB.row$)->exists(d|d.days->includes(DayOfWeek::SATURDAY))]
-                            { value := [false]
+                            { value := [null]
                               notification(['Error'], ['There is already a deadline fixed form Saturdays'], [0]) }
                          else { [$DeadlinesTB.row$.days] := 
                               [if $DeadlinesTB.row$.days->oclIsUndefined()
                               then DayOfWeek::SATURDAY->asSet()
                               else $DeadlinesTB.row$.days->including(DayOfWeek::SATURDAY) endif] } } 
-                      else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::SATURDAY)] }
+                    else {
+                        DeadlinesTB.now := [LocalDateTime.now($ConfigurationWI.residence$.zone)]
+                        DeadlinesTB.mealSelectionsInvolved := [$ConfigurationWI.residence$.users.dailyMeals->union($ConfigurationWI.residence$.guests.dailyMeals)->select(dms|dms.date.toLocalDate().atStartOfDay() >= $ThisOptionPeriodsFO.selected$.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= $ThisOptionPeriodsFO.selected$.end.toLocalDate().atStartOfDay()).selections->select(ms|ms.mealOption = $Meal_Options_T.selected$)->asSet()] 
+                        DeadlinesTB.mealSelectionsAffected := [$DeadlinesTB.mealSelectionsInvolved$->select(ms|ms.ownedBy.date.getDayOfWeek() = DayOfWeek::SATURDAY)->select(ms|ms.ownedBy.date.toLocalDate().atStartOfDay() > $DeadlinesTB.now$.plusDays($DeadlinesTB.row$.cday).toLocalDate().atStartOfDay() or (ms.ownedBy.date.toLocalDate().atStartOfDay() > $DeadlinesTB.now$.plusDays($DeadlinesTB.row$.cday).toLocalDate().atStartOfDay() and ($DeadlinesTB.now$.getHour() < $DeadlinesTB.row$.chour or ($DeadlinesTB.now$.getHour() = $DeadlinesTB.row$.chour and $DeadlinesTB.now$.getMinute() <= $DeadlinesTB.row$.cminute))))]
+                        foreach mealSelection in [$DeadlinesTB.mealSelectionsAffected$] {
+                            if [$mealSelection$.ownedBy.selections->size() = 1] {
+                                DeadlinesTB.dmsToDelete := [$mealSelection$.ownedBy]
+                                delete [$mealSelection$]
+                                delete [$DeadlinesTB.dmsToDelete$]
+                            }
+                            else {
+                                delete [$mealSelection$]
+                            }   
+                        }   
+                        [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::SATURDAY)]
+                    }
                    }   
                   
                 } }
         ['Su'] : BooleanField Sunday { 
-                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::SUNDAY)) then true else false endif] 
+                Boolean value := [if ($DeadlinesTB.row$.days->includes(DayOfWeek::SUNDAY)) then true else null endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
                    { if [$value$] 
                         { if [$DeadlinesTB.rows$->excluding($DeadlinesTB.row$)->exists(d|d.days->includes(DayOfWeek::SUNDAY))]
-                            { value := [false]
+                            { value := [null]
                               notification(['Error'], ['There is already a deadline fixed form Sundays'], [0]) }
                          else { [$DeadlinesTB.row$.days] := 
                               [if $DeadlinesTB.row$.days->oclIsUndefined()
                               then DayOfWeek::SUNDAY->asSet()
                               else $DeadlinesTB.row$.days->including(DayOfWeek::SUNDAY) endif] } } 
-                      else { [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::SUNDAY)] }
+                    else {
+                        DeadlinesTB.now := [LocalDateTime.now($ConfigurationWI.residence$.zone)]
+                        DeadlinesTB.mealSelectionsInvolved := [$ConfigurationWI.residence$.users.dailyMeals->union($ConfigurationWI.residence$.guests.dailyMeals)->select(dms|dms.date.toLocalDate().atStartOfDay() >= $ThisOptionPeriodsFO.selected$.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= $ThisOptionPeriodsFO.selected$.end.toLocalDate().atStartOfDay()).selections->select(ms|ms.mealOption = $Meal_Options_T.selected$)->asSet()] 
+                        DeadlinesTB.mealSelectionsAffected := [$DeadlinesTB.mealSelectionsInvolved$->select(ms|ms.ownedBy.date.getDayOfWeek() = DayOfWeek::SUNDAY)->select(ms|ms.ownedBy.date.toLocalDate().atStartOfDay() > $DeadlinesTB.now$.plusDays($DeadlinesTB.row$.cday).toLocalDate().atStartOfDay() or (ms.ownedBy.date.toLocalDate().atStartOfDay() > $DeadlinesTB.now$.plusDays($DeadlinesTB.row$.cday).toLocalDate().atStartOfDay() and ($DeadlinesTB.now$.getHour() < $DeadlinesTB.row$.chour or ($DeadlinesTB.now$.getHour() = $DeadlinesTB.row$.chour and $DeadlinesTB.now$.getMinute() <= $DeadlinesTB.row$.cminute))))]
+                        foreach mealSelection in [$DeadlinesTB.mealSelectionsAffected$] {
+                            if [$mealSelection$.ownedBy.selections->size() = 1] {
+                                DeadlinesTB.dmsToDelete := [$mealSelection$.ownedBy]
+                                delete [$mealSelection$]
+                                delete [$DeadlinesTB.dmsToDelete$]
+                            }
+                            else {
+                                delete [$mealSelection$]
+                            }   
+                        }   
+                        [$DeadlinesTB.row$.days] := [$DeadlinesTB.row$.days->excluding(DayOfWeek::SUNDAY)]
+                    }
                    }   
                   
                 } }
@@ -510,10 +619,24 @@ Button AddDeadlineBU {
 Button DeleteDeadlinesBU {
     String text := ['Delete']
     event onClick {
+        error := [null]
         if [$DeadlinesTB.selected$.oclIsUndefined()] {
             error := ['Please, select first a deadline']
         }
         else {
+            DeadlinesTB.now := [LocalDateTime.now($ConfigurationWI.residence$.zone)]
+            DeadlinesTB.mealSelectionsInvolved := [$ConfigurationWI.residence$.users.dailyMeals->union($ConfigurationWI.residence$.guests.dailyMeals)->select(dms|dms.date.toLocalDate().atStartOfDay() >= $ThisOptionPeriodsFO.selected$.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= $ThisOptionPeriodsFO.selected$.end.toLocalDate().atStartOfDay()).selections->select(ms|ms.mealOption = $Meal_Options_T.selected$)->asSet()] 
+            DeadlinesTB.mealSelectionsAffected := [$DeadlinesTB.mealSelectionsInvolved$->select(ms|$DeadlinesTB.selected$.days->includes(ms.ownedBy.date.getDayOfWeek()))->select(ms|ms.ownedBy.date.toLocalDate().atStartOfDay() > $DeadlinesTB.now$.plusDays($DeadlinesTB.selected$.cday).toLocalDate().atStartOfDay() or (ms.ownedBy.date.toLocalDate().atStartOfDay() > $DeadlinesTB.now$.plusDays($DeadlinesTB.selected$.cday).toLocalDate().atStartOfDay() and ($DeadlinesTB.now$.getHour() < $DeadlinesTB.selected$.chour or ($DeadlinesTB.now$.getHour() = $DeadlinesTB.selected$.chour and $DeadlinesTB.now$.getMinute() <= $DeadlinesTB.selected$.cminute))))]
+            foreach mealSelection in [$DeadlinesTB.mealSelectionsAffected$] {
+                if [$mealSelection$.ownedBy.selections->size() = 1] {
+                    DeadlinesTB.dmsToDelete := [$mealSelection$.ownedBy]
+                    delete [$mealSelection$]
+                    delete [$DeadlinesTB.dmsToDelete$]
+                }
+                else {
+                    delete [$mealSelection$]
+                }   
+            }
             delete [$DeadlinesTB.selected$]
         }
         reevaluate DeadlinesTB.rows
