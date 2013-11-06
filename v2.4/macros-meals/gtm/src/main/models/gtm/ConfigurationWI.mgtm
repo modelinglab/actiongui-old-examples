@@ -13,11 +13,46 @@ Window ConfigurationWI {
         entity : Meal
         rows : [$ConfigurationWI.residence$.meals]
         column : literal {
-                    label : ['Name']
-                }
-        sortedBy : [literal]
+            label : ['Name']
+        }
+        column : position {
+            label : ['#']
+        }
+        sortedBy : [position]
         selection : SINGLE
     }#
+
+    Button downMealBU {
+        String text := ['/\']
+        Meal selectedMeal
+        event onClick {
+            if [not $Meals_T.selected$.oclIsUndefined()] {
+                if [$Meals_T.selected$.position > 1] {
+                    [$ConfigurationWI.residence$.meals->any(m|m.position = $Meals_T.selected$.position - 1).position] := [$ConfigurationWI.residence$.meals->any(m|m.position = $Meals_T.selected$.position - 1).position + 1]
+                    [$Meals_T.selected$.position] := [$Meals_T.selected$.position - 1]
+                    selectedMeal := [$Meals_T.selected$]
+                    #refresh Meals_T#
+                    Meals_T.selected := [$selectedMeal$]
+                }
+            }
+        }
+    }
+
+    Button upMealBU {
+        String text := ['\/']
+        Meal selectedMeal
+        event onClick {
+            if [not $Meals_T.selected$.oclIsUndefined()] {
+                if [$Meals_T.selected$.position < $ConfigurationWI.residence$.meals->size()] {
+                    [$ConfigurationWI.residence$.meals->any(m|m.position = $Meals_T.selected$.position + 1).position] := [$ConfigurationWI.residence$.meals->any(m|m.position = $Meals_T.selected$.position + 1).position - 1]
+                    [$Meals_T.selected$.position] := [$Meals_T.selected$.position + 1]
+                    selectedMeal := [$Meals_T.selected$]
+                    #refresh Meals_T#
+                    Meals_T.selected := [$selectedMeal$]
+                }
+            }
+        }
+    }
 
     #form NewMealFO {
         entity: Meal

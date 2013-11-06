@@ -93,6 +93,7 @@ entity FoodRegime {
 entity MealOption {
     String initial
     String literal
+    Integer position
     // associations
     // 0..1
     Meal ownedBy oppositeTo options
@@ -101,6 +102,7 @@ entity MealOption {
 
 entity Meal {
     String literal
+    Integer position
     // associations
     Set(MealOption) options oppositeTo ownedBy
     Residence residence oppositeTo meals
