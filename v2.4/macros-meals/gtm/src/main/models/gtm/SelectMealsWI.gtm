@@ -96,7 +96,7 @@ Window SelectMealsWI  {
         Set(Meal) rows := [$SelectMealsWI.residence$.meals]
         Set(Meal) selected := [null]
         columns {
-        ['First'] : ComboBox Monday {
+        ['Mo'] : ComboBox Monday {
                             LocalDateTime thisDate := [$SelectMealsWI.selDateWeekFirstDay$]
                             FoodRegime currentFoodRegime := [$SelectMealsWI.caller$.regimes->any(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay()).regime]
                             Set(MealOption) rows := [$WeekMealsTB.row$.options]
@@ -164,7 +164,7 @@ Window SelectMealsWI  {
                             */
                            }
                     }
-        ['Second'] : ComboBox Tuesday {
+        ['Tu'] : ComboBox Tuesday {
                             LocalDateTime thisDate := [$SelectMealsWI.selDateWeekFirstDay$.plusDays(1)]
                             FoodRegime currentFoodRegime := [$SelectMealsWI.caller$.regimes->any(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay()).regime]
                             Set(MealOption) rows := [$WeekMealsTB.row$.options]
@@ -233,7 +233,7 @@ Window SelectMealsWI  {
                     }
                      
                     
-         ['Third'] : ComboBox Wednesday {
+         ['We'] : ComboBox Wednesday {
                             LocalDateTime thisDate := [$SelectMealsWI.selDateWeekFirstDay$.plusDays(2)]
                             FoodRegime currentFoodRegime := [$SelectMealsWI.caller$.regimes->any(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay()).regime]
                             Set(MealOption) rows := [$WeekMealsTB.row$.options]
@@ -300,7 +300,7 @@ Window SelectMealsWI  {
                            }
                     }
                         
-         ['Fourth'] : ComboBox Thursday {
+         ['Th'] : ComboBox Thursday {
                             LocalDateTime thisDate := [$SelectMealsWI.selDateWeekFirstDay$.plusDays(3)]
                             FoodRegime currentFoodRegime := [$SelectMealsWI.caller$.regimes->any(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay()).regime]
                             Set(MealOption) rows := [$WeekMealsTB.row$.options]
@@ -367,7 +367,7 @@ Window SelectMealsWI  {
                            }
                     }
                     
-         ['Fifth'] : ComboBox Friday {
+         ['Fr'] : ComboBox Friday {
                         LocalDateTime thisDate := [$SelectMealsWI.selDateWeekFirstDay$.plusDays(4)]
                         FoodRegime currentFoodRegime := [$SelectMealsWI.caller$.regimes->any(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay()).regime]
                         Set(MealOption) rows := [$WeekMealsTB.row$.options]
@@ -434,7 +434,7 @@ Window SelectMealsWI  {
                            }
                     }
                     
-          ['Sixth'] : ComboBox Saturday {
+          ['Sa'] : ComboBox Saturday {
                             LocalDateTime thisDate := [$SelectMealsWI.selDateWeekFirstDay$.plusDays(5)]
                             FoodRegime currentFoodRegime := [$SelectMealsWI.caller$.regimes->any(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay()).regime]
                             Set(MealOption) rows := [$WeekMealsTB.row$.options]
@@ -501,7 +501,7 @@ Window SelectMealsWI  {
                            }
                     }
                  
-          ['Seventh'] : ComboBox Sunday {
+          ['Su'] : ComboBox Sunday {
                             LocalDateTime thisDate := [$SelectMealsWI.selDateWeekFirstDay$.plusDays(6)]
                             FoodRegime currentFoodRegime := [$SelectMealsWI.caller$.regimes->any(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay()).regime]
                             Set(MealOption) rows := [$WeekMealsTB.row$.options]
