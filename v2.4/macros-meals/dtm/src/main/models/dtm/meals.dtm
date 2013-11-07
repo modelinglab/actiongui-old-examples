@@ -35,6 +35,7 @@ entity Guest {
     String surname
     // associations
     Set(DailyMealSelection) dailyMeals oppositeTo offeredTo
+    Set(Residency) regimes oppositeTo guestRegime
     Residence residence oppositeTo guests
 }
 
@@ -43,6 +44,7 @@ entity Residency {
     LocalDateTime end
     User ownedBy oppositeTo periods
     User ownedByRegime oppositeTo regimes
+    Guest guestRegime oppositeTo regimes
     FoodRegime regime oppositeTo ownedBy
     Contract contract oppositeTo ownedBy
     MealOption ownedByOption oppositeTo periodsOption
