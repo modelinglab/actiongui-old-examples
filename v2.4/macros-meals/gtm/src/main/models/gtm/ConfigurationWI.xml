@@ -122,6 +122,8 @@ and open the template in the editor.
                         </ns1:entry>
                     </ns1:line-layout>
                 </ns1:entry>
+                 <ns1:entry>
+                <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
                 <ns1:entry>
                     <ns1:table ns1:id="Meal_Options_T" ns1:height="200px" ns1:width="450px">
                         <ns1:column>
@@ -155,6 +157,8 @@ and open the template in the editor.
                                     <ns1:line-layout orientation="vertical" ns1:height="30px"></ns1:line-layout>
                                 </ns1:entry>
                             </ns1:line-layout>
+                 </ns1:entry>
+                 </ns1:line-layout>
                  </ns1:entry>
                     
                 <!-- END TABLE -->
