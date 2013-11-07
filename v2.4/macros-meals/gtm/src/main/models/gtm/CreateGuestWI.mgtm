@@ -1,0 +1,38 @@
+Window CreateGuestWI {
+    Residence residence
+    String text := ['Guest management']
+
+    #form CreateFO {
+        entity: Guest
+        prop: name {label: ['Name: '] 
+                    init: ['']
+                    }
+        prop: surname {label: ['Surname: '] 
+                    init: ['']
+                    }           
+    }#
+
+Button CreateBU {
+    String text := ['Create']
+    Guest newGuest
+    event onClick {
+        #create {
+            form: CreateFO
+            result: newGuest
+                    assert: [$CreateGuestWI.residence$.guests->forAll(u| u.name <> $CreateFO_name.text$ or u.surname <> $CreateFO_surname.text$)] {
+                        message: ['There is already a guest with this name and surname.']
+                    }
+        }#
+        if [not $newGuest$.oclIsUndefined()] {
+            [$newGuest$.residence] := [$CreateGuestWI.residence$]
+        }   
+    }
+}
+
+Button BackBU {
+    String text := ['Back']
+    event onClick {
+        back
+    }
+}
+}
