@@ -10,7 +10,7 @@ Table ContractItemsTB {
         ['Meal'] : Label Literal { String text := [$ContractItemsTB.row$.mealOption.ownedBy.literal] }
         ['Options'] : Label Option { String text := [$ContractItemsTB.row$.mealOption.literal] }
         ['Monday'] : BooleanField Monday { 
-            Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::MONDAY)) then true else false endif] 
+            Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::MONDAY)) then true else null endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
                    { if [$value$] 
@@ -22,11 +22,21 @@ Table ContractItemsTB {
                               else $ContractItemsTB.row$.days->including(DayOfWeek::MONDAY) endif]
                               }
                          }                   
-                      else { [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::MONDAY)] }
+                    else {
+                        try {
+                            foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.row$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.row$.mealOption and ms.ownedBy.date.getDayOfWeek() = DayOfWeek::MONDAY)] {
+                                delete [$selection$]
+                            }
+                            [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::MONDAY)]
+                        }
+                        catch(SecurityException) {
+                            notification(['Message'], ['Sorry. There are meal selections associated to the current contract option, that can not be deleted'], [-1])
+                        }
+                    }
 
         } } } 
  ['Tuesday'] : BooleanField Tuesday { 
-            Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::TUESDAY)) then true else false endif] 
+            Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::TUESDAY)) then true else null endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
                    { if [$value$] 
@@ -38,11 +48,21 @@ Table ContractItemsTB {
                               else $ContractItemsTB.row$.days->including(DayOfWeek::TUESDAY) endif]
                               }
                          }                   
-                      else { [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::TUESDAY)] }
+                    else {
+                        try {
+                            foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.row$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.row$.mealOption and ms.ownedBy.date.getDayOfWeek() = DayOfWeek::TUESDAY)] {
+                                delete [$selection$]
+                            }
+                            [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::TUESDAY)]
+                        }
+                        catch(SecurityException) {
+                            notification(['Message'], ['Sorry. There are meal selections associated to the current contract option, that can not be deleted'], [-1])
+                        }
+                    }
 
         } } } 
  ['Wednesday'] : BooleanField Wednesday { 
-            Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::WEDNESDAY)) then true else false endif] 
+            Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::WEDNESDAY)) then true else null endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
                    { if [$value$] 
@@ -54,11 +74,21 @@ Table ContractItemsTB {
                               else $ContractItemsTB.row$.days->including(DayOfWeek::WEDNESDAY) endif]
                               }
                          }                   
-                      else { [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::WEDNESDAY)] }
+                    else {
+                        try {
+                            foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.row$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.row$.mealOption and ms.ownedBy.date.getDayOfWeek() = DayOfWeek::WEDNESDAY)] {
+                                delete [$selection$]
+                            }
+                            [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::WEDNESDAY)]
+                        }
+                        catch(SecurityException) {
+                            notification(['Message'], ['Sorry. There are meal selections associated to the current contract option, that can not be deleted'], [-1])
+                        }
+                    }
 
         } } } 
  ['Thursday'] : BooleanField Thursday { 
-            Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::THURSDAY)) then true else false endif] 
+            Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::THURSDAY)) then true else null endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
                    { if [$value$] 
@@ -70,11 +100,21 @@ Table ContractItemsTB {
                               else $ContractItemsTB.row$.days->including(DayOfWeek::THURSDAY) endif]
                               }
                          }                   
-                      else { [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::THURSDAY)] }
+                    else {
+                        try {
+                            foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.row$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.row$.mealOption and ms.ownedBy.date.getDayOfWeek() = DayOfWeek::THURSDAY)] {
+                                delete [$selection$]
+                            }
+                            [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::THURSDAY)]
+                        }
+                        catch(SecurityException) {
+                            notification(['Message'], ['Sorry. There are meal selections associated to the current contract option, that can not be deleted'], [-1])
+                        }
+                    }
 
         } } } 
  ['Friday'] : BooleanField Friday { 
-            Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::FRIDAY)) then true else false endif] 
+            Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::FRIDAY)) then true else null endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
                    { if [$value$] 
@@ -86,11 +126,21 @@ Table ContractItemsTB {
                               else $ContractItemsTB.row$.days->including(DayOfWeek::FRIDAY) endif]
                               }
                          }                   
-                      else { [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::FRIDAY)] }
+                    else {
+                        try {
+                            foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.row$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.row$.mealOption and ms.ownedBy.date.getDayOfWeek() = DayOfWeek::FRIDAY)] {
+                                delete [$selection$]
+                            }
+                            [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::FRIDAY)]
+                        }
+                        catch(SecurityException) {
+                            notification(['Message'], ['Sorry. There are meal selections associated to the current contract option, that can not be deleted'], [-1])
+                        }
+                    }
 
         } } } 
  ['Saturday'] : BooleanField Saturday { 
-            Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::SATURDAY)) then true else false endif] 
+            Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::SATURDAY)) then true else null endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
                    { if [$value$] 
@@ -102,11 +152,21 @@ Table ContractItemsTB {
                               else $ContractItemsTB.row$.days->including(DayOfWeek::SATURDAY) endif]
                               }
                          }                   
-                      else { [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::SATURDAY)] }
+                    else {
+                        try {
+                            foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.row$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.row$.mealOption and ms.ownedBy.date.getDayOfWeek() = DayOfWeek::SATURDAY)] {
+                                delete [$selection$]
+                            }
+                            [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::SATURDAY)]
+                        }
+                        catch(SecurityException) {
+                            notification(['Message'], ['Sorry. There are meal selections associated to the current contract option, that can not be deleted'], [-1])
+                        }
+                    }
 
         } } } 
  ['Sunday'] : BooleanField Sunday { 
-            Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::SUNDAY)) then true else false endif] 
+            Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::SUNDAY)) then true else null endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
                    { if [$value$] 
@@ -118,7 +178,17 @@ Table ContractItemsTB {
                               else $ContractItemsTB.row$.days->including(DayOfWeek::SUNDAY) endif]
                               }
                          }                   
-                      else { [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::SUNDAY)] }
+                    else {
+                        try {
+                            foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.row$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.row$.mealOption and ms.ownedBy.date.getDayOfWeek() = DayOfWeek::SUNDAY)] {
+                                delete [$selection$]
+                            }
+                            [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::SUNDAY)]
+                        }
+                        catch(SecurityException) {
+                            notification(['Message'], ['Sorry. There are meal selections associated to the current contract option, that can not be deleted'], [-1])
+                        }
+                    }
 
         } } } 
 
@@ -176,8 +246,16 @@ Button DeleteContractOptionBU {
             notification(['Error'], ['Please, selected first a contract option.'], [0] )
         }
         else {
-            delete [$ContractItemsTB.selected$]
-            reevaluate ContractItemsTB.rows
+            try {
+                foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.selected$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.selected$.mealOption and $ContractItemsTB.selected$.days->includes(ms.ownedBy.date.getDayOfWeek()))] {
+                    delete [$selection$]
+                }
+                delete [$ContractItemsTB.selected$]
+                reevaluate ContractItemsTB.rows
+            }
+            catch (SecurityException) {
+                notification(['Message'], ['Sorry. There are meal selections associated to the selected contract option, that can not be deleted'], [-1])
+            }
         }
 
     }
