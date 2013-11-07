@@ -20,6 +20,9 @@ role DIRECTOR {
     User {
         fullAccess
     }
+    Guest {
+        fullAccess
+    }
     MealOption {
         fullAccess
     }
@@ -39,6 +42,44 @@ role DIRECTOR {
         //fullAccess
         create
         read
+        update(meal)
+        update(ownedBy) 
+        update(mealOption) constrainedBy [
+                    let 
+                        mealDate    : LocalDateTime = self.ownedBy.date,
+                        now         : LocalDateTime = LocalDateTime.now(caller.residence.zone)
+                    in
+                        mealDate.toLocalDate().atStartOfDay() >= now.toLocalDate().atStartOfDay()
+                        and (if not(self.mealOption.oclIsUndefined())
+                             then self.mealOption.periodsOption->exists(p|
+                                p.start <= mealDate 
+                                and p.end >= mealDate
+                                and p.deadlines->exists(q|
+                                    q.days->includes(mealDate.getDayOfWeek())
+                                    and 
+                                    if now.plusDays(q.cday).toLocalDate().atStartOfDay() = mealDate.toLocalDate().atStartOfDay() 
+                                    then now.getHour() < q.chour 
+                                         or (now.getHour() = q.chour and now.getMinute() <= q.cminute)
+                                    else
+                                        now.plusDays(q.cday).toLocalDate().atStartOfDay() < mealDate.toLocalDate().atStartOfDay()
+                                    endif)
+                                    )
+                              else true endif)
+                        and value.periodsOption->exists(p|
+                                p.start <= mealDate 
+                            and p.end >= mealDate
+                            and p.deadlines->exists(q|
+                                    q.days->includes(mealDate.getDayOfWeek())
+                                and 
+                                    if now.plusDays(q.cday).toLocalDate().atStartOfDay() = mealDate.toLocalDate().atStartOfDay() 
+                                    then now.getHour() < q.chour 
+                                        or (now.getHour() = q.chour and now.getMinute() <= q.cminute)
+                                    else
+                                        now.plusDays(q.cday).toLocalDate().atStartOfDay() < mealDate.toLocalDate().atStartOfDay()
+                                    endif
+                                )
+                            )
+                    ]
         delete constrainedBy [
                     let 
                         mealDate    : LocalDateTime = self.ownedBy.date,
@@ -90,7 +131,8 @@ role DIRECTOR {
                                 value.ownedBy->exists(p|p.ownedByRegime = self.ownedBy.selectedBy and p.start.toLocalDate().atStartOfDay() <= mealDate.toLocalDate().atStartOfDay() and p.end.toLocalDate().atStartOfDay() >= mealDate.toLocalDate().atStartOfDay())
                             endif
                         )
-                    ]  
+                    ] 
+
     }
     Residence {
         read, update constrainedBy [self.users->includes(caller)]
