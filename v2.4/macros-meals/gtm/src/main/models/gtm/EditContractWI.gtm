@@ -129,7 +129,7 @@ Table ContractItemsTB {
     }
 
 Table MealsTB {
-    Set(Meal) rows := [$EditContractWI.residence$.meals]
+    OrderedSet(Meal) rows := [$EditContractWI.residence$.meals->sortedBy(position)]
     Meal selected 
     columns {
         ['Meals'] : Label Meals { String text := [$MealsTB.row$.literal] }
@@ -137,7 +137,7 @@ Table MealsTB {
 }
 
 Table MealOptionsTB {
-    Set(MealOption) rows := [if ($MealsTB.selected$.oclIsUndefined()) then MealOption.allInstances()->select(false) else $MealsTB.selected$.options endif]
+    OrderedSet(MealOption) rows := [if ($MealsTB.selected$.oclIsUndefined()) then MealOption.allInstances()->select(false)->asOrderedSet() else $MealsTB.selected$.options->sortedBy(position) endif]
     MealOption selected 
     columns {
         ['Options'] : Label Options { String text := [$MealOptionsTB.row$.literal] }

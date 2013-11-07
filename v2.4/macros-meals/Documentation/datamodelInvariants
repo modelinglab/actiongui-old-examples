@@ -5,6 +5,13 @@ Residence:
     // The zone id of the residence can not be undefined 
     not Residence.allinstances()->any(true).zone.oclIsUndefined()
 
+    // The meals of each residence, must have different positions
+    Residence.allInstances->forAll(r|r.meals->forAll(m1, m2|m1 <> m2 implies m1.position <> m2.position))
+
+    // The meals of each residence,, must have consecutive positions
+    Residence.allInstances->forAll(r|r.meals->forAll(m1| r.meals->forAll(m2| m1 <> m2 implies m1 < m2) or r.meals->forAll(m2| m1 <> m2 implies m1 > m2) or (r.meals->exists(m2| m1 <> m2 and m1 = m2 + 1) and r.meals->exists(m2| m1 <> m2 and m1 = m2 - 1))))
+
+
 
 User:
     // The login of a user can not be undefined
@@ -121,12 +128,16 @@ FoodRegime:
     // The name of the food regimes, must be unique between them
     FoodRegime.allInstances()->forAll(fr1, fr2|fr1 <> fr2 implies fr1.name <> fr2.name)
     
+
 MealOption
     // The literal can not be undefined
     MealOption.allInstances()->forAll(mo|not mo.literal.oclIsUndefined())
 
     // The initial can not be undefined
     MealOption.allInstances()->forAll(mo|not mo.initial.oclIsUndefined())
+
+    // The position must be greater than zero
+    MealOption.allInstances()->forAll(mo|mo.position > 0)
 
     // Each meal option must belong to a meal
     MealOption.allInstances()->forAll(mo|not mo.ownedBy.oclIsUndefined())
@@ -139,24 +150,24 @@ Meal:
     // The literal can not be undefined
     Meal.allInstances->forAll(m|not m.literal.oclIsUndefined())
 
+    // The position can not be undefined
+    Meal.allInstances->forAll(m|not m.position.oclIsUndefined())
+
+    // The position must be greater than zero
+    Meal.allInstances->forAll(m|m.position > 0)
+
     // The meal options of each meal, must have different literals
     Meal.allInstances->forAll(m|m.options->forAll(mo1, mo2|mo1 <> mo2 implies mo1.literal <> mo2.literal))
 
     // The meal options of each meal, must have different initials
     Meal.allInstances->forAll(m|m.options->forAll(mo1, mo2|mo1 <> mo2 implies mo1.initial <> mo2.initial))
 
+    // The meal options of each meal, must have different positions
+    Meal.allInstances->forAll(m|m.options->forAll(mo1, mo2|mo1 <> mo2 implies mo1.position <> mo2.position))
 
+    // The meal options of each meal, must have consecutive positions
+    Meal.allInstances->forAll(m|m.options->forAll(mo1| m.options->forAll(mo2| mo1 <> mo2 implies mo1 < mo2) or m.options->forAll(mo2| mo1 <> mo2 implies mo1 > mo2) or (m.options->exists(mo2| mo1 <> mo2 and mo1 = mo2 + 1) and m.options->exists(mo2| mo1 <> mo2 and mo1 = mo2 - 1))))
 
-entity MealOptionDeadline {
-    String literal
-    Set(DayOfWeek) days
-    Integer cday // dias de antelacion
-    Integer chour
-    Integer cminute
-    // associations
-    // 0..1
-    Residency  ownedBy oppositeTo deadlines
-}
 
 MealOptionDeadline:
     // There must be at least one day of the week in which meal selections could be selected
