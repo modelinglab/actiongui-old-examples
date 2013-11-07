@@ -61,7 +61,7 @@ Window ListDinersWI {
 
     #table DinersTA {
         entity : User
-        rows : [(if $MealOptionCB.selected$.oclIsUndefined() or $DateDF.value$.oclIsUndefined() then User.allInstances()->select(false) else $ListDinersWI.residence$.users->select(u|u.dailyMeals->exists(dms| dms.date = $DateDF.value$.toLocalDate().atStartOfDay() and dms.selections->exists(ms| ms.mealOption = $MealOptionCB.selected$))) endif)]
+        rows : [(if $MealOptionCB.selected$.oclIsUndefined() or $DateDF.value$.oclIsUndefined() then User.allInstances()->select(false) else $ListDinersWI.residence$.users->select(u|u.dailyMeals->exists(dms| dms.date.toLocalDate().atStartOfDay() = $DateDF.value$.toLocalDate().atStartOfDay() and dms.selections->exists(ms| ms.mealOption = $MealOptionCB.selected$))) endif)]
         column : name {
             label : ['Name']
         }
