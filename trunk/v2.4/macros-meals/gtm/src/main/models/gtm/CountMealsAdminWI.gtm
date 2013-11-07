@@ -40,7 +40,7 @@ Window CountMealsAdminWI {
 
     // Can not be created using macro table since there is a "special" column (sub-column "Count") that can not be generated directly through the value of an attribute
     Table MealsTA {
-        Set(MealSelection) selections := [$CountMealsAdminWI.residence$.users.dailyMeals->union($CountMealsAdminWI.residence$.guests.dailyMeals)->select(dms| dms.date = $DateDF.value$.toLocalDate().atStartOfDay()).selections->asSet()]
+        Set(MealSelection) selections := [$CountMealsAdminWI.residence$.users.dailyMeals->union($CountMealsAdminWI.residence$.guests.dailyMeals)->select(dms| dms.date.toLocalDate().atStartOfDay() = $DateDF.value$.toLocalDate().atStartOfDay()).selections->asSet()]
         OrderedSet(Meal) rows := [$CountMealsAdminWI.residence$.meals->sortedBy(position)]
 
         columns {
