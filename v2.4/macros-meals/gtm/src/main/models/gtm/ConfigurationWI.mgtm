@@ -77,6 +77,7 @@ Window ConfigurationWI {
             }#
             if [not($newMeal$.oclIsUndefined())] {
                 [$newMeal$.residence] := [$ConfigurationWI.residence$]
+                [$newMeal$.position] := [if Meal.allInstances()->size() = 1 then 1 else (Meal.allInstances()->sortedBy(position)->last().position + 1) endif]
                 #refresh Meals_T#                
                 Meals_T.selected := [$newMeal$]
             }
@@ -129,7 +130,7 @@ Window ConfigurationWI {
         column : literal {
             label : ['Name']
         }
-        sortedBy: [literal]
+        sortedBy: [position]
         selection: SINGLE
     }#
 
@@ -200,8 +201,10 @@ Button downMealOptionBU {
                 }
             }#
             if [not($newOption$.oclIsUndefined())] {
+                [$newOption$.position] := [if $Meals_T.selected$.options->size() = 0 then 1 else ($Meals_T.selected$.options->sortedBy(position)->last().position + 1) endif]
                 [$newOption$.ownedBy] := [$Meals_T.selected$]
-                #refresh Meals_T#
+                
+                #refresh Meal_Options_T#
                 Meals_T.selected := [$newOption$.ownedBy]            
                 Meal_Options_T.selected := [$newOption$]
             }
