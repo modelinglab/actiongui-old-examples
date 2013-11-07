@@ -12,6 +12,17 @@ Button MenuDirector_UserAccountsWI_B {
         }
     }
 }
+
+Button MenuDirector_GuestAccountsWI_B {
+    String text := ['Guests']
+    String error := [null]
+    event onClick {
+        error := [null]
+        if [$error$.oclIsUndefined()] {
+            open GuestAccountsWI (residence: [$MenuDirectorWI.residence$])
+        }
+    }
+}
 Button MenuDirector_ConfigurationWI_B {
     String text := ['Meals']
     String error := [null]
