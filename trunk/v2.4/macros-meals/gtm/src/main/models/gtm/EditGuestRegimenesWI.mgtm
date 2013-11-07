@@ -1,0 +1,199 @@
+Window EditGuestRegimenesWI {
+   Guest thisGuest
+
+Table ThisGuestRegimesTB {
+    OrderedSet(Residency) rows := [$EditGuestRegimenesWI.thisGuest$.regimes->sortedBy(start)->reverse()]
+    Residency selected := [null]
+    columns {
+    ['Start'] : Label Start { String text := [$ThisGuestRegimesTB.row$.start.toString().substring(1,10)] }
+    ['End'] : Label End { String text := [$ThisGuestRegimesTB.row$.end.toString().substring(1,10)] }
+    ['Regime'] : Label Regime { String text := [$ThisGuestRegimesTB.row$.regime.name] }
+}
+}
+
+  
+
+#form NewPeriodFO {
+    entity: Residency
+    prop: start {label: ['Start: ']}
+    prop: end {label: ['End: ']}
+}#
+
+Label FoodRegimesLB {
+    String text := ['Food regime: ']
+}
+
+ComboBox FoodRegimesCB {
+        Set(FoodRegime) rows := [FoodRegime.allInstances()]
+        
+        Label Regime {
+            String text := [$FoodRegimesCB.row$.name]
+        }
+
+    }
+
+Button CreatePeriodBU {
+    String text := ['New period']
+    event onClick {
+        if [$NewPeriodFO_start.value$.oclIsUndefined()] {
+            notification(['Message'], ['Please, select first a starting date'], [-1])
+        }
+        else {
+            if [$NewPeriodFO_end.value$.oclIsUndefined()] {
+                notification(['Message'], ['Please, select first an ending date'], [-1])
+            }
+            else {
+                if [$NewPeriodFO_start.value$.toLocalDate().atStartOfDay() > $NewPeriodFO_end.value$.toLocalDate().atStartOfDay()] {
+                    notification(['Message'], ['Please, select an ending date that is later or equal than the starting date'], [-1])
+                }
+                else {
+                    if [$EditGuestRegimenesWI.thisGuest$.regimes->select(p|($NewPeriodFO_start.value$.toLocalDate().atStartOfDay() <= p.start.toLocalDate().atStartOfDay() and $NewPeriodFO_end.value$.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay()) or ($NewPeriodFO_start.value$.toLocalDate().atStartOfDay() > p.start.toLocalDate().atStartOfDay() and $NewPeriodFO_start.value$.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay()))->notEmpty()] {
+                        notification(['Message'], ['The selected period overlaps with one or more existing regimes. Please, change either the starting or the ending date'], [-1])
+                    }
+                    else {
+                        if [$FoodRegimesCB.selected$.oclIsUndefined()] {
+                            notification(['Message'], ['Please, select first a food regime.'], [-1])
+                        }
+                        else {
+                            try {                                
+                                newPeriod := new Residency
+                                [$newPeriod$.start] := [$NewPeriodFO_start.value$]
+                                [$newPeriod$.end] := [$NewPeriodFO_end.value$]
+                                [$newPeriod$.regime] := [$FoodRegimesCB.selected$]
+                                [$EditGuestRegimenesWI.thisGuest$.regimes]+= [$newPeriod$]
+
+                                // Check the security after creating the period regim, because of the authorization constraint
+                                foreach selection in [$EditGuestRegimenesWI.thisGuest$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $NewPeriodFO_start.value$.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $NewPeriodFO_end.value$.toLocalDate().atStartOfDay()).selections] {
+                                    [$selection$.foodRegime] := [$FoodRegimesCB.selected$]
+                                }
+
+                                reevaluate ThisGuestRegimesTB.rows
+                                #refresh NewPeriodFO#
+                                FoodRegimesCB.selected := [null]
+                                notification (['Success'],['An instance of Residency has been created successfully.'],[2000])
+                            }
+                            catch (SecurityException) {
+                                notification(['Message'], ['Sorry. This period contains selections that can not be modified'], [-1])
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+Button DeletePeriodBU {
+    Residency thisPeriod
+    String text := ['Delete']
+    event onClick {
+    if [$EditGuestRegimenesWI.ThisGuestRegimesTB.selected$->oclIsUndefined()]
+        { notification(['Error'], ['Please, select first a period'], [0]) }
+    else { 
+        if [$EditGuestRegimenesWI.ThisGuestRegimesTB.selected$->size() <> 1]
+           { notification(['Error'], ['Please, select first a period'], [0]) }
+        else {
+            thisPeriod := [$EditGuestRegimenesWI.ThisGuestRegimesTB.selected$->any(true)]
+            try {
+                foreach selection in [$EditGuestRegimenesWI.thisGuest$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $thisPeriod$.start.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $thisPeriod$.end.toLocalDate().atStartOfDay()).selections] {
+                    [$selection$.foodRegime] := [null] 
+                }
+                delete [$thisPeriod$]
+                reevaluate ThisGuestRegimesTB.rows
+            }
+            catch (SecurityException) { 
+                notification(['Message'], ['Sorry. This period contains selections that can not be deleted'], [-1])
+            }
+        }
+    }
+    }
+}
+
+#form UpdatePeriodFO {
+    entity: Residency
+    instance : [$ThisGuestRegimesTB.selected$->any(true)]
+    prop: start {label: ['Start: ']}
+    prop: end {label: ['End: ']}
+}#
+
+Label PeriodsUpdateLB {
+    String text := ['Regime']
+}
+
+ComboBox PeriodsUpdateCB {
+        Set(FoodRegime) rows := [FoodRegime.allInstances()]
+        FoodRegime selected := [$ThisGuestRegimesTB.selected$->any(true).regime]
+        
+        Label PeriodsUpdate {
+            String text := [$PeriodsUpdateCB.row$.name]
+            
+        }
+
+    }
+
+
+Button ModifyPeriodBU {
+Residency thisPeriod
+    String text := ['Update']
+    event onClick {
+        if [$EditGuestRegimenesWI.ThisGuestRegimesTB.selected$.oclIsUndefined()] {
+            notification(['Error'], ['Please, select first a period'], [0])
+        }
+        else { 
+            thisPeriod := [$EditGuestRegimenesWI.ThisGuestRegimesTB.selected$]
+            if [$UpdatePeriodFO_start.value$.oclIsUndefined()] {
+                notification(['Error'], ['Please, select first a starting date'], [0]) }
+            else {
+                if [$UpdatePeriodFO_end.value$.oclIsUndefined()] {
+                    notification(['Error'], ['Please, select first a ending date'], [0]) }
+                else { 
+                    if [$UpdatePeriodFO_start.value$ > $UpdatePeriodFO_end.value$] {
+                        notification(['Error'], ['Please, select an ending date that is later or equal than the starting date'], [0])
+                    }
+                    else {
+                        if [$EditGuestRegimenesWI.thisGuest$.regimes->select(p|
+                                        p <> $thisPeriod$ and
+                                        (($UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay() <= p.start.toLocalDate().atStartOfDay() and $UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay())
+                                        or ($UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay() > p.start.toLocalDate().atStartOfDay() and $UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())))
+                                    ->notEmpty()] {
+                            notification(['Error'], ['The selected period overlaps with one or more existing regimes. Please, change either the starting or the ending date'], [0])
+                        }
+                        else {
+                         if [$PeriodsUpdateCB.selected$.oclIsUndefined()] {
+                            notification(['Error'], ['Please, select first a food regime.'], [0])
+                            }
+                         else {
+                            try {
+                                foreach selection in [$EditGuestRegimenesWI.thisGuest$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $thisPeriod$.start.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $thisPeriod$.end.toLocalDate().atStartOfDay()).selections->asSet() - $EditGuestRegimenesWI.thisGuest$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()).selections->asSet()] {
+                                    [$selection$.foodRegime] := [null] 
+                                }
+                                [$thisPeriod$.start] := [$UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay()]
+                                [$thisPeriod$.end] := [$UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()]
+                                [$thisPeriod$.regime] := [$PeriodsUpdateCB.selected$]
+                                ThisGuestRegimesTB.rows := [$ThisGuestRegimesTB.rows$->select(false)]
+                                ThisGuestRegimesTB.rows := [$EditGuestRegimenesWI.thisGuest$.regimes->sortedBy(start)->reverse()]
+                                thisPeriod := [null]
+                            }
+                            catch (SecurityException) { 
+                                notification(['Message'], ['Sorry. This period contains selections that can not be deleted'], [-1])
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    } }
+}
+
+Button BackBU {
+    String text := ['Back']
+    event onClick { back }
+}
+
+event onChange(ThisGuestRegimesTB.selected) {
+    #refresh UpdatePeriodFO #
+    reevaluate PeriodsUpdateCB.selected
+}
+
+
+}
