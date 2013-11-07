@@ -133,6 +133,38 @@ Window ConfigurationWI {
         selection: SINGLE
     }#
 
+Button downMealOptionBU {
+        String text := ['/\']
+        MealOption selectedMealOption
+        event onClick {
+            if [not $Meal_Options_T.selected$.oclIsUndefined()] {
+                if [$Meal_Options_T.selected$.position > 1] {
+                    [$Meals_T.selected$.options->any(m|m.position = $Meal_Options_T.selected$.position - 1).position] := [$Meals_T.selected$.options->any(m|m.position = $Meal_Options_T.selected$.position - 1).position + 1]
+                    [$Meal_Options_T.selected$.position] := [$Meal_Options_T.selected$.position - 1]
+                    selectedMealOption := [$Meal_Options_T.selected$]
+                    #refresh Meal_Options_T#
+                    Meal_Options_T.selected := [$selectedMealOption$]
+                }
+            }
+        }
+    }
+
+    Button upMealOptionBU {
+        String text := ['\/']
+        MealOption selectedMealOption
+        event onClick {
+            if [not $Meal_Options_T.selected$.oclIsUndefined()] {
+                if [$Meal_Options_T.selected$.position < $Meals_T.selected$.options->size()] {
+                    [$Meals_T.selected$.options->any(m|m.position = $Meal_Options_T.selected$.position + 1).position] := [$Meals_T.selected$.options->any(m|m.position = $Meal_Options_T.selected$.position + 1).position - 1]
+                    [$Meal_Options_T.selected$.position] := [$Meal_Options_T.selected$.position + 1]
+                    selectedMealOption := [$Meal_Options_T.selected$]
+                    #refresh Meal_Options_T#
+                    Meal_Options_T.selected := [$selectedMealOption$]
+                }
+            }
+        }
+    }
+
 
     #form NewOptionFO {
         entity: MealOption
