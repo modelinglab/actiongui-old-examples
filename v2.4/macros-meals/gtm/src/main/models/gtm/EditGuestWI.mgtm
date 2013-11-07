@@ -1,0 +1,51 @@
+Window EditGuestWI {
+    Residence residence
+    Guest thisGuest
+
+    #form ThisGuestFO {
+    entity: Guest
+        instance: [$EditGuestWI.thisGuest$]
+        prop: name {label: ['Name: '] }
+        prop: surname {label: ['Surname: ']}
+    }#
+
+Button thisGuestUpdateBU {
+    String text := ['Update']
+    event onClick {
+        #update {
+            form: ThisGuestFO
+              assert: [($ThisGuestFO_name.text$ <> $EditGuestWI.thisGuest$.name or $ThisGuestFO_surname.text$ <> $EditGuestWI.thisGuest$.surname)
+                        implies $EditGuestWI.residence$.guests->forAll(u|u.name <> $ThisGuestFO_name.text$ or u.surname <> $ThisGuestFO_surname.text$)] {
+                    message: ['There is already a guest with this name and surname. Please, use a different name or surname.']
+            
+                    }
+        }#
+    }
+}
+
+Button editGuestRegimenesBU {
+    String text := ['Regimes']
+    event onClick {
+        #forward { target: EditGuestRegimenesWI
+                   arg: thisGuest {value: [$EditGuestWI.thisGuest$] }
+                  }#
+    }
+}
+
+Button inviteGuestBU {
+    String text := ['Invite']
+    event onClick {
+        #forward { target: InviteGuestMealsWI
+                   arg: thisGuest {value: [$EditGuestWI.thisGuest$] }
+                  }#
+    }
+}
+
+
+Button BackBU {
+    String text := ['Back']
+    event onClick {
+        back
+    }
+}
+}
