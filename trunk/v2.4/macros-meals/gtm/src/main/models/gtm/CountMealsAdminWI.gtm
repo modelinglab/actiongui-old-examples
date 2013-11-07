@@ -16,7 +16,7 @@ Window CountMealsAdminWI {
             }
             else {
                 reevaluate MealsTA.selections
-                MealsTA.rows := [Meal.allInstances()->select(false)]
+                MealsTA.rows := [Meal.allInstances()->select(false)->asOrderedSet()]
                 reevaluate MealsTA.rows
             }
         }
@@ -41,14 +41,14 @@ Window CountMealsAdminWI {
     // Can not be created using macro table since there is a "special" column (sub-column "Count") that can not be generated directly through the value of an attribute
     Table MealsTA {
         Set(MealSelection) selections := [$CountMealsAdminWI.residence$.users.dailyMeals->union($CountMealsAdminWI.residence$.guests.dailyMeals)->select(dms| dms.date = $DateDF.value$.toLocalDate().atStartOfDay()).selections->asSet()]
-        Set(Meal) rows := [$CountMealsAdminWI.residence$.meals]
+        OrderedSet(Meal) rows := [$CountMealsAdminWI.residence$.meals->sortedBy(position)]
 
         columns {
             ['Meals'] : Label Meals {
                 String text := [$MealsTA.row$.literal]
             }
             ['Meal Options'] : Table MealOptions {
-                Set(MealOption) rows := [$MealsTA.row$.options]
+                OrderedSet(MealOption) rows := [$MealsTA.row$.options->sortedBy(position)]
 
                 columns {
                     ['Option'] : Label Option {

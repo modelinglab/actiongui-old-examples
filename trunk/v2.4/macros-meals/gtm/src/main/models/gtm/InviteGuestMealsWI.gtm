@@ -94,13 +94,13 @@ Window InviteGuestMealsWI  {
 
 
     Table WeekMealsTB {
-        Set(Meal) rows := [$InviteGuestMealsWI.residence$.meals]
-        Set(Meal) selected := [null]
+        OrderedSet(Meal) rows := [$InviteGuestMealsWI.residence$.meals->sortedBy(position)]
+        OrderedSet(Meal) selected := [null]
         columns {
         ['Mo'] : ComboBox Monday {
                             LocalDateTime thisDate := [$InviteGuestMealsWI.selDateWeekFirstDay$]
                             FoodRegime currentFoodRegime := [$InviteGuestMealsWI.thisGuest$.regimes->any(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay()).regime]
-                            Set(MealOption) rows := [$WeekMealsTB.row$.options]
+                            OrderedSet(MealOption) rows := [$WeekMealsTB.row$.options->sortedBy(position)]
                             MealOption selected
 
                             Label initial {
@@ -168,7 +168,7 @@ Window InviteGuestMealsWI  {
         ['Tu'] : ComboBox Tuesday {
                             LocalDateTime thisDate := [$InviteGuestMealsWI.selDateWeekFirstDay$.plusDays(1)]
                             FoodRegime currentFoodRegime := [$InviteGuestMealsWI.thisGuest$.regimes->any(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay()).regime]
-                            Set(MealOption) rows := [$WeekMealsTB.row$.options]
+                            OrderedSet(MealOption) rows := [$WeekMealsTB.row$.options->sortedBy(position)]
                             MealOption selected
 
                             Label initial {
@@ -237,7 +237,7 @@ Window InviteGuestMealsWI  {
          ['We'] : ComboBox Wednesday {
                             LocalDateTime thisDate := [$InviteGuestMealsWI.selDateWeekFirstDay$.plusDays(2)]
                             FoodRegime currentFoodRegime := [$InviteGuestMealsWI.thisGuest$.regimes->any(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay()).regime]
-                            Set(MealOption) rows := [$WeekMealsTB.row$.options]
+                            OrderedSet(MealOption) rows := [$WeekMealsTB.row$.options->sortedBy(position)]
                             MealOption selected
 
                             Label initial {
@@ -304,7 +304,7 @@ Window InviteGuestMealsWI  {
          ['Th'] : ComboBox Thursday {
                             LocalDateTime thisDate := [$InviteGuestMealsWI.selDateWeekFirstDay$.plusDays(3)]
                             FoodRegime currentFoodRegime := [$InviteGuestMealsWI.thisGuest$.regimes->any(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay()).regime]
-                            Set(MealOption) rows := [$WeekMealsTB.row$.options]
+                            OrderedSet(MealOption) rows := [$WeekMealsTB.row$.options->sortedBy(position)]
                             MealOption selected
 
                             Label initial {
@@ -371,7 +371,7 @@ Window InviteGuestMealsWI  {
          ['Fr'] : ComboBox Friday {
                         LocalDateTime thisDate := [$InviteGuestMealsWI.selDateWeekFirstDay$.plusDays(4)]
                         FoodRegime currentFoodRegime := [$InviteGuestMealsWI.thisGuest$.regimes->any(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay()).regime]
-                        Set(MealOption) rows := [$WeekMealsTB.row$.options]
+                        OrderedSet(MealOption) rows := [$WeekMealsTB.row$.options->sortedBy(position)]
                             MealOption selected
 
                             Label initial {
@@ -438,7 +438,7 @@ Window InviteGuestMealsWI  {
           ['Sa'] : ComboBox Saturday {
                             LocalDateTime thisDate := [$InviteGuestMealsWI.selDateWeekFirstDay$.plusDays(5)]
                             FoodRegime currentFoodRegime := [$InviteGuestMealsWI.thisGuest$.regimes->any(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay()).regime]
-                            Set(MealOption) rows := [$WeekMealsTB.row$.options]
+                            OrderedSet(MealOption) rows := [$WeekMealsTB.row$.options->sortedBy(position)]
                             MealOption selected
 
                             Label initial {
@@ -505,7 +505,7 @@ Window InviteGuestMealsWI  {
           ['Su'] : ComboBox Sunday {
                             LocalDateTime thisDate := [$InviteGuestMealsWI.selDateWeekFirstDay$.plusDays(6)]
                             FoodRegime currentFoodRegime := [$InviteGuestMealsWI.thisGuest$.regimes->any(r|r.start.toLocalDate().atStartOfDay() <= $thisDate$.toLocalDate().atStartOfDay() and r.end.toLocalDate().atStartOfDay() >= $thisDate$.toLocalDate().atStartOfDay()).regime]
-                            Set(MealOption) rows := [$WeekMealsTB.row$.options]
+                            OrderedSet(MealOption) rows := [$WeekMealsTB.row$.options->sortedBy(position)]
                             MealOption selected
 
                             Label initial {
@@ -601,7 +601,7 @@ Window InviteGuestMealsWI  {
         reevaluate sixthDayThisWeekLB.text
         reevaluate seventhDayThisWeekLB.text
 
-        WeekMealsTB.rows := [Meal.allInstances()->select(m|false)]
+        WeekMealsTB.rows := [Meal.allInstances()->select(m|false)->asOrderedSet()]
         reevaluate WeekMealsTB.rows
     }
 }

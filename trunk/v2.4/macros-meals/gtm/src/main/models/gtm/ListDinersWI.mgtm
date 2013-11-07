@@ -19,7 +19,7 @@ Window ListDinersWI {
     }
 
     ComboBox MealCB {
-        Set(Meal) rows := [$ListDinersWI.residence$.meals]
+        OrderedSet(Meal) rows := [$ListDinersWI.residence$.meals->sortedBy(position)]
         
         Label Meal {
             String text := [$MealCB.row$.literal]
@@ -35,7 +35,7 @@ Window ListDinersWI {
     }
 
     ComboBox MealOptionCB {
-        Set(MealOption) rows
+        OrderedSet(MealOption) rows
 
         Label MealOption {
             String text := [$MealOptionCB.row$.literal]
@@ -43,10 +43,10 @@ Window ListDinersWI {
 
         event onView(rows) {
             if [$MealCB.selected$.oclIsUndefined()] {
-                rows := [MealOption.allInstances()->select(false)]
+                rows := [MealOption.allInstances()->select(false)->asOrderedSet()]
             }
             else {
-                rows := [$MealCB.selected$.options]
+                rows := [$MealCB.selected$.options->sortedBy(position)]
             }
         }
 

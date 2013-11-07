@@ -22,7 +22,7 @@ Window CountMealsWI {
                     else {
                         EndDF.error := ['']
                         reevaluate MealsTA.selections
-                        MealsTA.rows := [Meal.allInstances()->select(false)]
+                        MealsTA.rows := [Meal.allInstances()->select(false)->asOrderedSet()]
                         reevaluate MealsTA.rows
                     }
                 }
@@ -50,7 +50,7 @@ Window CountMealsWI {
                     else {
                         StartDF.error := ['']
                         reevaluate MealsTA.selections
-                        MealsTA.rows := [Meal.allInstances()->select(false)]
+                        MealsTA.rows := [Meal.allInstances()->select(false)->asOrderedSet()]
                         reevaluate MealsTA.rows
                     }
                 }
@@ -61,14 +61,14 @@ Window CountMealsWI {
     // Can not be created using macro table since there is a "special" column (sub-column "Count") that can not be generated directly through an attribute
     Table MealsTA {
         Set(MealSelection) selections := [$CountMealsWI.residence$.users.dailyMeals->union($CountMealsWI.residence$.guests.dailyMeals)->select(dms| dms.date >= $StartDF.value$.toLocalDate().atStartOfDay() and dms.date <= $EndDF.value$.toLocalDate().atStartOfDay()).selections->asSet()]
-        Set(Meal) rows := [$CountMealsWI.residence$.meals]
+        OrderedSet(Meal) rows := [$CountMealsWI.residence$.meals->sortedBy(position)]
 
         columns {
             ['Meals'] : Label Meals {
                 String text := [$MealsTA.row$.literal]
             }
             ['Meal Options'] : Table MealOptions {
-                Set(MealOption) rows := [$MealsTA.row$.options]
+                OrderedSet(MealOption) rows := [$MealsTA.row$.options->sortedBy(position)]
 
                 columns {
                     ['Option'] : Label Option {
