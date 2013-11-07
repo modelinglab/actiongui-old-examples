@@ -1,0 +1,44 @@
+Window GuestAccountsWI {
+    Residence residence
+
+    #table GuestsTB {
+        entity: Guest
+        rows : [$GuestAccountsWI.residence$.guests]
+        column : surname {label : ['Surname'] }
+        column : name {label : ['Name'] }
+        size : [10]
+        selection: SINGLE
+    }#
+
+Button CreateBU {
+    String text := ['Create']
+    event onClick {        
+    open CreateGuestWI (residence: [$GuestAccountsWI.residence$])
+        }
+    }
+
+Button EditBU {
+    String text := ['Edit']
+    event onClick {
+      #forward {
+            target: EditGuestWI
+            arg: thisGuest {
+                value: [$GuestsTB.selected$]
+            }
+            arg: residence {
+                value: [$GuestAccountsWI.residence$]
+            }
+            assert: [not($GuestsTB.selected$->oclIsUndefined())] {
+                message: ['Please, select first a guest']
+            } 
+        }#
+    }
+}
+
+Button BackBU {
+    String text := ['Back']
+    event onClick {
+        back
+    }
+}
+}
