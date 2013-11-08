@@ -9,18 +9,18 @@
     background-color: white;
     border-color: #000000;
     border-width: thin;
-    font-family: Helvetica;
+    font-family: Arial, sans-serif;
     font-size: 12px;
 }
 .v-captiontext {
-    font-family: Helvetica;
+    font-family: Arial, sans-serif;
     font-size: 12px; 
 }
 .v-table {
-    font-family: Helvetica;
+    font-family: Arial, sans-serif;
 }
 .v-table-cell-content {
-    font-family: Helvetica;
+    font-family: Arial, sans-serif;
     font-size: 12px;
 
 }
@@ -31,26 +31,32 @@
 .v-table-caption-container {
     border-color: #000000;
     border-width: thin;
-    font-family: Helvetica;
+    font-family: Arial, sans-serif;
 }
 .v-nativebutton {
     background-color: #E76500;
     border-color: #000000;
     border-width: thin !important;
     color: #FFFFFF !important;
-    font-family: Helvetica;
+    font-family: Arial, sans-serif;
     font-size: 16px !important;
     font-weight: bolder !important;
+    outline: 0;
+    line-height: 30px;
+    text-align: center;
+    padding: 0 8px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 .v-select-select {
     background-color: white !important;
     border-color: #000000;
     border-width: thin;
-    font-family: Helvetica;
+    font-family: Arial, sans-serif;
     font-weight: bold;
     border-style : solid ;
-    font-size: 12px !important;
-    font-style: italic;        
+    font-size: 12px !important; 
 }
 .v-table-body {
     /* background: none repeat scroll 0 0 #F5CCCC; */
@@ -63,7 +69,7 @@
     color: white;
     font-size: 14px;
     font-weight: bold !important;
-    font-family: Helvetica;
+    font-family: Arial, sans-serif;
 }
 .v-table-resizer {
    /* background: #000000; */
@@ -95,6 +101,16 @@
 .v-checkbox {
     background: #E76500;  
     line-height: 30px
+}
+
+.v-panel-LoginWI {
+    background: #fff;
+}
+.v-panel-MenuDirectorWI {
+    background: #fff   ;
+}
+.v-panel-SelectMealsWI {
+    background: #fff   ;
 }
 
 
