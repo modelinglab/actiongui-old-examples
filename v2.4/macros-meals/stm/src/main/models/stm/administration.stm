@@ -1,6 +1,6 @@
 role SYSTEM {
     User {
-        read(login), read(password), read(role)
+        read(login), read(password), read(role), read(residence)
     }
     MealOption {
         fullAccess
