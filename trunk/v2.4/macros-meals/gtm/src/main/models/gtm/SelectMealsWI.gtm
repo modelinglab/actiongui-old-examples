@@ -25,6 +25,8 @@ Window SelectMealsWI  {
         else $selDate$.plusDays(-6) 
         endif) endif) endif) endif) endif)endif]
 
+    Label logoIMG {
+    }
 
     Button NextWeekBU {
         String text := ['Next'] 
