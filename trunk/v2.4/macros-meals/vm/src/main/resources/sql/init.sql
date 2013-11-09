@@ -19,14 +19,14 @@ insert into Meal_residence__Residence_meals (Meal_residence,Residence_meals) val
 
 
 INSERT INTO Residence (pk, name, zone) VALUES (2,'Allenmoos','Europe/Zurich');
-insert into mmeals.User (pk, name, surname, login, password, role, residence) values (4, '', '' , 'scl1', '111', 1, 1);
-insert into mmeals.User (pk, name, surname, login, password, role, residence) values (5, '', '' , 'adm1', '111', 2, 1);
+insert into mmeals.User (pk, name, surname, login, password, role, residence) values (4, '', '' , 'scl1', '111', 1, 2);
+insert into mmeals.User (pk, name, surname, login, password, role, residence) values (5, '', '' , 'adm1', '111', 2, 2);
 insert into Residence_users__User_residence(Residence_users,User_residence) values (2,4),(2,5);
 
 
 INSERT INTO Residence (pk, name, zone) VALUES (3,'Schweidt','CET');
-insert into mmeals.User (pk, name, surname, login, password, role, residence) values (6, '', '' , 'scl2', '111', 1, 2);
-insert into mmeals.User (pk, name, surname, login, password, role, residence) values (7, '', '' , 'adm2', '111', 2, 2);
+insert into mmeals.User (pk, name, surname, login, password, role, residence) values (6, '', '' , 'scl2', '111', 1, 3);
+insert into mmeals.User (pk, name, surname, login, password, role, residence) values (7, '', '' , 'adm2', '111', 2, 3);
 insert into Residence_users__User_residence(Residence_users,User_residence) values (3,6),(3,7);
 
 
