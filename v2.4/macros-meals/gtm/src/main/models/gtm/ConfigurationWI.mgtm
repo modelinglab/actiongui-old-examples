@@ -77,9 +77,10 @@ Window ConfigurationWI {
             }#
             if [not($newMeal$.oclIsUndefined())] {
                 [$newMeal$.residence] := [$ConfigurationWI.residence$]
-                [$newMeal$.position] := [if Meal.allInstances()->size() = 1 then 1 else (Meal.allInstances()->sortedBy(position)->last().position + 1) endif]
-                #refresh Meals_T#                
-                Meals_T.selected := [$newMeal$]
+                [$newMeal$.position] := [if Meal.allInstances()->size() = 1 then 1 else (Meal.allInstances()->excluding($newMeal$)->sortedBy(position)->last().position + 1) endif]
+                #refresh Meals_T#  
+                Meals_T.selected := [$newMeal$]              
+
             }
         }
 
@@ -224,7 +225,7 @@ Button downMealOptionBU {
     }#
 
     Button EditOptionBU {
-        String text := ['Modiy']
+        String text := ['Modify']
         MealOption selectedOption
         event onClick {
             if [$Meals_T.selected$.oclIsUndefined()] {
@@ -240,12 +241,12 @@ Button downMealOptionBU {
                         form: EditOptionFO
                         assert: [not($EditOptionFO_literal.text$.oclIsUndefined())] {
                             message: ['Please, write the new literal of the option']
-                            assert : [not($Meals_T.selected$.options->exists(mo|mo.literal = $EditOptionFO_literal.text$))] {
+                            assert : [not($Meals_T.selected$.options->excluding($Meal_Options_T.selected$)->exists(mo|mo.literal = $EditOptionFO_literal.text$))] {
                                 message: ['There is already an option for this meal with this name. Please, choose a different name']
                                 assert: [not($EditOptionFO_initial.text$.oclIsUndefined())] {
                                     message: ['Please, write the new initials of the option']
-                                    assert: [not($Meals_T.selected$.options->exists(mo|mo.initial = $EditOptionFO_initial.text$))] {
-                                        message: ['There is already an option for this meal with these intials. Please, choose different initials']
+                                    assert: [not($Meals_T.selected$.options->excluding($Meal_Options_T.selected$)->exists(mo|mo.initial = $EditOptionFO_initial.text$))] {
+                                        message: ['There is already an option for this meal with these initials. Please, choose different initials']
                                     }
                                 }
                             }  
