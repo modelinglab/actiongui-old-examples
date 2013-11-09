@@ -2,6 +2,10 @@ Window CountMealsAdminWI {
     Residence residence
     String text := ['Count meals']
     ZoneId zone := [$residence$.zone]
+
+    Label logoIMG {
+    }
+
     Label DateLA {
         String text := ['Date:']
     }
@@ -23,7 +27,7 @@ Window CountMealsAdminWI {
     }
     
     Button PrevBU {
-        String text := ['Previous']
+        String text := ['<<']
 
         event onClick {
             DateDF.value := [$DateDF.value$.minusDays(1)]
@@ -31,7 +35,7 @@ Window CountMealsAdminWI {
     }
 
     Button NextBU {
-        String text := ['Next']
+        String text := ['>>']
 
         event onClick {
             DateDF.value := [$DateDF.value$.plusDays(1)]
@@ -47,17 +51,17 @@ Window CountMealsAdminWI {
             ['Meals'] : Label Meals {
                 String text := [$MealsTA.row$.literal]
             }
-            ['Meal Options'] : Table MealOptions {
+            ['Options'] : Table MealOptions {
                 OrderedSet(MealOption) rows := [$MealsTA.row$.options->sortedBy(position)]
 
                 columns {
-                    ['Option'] : Label Option {
+                    [''] : Label Option {
                         String text := [$MealOptions.row$.literal]
                     }
-                    ['Count'] : Label Count {
+                    ['Num'] : Label Count {
                         String text := [$MealsTA.selections$->select(ms| ms.meal = $MealsTA.row$ and ms.mealOption = $MealOptions.row$)->size().toString()]
                     }
-                    ['Status'] : Label Status {                       
+                    ['Sta'] : Label Status {                       
                         LocalDateTime selectedDate := [if $DateDF.value$.oclIsUndefined() then LocalDateTime.now($CountMealsAdminWI.zone$) else $DateDF.value$ endif]
                         LocalDateTime nowDate := [LocalDateTime.now($CountMealsAdminWI.zone$)]
                         Residency period := [$MealOptions.row$.periodsOption->any(p|p.start.toLocalDate().atStartOfDay() <= $selectedDate$.toLocalDate().atStartOfDay() and p.end.toLocalDate().atStartOfDay() >= $selectedDate$.toLocalDate().atStartOfDay())]
@@ -79,7 +83,7 @@ Window CountMealsAdminWI {
                             }
                         }
                     }
-                    ['Regimes'] : Label Regimes {
+                    ['Reg'] : Label Regimes {
                         LocalDateTime selectedDate := [if $DateDF.value$.oclIsUndefined() then LocalDateTime.now($CountMealsAdminWI.zone$) else $DateDF.value$ endif]
                         Bag(FoodRegime) allFoodRegimes := [$CountMealsAdminWI.residence$.users.dailyMeals->union($CountMealsAdminWI.residence$.guests.dailyMeals).selections->select(ms|ms.mealOption = $MealOptions.row$ and ms.ownedBy.date.toLocalDate().atStartOfDay() = $selectedDate$.toLocalDate().atStartOfDay()).foodRegime->reject(fr|fr.oclIsUndefined())]
                         Set(FoodRegime) foodRegimes := [$allFoodRegimes$->asSet()]
@@ -99,7 +103,7 @@ Window CountMealsAdminWI {
     }    
 
     Button changePasswordBU {
-        String text := ['Change password']
+        String text := ['Password']
 
         event onClick {
             open ChangePasswordWI()
