@@ -1,9 +1,9 @@
 
 .logoIMG {
-    background-image: url("vectorlogo.png");
+    background-image: url("mmlogo.jpg");
     background-position: left top;
     background-repeat: no-repeat;
-    background-size: 100% auto;
+    background-size: 75% auto;
 }
 .v-textfield {
     background-color: white;
@@ -113,6 +113,9 @@
     background: #fff   ;
 }
 
+.v-panel-CountMealsAdminWI {
+    background: #fff   ;
+}
 
     
  
