@@ -61,19 +61,7 @@
                                     <ns1:entry>
                                         <ns1:line-layout orientation="vertical" ns1:height="15px"/>
                                     </ns1:entry> 
-                                    <ns1:entry>
-                                        <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto"> 
-                                            <ns1:entry>
-                                                <ns1:widget ns1:id="residenceLA" ns1:height="30px" ns1:width="80px"></ns1:widget>
-                                            </ns1:entry>
-                                            <ns1:entry>
-                                                <ns1:widget ns1:id="residenceCB" ns1:height="30px" ns1:width="120px"></ns1:widget>    
-                                            </ns1:entry>
-                                        </ns1:line-layout>
-                                    </ns1:entry>
-                                    <ns1:entry>
-                                        <ns1:line-layout orientation="vertical" ns1:height="15px"/>
-                                    </ns1:entry> 
+ 
                                     <ns1:entry>
                                         <ns1:widget ns1:id="LoginBU" ns1:height="30px" ns1:width="100px"></ns1:widget>
                                     </ns1:entry>
