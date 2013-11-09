@@ -7,13 +7,7 @@ Label logoIMG {
 Label residenceLA {
     String text := ['Residence:']
 }
-ComboBox residenceCB {
-    Set(Residence) rows := [Residence.allInstances()]
 
-    Label residence {
-        String text := [$residenceCB.row$.name]
-    }
-}
 
 Label LoginFO_login_L {
     String text := ['Login:']
@@ -37,10 +31,6 @@ Button LoginBU {
     String text := ['Login']
     User loggedUser
     event onClick {
-        if [$residenceCB.selected$.oclIsUndefined()] {
-            notification (['Message'],['Please, select a residence.'],[2000])  
-        }
-        else {
             try {
                 loggedUser := [User.allInstances()->any(e|e.login = $LoginFO_login.text$ and e.password = $LoginFO_password.text$)]
             }
@@ -56,15 +46,15 @@ Button LoginBU {
 
             if [not($loggedUser$.oclIsUndefined())] {
                 if [$loggedUser$.role = Role::RESIDENT] {
-                    open SelectMealsWI(caller:[$loggedUser$], role:[$loggedUser$.role], residence:[$residenceCB.selected$])
+                    open SelectMealsWI(caller:[$loggedUser$], role:[$loggedUser$.role], residence:[$loggedUser$.residence])
                 }
                 else {
                     if [$loggedUser$.role = Role::DIRECTOR] {
-                        open MenuDirectorWI(caller:[$loggedUser$], role:[$loggedUser$.role], residence:[$residenceCB.selected$])
+                        open MenuDirectorWI(caller:[$loggedUser$], role:[$loggedUser$.role], residence:[$loggedUser$.residence])
                     }
                     else {
                         if [$loggedUser$.role = Role::ADMINISTRATION] {
-                            open CountMealsAdminWI(caller:[$loggedUser$], role:[$loggedUser$.role], residence:[$residenceCB.selected$])
+                            open CountMealsAdminWI(caller:[$loggedUser$], role:[$loggedUser$.role], residence:[$loggedUser$.residence])
                         }
                         else {
                             notification (['Message'],['You have no role assigned.'],[2000])
@@ -75,7 +65,7 @@ Button LoginBU {
             else {
                 notification (['Wrong credentials'],['Please, write a valid login and password.'],[2000])  
             }
-        }
+        
     }
 }
 
