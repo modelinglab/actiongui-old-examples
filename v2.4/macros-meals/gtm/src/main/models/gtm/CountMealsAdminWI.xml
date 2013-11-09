@@ -1,67 +1,123 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-
-
-<ns1:window-layout ns1:id="CountMealsWI"
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!-- was: no XML declaration present -->
+<ns1:window-layout ns1:id="CountMealsAdminWI"
     xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
     xmlns:ns1='http://actiongui.org/schemes/ag-layout/2.4'
-    xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
-    <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto">
-        <ns1:entry>
-            <ns1:widget ns1:id="changePasswordBU" ns1:width="150px" ns1:height="30px"></ns1:widget>
-        </ns1:entry>
-        <ns1:entry>
-            <ns1:widget ns1:id="logoutBU" ns1:width="150px" ns1:height="30px"></ns1:widget>
-        </ns1:entry>
-        <ns1:entry>
-            <ns1:line-layout orientation="vertical" ns1:height="50px"></ns1:line-layout>
-        </ns1:entry>
-        <ns1:entry>
-            <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
-                <ns1:entry>
-                    <ns1:widget ns1:id="DateLA" ns1:height="30px" ns1:width="90px"></ns1:widget>
-                </ns1:entry>
-                <ns1:entry>
-                    <ns1:widget ns1:id="DateDF" ns1:height="30px" ns1:width="90px"></ns1:widget>
-                </ns1:entry>
-            </ns1:line-layout>
-        </ns1:entry>
-        <ns1:entry>
-            <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
-                <ns1:entry>
-                    <ns1:widget ns1:id="PrevBU" ns1:height="30px"></ns1:widget>
-                </ns1:entry>
-                <ns1:entry>
-                    <ns1:widget ns1:id="NextBU" ns1:height="30px"></ns1:widget>
-                </ns1:entry>
-            </ns1:line-layout>
-        </ns1:entry>
-        <ns1:entry>
-            <ns1:table ns1:id="MealsTA" ns1:height="800px" ns1:width="auto">
-                <ns1:column>
-                    <ns1:widget ns1:id="Meals" ns1:width="150px" ns1:height="30px"></ns1:widget>
-                </ns1:column>
-                <ns1:column>
-                    <ns1:table ns1:id="MealOptions" ns1:width="auto" ns1:height="250px">
-                        <ns1:column>
-                            <ns1:widget ns1:id="Option" ns1:width="250px" ns1:height="30px"></ns1:widget>
-                        </ns1:column>
-                        <ns1:column>
-                            <ns1:widget ns1:id="Count" ns1:width="50px" ns1:height="30px"></ns1:widget>
-                        </ns1:column>
-                        <ns1:column>
-                            <ns1:widget ns1:id="Status" ns1:width="50px" ns1:height="30px"></ns1:widget>
-                        </ns1:column>
-                        <ns1:column>
-                            <ns1:widget ns1:id="Regimes" ns1:width="300px" ns1:height="30px"></ns1:widget>
-                        </ns1:column>
-                    </ns1:table>
-                </ns1:column>
-            </ns1:table>
-        </ns1:entry>
-    </ns1:line-layout>
-
+    xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://www.actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
+ <ns1:line-layout orientation="horizontal" ns1:height="100%">
+     <!-- LEFT PANNEL -->
+     <ns1:entry>
+         <ns1:line-layout orientation="horizontal" ns1:width="30px" ns1:height="auto"/>
+     </ns1:entry>
+     <!-- CENTRAL PANNEL -->
+    <ns1:entry>
+        <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto">   
+            <!-- TOP (CENTER PANNEL) -->
+            <ns1:entry>
+                <ns1:line-layout orientation="vertical" ns1:height="30px"/>
+            </ns1:entry> 
+            <!-- MIDDLE (CENTER PANNEL) -->
+            <ns1:entry>
+                <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
+                    <!-- LEFT (MIDDLE CENTER PANNEL)-->
+                    <ns1:entry>
+                        <ns1:line-layout orientation="vertical" ns1:width="100px">
+                            <ns1:entry>
+                                <ns1:widget ns1:id="logoIMG"></ns1:widget>
+                            </ns1:entry>
+                        </ns1:line-layout>
+                    </ns1:entry>
+                    <!-- END LEFT (MIDDLE CENTER PANNEL) -->
+                    <!-- SEPARATOR (MIDDLE CENTER PANNEL) -->
+                    <ns1:entry>
+                        <ns1:line-layout orientation="vertical" ns1:width="30px" />
+                    </ns1:entry>
+                    <!-- END SEPARATOR (MIDDLE CENTER PANNEL) -->
+                    <!-- CENTER (MIDDLE CENTER PANNEL) -->
+                    <ns1:entry>
+                        <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto">
+                            <!-- BODY -->    
+                            <!-- DATE SELECTOR -->
+                            <ns1:entry>
+                                <ns1:line-layout orientation="horizontal" ns1:width="auto" ns1:height="auto">
+                                    <ns1:entry>
+                                        <ns1:widget ns1:id="PrevBU" ns1:height="30px"></ns1:widget>
+                                    </ns1:entry>
+                                    <ns1:entry>
+                                        <ns1:line-layout orientation="horizontal" ns1:width="15px"/>
+                                    </ns1:entry><ns1:entry>
+                                        <ns1:widget ns1:id="DateLA" ns1:height="30px" ns1:width="40px"></ns1:widget>
+                                    </ns1:entry>
+                                    <ns1:entry>
+                                        <ns1:widget ns1:id="DateDF" ns1:height="30px" ns1:width="90px"></ns1:widget>
+                                    </ns1:entry>
+                                    <ns1:entry>
+                                        <ns1:line-layout orientation="horizontal" ns1:width="15px"/>
+                                    </ns1:entry>
+                                    <ns1:entry>
+                                        <ns1:widget ns1:id="NextBU" ns1:height="30px"></ns1:widget>
+                                    </ns1:entry>
+                                </ns1:line-layout>
+                            </ns1:entry>
+                            <!-- END DATE SELECTOR -->
+                            <!-- SEPARATOR -->
+                            <ns1:entry>
+                                <ns1:line-layout orientation="vertical" ns1:height="30px" />
+                            </ns1:entry>
+                            
+                            <!-- MEALS COUNT TABLE -->
+                            <ns1:entry>
+                                <ns1:table ns1:id="MealsTA" ns1:height="900px" ns1:width="auto">
+                                    <ns1:column>
+                                        <ns1:widget ns1:id="Meals" ns1:width="100px" ns1:height="auto"></ns1:widget>
+                                    </ns1:column>
+                                    <ns1:column>
+                                        <ns1:table ns1:id="MealOptions" ns1:width="500px" ns1:height="275px">
+                                            <ns1:column>
+                                                <ns1:widget ns1:id="Option" ns1:width="150px" ns1:height="auto"></ns1:widget>
+                                            </ns1:column>
+                                            <ns1:column>
+                                                <ns1:widget ns1:id="Status" ns1:width="40px" ns1:height="auto"></ns1:widget>
+                                            </ns1:column>
+                                            <ns1:column>
+                                                <ns1:widget ns1:id="Count" ns1:width="40px" ns1:height="auto"></ns1:widget>
+                                            </ns1:column>
+                                            <ns1:column>
+                                                <ns1:widget ns1:id="Regimes" ns1:width="200px" ns1:height="auto"></ns1:widget>
+                                            </ns1:column>
+                                        </ns1:table>
+                                    </ns1:column>
+                                </ns1:table>
+                            </ns1:entry>
+                            <!-- SEPARATOR -->
+                            <ns1:entry>
+                                <ns1:line-layout orientation="vertical" ns1:height="30px" />
+                            </ns1:entry>
+                            <!-- PASSWORD & BACK -->
+                            <ns1:entry>
+                                <ns1:widget ns1:id="changePasswordBU" ns1:width="100px" ns1:height="30px"></ns1:widget>
+                            </ns1:entry>
+                            <ns1:entry>
+                                <ns1:line-layout orientation="vertical" ns1:height="15px"/>
+                            </ns1:entry>
+                            <ns1:entry>
+                                <ns1:widget ns1:id="logoutBU" ns1:width="100px" ns1:height="30px"></ns1:widget>
+                            </ns1:entry>
+                            <!-- END BODY -->
+                        </ns1:line-layout>
+                    </ns1:entry>
+                    <!-- END CENTER (MIDDLE CENTER PANNEL) -->
+                </ns1:line-layout>
+            </ns1:entry>
+            <!-- END MIDDLE (CENTER PANNEL) -->
+        </ns1:line-layout>
+    </ns1:entry>
+    <!-- END CENTRAL PANNEL -->
+    <!-- RIGHT PANNEL -->
+    <ns1:entry expand-ratio="1">
+        <ns1:line-layout orientation="horizontal"/>
+    </ns1:entry>
+    <!-- END RIGHT PANNEL -->
+</ns1:line-layout>
 </ns1:window-layout>
+
