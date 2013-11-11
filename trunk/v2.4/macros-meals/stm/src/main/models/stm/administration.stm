@@ -218,9 +218,6 @@ role RESIDENT {
                     in
                         self.ownedBy.selectedBy = caller
                         and mealDate.toLocalDate().atStartOfDay() >= now.toLocalDate().atStartOfDay()
-                        and caller.periods->exists(p|p.start <= mealDate and p.end >= mealDate
-                            and p.contract.options->exists(o|
-                            o.mealOption = value and o.days->includes(mealDate.getDayOfWeek())))
                         and (if not(self.mealOption.oclIsUndefined())
                              then self.mealOption.periodsOption->exists(p|
                                 p.start <= mealDate 
