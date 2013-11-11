@@ -46,6 +46,17 @@ Button editUserRegimenesBU {
     }
 }
 
+Button countMealsBU {
+    String text := ['Counts']
+    event onClick {
+        #forward { target: UserCountMealsWI
+                   arg: thisUser {value: [$EditUserWI.thisUser$] 
+                   arg: residence {value: [$EdituserWI.residence$]} }
+                  }#
+    }
+}
+
+
 Button BackBU {
     String text := ['Back']
     event onClick {
