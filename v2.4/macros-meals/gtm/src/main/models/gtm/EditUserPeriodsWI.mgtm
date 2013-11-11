@@ -43,7 +43,7 @@ Label ContractsLB {
 }
 
 ComboBox ContractsCB {
-        Set(Contract) rows := [Contract.allInstances()]
+        Set(Contract) rows := [$EditUserPeriodsWI.caller$.residence.contracts]
         
         Label Contract {
             String text := [$ContractsCB.row$.name]
@@ -123,7 +123,7 @@ Label ContractsUpdateLB {
 }
 
 ComboBox ContractsUpdateCB {
-        Set(Contract) rows := [Contract.allInstances()]
+        Set(Contract) rows := [$EditUserPeriodsWI.caller$.residence.contracts]
         Contract selected := [$ThisUserFO.selected$.contract]
         
         Label ContractUpdate {
