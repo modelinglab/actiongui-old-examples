@@ -43,6 +43,9 @@ and open the template in the editor.
                         <ns1:column>
                             <ns1:widget ns1:id="Count" ns1:height="30px"></ns1:widget>
                         </ns1:column>
+                        <ns1:column>
+                            <ns1:widget ns1:id="Extra" ns1:height="30px"></ns1:widget>
+                        </ns1:column>
                     </ns1:table>
                 </ns1:column>
             </ns1:table>
