@@ -23,6 +23,7 @@ Window UserCountMealsWI {
                     else {
                         EndDF.error := ['']
                         reevaluate MealsTA.selections
+                        reevaluate MealsTA.extras
                         MealsTA.rows := [$UserCountMealsWI.thisUser$.residence.meals->select(false)->asOrderedSet()]
                         reevaluate MealsTA.rows
                     }
@@ -51,6 +52,7 @@ Window UserCountMealsWI {
                     else {
                         StartDF.error := ['']
                         reevaluate MealsTA.selections
+                        reevaluate MealsTA.extras
                         MealsTA.rows := [$UserCountMealsWI.thisUser$.residence.meals->select(false)->asOrderedSet()]
                         reevaluate MealsTA.rows
                     }
@@ -62,6 +64,7 @@ Window UserCountMealsWI {
     // Can not be created using macro table since there is a "special" column (sub-column "Count") that can not be generated directly through an attribute
     Table MealsTA {
         Set(MealSelection) selections := [$UserCountMealsWI.thisUser$.dailyMeals->select(dms| dms.date.toLocalDate().atStartOfDay() >= $StartDF.value$.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= $EndDF.value$.toLocalDate().atStartOfDay()).selections->asSet()->select(ms|$UserCountMealsWI.thisUser$.periods->exists(p|p.contract.options->exists(o|o.mealOption->includes(ms.mealOption) and o.days->includes(ms.ownedBy.date.getDayOfWeek()) and p.start <= ms.ownedBy.date.toLocalDate().atStartOfDay() and p.end >= ms.ownedBy.date.toLocalDate().atStartOfDay())))]
+        Set(MealSelection) extras := [$UserCountMealsWI.thisUser$.dailyMeals->select(dms| dms.date.toLocalDate().atStartOfDay() >= $StartDF.value$.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= $EndDF.value$.toLocalDate().atStartOfDay()).selections->asSet()->reject(ms|$UserCountMealsWI.thisUser$.periods->exists(p|p.contract.options->exists(o|o.mealOption->includes(ms.mealOption) and o.days->includes(ms.ownedBy.date.getDayOfWeek()) and p.start <= ms.ownedBy.date.toLocalDate().atStartOfDay() and p.end >= ms.ownedBy.date.toLocalDate().atStartOfDay())))]
         OrderedSet(Meal) rows := [$UserCountMealsWI.thisUser$.residence.meals->sortedBy(position)]
 
         columns {
@@ -75,8 +78,11 @@ Window UserCountMealsWI {
                     ['Option'] : Label Option {
                         String text := [$MealOptions.row$.literal]
                     }
-                    ['Count'] : Label Count {
+                    ['Co'] : Label Count {
                         String text := [$MealsTA.selections$->select(ms| ms.meal = $MealsTA.row$ and ms.mealOption = $MealOptions.row$)->size().toString()]
+                    }
+                    ['Ex'] : Label Extra {
+                        String text := [$MealsTA.extras$->select(ms| ms.meal = $MealsTA.row$ and ms.mealOption = $MealOptions.row$)->size().toString()]
                     }
                 }
             }     
