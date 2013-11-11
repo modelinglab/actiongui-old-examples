@@ -24,7 +24,7 @@ Label FoodRegimesLB {
 }
 
 ComboBox FoodRegimesCB {
-        Set(FoodRegime) rows := [FoodRegime.allInstances()]
+        Set(FoodRegime) rows := [$EditUserRegimenesWI.caller$.residence.foodRegimes]
         
         Label Regime {
             String text := [$FoodRegimesCB.row$.name]
@@ -121,7 +121,7 @@ Label PeriodsUpdateLB {
 }
 
 ComboBox PeriodsUpdateCB {
-        Set(FoodRegime) rows := [FoodRegime.allInstances()]
+        Set(FoodRegime) rows := [$EditUserRegimenesWI.caller$.residence.foodRegimes]
         FoodRegime selected := [$ThisUserRegimesTB.selected$->any(true).regime]
         
         Label PeriodsUpdate {
