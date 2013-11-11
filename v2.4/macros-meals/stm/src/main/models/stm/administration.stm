@@ -293,6 +293,9 @@ role ADMINISTRATION {
     User {
         fullAccess
     }
+    Guest {
+        fullAccess
+    }
     Residence {
         read(zone), read(meals), read(users), read(guests) constrainedBy [self.users->includes(caller)]
     }
