@@ -574,13 +574,6 @@ Window InviteGuestMealsWI  {
 
     }
 
-    Button changePasswordBU {
-        String text := ['Settings']
-
-        event onClick {
-            open ChangePasswordWI()
-        }
-    }
 
     Button backBU {
         String text := ['Back']

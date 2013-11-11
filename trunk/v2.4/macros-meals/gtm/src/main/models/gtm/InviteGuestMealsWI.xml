@@ -93,9 +93,6 @@
                 <ns1:line-layout orientation="vertical" ns1:height="30px"/>
             </ns1:entry> 
             <ns1:entry>
-                <ns1:widget ns1:id="changePasswordBU" ns1:width="100px" ns1:height="30px"></ns1:widget>
-            </ns1:entry>
-            <ns1:entry>
                 <ns1:line-layout orientation="vertical" ns1:height="15px"/>
             </ns1:entry> 
             <ns1:entry>
