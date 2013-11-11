@@ -1,0 +1,93 @@
+Window UserCountMealsWI {
+    User thisUser
+    String text := ['Meal count']
+    Residence residence
+    ZoneId zone := [$UserCountMealsWI.thisUser$.residence.zone]
+    Label StartLA {
+        String text := ['Start:']
+    }
+
+    DateField StartDF {
+        LocalDateTime value := [LocalDateTime.now($UserCountMealsWI.zone$)]
+
+        event onChange(value) {
+            error := ['']
+            if [$value$.oclIsUndefined()] {
+                error := ['Select the start date']
+            }
+            else {
+                if [not $EndDF.value$.oclIsUndefined()] {
+                    if [$value$ > $EndDF.value$] {
+                        error := ['The start date must be before the end date']
+                    }
+                    else {
+                        EndDF.error := ['']
+                        reevaluate MealsTA.selections
+                        MealsTA.rows := [$UserCountMealsWI.thisUser$.residence.meals->select(false)->asOrderedSet()]
+                        reevaluate MealsTA.rows
+                    }
+                }
+            }
+        }
+    }
+
+    Label EndLA {
+        String text := ['End:']
+    }
+
+    DateField EndDF {
+        LocalDateTime value := [LocalDateTime.now($UserCountMealsWI.zone$)]
+
+        event onChange(value) {
+            error := ['']
+            if [$value$.oclIsUndefined()] {
+                error := ['Select the end date']
+            }
+            else {
+                if [not $StartDF.value$.oclIsUndefined()] {
+                    if [$value$ < $StartDF.value$] {
+                        error := ['The end date must be after the start date']
+                    }
+                    else {
+                        StartDF.error := ['']
+                        reevaluate MealsTA.selections
+                        MealsTA.rows := [$UserCountMealsWI.thisUser$.residence.meals->select(false)->asOrderedSet()]
+                        reevaluate MealsTA.rows
+                    }
+                }
+            }
+        }
+    }
+    
+    // Can not be created using macro table since there is a "special" column (sub-column "Count") that can not be generated directly through an attribute
+    Table MealsTA {
+        Set(MealSelection) selections := [$UserCountMealsWI.thisUser$.dailyMeals->select(dms| dms.date.toLocalDate().atStartOfDay() >= $StartDF.value$.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= $EndDF.value$.toLocalDate().atStartOfDay()).selections->asSet()->select(ms|$UserCountMealsWI.thisUser$.periods->exists(p|p.contract.options->exists(o|o.mealOption->includes(ms.mealOption) and o.days->includes(ms.ownedBy.date.getDayOfWeek()) and p.start <= ms.ownedBy.date.toLocalDate().atStartOfDay() and p.end >= ms.ownedBy.date.toLocalDate().atStartOfDay())))]
+        OrderedSet(Meal) rows := [$UserCountMealsWI.thisUser$.residence.meals->sortedBy(position)]
+
+        columns {
+            ['Meals'] : Label Meals {
+                String text := [$MealsTA.row$.literal]
+            }
+            ['Meal Options'] : Table MealOptions {
+                OrderedSet(MealOption) rows := [$MealsTA.row$.options->sortedBy(position)]
+
+                columns {
+                    ['Option'] : Label Option {
+                        String text := [$MealOptions.row$.literal]
+                    }
+                    ['Count'] : Label Count {
+                        String text := [$MealsTA.selections$->select(ms| ms.meal = $MealsTA.row$ and ms.mealOption = $MealOptions.row$)->size().toString()]
+                    }
+                }
+            }     
+        }
+    }    
+
+    Button BackBU {
+        String text := ['Back']
+
+        event onClick {
+            back
+        }
+    }
+}
