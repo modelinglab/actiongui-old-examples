@@ -20,7 +20,7 @@ Window CountMealsAdminWI {
             }
             else {
                 reevaluate MealsTA.selections
-                MealsTA.rows := [Meal.allInstances()->select(false)->asOrderedSet()]
+                MealsTA.rows := [$CountMealsAdminWI.residence$.meals->select(false)->asOrderedSet()]
                 reevaluate MealsTA.rows
             }
         }
