@@ -12,6 +12,7 @@ Label logoIMG {
         column : login {label : ['Login']}
         column : role {label : ['Role']}
         size : [10]
+        sortedBy : [surname]
         selection: SINGLE
     }#
 
