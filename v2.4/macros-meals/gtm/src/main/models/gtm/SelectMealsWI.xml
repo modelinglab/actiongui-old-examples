@@ -21,7 +21,7 @@
                 <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
                     <!-- LEFT (MIDDLE CENTER PANNEL)-->
                     <ns1:entry>
-                        <ns1:line-layout orientation="vertical" ns1:width="100px">
+                        <ns1:line-layout orientation="vertical" ns1:width="120px">
                             <ns1:entry>
                                 <ns1:widget ns1:id="logoIMG"></ns1:widget>
                             </ns1:entry>
@@ -30,7 +30,7 @@
                     <!-- END LEFT (MIDDLE CENTER PANNEL) -->
                     <!-- SEPARATOR (MIDDLE CENTER PANNEL) -->
                     <ns1:entry>
-                        <ns1:line-layout orientation="vertical" ns1:width="30px" />
+                        <ns1:line-layout orientation="vertical" ns1:width="10px" />
                     </ns1:entry>
                     <!-- END SEPARATOR (MIDDLE CENTER PANNEL) -->
                     <!-- CENTER (MIDDLE CENTER PANNEL) -->
@@ -40,13 +40,13 @@
                             <ns1:entry>
                                 <ns1:line-layout orientation="horizontal" ns1:height="auto">
                                     <ns1:entry>
-                                        <ns1:widget ns1:id="PreviousWeekBU" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                                        <ns1:widget ns1:id="PreviousWeekBU" ns1:height="auto" ns1:width="80px"></ns1:widget>
                                     </ns1:entry>
                                     <ns1:entry expand-ratio="1">
                                         <ns1:line-layout orientation="horizontal"/>
                                     </ns1:entry>
                                     <ns1:entry>
-                                        <ns1:widget ns1:id="NextWeekBU" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                                        <ns1:widget ns1:id="NextWeekBU" ns1:height="auto" ns1:width="80px"></ns1:widget>
                                     </ns1:entry>
                                </ns1:line-layout>
                             </ns1:entry>
@@ -58,25 +58,25 @@
                             <ns1:entry>
                                 <ns1:line-layout orientation="horizontal" ns1:height="auto">
                                     <ns1:entry>
-                                        <ns1:widget ns1:id="firstDayThisWeekLB" ns1:height="30px" ns1:width="80px"></ns1:widget>
+                                        <ns1:widget ns1:id="firstDayThisWeekLB" ns1:height="auto" ns1:width="80px"></ns1:widget>
                                     </ns1:entry>
                                         <ns1:entry>
-                                    <ns1:widget ns1:id="secondDayThisWeekLB" ns1:height="30px" ns1:width="80px"></ns1:widget>
+                                    <ns1:widget ns1:id="secondDayThisWeekLB" ns1:height="auto" ns1:width="80px"></ns1:widget>
                                         </ns1:entry>
                                     <ns1:entry>
-                                        <ns1:widget ns1:id="thirdDayThisWeekLB" ns1:height="30px" ns1:width="80px"></ns1:widget>
+                                        <ns1:widget ns1:id="thirdDayThisWeekLB" ns1:height="auto" ns1:width="80px"></ns1:widget>
                                     </ns1:entry>
                                         <ns1:entry>
-                                    <ns1:widget ns1:id="fourthDayThisWeekLB" ns1:height="30px" ns1:width="80px"></ns1:widget>
+                                    <ns1:widget ns1:id="fourthDayThisWeekLB" ns1:height="auto" ns1:width="80px"></ns1:widget>
                                         </ns1:entry>
                                     <ns1:entry>
-                                        <ns1:widget ns1:id="fifthDayThisWeekLB" ns1:height="30px" ns1:width="80px"></ns1:widget>
+                                        <ns1:widget ns1:id="fifthDayThisWeekLB" ns1:height="auto" ns1:width="80px"></ns1:widget>
                                     </ns1:entry>
                                     <ns1:entry>
-                                        <ns1:widget ns1:id="sixthDayThisWeekLB" ns1:height="30px" ns1:width="80px"></ns1:widget>
+                                        <ns1:widget ns1:id="sixthDayThisWeekLB" ns1:height="auto" ns1:width="80px"></ns1:widget>
                                     </ns1:entry>
                                     <ns1:entry>
-                                        <ns1:widget ns1:id="seventhDayThisWeekLB" ns1:height="30px" ns1:width="80px"></ns1:widget>
+                                        <ns1:widget ns1:id="seventhDayThisWeekLB" ns1:height="auto" ns1:width="80px"></ns1:widget>
                                     </ns1:entry>
                                 </ns1:line-layout>             
                             </ns1:entry>
@@ -86,27 +86,27 @@
                             </ns1:entry> 
                             <!-- TABLE -->
                             <ns1:entry>
-                                <ns1:table ns1:id="WeekMealsTB" ns1:height="150px" ns1:width="auto">
+                                <ns1:table ns1:id="WeekMealsTB" ns1:height="200px" ns1:width="auto">
                                     <ns1:column>
-                                        <ns1:widget  ns1:id="Monday" ns1:height="30px" ns1:width="80px"></ns1:widget>
+                                        <ns1:widget  ns1:id="Monday" ns1:height="auto" ns1:width="80px"></ns1:widget>
                                     </ns1:column>
                                     <ns1:column>
-                                        <ns1:widget  ns1:id="Tuesday" ns1:height="30px" ns1:width="80px"></ns1:widget>
+                                        <ns1:widget  ns1:id="Tuesday" ns1:height="auto" ns1:width="80px"></ns1:widget>
                                     </ns1:column>
                                     <ns1:column>
-                                        <ns1:widget  ns1:id="Wednesday" ns1:height="30px" ns1:width="80px"></ns1:widget>
+                                        <ns1:widget  ns1:id="Wednesday" ns1:height="auto" ns1:width="80px"></ns1:widget>
                                     </ns1:column>
                                     <ns1:column>
-                                        <ns1:widget  ns1:id="Thursday" ns1:height="30px" ns1:width="80px"></ns1:widget>
+                                        <ns1:widget  ns1:id="Thursday" ns1:height="auto" ns1:width="80px"></ns1:widget>
                                     </ns1:column>
                                     <ns1:column>
-                                        <ns1:widget  ns1:id="Friday" ns1:height="30px" ns1:width="80px"></ns1:widget>
+                                        <ns1:widget  ns1:id="Friday" ns1:height="auto" ns1:width="80px"></ns1:widget>
                                     </ns1:column>
                                     <ns1:column>
-                                        <ns1:widget  ns1:id="Saturday" ns1:height="30px" ns1:width="80px"></ns1:widget>
+                                        <ns1:widget  ns1:id="Saturday" ns1:height="auto" ns1:width="80px"></ns1:widget>
                                     </ns1:column>
                                     <ns1:column>
-                                        <ns1:widget  ns1:id="Sunday" ns1:height="30px" ns1:width="80px"></ns1:widget>
+                                        <ns1:widget  ns1:id="Sunday" ns1:height="auto" ns1:width="80px"></ns1:widget>
                                     </ns1:column>
                                 </ns1:table>
                             </ns1:entry>
@@ -115,13 +115,13 @@
                                 <ns1:line-layout orientation="vertical" ns1:height="30px"/>
                             </ns1:entry> 
                             <ns1:entry>
-                                <ns1:widget ns1:id="changePasswordBU" ns1:width="100px" ns1:height="30px"></ns1:widget>
+                                <ns1:widget ns1:id="changePasswordBU" ns1:width="130px" ns1:height="auto"></ns1:widget>
                             </ns1:entry>
                             <ns1:entry>
                                 <ns1:line-layout orientation="vertical" ns1:height="15px"/>
                             </ns1:entry> 
                             <ns1:entry>
-                                <ns1:widget ns1:id="logoutBU" ns1:width="100px" ns1:height="30px"></ns1:widget>
+                                <ns1:widget ns1:id="logoutBU" ns1:width="130px" ns1:height="auto"></ns1:widget>
                             </ns1:entry>
                             <!-- END BODY -->
                         </ns1:line-layout>
