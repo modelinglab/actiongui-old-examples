@@ -17,7 +17,7 @@ Label logoIMG {
     }#
 
 Button thisUserUpdateBU {
-    String text := ['Update']
+    String text := locate(Update)
     event onClick {
         #update {
             form: ThisUserFO
@@ -33,7 +33,7 @@ Button thisUserUpdateBU {
 }
 
 Button editUserPeriodsBU {
-    String text := ['Periods']
+    String text := locate(Periods)
     event onClick {
         #forward { target: EditUserPeriodsWI
                    arg: thisUser {value: [$EditUserWI.thisUser$] }
@@ -42,7 +42,7 @@ Button editUserPeriodsBU {
 }
 
 Button editUserRegimenesBU {
-    String text := ['Regimes']
+    String text := locate(Regimens)
     event onClick {
         #forward { target: EditUserRegimenesWI
                    arg: thisUser {value: [$EditUserWI.thisUser$] }
@@ -51,7 +51,7 @@ Button editUserRegimenesBU {
 }
 
 Button countMealsBU {
-    String text := ['Counts']
+    String text := locate(Counts)
     event onClick {
         #forward { target: UserCountMealsWI
                    arg: thisUser {value: [$EditUserWI.thisUser$] 
@@ -62,7 +62,7 @@ Button countMealsBU {
 
 
 Button BackBU {
-    String text := ['Back']
+    String text := locate(Back)
     event onClick {
         back
     }
