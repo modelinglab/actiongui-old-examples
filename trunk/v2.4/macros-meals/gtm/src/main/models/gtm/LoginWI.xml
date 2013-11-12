@@ -20,14 +20,14 @@
                         <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
                             <!-- MIDDLE-LEFT -->
                             <ns1:entry>
-                                <ns1:line-layout orientation="vertical" ns1:width="100px">
+                                <ns1:line-layout orientation="vertical" ns1:width="120px">
                                     <ns1:entry>
                                         <ns1:widget ns1:id="logoIMG"></ns1:widget>
                                     </ns1:entry>
                                 </ns1:line-layout>
                             </ns1:entry>
                             <ns1:entry>
-                                <ns1:line-layout orientation="vertical" ns1:width="30px" />
+                                <ns1:line-layout orientation="vertical" ns1:width="10px" />
                             </ns1:entry>
                             <!-- MIDDLE CENTER -->
                             <ns1:entry>
@@ -38,10 +38,10 @@
                                     <ns1:entry>
                                         <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
                                             <ns1:entry>
-                                                <ns1:widget ns1:id="LoginFO_login_L" ns1:height="30px" ns1:width="80px"></ns1:widget>
+                                                <ns1:widget ns1:id="LoginFO_login_L" ns1:height="auto" ns1:width="80px"></ns1:widget>
                                             </ns1:entry>
                                             <ns1:entry>
-                                                <ns1:widget ns1:id="LoginFO_login" ns1:height="30px" ns1:width="120px"></ns1:widget>
+                                                <ns1:widget ns1:id="LoginFO_login" ns1:height="auto" ns1:width="120px"></ns1:widget>
                                             </ns1:entry>
                                         </ns1:line-layout>
                                     </ns1:entry>
@@ -51,10 +51,10 @@
                                     <ns1:entry>
                                         <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
                                             <ns1:entry>
-                                                <ns1:widget ns1:id="LoginFO_password_L" ns1:height="30px" ns1:width="80px"></ns1:widget>
+                                                <ns1:widget ns1:id="LoginFO_password_L" ns1:height="auto" ns1:width="80px"></ns1:widget>
                                             </ns1:entry>
                                             <ns1:entry>
-                                                <ns1:widget ns1:id="LoginFO_password" ns1:height="30px" ns1:width="120px"></ns1:widget>    
+                                                <ns1:widget ns1:id="LoginFO_password" ns1:height="auto" ns1:width="120px"></ns1:widget>    
                                             </ns1:entry>
                                         </ns1:line-layout>
                                     </ns1:entry>
@@ -63,7 +63,7 @@
                                     </ns1:entry> 
  
                                     <ns1:entry>
-                                        <ns1:widget ns1:id="LoginBU" ns1:height="30px" ns1:width="100px"></ns1:widget>
+                                        <ns1:widget ns1:id="LoginBU" ns1:height="auto" ns1:width="130px"></ns1:widget>
                                     </ns1:entry>
                             </ns1:line-layout>
                         </ns1:entry>

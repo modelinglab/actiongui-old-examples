@@ -1,9 +1,13 @@
 Window MenuDirectorWI  {
     String text := ['Headmaster menu']
     Residence residence
+    String locale := [$residence$.lang]
+
+Label logoIMG {
+}
 
 Button MenuDirector_UserAccountsWI_B {
-    String text := ['Users']
+    String text := locate(Users)
     String error := [null]
     event onClick {
         error := [null]
@@ -14,7 +18,7 @@ Button MenuDirector_UserAccountsWI_B {
 }
 
 Button MenuDirector_GuestAccountsWI_B {
-    String text := ['Guests']
+    String text := locate(Guests)
     String error := [null]
     event onClick {
         error := [null]
@@ -24,7 +28,7 @@ Button MenuDirector_GuestAccountsWI_B {
     }
 }
 Button MenuDirector_ConfigurationWI_B {
-    String text := ['Meals']
+    String text := locate(Meals)
     String error := [null]
     event onClick {
         error := [null]
@@ -34,7 +38,7 @@ Button MenuDirector_ConfigurationWI_B {
     }
 }
 Button MenuDirector_FoodRegimesWI_B {
-    String text := ['Regimes']
+    String text := locate(Regimens)
     String error := [null]
     event onClick {
         error := [null]
@@ -44,7 +48,7 @@ Button MenuDirector_FoodRegimesWI_B {
     }
 }
 Button MenuDirector_ContractsWI_B {
-    String text := ['Contracts']
+    String text := locate(Contracts)
     String error := [null]
     event onClick {
         error := [null]
@@ -54,7 +58,7 @@ Button MenuDirector_ContractsWI_B {
     }
 }
 Button MenuDirector_ChangePasswordWI_B {
-    String text := ['Password']
+    String text := locate(Password)
     String error := [null]
     event onClick {
         error := [null]
@@ -64,7 +68,7 @@ Button MenuDirector_ChangePasswordWI_B {
     }
 }
 Button MenuDirector_CountMealsWI_B {
-    String text := ['Counts']
+    String text := locate(Counts)
     String error := [null]
     event onClick {
         error := [null]
@@ -74,7 +78,7 @@ Button MenuDirector_CountMealsWI_B {
     }
 }
 Button MenuDirector_ListDinersWI_B {
-    String text := ['Lists']
+    String text := locate(Lists)
     String error := [null]
     event onClick {
         error := [null]
@@ -84,7 +88,7 @@ Button MenuDirector_ListDinersWI_B {
     }
 }
 Button MenuDirector_ChangeZoneWI_B {
-    String text := ['Time zone']
+    String text := locate(TimeZone)
     String error := [null]
     event onClick {
         error := [null]
@@ -95,7 +99,7 @@ Button MenuDirector_ChangeZoneWI_B {
 }
 
 Button Menu_Director_Back_B {
-    String text := ['Logout']
+    String text := locate(Logout)
     event onClick {
         exit
     }

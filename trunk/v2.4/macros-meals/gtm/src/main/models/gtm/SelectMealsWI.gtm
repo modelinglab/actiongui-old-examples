@@ -1,12 +1,14 @@
 Window SelectMealsWI  {
     Residence residence
     ZoneId zone := [$residence$.zone]
+    String locale := [$residence$.lang]
     LocalDateTime selDate := [LocalDateTime.now($zone$).toLocalDate().atStartOfDay()] 
     DayOfWeek selDateDayOfWeek := [$selDate$.getDayOfWeek()] 
     // we want to start on Monday:
     // getValue(): the values are numbered following the ISO-8601 standard, from 1 (Monday) to 7 (Sunday)
     // The following line code does not work: Source was evaluated to DayOfWeek::FRIDAY with type 'DayOfWeek' does not conform to DayOfWeek.
     // LocalDateTime selDateWeekFirstDay := [$selDate$.plusDays(1-$selDateDayOfWeek$.getValue())]
+
 
     LocalDateTime selDateWeekFirstDay := //gortiz: there have to be other better ways to do that (ej: using DayOfWeek#getValue())
         [ 
@@ -29,7 +31,7 @@ Window SelectMealsWI  {
     }
 
     Button NextWeekBU {
-        String text := ['Next'] 
+        String text := locate(Next) 
         //[Date.now().getDayOfWeek().toString()]
         event onClick {
               SelectMealsWI.selDate := [$SelectMealsWI.selDate$.plusDays(7)]
@@ -37,7 +39,7 @@ Window SelectMealsWI  {
     }
 
     Button PreviousWeekBU {
-        String text := ['Prev']
+        String text := locate(Prev)
         event onClick {
               SelectMealsWI.selDate := [$SelectMealsWI.selDate$.plusDays(-7)]
         }
@@ -97,6 +99,14 @@ Window SelectMealsWI  {
     Table WeekMealsTB {
         OrderedSet(Meal) rows := [$SelectMealsWI.residence$.meals->sortedBy(position)]
         OrderedSet(Meal) selected := [null]
+        String AMonday := locate(AMonday)
+        String ATuesday := locate(ATuesday)
+        String AWednesday := locate(AWednesday)
+        String AThursday := locate(AThursday)
+        String AFriday := locate(AFriday)
+        String ASaturday := locate(ASaturday)
+        String ASunday := locate(ASunday)
+
         columns {
         ['Mo'] : ComboBox Monday {
                             LocalDateTime thisDate := [$SelectMealsWI.selDateWeekFirstDay$]
@@ -576,7 +586,7 @@ Window SelectMealsWI  {
     }
 
     Button changePasswordBU {
-        String text := ['Settings']
+        String text := locate(Preferences)
 
         event onClick {
             open ChangePasswordWI()
@@ -584,7 +594,7 @@ Window SelectMealsWI  {
     }
 
     Button logoutBU {
-        String text := ['Log out']
+        String text := locate(Logout)
 
         event onClick {
             exit
