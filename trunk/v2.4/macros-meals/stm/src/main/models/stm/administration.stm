@@ -150,7 +150,7 @@ role DIRECTOR {
 
 role RESIDENT {
     Residence {
-        read(zone), read(meals) constrainedBy [self.users->includes(caller)]
+        read(zone), read(lang), read(meals) constrainedBy [self.users->includes(caller)]
     }
     MealOption {
         fullAccess
@@ -294,7 +294,7 @@ role ADMINISTRATION {
         fullAccess
     }
     Residence {
-        read(zone), read(meals), read(users), read(guests) constrainedBy [self.users->includes(caller)]
+        read(zone), read(lang), read(meals), read(users), read(guests) constrainedBy [self.users->includes(caller)]
     }
     Meal {
         fullAccess
