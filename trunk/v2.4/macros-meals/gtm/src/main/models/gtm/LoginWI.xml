@@ -5,76 +5,84 @@
     xmlns:ns1='http://actiongui.org/schemes/ag-layout/2.4'
     xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://www.actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
  <ns1:line-layout orientation="horizontal" ns1:height="100%">
+     <!-- LEFT PANNEL -->
      <ns1:entry>
-         <ns1:line-layout orientation="horizontal" ns1:width="30px"/>
+         <ns1:line-layout orientation="horizontal" ns1:width="30px" ns1:height="auto"/>
      </ns1:entry>
-     <!-- CENTER -->
+     <!-- CENTRAL PANNEL -->
     <ns1:entry>
         <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="1200px">   
-            <!-- TOP -->
+            <!-- TOP (CENTER PANNEL) -->
             <ns1:entry>
                 <ns1:line-layout orientation="vertical" ns1:height="30px"/>
             </ns1:entry> 
-        <!-- MIDDLE -->
+            <!-- MIDDLE (CENTER PANNEL) -->
+            <ns1:entry>
+                <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
+                    <!-- LEFT (MIDDLE CENTER PANNEL)-->
                     <ns1:entry>
-                        <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
-                            <!-- MIDDLE-LEFT -->
+                        <ns1:line-layout orientation="vertical" ns1:width="120px">
                             <ns1:entry>
-                                <ns1:line-layout orientation="vertical" ns1:width="120px">
+                                <ns1:widget ns1:id="logoIMG"></ns1:widget>
+                            </ns1:entry>
+                        </ns1:line-layout>
+                    </ns1:entry>
+                    <!-- END LEFT (MIDDLE CENTER PANNEL) -->
+                    <!-- SEPARATOR (MIDDLE CENTER PANNEL) -->
+                    <ns1:entry>
+                        <ns1:line-layout orientation="vertical" ns1:width="10px" />
+                    </ns1:entry>
+                    <!-- END SEPARATOR (MIDDLE CENTER PANNEL) -->
+                    <!-- CENTER (MIDDLE CENTER PANNEL) -->
+                    <ns1:entry>
+                        <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto">
+                            <!-- -->    
+                            <!-- WINDOW -->
+                            <ns1:entry>
+                                <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
                                     <ns1:entry>
-                                        <ns1:widget ns1:id="logoIMG"></ns1:widget>
+                                        <ns1:widget ns1:id="LoginFO_login_L" ns1:height="auto" ns1:width="80px"></ns1:widget>
+                                    </ns1:entry>
+                                    <ns1:entry>
+                                        <ns1:widget ns1:id="LoginFO_login" ns1:height="auto" ns1:width="120px"></ns1:widget>
                                     </ns1:entry>
                                 </ns1:line-layout>
                             </ns1:entry>
                             <ns1:entry>
-                                <ns1:line-layout orientation="vertical" ns1:width="10px" />
-                            </ns1:entry>
-                            <!-- MIDDLE CENTER -->
+                                <ns1:line-layout orientation="vertical" ns1:height="15px"/>
+                            </ns1:entry> 
                             <ns1:entry>
-                                <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto">
+                                <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
                                     <ns1:entry>
-                                        <ns1:line-layout orientation="vertical" ns1:height="15px"/>
+                                        <ns1:widget ns1:id="LoginFO_password_L" ns1:height="auto" ns1:width="80px"></ns1:widget>
                                     </ns1:entry>
                                     <ns1:entry>
-                                        <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
-                                            <ns1:entry>
-                                                <ns1:widget ns1:id="LoginFO_login_L" ns1:height="auto" ns1:width="80px"></ns1:widget>
-                                            </ns1:entry>
-                                            <ns1:entry>
-                                                <ns1:widget ns1:id="LoginFO_login" ns1:height="auto" ns1:width="120px"></ns1:widget>
-                                            </ns1:entry>
-                                        </ns1:line-layout>
+                                        <ns1:widget ns1:id="LoginFO_password" ns1:height="auto" ns1:width="120px"></ns1:widget>    
                                     </ns1:entry>
-                                    <ns1:entry>
-                                        <ns1:line-layout orientation="vertical" ns1:height="15px"/>
-                                    </ns1:entry> 
-                                    <ns1:entry>
-                                        <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
-                                            <ns1:entry>
-                                                <ns1:widget ns1:id="LoginFO_password_L" ns1:height="auto" ns1:width="80px"></ns1:widget>
-                                            </ns1:entry>
-                                            <ns1:entry>
-                                                <ns1:widget ns1:id="LoginFO_password" ns1:height="auto" ns1:width="120px"></ns1:widget>    
-                                            </ns1:entry>
-                                        </ns1:line-layout>
-                                    </ns1:entry>
-                                    <ns1:entry>
-                                        <ns1:line-layout orientation="vertical" ns1:height="15px"/>
-                                    </ns1:entry> 
- 
-                                    <ns1:entry>
-                                        <ns1:widget ns1:id="LoginBU" ns1:height="auto" ns1:width="130px"></ns1:widget>
-                                    </ns1:entry>
-                            </ns1:line-layout>
-                        </ns1:entry>
-                        <!-- END MIDDLE-CENTER -->
-                    </ns1:line-layout>
-                </ns1:entry>
-            </ns1:line-layout>
-        </ns1:entry>
-        <!-- END CENTER -->
+                                </ns1:line-layout>
+                            </ns1:entry>
+                            <ns1:entry>
+                                <ns1:line-layout orientation="vertical" ns1:height="15px"/>
+                            </ns1:entry> 
+
+                            <ns1:entry>
+                                <ns1:widget ns1:id="LoginBU" ns1:height="auto" ns1:width="130px"></ns1:widget>
+                            </ns1:entry>
+                            <!-- -->
+                        </ns1:line-layout>
+                    </ns1:entry>
+                    <!-- END CENTER (MIDDLE CENTER PANNEL) -->
+                </ns1:line-layout>
+            </ns1:entry>
+            <!-- END MIDDLE (CENTER PANNEL) -->
+        </ns1:line-layout>
+    </ns1:entry>
+    <!-- END CENTRAL PANNEL -->
+    <!-- RIGHT PANNEL -->
     <ns1:entry expand-ratio="1">
         <ns1:line-layout orientation="horizontal"/>
     </ns1:entry>
+    <!-- END RIGHT PANNEL -->
 </ns1:line-layout>
 </ns1:window-layout>
+
