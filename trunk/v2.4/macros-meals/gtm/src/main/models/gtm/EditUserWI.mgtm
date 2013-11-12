@@ -1,7 +1,11 @@
 Window EditUserWI {
     Residence residence
+    String locale := [$residence$.lang]
+
     User thisUser
 
+Label logoIMG {
+}
     #form ThisUserFO {
     entity: User
         instance: [$EditUserWI.thisUser$]
