@@ -23,7 +23,7 @@ Button thisUserUpdateBU {
             form: ThisUserFO
             assert: [$ThisUserFO_login.text$ <> ''] {
                 message: ['The login can not be empty']
-                assert: [$ThisUserFO_login.text$ <> $EditUserWI.thisUser$.login implies $EditUserWI.residence$.users->forAll(u|u.login <> $ThisUserFO_login.text$)] {
+                assert: [$ThisUserFO_login.text$ <> $EditUserWI.thisUser$.login implies User.allInstances()->forAll(u|u.login <> $ThisUserFO_login.text$)] {
                     message: ['There is already a user with this login. Please, use a different login.']
                 } 
             }
