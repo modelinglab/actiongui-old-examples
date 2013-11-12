@@ -24,9 +24,9 @@ Table ContractItemsTB {
                          }                   
                     else {
                         try {
-                            foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.row$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.row$.mealOption and ms.ownedBy.date.getDayOfWeek() = DayOfWeek::MONDAY)] {
-                                delete [$selection$]
-                            }
+                           // foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.row$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.row$.mealOption and ms.ownedBy.date.getDayOfWeek() = DayOfWeek::MONDAY)] {
+                           //     delete [$selection$]
+                           // }
                             [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::MONDAY)]
                         }
                         catch(SecurityException) {
@@ -50,9 +50,9 @@ Table ContractItemsTB {
                          }                   
                     else {
                         try {
-                            foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.row$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.row$.mealOption and ms.ownedBy.date.getDayOfWeek() = DayOfWeek::TUESDAY)] {
-                                delete [$selection$]
-                            }
+                            //foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.row$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.row$.mealOption and ms.ownedBy.date.getDayOfWeek() = DayOfWeek::TUESDAY)] {
+                            //    delete [$selection$]
+                            //}
                             [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::TUESDAY)]
                         }
                         catch(SecurityException) {
@@ -76,9 +76,9 @@ Table ContractItemsTB {
                          }                   
                     else {
                         try {
-                            foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.row$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.row$.mealOption and ms.ownedBy.date.getDayOfWeek() = DayOfWeek::WEDNESDAY)] {
-                                delete [$selection$]
-                            }
+                            //foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.row$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.row$.mealOption and ms.ownedBy.date.getDayOfWeek() = DayOfWeek::WEDNESDAY)] {
+                            //    delete [$selection$]
+                            //}
                             [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::WEDNESDAY)]
                         }
                         catch(SecurityException) {
@@ -102,9 +102,9 @@ Table ContractItemsTB {
                          }                   
                     else {
                         try {
-                            foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.row$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.row$.mealOption and ms.ownedBy.date.getDayOfWeek() = DayOfWeek::THURSDAY)] {
-                                delete [$selection$]
-                            }
+                           // foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.row$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.row$.mealOption and ms.ownedBy.date.getDayOfWeek() = DayOfWeek::THURSDAY)] {
+                           //     delete [$selection$]
+                            //}
                             [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::THURSDAY)]
                         }
                         catch(SecurityException) {
@@ -128,9 +128,9 @@ Table ContractItemsTB {
                          }                   
                     else {
                         try {
-                            foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.row$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.row$.mealOption and ms.ownedBy.date.getDayOfWeek() = DayOfWeek::FRIDAY)] {
-                                delete [$selection$]
-                            }
+                            //foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.row$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.row$.mealOption and ms.ownedBy.date.getDayOfWeek() = DayOfWeek::FRIDAY)] {
+                            //    delete [$selection$]
+                            //}
                             [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::FRIDAY)]
                         }
                         catch(SecurityException) {
@@ -154,9 +154,9 @@ Table ContractItemsTB {
                          }                   
                     else {
                         try {
-                            foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.row$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.row$.mealOption and ms.ownedBy.date.getDayOfWeek() = DayOfWeek::SATURDAY)] {
-                                delete [$selection$]
-                            }
+                            //foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.row$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.row$.mealOption and ms.ownedBy.date.getDayOfWeek() = DayOfWeek::SATURDAY)] {
+                            //    delete [$selection$]
+                            //}
                             [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::SATURDAY)]
                         }
                         catch(SecurityException) {
@@ -180,9 +180,9 @@ Table ContractItemsTB {
                          }                   
                     else {
                         try {
-                            foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.row$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.row$.mealOption and ms.ownedBy.date.getDayOfWeek() = DayOfWeek::SUNDAY)] {
-                                delete [$selection$]
-                            }
+                            //foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.row$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.row$.mealOption and ms.ownedBy.date.getDayOfWeek() = DayOfWeek::SUNDAY)] {
+                            //    delete [$selection$]
+                            //}
                             [$ContractItemsTB.row$.days] := [$ContractItemsTB.row$.days->excluding(DayOfWeek::SUNDAY)]
                         }
                         catch(SecurityException) {
@@ -247,9 +247,9 @@ Button DeleteContractOptionBU {
         }
         else {
             try {
-                foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.selected$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.selected$.mealOption and $ContractItemsTB.selected$.days->includes(ms.ownedBy.date.getDayOfWeek()))] {
-                    delete [$selection$]
-                }
+                //foreach selection in [$EditContractWI.residence$.users.dailyMeals->union($EditContractWI.residence$.guests.dailyMeals)->select(dms|$ContractItemsTB.selected$.includedIn.ownedBy->exists(p|dms.date.toLocalDate().atStartOfDay() >= p.start.toLocalDate().atStartOfDay() and dms.date.toLocalDate().atStartOfDay() <= p.end.toLocalDate().atStartOfDay())).selections->select(ms|ms.mealOption = $ContractItemsTB.selected$.mealOption and $ContractItemsTB.selected$.days->includes(ms.ownedBy.date.getDayOfWeek()))] {
+                //    delete [$selection$]
+                //}
                 delete [$ContractItemsTB.selected$]
                 reevaluate ContractItemsTB.rows
             }
