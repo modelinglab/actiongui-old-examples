@@ -170,9 +170,9 @@ Button ModifyPeriodBU {
                                         delete [$selection$]
                                     }
                                     // delete all meal selections that are not included in the new contract of the period
-                                    foreach selection2 in [$EditUserPeriodsWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $thisPeriod$.start.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $thisPeriod$.end.toLocalDate().atStartOfDay()).selections->asSet()->reject(ms|$ContractsUpdateCB.selected$.options->select(co|co.mealOption = ms.mealOption).days->includes(ms.ownedBy.date.getDayOfWeek()))] {
-                                        delete [$selection2$]
-                                    }
+                                    //foreach selection2 in [$EditUserPeriodsWI.thisUser$.dailyMeals->select(d|d.date.toLocalDate().atStartOfDay() >= $thisPeriod$.start.toLocalDate().atStartOfDay() and d.date.toLocalDate().atStartOfDay() <= $thisPeriod$.end.toLocalDate().atStartOfDay()).selections->asSet()->reject(ms|$ContractsUpdateCB.selected$.options->select(co|co.mealOption = ms.mealOption).days->includes(ms.ownedBy.date.getDayOfWeek()))] {
+                                    //    delete [$selection2$]
+                                    //}
 
                                     [$thisPeriod$.start] := [$UpdatePeriodFO_start.value$.toLocalDate().atStartOfDay()]
                                     [$thisPeriod$.end] := [$UpdatePeriodFO_end.value$.toLocalDate().atStartOfDay()]
