@@ -1,7 +1,10 @@
 Window CreateUserWI {
     Residence residence
+    String locale := [$residence$.lang]
     String text := ['User management']
 
+Label logoIMG {
+}
     #form CreateFO {
         entity: User
         prop: name {label: ['Name: '] 
@@ -21,7 +24,7 @@ Window CreateUserWI {
     }#
 
 Button CreateBU {
-    String text := ['Create']
+    String text := locate(Create)
     User newUser
     event onClick {
         #create {
@@ -44,7 +47,7 @@ Button CreateBU {
 }
 
 Button BackBU {
-    String text := ['Back']
+    String text := locate(Back)
     event onClick {
         back
     }
