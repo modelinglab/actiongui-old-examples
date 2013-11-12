@@ -1,6 +1,9 @@
 Window UserAccountsWI {
     Residence residence
+    String locale := [$residence$.lang]
 
+Label logoIMG {
+}
     #table UsersTB {
         entity: User
         rows : [$UserAccountsWI.residence$.users]
@@ -13,14 +16,14 @@ Window UserAccountsWI {
     }#
 
 Button CreateBU {
-    String text := ['Create']
+    String text := locate(Create)
     event onClick {
         open CreateUserWI (residence: [$UserAccountsWI.residence$])
         }
     }
 
 Button EditBU {
-    String text := ['Edit']
+    String text := locate(Select)
     event onClick {
         #forward {
             target: EditUserWI
@@ -38,7 +41,7 @@ Button EditBU {
 }
 
 Button BackBU {
-    String text := ['Back']
+    String text := locate(Back)
     event onClick {
         back
     }
