@@ -9,6 +9,7 @@
     background-color: white;
     border-color: #000000;
     border-width: thin;
+    border-style: solid;
     font-family: Arial, sans-serif;
     font-size: 12px;
 }
@@ -117,5 +118,19 @@
     background: #fff   ;
 }
 
-    
- 
+.v-panel-UserAccountsWI {
+    background: #fff   ;
+}
+
+.v-panel-editUserWI {
+    background: #fff   ;
+}
+
+.v-panel-CreateUserWI {
+    background: #fff   ;
+}
+
+
+.v-panel-EditUserWI {
+    background: #fff   ;
+}
