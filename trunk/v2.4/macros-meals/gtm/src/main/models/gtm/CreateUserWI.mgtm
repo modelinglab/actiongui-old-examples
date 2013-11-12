@@ -34,7 +34,7 @@ Button CreateBU {
                 message: ['Please, select a role']
                 assert: [$CreateFO_login.text$ <> '' ] {
                     message: ['The login can not be empty']
-                    assert: [$CreateUserWI.residence$.users->forAll(u| u.login <> $CreateFO_login.text$)] {
+                    assert: [User.allInstances()->forAll(u| u.login <> $CreateFO_login.text$)] {
                         message: ['The selected login is already in use']
                     }
                 }
