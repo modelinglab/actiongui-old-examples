@@ -1,115 +1,129 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<ns1:window-layout
-    ns1:id="EditContractWI"
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!-- was: no XML declaration present -->
+<ns1:window-layout ns1:id="EditContractWI"
     xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
     xmlns:ns1='http://actiongui.org/schemes/ag-layout/2.4'
-    xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
-    
-    <ns1:line-layout orientation="horizontal" ns1:height="100%">
-        <ns1:entry expand-ratio="1">
-            <ns1:line-layout orientation="horizontal"/>
-        </ns1:entry>
-        <ns1:entry>
-            <ns1:line-layout orientation="vertical" ns1:height="100%" ns1:width="1200px">
-                <ns1:entry expand-ratio="1">
-                    <ns1:line-layout orientation="horizontal"/>
-                </ns1:entry>
-                <ns1:entry>
-                    <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="100%">
-                        <ns1:entry expand-ratio="1">
-                            <ns1:line-layout orientation="horizontal"/>
-                        </ns1:entry>
-                        <ns1:entry>
-                            <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="100%">
-                                <ns1:entry>
-                                    <ns1:table ns1:id="ContractItemsTB" ns1:width="100%" ns1:height="300px">
-                                        <ns1:column>
-                                            <ns1:widget ns1:id="Literal" ns1:width="100%" ns1:height="30px"/>
-                                        </ns1:column>
-                                        <ns1:column>
-                                            <ns1:widget ns1:id="Option" ns1:width="100%" ns1:height="30px"/>
-                                        </ns1:column>
-                                        <ns1:column>
-                                            <ns1:widget ns1:id="Monday" ns1:width="100%" ns1:height="auto"/>
-                                        </ns1:column>
-                                        <ns1:column>
-                                            <ns1:widget ns1:id="Tuesday" ns1:width="100%" ns1:height="auto"/>
-                                        </ns1:column>
-                                        <ns1:column>
-                                            <ns1:widget ns1:id="Wednesday" ns1:width="100%" ns1:height="auto"/>
-                                        </ns1:column>
-                                        <ns1:column>
-                                            <ns1:widget ns1:id="Thursday" ns1:width="100%" ns1:height="auto"/>
-                                        </ns1:column>
-                                        <ns1:column>
-                                            <ns1:widget ns1:id="Friday" ns1:width="100%" ns1:height="auto"/>
-                                        </ns1:column>
-                                        <ns1:column>
-                                            <ns1:widget ns1:id="Saturday" ns1:width="100%" ns1:height="auto"/>
-                                        </ns1:column>
-                                        <ns1:column>
-                                            <ns1:widget ns1:id="Sunday" ns1:width="100%" ns1:height="auto"/>
-                                        </ns1:column>
-                                    </ns1:table>
-                                </ns1:entry>
-                                <ns1:entry>
-                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
-                                </ns1:entry>
-                                <ns1:entry>
-                                    <ns1:table ns1:id="MealsTB" ns1:width="100%" ns1:height="200px">
-                                        <ns1:column>
-                                            <ns1:widget ns1:id="Meals" ns1:width="100%" ns1:height="30px"/>
-                                        </ns1:column>
-                                    </ns1:table>
-                                </ns1:entry>
-                                <ns1:entry>
-                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
-                                </ns1:entry>
-                                <ns1:entry>
-                                    <ns1:table ns1:id="MealOptionsTB" ns1:width="100%" ns1:height="200px">
-                                        <ns1:column>
-                                            <ns1:widget ns1:id="Options" ns1:width="100%" ns1:height="30px"/>
-                                        </ns1:column>
-                                    </ns1:table>
-                                </ns1:entry>
-                                <ns1:entry>
-                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
-                                </ns1:entry>
-                                <ns1:entry>
-                                    <ns1:widget ns1:id="NewContractOptionBU" ns1:width="100%" ns1:height="30px"/>
-                                </ns1:entry>
-                                <ns1:entry>
-                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
-                                </ns1:entry>
-                                <ns1:entry>
-                                    <ns1:widget ns1:id="DeleteContractOptionBU" ns1:width="100%" ns1:height="30px"/>
-                                </ns1:entry>
-                                <ns1:entry>
-                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
-                                </ns1:entry>
-                                <ns1:entry>
-                                    <ns1:widget ns1:id="BackBU" ns1:width="100%" ns1:height="30px"/>
-                                </ns1:entry>
-                                <ns1:entry>
-                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
-                                </ns1:entry>
-                            </ns1:line-layout>
-                        </ns1:entry>
-                        <ns1:entry expand-ratio="1">
-                            <ns1:line-layout orientation="horizontal"/>
-                        </ns1:entry>
-                    </ns1:line-layout>
-                </ns1:entry>
-                <ns1:entry expand-ratio="1">
-                    <ns1:line-layout orientation="horizontal"/>
-                </ns1:entry>
-            </ns1:line-layout>
-        </ns1:entry>
-        <ns1:entry expand-ratio="1">
-            <ns1:line-layout orientation="horizontal"/>
-        </ns1:entry>
-    </ns1:line-layout>
-
+    xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://www.actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
+ <ns1:line-layout orientation="horizontal" ns1:height="100%">
+     <!-- LEFT PANNEL -->
+     <ns1:entry>
+         <ns1:line-layout orientation="horizontal" ns1:width="30px" ns1:height="auto"/>
+     </ns1:entry>
+     <!-- CENTRAL PANNEL -->
+    <ns1:entry>
+        <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="1200px">   
+            <!-- TOP (CENTER PANNEL) -->
+            <ns1:entry>
+                <ns1:line-layout orientation="vertical" ns1:height="30px"/>
+            </ns1:entry> 
+            <!-- MIDDLE (CENTER PANNEL) -->
+            <ns1:entry>
+                <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
+                    <!-- LEFT (MIDDLE CENTER PANNEL)-->
+                    <ns1:entry>
+                        <ns1:line-layout orientation="vertical" ns1:width="120px">
+                            <ns1:entry>
+                                <ns1:widget ns1:id="logoIMG"></ns1:widget>
+                            </ns1:entry>
+                        </ns1:line-layout>
+                    </ns1:entry>
+                    <!-- END LEFT (MIDDLE CENTER PANNEL) -->
+                    <!-- SEPARATOR (MIDDLE CENTER PANNEL) -->
+                    <ns1:entry>
+                        <ns1:line-layout orientation="vertical" ns1:width="10px" />
+                    </ns1:entry>
+                    <!-- END SEPARATOR (MIDDLE CENTER PANNEL) -->
+                    <!-- CENTER (MIDDLE CENTER PANNEL) -->
+                    <ns1:entry>
+                        <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto">
+                            <!-- -->    
+                            <!-- WINDOW -->
+                                    <ns1:entry>
+                                        <ns1:table ns1:id="ContractItemsTB" ns1:width="800px" ns1:height="300px">
+                                            <ns1:column>
+                                                <ns1:widget ns1:id="Literal" ns1:width="200px" ns1:height="auto"/>
+                                            </ns1:column>
+                                            <ns1:column>
+                                                <ns1:widget ns1:id="Option"  ns1:width="200px" ns1:height="auto"/>
+                                            </ns1:column>
+                                            <ns1:column>
+                                                <ns1:widget ns1:id="Monday"  ns1:width="30px" ns1:height="auto"/>
+                                            </ns1:column>
+                                            <ns1:column>
+                                                <ns1:widget ns1:id="Tuesday" ns1:width="30px" ns1:height="auto"/>
+                                            </ns1:column>
+                                            <ns1:column>
+                                                <ns1:widget ns1:id="Wednesday" ns1:width="30px" ns1:height="auto"/>
+                                            </ns1:column>
+                                            <ns1:column>
+                                                <ns1:widget ns1:id="Thursday" ns1:width="30px"  ns1:height="auto"/>
+                                            </ns1:column>
+                                            <ns1:column>
+                                                <ns1:widget ns1:id="Friday" ns1:width="30px"  ns1:height="auto"/>
+                                            </ns1:column>
+                                            <ns1:column>
+                                                <ns1:widget ns1:id="Saturday" ns1:width="30px"  ns1:height="auto"/>
+                                            </ns1:column>
+                                            <ns1:column>
+                                                <ns1:widget ns1:id="Sunday" ns1:width="30px"  ns1:height="auto"/>
+                                            </ns1:column>
+                                        </ns1:table>
+                                    </ns1:entry>
+                                    <ns1:entry>
+                                        <ns1:line-layout orientation="vertical" ns1:height="30px"/>
+                                    </ns1:entry>
+                                    <ns1:entry>
+                                        <ns1:table ns1:id="MealsTB"  ns1:width="auto" ns1:height="200px">
+                                            <ns1:column>
+                                                <ns1:widget ns1:id="Meals" ns1:width="400px" ns1:height="auto"/>
+                                            </ns1:column>
+                                        </ns1:table>
+                                    </ns1:entry>
+                                    <ns1:entry>
+                                        <ns1:line-layout orientation="vertical" ns1:height="15px"/>
+                                    </ns1:entry>
+                                    <ns1:entry>
+                                        <ns1:table ns1:id="MealOptionsTB" ns1:width="auto" ns1:height="200px">
+                                            <ns1:column>
+                                                <ns1:widget ns1:id="Options" ns1:width="400px" ns1:height="auto"/>
+                                            </ns1:column>
+                                        </ns1:table>
+                                    </ns1:entry>
+                                    <ns1:entry>
+                                        <ns1:line-layout orientation="vertical" ns1:height="15px"/>
+                                    </ns1:entry>
+                                    <ns1:entry>
+                                        <ns1:widget ns1:id="NewContractOptionBU" ns1:width="130px" ns1:height="auto"/>
+                                    </ns1:entry>
+                                    <ns1:entry>
+                                        <ns1:line-layout orientation="vertical" ns1:height="15px"/>
+                                    </ns1:entry>
+                                    <ns1:entry>
+                                        <ns1:widget ns1:id="DeleteContractOptionBU" ns1:width="130px" ns1:height="auto"/>
+                                    </ns1:entry>
+                                    <ns1:entry>
+                                        <ns1:line-layout orientation="vertical" ns1:height="15px"/>
+                                    </ns1:entry>
+                                    <ns1:entry>
+                                        <ns1:widget ns1:id="BackBU" ns1:width="130px" ns1:height="auto"/>
+                                    </ns1:entry>
+                            <!-- -->
+                        </ns1:line-layout>
+                    </ns1:entry>
+                    <!-- END CENTER (MIDDLE CENTER PANNEL) -->
+                </ns1:line-layout>
+            </ns1:entry>
+            <!-- END MIDDLE (CENTER PANNEL) -->
+        </ns1:line-layout>
+    </ns1:entry>
+    <!-- END CENTRAL PANNEL -->
+    <!-- RIGHT PANNEL -->
+    <ns1:entry expand-ratio="1">
+        <ns1:line-layout orientation="horizontal"/>
+    </ns1:entry>
+    <!-- END RIGHT PANNEL -->
+</ns1:line-layout>
 </ns1:window-layout>
+
+
 

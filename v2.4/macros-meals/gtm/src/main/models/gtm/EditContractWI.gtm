@@ -1,7 +1,12 @@
 Window EditContractWI {
     String text := ['Edit contract']
     Residence residence
+    String locale := [$residence$.lang]
+
     Contract thisContract
+
+Label logoIMG {
+}
 
 Table ContractItemsTB {
     Set(ContractOption) rows := [$EditContractWI.thisContract$.options]
@@ -9,7 +14,7 @@ Table ContractItemsTB {
     columns {
         ['Meal'] : Label Literal { String text := [$ContractItemsTB.row$.mealOption.ownedBy.literal] }
         ['Options'] : Label Option { String text := [$ContractItemsTB.row$.mealOption.literal] }
-        ['Monday'] : BooleanField Monday { 
+        ['Mo'] : BooleanField Monday { 
             Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::MONDAY)) then true else null endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
@@ -35,7 +40,7 @@ Table ContractItemsTB {
                     }
 
         } } } 
- ['Tuesday'] : BooleanField Tuesday { 
+ ['Tu'] : BooleanField Tuesday { 
             Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::TUESDAY)) then true else null endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
@@ -61,7 +66,7 @@ Table ContractItemsTB {
                     }
 
         } } } 
- ['Wednesday'] : BooleanField Wednesday { 
+ ['We'] : BooleanField Wednesday { 
             Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::WEDNESDAY)) then true else null endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
@@ -87,7 +92,7 @@ Table ContractItemsTB {
                     }
 
         } } } 
- ['Thursday'] : BooleanField Thursday { 
+ ['Th'] : BooleanField Thursday { 
             Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::THURSDAY)) then true else null endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
@@ -113,7 +118,7 @@ Table ContractItemsTB {
                     }
 
         } } } 
- ['Friday'] : BooleanField Friday { 
+ ['Fr'] : BooleanField Friday { 
             Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::FRIDAY)) then true else null endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
@@ -139,7 +144,7 @@ Table ContractItemsTB {
                     }
 
         } } } 
- ['Saturday'] : BooleanField Saturday { 
+ ['Sa'] : BooleanField Saturday { 
             Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::SATURDAY)) then true else null endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
@@ -165,7 +170,7 @@ Table ContractItemsTB {
                     }
 
         } } } 
- ['Sunday'] : BooleanField Sunday { 
+ ['Su'] : BooleanField Sunday { 
             Boolean value := [if ($ContractItemsTB.row$.days->includes(DayOfWeek::SUNDAY)) then true else null endif] 
                 {
                 if [not($value$.oclIsUndefined())] 
@@ -217,7 +222,7 @@ Table MealOptionsTB {
 
 
 Button NewContractOptionBU {
-    String text := ['New option']
+    String text := locate(Create)
     event onClick {
     if [$MealsTB.selected$.oclIsUndefined()] {
         notification(['Error'], ['Please, select first a meal'], [0])
@@ -240,7 +245,7 @@ Button NewContractOptionBU {
 
 
 Button DeleteContractOptionBU {
-    String text := ['Delete option']
+    String text := locate(Delete)
     event onClick {
         if [$ContractItemsTB.selected$.oclIsUndefined()] {
             notification(['Error'], ['Please, selected first a contract option.'], [0] )
@@ -262,7 +267,7 @@ Button DeleteContractOptionBU {
 }
 
 Button BackBU {
-    String text := ['Back']
+    String text := locate(Back)
     event onClick {
         back
     }
