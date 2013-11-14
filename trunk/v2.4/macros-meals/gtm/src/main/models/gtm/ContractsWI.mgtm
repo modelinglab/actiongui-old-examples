@@ -1,12 +1,15 @@
 Window ContractsWI {
     String text := ['Contracts']
     Residence residence
+    String locale := [$residence$.lang]
+
+Label logoIMG {
+}
 
      #table ContractsTB {
         entity: Contract
         rows : [$ContractsWI.residence$.contracts]
         column : name {label : ['Name'] }
-        size : [10]
         selection: SINGLE
     }#
 
@@ -16,7 +19,7 @@ Window ContractsWI {
     }#
 
 Button NewContractBU {
-        String text := ['New contract']
+        String text := locate(Create)
         Contract newContract
         event onClick {
             #create {
@@ -39,7 +42,7 @@ Button NewContractBU {
     }
 
 Button EditBU {
-    String text := ['Edit']
+    String text := locate(Edit)
     event onClick {
         #forward {
             target: EditContractWI
@@ -58,7 +61,7 @@ Button EditBU {
 
 
 Button BackBU {
-    String text := ['Back']
+    String text := locate(Back)
     event onClick {
         back
     }
