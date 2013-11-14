@@ -21,7 +21,7 @@
                 <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
                     <!-- LEFT (MIDDLE CENTER PANNEL)-->
                     <ns1:entry>
-                        <ns1:line-layout orientation="vertical" ns1:width="100px">
+                        <ns1:line-layout orientation="vertical" ns1:width="120px">
                             <ns1:entry>
                                 <ns1:widget ns1:id="logoIMG"></ns1:widget>
                             </ns1:entry>
@@ -30,7 +30,7 @@
                     <!-- END LEFT (MIDDLE CENTER PANNEL) -->
                     <!-- SEPARATOR (MIDDLE CENTER PANNEL) -->
                     <ns1:entry>
-                        <ns1:line-layout orientation="vertical" ns1:width="30px" />
+                        <ns1:line-layout orientation="vertical" ns1:width="10px" />
                     </ns1:entry>
                     <!-- END SEPARATOR (MIDDLE CENTER PANNEL) -->
                     <!-- CENTER (MIDDLE CENTER PANNEL) -->
