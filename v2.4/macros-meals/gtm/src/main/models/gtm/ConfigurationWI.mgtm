@@ -4,9 +4,13 @@
 Window ConfigurationWI {
     Residence residence
     String text := ['Configuration']
+    String locale := [$residence$.lang]
+
+Label logoIMG {
+}
 
     Label mealsLA {
-        String text := ['Meals']
+        String text := locate(Meals)
     }
 
     #table Meals_T {
@@ -57,12 +61,12 @@ Window ConfigurationWI {
     #form NewMealFO {
         entity: Meal
         prop: literal {
-            label : ['Literal:']
+            label : ['Literal']
         }
     }#
 
     Button NewMealBU {
-        String text := ['Add']
+        String text := locate(Create)
         Meal newMeal
         event onClick {
             #create {
@@ -95,7 +99,7 @@ Window ConfigurationWI {
     }#
 
     Button EditMealBU {
-        String text := ['Modify']
+        String text := locate(Modify)
         Meal selectedMeal
         event onClick {
             if [$Meals_T.selected$.oclIsUndefined()] {
@@ -119,7 +123,7 @@ Window ConfigurationWI {
     }
 
     Label mealOptionsLA {
-        String text := ['Options']
+        String text := locate(Options)
     }
 
     #table Meal_Options_T {
@@ -179,7 +183,7 @@ Button downMealOptionBU {
     }#
 
     Button NewOptionBU {
-        String text := ['Add']
+        String text := locate(Create)
         MealOption newOption
         event onClick {
             #create {
@@ -225,7 +229,7 @@ Button downMealOptionBU {
     }#
 
     Button EditOptionBU {
-        String text := ['Modify']
+        String text := locate(Modify)
         MealOption selectedOption
         event onClick {
             if [$Meals_T.selected$.oclIsUndefined()] {
@@ -261,7 +265,7 @@ Button downMealOptionBU {
 
 
 Label mealOptionPeriodsLA {
-    String text := ['Periods']
+    String text := locate(Periods)
 }
 
 #table ThisOptionPeriodsFO {
@@ -282,7 +286,7 @@ Label mealOptionPeriodsLA {
 }#
 
 Button CreatePeriodOptionBU {
-    String text := ['Add']
+    String text := locate(Create)
     Residency newPeriod
     event onClick {
         if [$Meals_T.selected$.oclIsUndefined()] {
@@ -327,7 +331,7 @@ Button CreatePeriodOptionBU {
 }#
 
 Button EditPeriodOptionBU {
-    String text := ['Modify']
+    String text := locate(Modify)
     Residency newPeriod
     event onClick {
         if [$Meals_T.selected$.oclIsUndefined()] {
@@ -367,7 +371,7 @@ Button EditPeriodOptionBU {
 } 
 
 Label deadlinesLA {
-    String text := ['Deadlines']
+    String text := locate(Deadlines)
 }
 Table DeadlinesTB {
     Set(MealSelection) mealSelectionsInvolved
@@ -657,7 +661,7 @@ Table DeadlinesTB {
 }
 
 Button AddDeadlineBU {
-    String text := ['Add']
+    String text := locate(Create)
     event onClick {
         if [$Meals_T.selected$.oclIsUndefined()] {
             error := ['Please, select first a meal']
@@ -688,7 +692,7 @@ Button AddDeadlineBU {
 
 
 Button DeleteDeadlinesBU {
-    String text := ['Delete']
+    String text := locate(Delete)
     event onClick {
         error := [null]
         if [$DeadlinesTB.selected$.oclIsUndefined()] {
@@ -715,7 +719,7 @@ Button DeleteDeadlinesBU {
 }
 
 Button BackBU {
-    String text := ['Back'] 
+    String text := locate(Back)
     event onClick {
         back
     }

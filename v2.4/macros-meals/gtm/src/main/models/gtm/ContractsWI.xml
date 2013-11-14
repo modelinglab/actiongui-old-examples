@@ -1,57 +1,104 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!-- was: no XML declaration present -->
 <ns1:window-layout ns1:id="ContractsWI"
     xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
     xmlns:ns1='http://actiongui.org/schemes/ag-layout/2.4'
     xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://www.actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
-    <ns1:line-layout orientation="vertical" ns1:height="auto">
-    <!--FIRST TABLE -->
-        <ns1:entry>
-            <ns1:line-layout orientation="vertical" ns1:height="auto">
-                <ns1:entry>
-                    <ns1:widget ns1:id="ContractsTB_page" ns1:height="30px" ns1:width="600px"></ns1:widget>
-                </ns1:entry>
-                <ns1:entry>
-                    <ns1:table ns1:id="ContractsTB" ns1:height="200px" ns1:width="600px">
-                        <ns1:column>
-                            <ns1:widget ns1:id="name" ns1:height="30px"></ns1:widget>
-                        </ns1:column>
-                        
-                    </ns1:table>
-                </ns1:entry>
-                <ns1:entry>
-                    <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
-                        <ns1:entry>
-                            <ns1:widget ns1:id="ContractsTB_prev_B" ns1:height="30px" ns1:width="120px"></ns1:widget>
-                        </ns1:entry>
-                        <ns1:entry>
-                            <ns1:line-layout orientation="vertical" ns1:height="30px" ns1:width="30px"></ns1:line-layout>
-                        </ns1:entry>
-                        <ns1:entry>
-                            <ns1:widget ns1:id="ContractsTB_next_B" ns1:height="30px" ns1:width="120px"></ns1:widget>
-                        </ns1:entry>
-                    </ns1:line-layout>
-                </ns1:entry>
-                <ns1:entry>
-                    <ns1:line-layout orientation="vertical" ns1:height="30px"></ns1:line-layout>
-                </ns1:entry>
-            </ns1:line-layout>
-        </ns1:entry>
-        <ns1:entry>
-            <ns1:widget ns1:id="NewContractFO_name_L" ns1:height="30px" ns1:width="140px"></ns1:widget>
-         </ns1:entry>
-        <ns1:entry>
-            <ns1:widget ns1:id="NewContractFO_name" ns1:height="30px" ns1:width="140px"></ns1:widget>
-        </ns1:entry>   
-  
-         <ns1:entry>
-            <ns1:widget ns1:id="NewContractBU" ns1:height="30px" ns1:width="120px"></ns1:widget>
-        </ns1:entry>
-        <ns1:entry>
-            <ns1:widget ns1:id="EditBU" ns1:height="30px" ns1:width="120px"></ns1:widget>
-        </ns1:entry>
-        <ns1:entry>
-            <ns1:widget ns1:id="BackBU" ns1:height="30px" ns1:width="60px"></ns1:widget>        
-        </ns1:entry>
-  </ns1:line-layout> 
+ <ns1:line-layout orientation="horizontal" ns1:height="100%">
+     <!-- LEFT PANNEL -->
+     <ns1:entry>
+         <ns1:line-layout orientation="horizontal" ns1:width="30px" ns1:height="auto"/>
+     </ns1:entry>
+     <!-- CENTRAL PANNEL -->
+    <ns1:entry>
+        <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="1200px">   
+            <!-- TOP (CENTER PANNEL) -->
+            <ns1:entry>
+                <ns1:line-layout orientation="vertical" ns1:height="30px"/>
+            </ns1:entry> 
+            <!-- MIDDLE (CENTER PANNEL) -->
+            <ns1:entry>
+                <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
+                    <!-- LEFT (MIDDLE CENTER PANNEL)-->
+                    <ns1:entry>
+                        <ns1:line-layout orientation="vertical" ns1:width="120px">
+                            <ns1:entry>
+                                <ns1:widget ns1:id="logoIMG"></ns1:widget>
+                            </ns1:entry>
+                        </ns1:line-layout>
+                    </ns1:entry>
+                    <!-- END LEFT (MIDDLE CENTER PANNEL) -->
+                    <!-- SEPARATOR (MIDDLE CENTER PANNEL) -->
+                    <ns1:entry>
+                        <ns1:line-layout orientation="vertical" ns1:width="10px" />
+                    </ns1:entry>
+                    <!-- END SEPARATOR (MIDDLE CENTER PANNEL) -->
+                    <!-- CENTER (MIDDLE CENTER PANNEL) -->
+                    <ns1:entry>
+                        <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto">
+                            <!-- -->    
+                            <!-- WINDOW -->
+                            <!--FIRST TABLE -->
+                            <ns1:entry>
+                                <ns1:line-layout orientation="vertical" ns1:height="auto">
+                                    <ns1:entry>
+                                        <ns1:table ns1:id="ContractsTB" ns1:height="150px" ns1:width="300px">
+                                            <ns1:column>
+                                                <ns1:widget ns1:id="name" ns1:height="auto"></ns1:widget>
+                                            </ns1:column>
+                                        </ns1:table>
+                                    </ns1:entry>
+                                </ns1:line-layout>
+                            </ns1:entry>
+                            <!-- SEPARATOR -->
+                            <ns1:entry>
+                                <ns1:line-layout orientation="vertical" ns1:height="30px"/>
+                            </ns1:entry> 
+                            <!--  -->
+                            <ns1:entry>
+                                <ns1:widget ns1:id="NewContractFO_name_L" ns1:height="auto" ns1:width="60px"></ns1:widget>
+                             </ns1:entry>
+                            <ns1:entry>
+                                <ns1:widget ns1:id="NewContractFO_name" ns1:height="auto" ns1:width="130px"></ns1:widget>
+                            </ns1:entry>   
+                            <!-- SEPARATOR -->
+                            <ns1:entry>
+                                <ns1:line-layout orientation="vertical" ns1:height="15px"/>
+                            </ns1:entry> 
+                            <!--  -->
+                             <ns1:entry>
+                                <ns1:widget ns1:id="NewContractBU" ns1:height="auto" ns1:width="130px"></ns1:widget>
+                            </ns1:entry>
+                            <!-- SEPARATOR -->
+                            <ns1:entry>
+                                <ns1:line-layout orientation="vertical" ns1:height="15px"/>
+                            </ns1:entry> 
+                            <!--  -->
+                            <ns1:entry>
+                                <ns1:widget ns1:id="EditBU" ns1:height="auto" ns1:width="130px"></ns1:widget>
+                            </ns1:entry>
+                            <!-- SEPARATOR -->
+                            <ns1:entry>
+                                <ns1:line-layout orientation="vertical" ns1:height="15px"/>
+                            </ns1:entry> 
+                            <!--  -->
+                            <ns1:entry>
+                                <ns1:widget ns1:id="BackBU" ns1:height="auto" ns1:width="130px"></ns1:widget>        
+                            </ns1:entry>
+                            <!-- -->
+                        </ns1:line-layout>
+                    </ns1:entry>
+                    <!-- END CENTER (MIDDLE CENTER PANNEL) -->
+                </ns1:line-layout>
+            </ns1:entry>
+            <!-- END MIDDLE (CENTER PANNEL) -->
+        </ns1:line-layout>
+    </ns1:entry>
+    <!-- END CENTRAL PANNEL -->
+    <!-- RIGHT PANNEL -->
+    <ns1:entry expand-ratio="1">
+        <ns1:line-layout orientation="horizontal"/>
+    </ns1:entry>
+    <!-- END RIGHT PANNEL -->
+</ns1:line-layout>
 </ns1:window-layout>
