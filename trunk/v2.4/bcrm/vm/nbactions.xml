@@ -13,4 +13,14 @@
                 <goal>jetty:run-war</goal>
             </goals>
         </action>
+        <action>
+            <actionName>CUSTOM-debug</actionName>
+            <displayName>debug</displayName>
+            <goals>
+                <goal>package</goal>
+            </goals>
+            <properties>
+                <jpda.listen>maven</jpda.listen>
+            </properties>
+        </action>
     </actions>
