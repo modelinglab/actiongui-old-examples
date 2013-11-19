@@ -12,7 +12,7 @@
                 <!--<Set name="paramName">paramValue</Set> -->
                 <Set name="Url">jdbc:mysql://localhost:3306/mmeals</Set> <!--TODO: write here your database url -->
                 <Set name="User">root</Set> <!--TODO: write here your database user name-->
-                <Set name="Password">admin</Set> <!--TODO: write here your database password-->
+                <Set name="Password">actiongui</Set> <!--TODO: write here your database password-->
             </New>
         </Arg>
     </New>

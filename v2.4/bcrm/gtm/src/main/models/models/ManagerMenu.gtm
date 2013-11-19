@@ -2,42 +2,42 @@ Window ManagerMenu_W {
     String text := ['Manager Menu']
 
     Button Manager_M_CreateEmployee_W_B {
-        String text := ['Create employee']
+        String text := locate(create_employee)
 
         event onClick {
             open CreateEmployee_W()
         }
     }
     Button Manager_M_SearchEmployees_W_B {
-        String text := ['Search employees']
+        String text := locate(search_employees)
 
         event onClick {
             open SearchEmployees_W()
         }
     }
     Button Manager_M_CreateCustomer_W_B {
-        String text := ['Create customer']
+        String text := locate(create_customer)
 
         event onClick {
             open CreateCustomer_W()
         }
     }
     Button Manager_M_SearchCustomers_W_B {
-        String text := ['Search customers']
+        String text := locate(search_customers)
 
         event onClick {
             open SearchCustomers_W()
         }
     }
     Button Manager_M_ChangePassword_W_B {
-        String text := ['Change password']
+        String text := locate(change_password)
 
         event onClick {
             open ChangePassword_W()
         }
     }
     Button Manager_M_Login_W_B {
-        String text := ['Logout']
+        String text := locate(logout)
 
         event onClick {
             exit
