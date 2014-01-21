@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<ns1:window-layout
+    ns1:id="CreateCustomer_W"
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:ns1='http://actiongui.org/schemes/ag-layout/2.4'
+    xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
+    <ns1:line-layout orientation="horizontal" ns1:height="100%">
+        <ns1:entry expand-ratio="1">
+            <ns1:line-layout orientation="horizontal"/>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:line-layout orientation="vertical" ns1:height="100%" ns1:width="auto">
+                <ns1:entry expand-ratio="1">
+                    <ns1:line-layout orientation="horizontal"/>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
+                        <ns1:entry>
+                            <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto">
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="NewCustomer_F_name_L" ns1:height="25px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="NewCustomer_F_surname_L" ns1:height="25px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="NewCustomer_F_birthday_L" ns1:height="25px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="NewCustomer_F_email_L" ns1:height="25px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="NewCustomer_F_phone_L" ns1:height="25px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="NewCustomer_F_loyalty_L" ns1:height="25px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="NewCustomer_F_contacts_L" ns1:height="100px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:height="35px"/>
+                                </ns1:entry>
+                            </ns1:line-layout>
+                        </ns1:entry>
+                        <ns1:entry>
+                            <ns1:line-layout orientation="vertical" ns1:width="200px">
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="NewCustomer_F_name" ns1:height="25px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="NewCustomer_F_surname" ns1:height="25px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="NewCustomer_F_birthday" ns1:height="25px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="NewCustomer_F_email" ns1:height="25px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="NewCustomer_F_phone" ns1:height="25px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="NewCustomer_F_loyalty" ns1:height="25px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:table ns1:id="NewCustomer_F_contacts" ns1:height="100px">
+                                        <ns1:column>
+                                            <ns1:widget ns1:id="login" ns1:height="25px"/>
+                                        </ns1:column>
+                                    </ns1:table>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="Create_B" ns1:height="25px" ns1:width="200px"/>
+                                </ns1:entry>
+                            </ns1:line-layout>
+                        </ns1:entry>
+                    </ns1:line-layout>
+                </ns1:entry>
+                <ns1:entry expand-ratio="1">
+                    <ns1:line-layout orientation="horizontal"/>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:widget ns1:id="Back_B" ns1:height="auto"/>
+                </ns1:entry>
+            </ns1:line-layout>
+        </ns1:entry>
+        <ns1:entry expand-ratio="1">
+            <ns1:line-layout orientation="horizontal"/>
+        </ns1:entry>
+    </ns1:line-layout>
+
+</ns1:window-layout>

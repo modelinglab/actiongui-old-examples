@@ -1,0 +1,150 @@
+Window SearchEmployees_W {
+    String text := ['Search Employees']
+
+    Label Employees_T_page {
+        Integer current := [1]
+        Integer size := [5]
+        Integer total
+        String text := [$current$.toString().concat(' of ').concat($total$.toString())]
+        
+        event onView(total) {
+            total := [Employee.allInstances()->size()]
+            if [$total$ = 0] {
+                total := [1]
+            }
+            else {
+                if [$total$.mod($size$) > 0] {
+                    total := [$total$.div($size$) + 1]
+                }
+                else {
+                    total := [$total$.div($size$)]
+                }
+            }
+        }
+    }
+
+    Table Employees_T {
+        OrderedSet(Employee) all := [Employee.allInstances()->asOrderedSet()->sortedBy(login)]
+        Integer total := [$all$->size()]
+        Integer size := [5]
+        Integer lower := [1]
+        Integer upper := [if $lower$+$size$-1 > $total$ then $total$ else $lower$+$size$-1 endif]
+        OrderedSet(Employee) rows := [$all$->subOrderedSet($lower$,$upper$)]
+        OrderedSet(Employee) selected := [null]
+
+        columns {
+            ['User'] : Label login {
+                String text {
+                    if [$text$.oclIsInvalid()] {
+                        error := ['no permission']
+                    }
+                    else {
+                        error := [null]
+                    }
+                }
+                event onView (text) {
+                    text := [null]
+                    try {
+                        text := [$Employees_T.row$.login]
+                    }
+                    catch(SecurityException) {
+                        text := [invalid]
+                    }
+                }
+            }
+        }
+    }
+
+    Button Employees_T_prev_B {
+        String text := ['Previous']
+
+        event onClick {
+            if [$Employees_T.lower$ > 1] {
+                Employees_T.lower := [if $Employees_T.lower$-$Employees_T.size$ < 1 then 1 else $Employees_T.lower$-$Employees_T.size$ endif]
+                Employees_T.upper := [if $Employees_T.lower$+$Employees_T.size$-1 > $Employees_T.total$ then $Employees_T.total$ else $Employees_T.lower$+$Employees_T.size$-1 endif]
+                Employees_T.rows := [$Employees_T.all$->subOrderedSet($Employees_T.lower$,$Employees_T.upper$)]
+
+                Employees_T_page.current := [$Employees_T_page.current$ - 1]
+                reevaluate Employees_T_page.text
+            }
+        }
+    }
+
+    Button Employees_T_next_B {
+        String text := ['Next']
+
+        event onClick {
+            if [$Employees_T.upper$ < $Employees_T.total$] {
+                Employees_T.lower := [$Employees_T.upper$+1]
+                Employees_T.upper := [if $Employees_T.lower$+$Employees_T.size$-1 > $Employees_T.total$ then $Employees_T.total$ else $Employees_T.lower$+$Employees_T.size$-1 endif]
+                Employees_T.rows := [$Employees_T.all$->subOrderedSet($Employees_T.lower$,$Employees_T.upper$)]
+
+                Employees_T_page.current := [$Employees_T_page.current$ + 1]
+                reevaluate Employees_T_page.text
+            }
+        }
+    }
+
+    Button Edit_B {
+        String text := ['Edit']
+        event onClick {
+            try {
+                if [if $Employees_T.selected$->oclIsUndefined() then false else $Employees_T.selected$->size() = 1 endif] {
+                    open EditEmployee_W(selectedEmployee : [$Employees_T.selected$->any(true)])
+                }
+                else {
+                    notification(['Error'],['You must select exactly one employee.'],[-1]) 
+                }
+            }
+            catch (SecurityException) {
+                notification (['Security error'],['You do not have permission to open the window.'],[-1])
+            }
+        }
+    }
+
+    Button Delete_B {
+        String text := ['Delete']
+        event onClick {
+            try {
+                if [if $Employees_T.selected$->oclIsUndefined() then false else $Employees_T.selected$->notEmpty() endif] {
+                    try {
+                        foreach deleteObject in [$Employees_T.selected$] {
+                           if [$deleteObject$<>$SearchEmployees_W.caller$] {
+                                delete [$deleteObject$] 
+                                }
+                           else {
+                                notification (['Error'], ['You can not delete yourself while you are logged-in'], [-1])
+                                }
+                        }
+                        
+                        reevaluate Employees_T_page.current
+                        reevaluate Employees_T_page.size
+                        reevaluate Employees_T_page.total
+                        reevaluate Employees_T_page.text
+
+                        reevaluate Employees_T.all
+                        reevaluate Employees_T.total
+                        reevaluate Employees_T.size
+                        reevaluate Employees_T.lower
+                        reevaluate Employees_T.upper
+                        reevaluate Employees_T.rows
+                        reevaluate Employees_T.selected
+                    }
+                    catch (Exception) {
+                        notification(['Security error'],['You do not have permission to delete an Employee.'],[-1])
+                    }
+                } 
+            }
+            catch (SecurityException) {
+                notification(['Security error'],['You do not have permission to delete an Employee.'],[-1])
+            }
+        }
+    }
+
+    Button Back_B {
+        String text := ['Back']
+        event onClick {
+            back
+        }
+    }
+}

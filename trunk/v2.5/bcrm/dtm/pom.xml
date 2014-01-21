@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.modelinglab</groupId>
+        <artifactId>bcrm</artifactId>
+        <version>2.5-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>dtm</artifactId>
+    <packaging>ag-dtm</packaging>
+    <name>bcrm-dtm (2.5)</name>
+    
+    <build>
+        <sourceDirectory>${project.basedir}/src/main/models</sourceDirectory>
+        <plugins>
+            <plugin>
+                <groupId>org.modelinglab.actiongui.maven</groupId>
+                <artifactId>ag-dtm-maven-plugin</artifactId>
+                <version>2.5-SNAPSHOT</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <role-enum>Role</role-enum>
+                    <user-entity>Employee</user-entity>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

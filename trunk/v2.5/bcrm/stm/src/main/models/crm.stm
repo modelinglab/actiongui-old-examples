@@ -1,0 +1,31 @@
+role SYSTEM {
+    Employee {
+        read(login), read(password), read(myRole)
+    }
+}
+
+role SALESPERSON {
+    Employee {
+        read(login)
+        update(password), read(password) constrainedBy [self = caller]
+    }
+    Customer {
+        read(name), read(surname), read(loyalty), read(contacts)
+        read(phone), read(email), read(birthday) constrainedBy [self.contacts->includes(caller)]
+        update(email), update(phone), update(birthday) constrainedBy [self.contacts->includes(caller)] 
+        add(contacts) constrainedBy [target = caller]
+        //remove contacts constrainedBy [target = caller]
+    }
+}
+
+role MANAGER extends SALESPERSON{
+    Employee {
+        create
+        read(myRole)
+        update
+        delete // constrainedBy [caller <> self] // do not remove this authorization constraint
+        }
+    Customer {
+        fullAccess
+    }
+}
