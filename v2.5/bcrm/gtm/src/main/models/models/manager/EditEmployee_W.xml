@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<ns1:window-layout
+    ns1:id="EditEmployee_W"
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:ns1='http://actiongui.org/schemes/ag-layout/2.4'
+    xsi:schemaLocation='http://actiongui.org/schemes/ag-layout/2.4 http://actiongui.org/schemes/ag-layout/2.4/schema.xsd'>
+    <ns1:line-layout orientation="horizontal" ns1:height="100%">
+        <ns1:entry expand-ratio="1">
+            <ns1:line-layout orientation="horizontal"/>
+        </ns1:entry>
+        <ns1:entry>
+            <ns1:line-layout orientation="vertical" ns1:height="100%" ns1:width="auto">
+                <ns1:entry expand-ratio="1">
+                    <ns1:line-layout orientation="horizontal"/>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:line-layout orientation="horizontal" ns1:height="auto" ns1:width="auto">
+                        <ns1:entry>
+                            <ns1:line-layout orientation="vertical" ns1:height="auto" ns1:width="auto">
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="EditEmployee_F_login_L" ns1:height="25px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="EditEmployee_F_password_L" ns1:height="25px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="EditEmployee_F_myRole_L" ns1:height="25px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:height="35px"/>
+                                </ns1:entry>
+                            </ns1:line-layout>
+                        </ns1:entry>
+                        <ns1:entry>
+                            <ns1:line-layout orientation="vertical" ns1:width="200px">
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="EditEmployee_F_login" ns1:height="25px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="EditEmployee_F_password" ns1:height="25px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="EditEmployee_F_myRole" ns1:height="25px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:line-layout orientation="horizontal" ns1:height="10px"/>
+                                </ns1:entry>
+                                <ns1:entry>
+                                    <ns1:widget ns1:id="Update_B" ns1:height="25px"/>
+                                </ns1:entry>
+                            </ns1:line-layout>
+                        </ns1:entry>
+                    </ns1:line-layout>
+                </ns1:entry>
+                <ns1:entry expand-ratio="1">
+                    <ns1:line-layout orientation="horizontal"/>
+                </ns1:entry>
+                <ns1:entry>
+                    <ns1:widget ns1:id="Back_B" ns1:height="auto"/>
+                </ns1:entry>
+            </ns1:line-layout>
+        </ns1:entry>
+        <ns1:entry expand-ratio="1">
+            <ns1:line-layout orientation="horizontal"/>
+        </ns1:entry>
+    </ns1:line-layout>
+
+</ns1:window-layout>

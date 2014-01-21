@@ -1,0 +1,22 @@
+@import "../reindeer/legacy-styles.css";
+
+@import "SalesPersonMenu_W.css";
+@import "EditEmployee_W.css";
+@import "SearchCustomers_W.css";
+@import "CreateCustomer_W.css";
+@import "SearchEmployees_W.css";
+@import "CreateEmployee_W.css";
+@import "Login_W.css";
+@import "EditCustomer_atom_W.css";
+@import "ChangePassword_W.css";
+@import "ManagerMenu_W.css";
+
+/* The following rule is to avoid resizeable text fields */
+.v-textarea {
+    resize: none
+}
+
+/* The following rule is to avoid problems when a text field is higher than their standard value*/
+.v-textfield {
+    background-image: none;
+}

@@ -1,0 +1,166 @@
+Window CreateCustomer_W {
+    String text := ['Create Customer']
+
+    Label NewCustomer_F_name_L {
+        String text := ['name:']
+    }
+    TextField NewCustomer_F_name {
+        String text := [null]
+        String error := [null]
+    }   
+
+    Label NewCustomer_F_surname_L {
+        String text := ['surname:']
+    }
+    TextField NewCustomer_F_surname {
+        String text := [null]
+        String error := [null]
+    }   
+
+    Label NewCustomer_F_birthday_L {
+        String text := ['birthday:']
+    }
+    DateField NewCustomer_F_birthday {
+        LocalDateTime value := [null]
+        String error := [null]
+    }   
+
+    Label NewCustomer_F_email_L {
+        String text := ['email:']
+    }
+    TextField NewCustomer_F_email {
+        String text := [null]
+        String error := [null]
+    }   
+
+    Label NewCustomer_F_phone_L {
+        String text := ['phone:']
+    }
+    TextField NewCustomer_F_phone {
+        String text := [null]
+        String error := [null]
+    }   
+
+    Label NewCustomer_F_loyalty_L {
+        String text := ['loyalty:']
+    }
+    TextField NewCustomer_F_loyalty {
+        String text := [null]
+        String error := [null]
+    }
+
+    Label NewCustomer_F_contacts_L {
+        String text := ['contacts:']
+    }
+    Table NewCustomer_F_contacts {
+        Set(Employee) rows := [Employee.allInstances()]
+        String error := [null]
+        Set(Employee) selected := [null]
+        columns {
+            ['login'] : Label login {
+                event onView (text) {
+                    try {
+                        text := [$NewCustomer_F_contacts.row$.login]
+                    }
+                    catch (SecurityException) {
+                        text := ['---']
+                    }
+                }
+            }
+        }
+            
+    }
+
+    Button Create_B {
+        String text := ['Create']
+        event onClick {
+            reevaluate NewCustomer_F_name.error
+            reevaluate NewCustomer_F_surname.error
+            reevaluate NewCustomer_F_birthday.error
+            reevaluate NewCustomer_F_email.error
+            reevaluate NewCustomer_F_phone.error
+            reevaluate NewCustomer_F_loyalty.error
+            reevaluate NewCustomer_F_contacts.error
+
+            if [$NewCustomer_F_name.text$.oclIsUndefined()] {
+                NewCustomer_F_name.error := ['Error']
+            }
+            if [$NewCustomer_F_surname.text$.oclIsUndefined()] {
+                NewCustomer_F_surname.error := ['Required field']
+            }
+            if [$NewCustomer_F_birthday.value$.oclIsUndefined()] {
+                NewCustomer_F_birthday.error := ['Required field']
+            }
+            else {
+                if [$NewCustomer_F_birthday.value$ >= LocalDateTime.now()] {
+                    NewCustomer_F_birthday.error := ['The selected date must be previous to the current date']
+                }
+            }
+            if [$NewCustomer_F_email.text$.oclIsUndefined()] {
+                NewCustomer_F_email.error := ['Required field']
+            }
+            if [$NewCustomer_F_phone.text$.oclIsUndefined()] {
+                NewCustomer_F_phone.error := ['Required field']
+            }
+
+            if [$NewCustomer_F_loyalty.text$.oclIsUndefined()] {
+                NewCustomer_F_loyalty.error := ['Required field']
+            }
+            else {
+                if [$NewCustomer_F_loyalty.text$.toInteger().oclIsUndefined()]{
+                    NewCustomer_F_loyalty.error := ['The input must be a valid integer']
+                    }
+                }
+            if [$NewCustomer_F_contacts.selected$->oclIsUndefined()] {
+                NewCustomer_F_contacts.error := ['Required selection']
+            }
+            else {
+                if [$NewCustomer_F_contacts.selected$->isEmpty()] {
+                    NewCustomer_F_contacts.error := ['Required selection']
+                }
+            }
+
+            if [$NewCustomer_F_name.error$ = null and $NewCustomer_F_surname.error$ = null and
+                    $NewCustomer_F_birthday.error$ = null and $NewCustomer_F_email.error$ = null and
+                    $NewCustomer_F_phone.error$ = null and $NewCustomer_F_loyalty.error$ = null and
+                    $NewCustomer_F_contacts.error$ = null] {
+                
+                try {
+                    newCustomer := new Customer
+                    [$newCustomer$.name] := [$NewCustomer_F_name.text$]
+                    [$newCustomer$.surname] := [$NewCustomer_F_surname.text$]
+                    [$newCustomer$.birthday] := [$NewCustomer_F_birthday.value$.toLocalDate()]
+                    [$newCustomer$.email] := [$NewCustomer_F_email.text$]
+                    [$newCustomer$.phone] := [$NewCustomer_F_phone.text$]
+                    [$newCustomer$.loyalty] := [$NewCustomer_F_loyalty.text$.toInteger()]
+                    foreach newCustomer_contacts in [$NewCustomer_F_contacts.selected$] {
+                        [$newCustomer$.contacts] += [$newCustomer_contacts$]     
+                    }           
+                    
+                    reevaluate NewCustomer_F_name.text
+                    reevaluate NewCustomer_F_surname.text
+                    reevaluate NewCustomer_F_birthday.value
+                    reevaluate NewCustomer_F_email.text
+                    reevaluate NewCustomer_F_phone.text
+                    reevaluate NewCustomer_F_loyalty.text
+                    reevaluate NewCustomer_F_contacts.selected
+
+                    notification (['Success'],['An instance of Customer has been created successfully.'],[-1])
+                }
+                catch (SecurityException) {
+                    notification (['Security error'],['You do not have permission to create an instance of Customer.'],[-1])
+                }
+            }
+            else {
+                notification(['Error'],['The form contains errors. Please, check the form.'],[-1]) 
+            }
+        }
+    }
+
+    Button Back_B {
+        String text := ['Back']
+        event onClick {
+            back
+        }
+    }
+}
