@@ -1,0 +1,8 @@
+entity User {
+    String externalID
+    String name
+}
+
+enum Role {
+    DEFAULT
+}

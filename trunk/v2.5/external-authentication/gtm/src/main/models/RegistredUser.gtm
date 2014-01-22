@@ -1,0 +1,12 @@
+/*
+ * Recognized users are redirected to this window when they enter in this
+ * application. A user is Recognized if 
+ * User.allInstances()->any(u | u.externalID <> callerId)
+*/
+Window RegistredUser {
+    
+    Label label {
+        String text := ['Hello ' + $RegistredUser.caller$.name + '!']
+    }
+
+}

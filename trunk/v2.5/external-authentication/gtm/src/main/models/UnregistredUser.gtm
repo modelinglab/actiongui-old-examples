@@ -1,0 +1,43 @@
+/*
+ * Unrecognized users are redirected to this window when they enter in this
+ * application. A user is unrecognized if
+ * User.allInstances()->forAll(u | u.externalID <> callerId)
+*/
+Window UnregistredUser {
+    
+    Label welcomeLB {
+        String tokenID := getCallerToken()
+        String text
+
+        event onView(text) {
+            text := ["Welcome new user. Your token id is '" + $UnregistredUser.welcomeLB.tokenID$ + "'. Please enter your name to register"]
+        }
+    }
+
+    TextField nameTF {
+        
+    }
+
+    Button registerBT {
+        String text := ['Register']
+
+        event onClick {
+            if [$UnregistredUser.nameTF.text$.oclIsUndefined() or $UnregistredUser.nameTF.text$.size() = 0] {
+                notification(['Invalid name'], ['Enter your name to register, please'], [100])
+            }
+            else {
+                if [User.allInstances()->exists(u | u.externalID = $UnregistredUser.welcomeLB.tokenID$)] {
+                    notification(['Unexpected error'], ['There is another user with this tokenID'], [100])
+                }
+                else {
+                    u := new User
+                    [$u$.externalID] := [$UnregistredUser.welcomeLB.tokenID$]
+                    [$u$.name] := [$UnregistredUser.nameTF.text$]
+
+                    open RegistredUser(caller:[$u$])
+                }
+            }
+        }
+    }
+
+}

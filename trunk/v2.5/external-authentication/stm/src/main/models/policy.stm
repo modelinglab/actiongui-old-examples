@@ -1,0 +1,8 @@
+
+role DEFAULT {
+    
+    User {
+        fullAccess
+    }
+
+}
