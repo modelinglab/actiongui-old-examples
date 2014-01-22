@@ -14,12 +14,12 @@ import com.meaningfulmodels.actiongui.vm.core.AGSession;
 class MyAGSession implements AGSession {
 
     @Override
-    public String getCallerToken() {
+    public String getCallerId() {
         return null;
     }
 
     @Override
-    public String getRoleToken() {
+    public String getRoleId() {
         return null;
     }
 
